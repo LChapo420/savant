@@ -96,8 +96,21 @@ App.mount(async () => {
     parent: document.getElementById('step-parent'),
     sent: document.getElementById('step-sent'),
   };
+  /** The step bar at the top of the card: the age screen is step 1, whichever form follows is step 2. */
+  function progress(name) {
+    const bar = document.getElementById('reg-progress');
+    if (!bar) return;
+    const n = name === 'age' ? 1 : 2;
+    bar.setAttribute('aria-valuenow', String(n));
+    bar.setAttribute('aria-label', `Step ${n} of 2`);
+    bar.querySelector('.meter > span').style.width = `${n * 50}%`;
+    bar.querySelectorAll('.segments > i').forEach((seg, i) => seg.classList.toggle('on', i < n));
+    bar.querySelector('.ob-count').textContent = `${n} / 2`;
+    document.getElementById('reg-step').textContent = `Step ${n} of 2`;
+  }
   function show(name) {
     Object.entries(steps).forEach(([key, node]) => node.classList.toggle('hidden', key !== name));
+    progress(name);
     clearError();
     const first = steps[name].querySelector('input, select, a.btn');
     if (first) first.focus();

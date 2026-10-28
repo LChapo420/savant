@@ -11,8 +11,9 @@
   <script src="/js/style-boot.js"></script>
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/screens/onboarding.css">
 </head>
-<body>
+<body class="ob ob-onboarding">
   <header class="site-header" id="header"></header>
   <main class="page">
     <!-- Asked once of an account made before the age screen existed, and of a
@@ -52,21 +53,25 @@
       </section>
     </div>
     <div class="wrap" id="subjects-step">
-      <h1>What do you want to learn?</h1>
-      <p class="muted" style="max-width:62ch">
-        Pick a subject and the level you are aiming at. Each choice gets its own
-        placement quiz, which starts at the basics and ends just above the level you
-        picked, so the result is measured rather than assumed.
-      </p>
-      <div id="already" class="notice hidden" style="margin-bottom:18px"></div>
+      <div class="ob-head">
+        <div class="ob-progress hidden" id="ob-progress" role="progressbar" aria-valuemin="1"></div>
+        <p class="ob-step hidden" id="ob-step"></p>
+        <h1>What do you want to learn?</h1>
+        <p class="lede">
+          Pick a subject and the level you are aiming at. Each choice gets its own
+          placement quiz, which starts at the basics and ends just above the level you
+          picked, so the result is measured rather than assumed.
+        </p>
+      </div>
+      <div id="already" class="notice hidden"></div>
       <div id="tracks" class="grid grid-2">
         <div class="loading"><span class="spinner"></span>Loading subjects</div>
       </div>
-      <div class="card" id="footer-bar" style="position:sticky; bottom:16px; margin-top:22px">
-        <div class="row-between">
-          <div>
-            <div style="font-weight:650" id="summary">Nothing selected yet</div>
-            <div class="tiny muted" id="summary-detail">Choose at least one subject and level.</div>
+      <div class="ob-foot" id="footer-bar">
+        <div class="ob-foot-row">
+          <div class="ob-foot-text">
+            <strong id="summary">Nothing selected yet</strong>
+            <span class="tiny muted" id="summary-detail">Choose at least one subject and level.</span>
           </div>
           <button class="btn btn-primary btn-lg" id="start" disabled>Continue</button>
         </div>
@@ -76,6 +81,7 @@
   <script src="/js/icons.js"></script>
   <script src="/js/app.js"></script>
   <script src="/js/age-screen.js"></script>
+  <script src="/js/ob-steps.js"></script>
   <script src="/js/onboarding.js"></script>
 </body>
 </html>

@@ -12,25 +12,39 @@ App.mount(async () => {
   const next = App.query('next');
   const nextHref = next && next.startsWith('/') ? next : '/dashboard';
 
+  // Inside the sign-up chain (quiz, about you, subjects, placement) this is step 1.
+  const total = nextHref.startsWith('/survey') ? 4 : nextHref.startsWith('/onboarding') ? 3 : 0;
+  if (total) {
+    ObSteps.flow(total);
+    document.body.classList.add('ob-focus');
+  }
+
   root.innerHTML = `
-    <h1>How do you learn?</h1>
-    <p class="muted">
-      Twenty choices, about two minutes. There are no right answers: this only sets how
-      your sessions are paced (their length, when feedback shows, how much explanation you get).
-      ${App.ux.style_copy === false ? '' : 'It does not decide how you are taught: research finds that teaching to a learning style does not raise scores. '}What you actually do in sessions carries more weight over
-      time, so a rough answer here is fine.
-    </p>
-    <div class="player-bar" style="margin: 18px 0">
-      <div class="meter meter-lg"><span id="bar" style="width:0%"></span></div>
-      <span class="small muted" id="count">0 of ${questions.length}</span>
+    <div class="ob-head">
+      ${total ? `<div class="ob-progress" role="progressbar" aria-valuemin="1" aria-valuemax="${total}" aria-valuenow="1" aria-label="Step 1 of ${total}">${ObSteps.html(1, total)}</div>
+      <p class="ob-step">Step 1 of ${total}</p>` : ''}
+      <h1>How do you learn?</h1>
+      <p class="lede">Twenty choices, about two minutes. There are no right answers: this only sets how
+        your sessions are paced (their length, when feedback shows, how much explanation you get).</p>
+    </div>
+    <details class="sq-why">
+      <summary>What this does and does not do</summary>
+      <p>${App.ux.style_copy === false ? '' : 'It does not decide how you are taught: research finds that teaching to a learning style does not raise scores. '}What you actually do in sessions carries more weight over
+      time, so a rough answer here is fine.</p>
+    </details>
+    <div class="sq-top">
+      <div class="sq-progress">
+        <div class="meter meter-lg"><span id="bar" style="width:0%"></span></div>
+        <span class="small muted" id="count">0 of ${questions.length}</span>
+      </div>
     </div>
     <div id="items"></div>
-    <div class="card sq-bar" style="position:sticky; bottom:16px; margin-top:18px">
-      <div class="row-between">
-        <span class="small muted" id="status">Answer what you can — unanswered questions are simply left out.</span>
-        <div class="row">
+    <div class="ob-foot sq-bar">
+      <div class="ob-foot-row">
+        <span class="ob-foot-text" id="status">Answer what you can. Unanswered questions are simply left out.</span>
+        <div class="ob-actions">
           <a class="btn btn-ghost" href="${nextHref}">Skip</a>
-          <button class="btn btn-primary" id="submit" disabled>Save profile</button>
+          <button class="btn btn-primary btn-lg" id="submit" disabled>Save profile</button>
         </div>
       </div>
     </div>`;
@@ -40,11 +54,11 @@ App.mount(async () => {
     <div class="sq-item" data-id="${q.id}">
       <div class="sq-prompt" id="sq-p-${q.id}">${App.escapeHtml(q.prompt)}</div>
       <div class="sq-ends">
-        <span>${App.escapeHtml(q.low)}</span>
-        <span style="text-align:right">${App.escapeHtml(q.high)}</span>
+        <span class="sq-end"><b>First</b>${App.escapeHtml(q.low)}</span>
+        <span class="sq-end"><b>Second</b>${App.escapeHtml(q.high)}</span>
       </div>
       <div class="sq-scale" role="group" aria-labelledby="sq-p-${q.id}">
-        ${scale.map((s) => `<button class="sq-opt" type="button" aria-pressed="false" aria-label="${App.escapeHtml(s.label)}" data-value="${s.value}"><span class="sq-long">${App.escapeHtml(s.label)}</span><span class="sq-short" aria-hidden="true">${App.escapeHtml(s.label.split(' ')[0])}</span></button>`).join('')}
+        ${scale.map((s) => `<button class="sq-opt" type="button" aria-pressed="false" aria-label="${App.escapeHtml(s.label)}" data-value="${s.value}"><span class="sq-long">${App.escapeHtml(s.label)}</span><span class="sq-short" aria-hidden="true">${App.escapeHtml(s.label.split(' ')[0])}<br>${App.escapeHtml(s.label.split(' ').pop())}</span></button>`).join('')}
       </div>
     </div>`).join('');
 
@@ -79,7 +93,7 @@ App.mount(async () => {
       const result = await App.api.post('/api/profile/style-quiz', { answers });
       const applied = result.applied;
       root.innerHTML = `
-        <div class="card">
+        <div class="card quiz-done">
           <h1>${window.icon('check-circle')} Profile saved</h1>
           <p class="muted">Here is what changes in your sessions from now on.</p>
           <table class="data"><tbody>
