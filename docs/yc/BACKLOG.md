@@ -43,7 +43,7 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-1b. **Seed a fixture db so the 7 skipped db-dependent tests run on a clean clone.** Found while doing the item above: `grading-test`, `self-test`, `scorecard*`, `model-lineup-test`, `subject-placement-test` and `game-lab-integration-test` copy the owner's `data/db.json`. Give them a committed, synthetic fixture (via `scripts/seed-demo-account.js` or a small hand-built db) so CI really runs them. Done when `npm test --strict` passes on a fresh clone for those steps.
+1b. [claimed 2026-10-28T12:36Z] **Seed a fixture db so the 7 skipped db-dependent tests run on a clean clone.** Found while doing the item above: `grading-test`, `self-test`, `scorecard*`, `model-lineup-test`, `subject-placement-test` and `game-lab-integration-test` copy the owner's `data/db.json`. Give them a committed, synthetic fixture (via `scripts/seed-demo-account.js` or a small hand-built db) so CI really runs them. Done when `npm test --strict` passes on a fresh clone for those steps.
 2. **ACT score entry and test date** (item 2): a small ACT profile with test date, target score, and section
    scores from each official practice test (date, form, English, Math, Reading, optional Science), later the
    real ACT. Show the history as a bar or line chart on an ACT page. Store per user in the existing db layer.
