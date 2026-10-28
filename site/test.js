@@ -103,9 +103,11 @@ test('updates: consent and email are required', async () => {
 test('beta: every rule is checked', async () => {
   const r = await post('/api/beta', { email: 'b@example.com', name: '', role: 'admin', ...human });
   assert.strictEqual(r.status, 400);
-  assert.deepStrictEqual(Object.keys(r.json.errors).sort(), ['age_ok', 'consent', 'name', 'role', 'why']);
+  assert.deepStrictEqual(Object.keys(r.json.errors).sort(), ['age_ok', 'consent', 'name', 'role'], 'the "why" is optional now');
   const long = await post('/api/beta', { email: 'b@example.com', name: 'x'.repeat(81), role: 'learner', why: WHY, age_ok: 'yes', consent: 'yes', ...human });
   assert.ok(long.json.errors.name);
+  const other = await post('/api/beta', { email: 'b@example.com', name: 'Bo', role: 'learner', interests_other: 'x'.repeat(121), age_ok: 'yes', consent: 'yes', ...human });
+  assert.ok(other.json.errors.interests_other);
 });
 
 test('beta: a valid application keeps only what the form asks', async () => {
@@ -116,51 +118,239 @@ test('beta: a valid application keeps only what the form asks', async () => {
   assert.strictEqual(row.name, 'Sam', 'control characters stripped');
   assert.strictEqual(row.role, 'parent');
   assert.strictEqual(row.why, 'My daughter loves puzzles.\nShe is bored at school and wants harder maths.', 'why is stored trimmed, newlines kept, control characters stripped');
-  assert.strictEqual(row.why_question, 'Why should we accept you?');
+  assert.strictEqual(row.why_question, 'Why should we pick you?');
   assert.strictEqual(row.age_confirmed, true);
   assert.strictEqual(row.consent, true);
-  assert.ok(!('extra' in row) && !('elapsed' in row));
+  assert.strictEqual(row.status, 'applied');
+  assert.deepStrictEqual(row.interests, []);
+  assert.ok(!('extra' in row) && !('elapsed' in row) && !('source' in row) && !('ref' in row));
 });
 
-test('beta: "Why should we accept you?" is required, 30 to 1,000 characters', async () => {
+test('beta: "Why should we pick you?" is optional, 1,000 characters at most', async () => {
   const base1 = { email: 'why@example.com', name: 'Wy', role: 'learner', age_ok: 'yes', consent: 'yes', ...human };
-  assert.strictEqual(WHY_MIN, 30);
+  assert.strictEqual(WHY_MIN, 0, 'no minimum');
   assert.strictEqual(WHY_MAX, 1000);
-  const missing = await post('/api/beta', base1);
-  assert.strictEqual(missing.status, 400);
-  assert.deepStrictEqual(Object.keys(missing.json.errors), ['why']);
-  assert.strictEqual(missing.json.errors.why, 'Tell us why we should accept you.');
-  const blank = await post('/api/beta', { ...base1, why: ' \n\t\u0007  ' });
-  assert.strictEqual(blank.json.errors.why, 'Tell us why we should accept you.', 'whitespace and control characters only count as empty');
-  const short = await post('/api/beta', { ...base1, why: 'x'.repeat(WHY_MIN - 1) });
-  assert.ok(short.json.errors.why.includes('at least 30'));
-  const padded = await post('/api/beta', { ...base1, why: `   ${'x'.repeat(WHY_MIN - 1)}    ` });
-  assert.ok(padded.json.errors.why, 'length is counted after trimming');
   const long = await post('/api/beta', { ...base1, why: 'x'.repeat(WHY_MAX + 1) });
   assert.strictEqual(long.json.errors.why, 'Keep this under 1,000 characters.');
-  const notText = await post('/api/beta', { ...base1, why: { a: 'x'.repeat(40) } });
-  assert.ok(notText.json.errors.why, 'only a string is accepted');
   assert.ok(!readAll('beta').some((x) => x.email === 'why@example.com'), 'nothing stored while invalid');
-  const atMin = await post('/api/beta', { ...base1, why: 'y'.repeat(WHY_MIN) });
-  assert.strictEqual(atMin.status, 200);
+  const none = await post('/api/beta', base1);
+  assert.strictEqual(none.status, 200, 'no answer is fine');
+  assert.strictEqual(readAll('beta').find((x) => x.email === 'why@example.com').why, '');
+  const short = await post('/api/beta', { ...base1, email: 'why1@example.com', why: 'Hi' });
+  assert.strictEqual(short.status, 200, 'a short answer is fine');
+  const blank = await post('/api/beta', { ...base1, email: 'why4@example.com', why: ' \n\t\u0007  ' });
+  assert.strictEqual(blank.status, 200);
+  assert.strictEqual(readAll('beta').find((x) => x.email === 'why4@example.com').why, '', 'whitespace and control characters count as empty');
   const atMax = await post('/api/beta', { ...base1, email: 'why2@example.com', why: 'z'.repeat(WHY_MAX) });
   assert.strictEqual(atMax.status, 200);
   assert.strictEqual(readAll('beta').find((x) => x.email === 'why2@example.com').why.length, WHY_MAX);
-  const nonLatin = await post('/api/beta', { ...base1, email: 'why3@example.com', why: '\u5b66'.repeat(WHY_MAX) }, { type: 'application/x-www-form-urlencoded' });
+  const nonLatin = await post('/api/beta', { ...base1, email: 'why3@example.com', why: '学'.repeat(WHY_MAX) }, { type: 'application/x-www-form-urlencoded' });
   assert.strictEqual(nonLatin.status, 200, 'a full answer in a non-Latin script fits the body limit, even as a form post');
   assert.ok(readAll('beta').some((x) => x.email === 'why3@example.com'));
 });
 
-test('beta: the page asks "Why should we accept you?" with the same limits', async () => {
+test('beta: the page asks "Why should we pick you?" as an optional answer with a 1,000 character limit', async () => {
   const html = await (await fetch(`${base}/`)).text();
-  const ta = html.match(/<textarea[^>]*id="beta-why"[^>]*>/);
-  assert.ok(ta, 'the textarea is on the page');
-  assert.ok(/name="why"/.test(ta[0]) && /\brequired\b/.test(ta[0]));
-  assert.ok(ta[0].includes(`minlength="${WHY_MIN}"`) && ta[0].includes(`maxlength="${WHY_MAX}"`));
-  assert.ok(html.includes('<label for="beta-why">Why should we accept you?'));
+  for (const id of ['beta-why', 'hero-why']) {
+    const ta = html.match(new RegExp(`<textarea[^>]*id="${id}"[^>]*>`));
+    assert.ok(ta, `${id}: the textarea is on the page`);
+    assert.ok(/name="why"/.test(ta[0]) && !/\brequired\b/.test(ta[0]) && !/minlength/.test(ta[0]), `${id}: optional, no minimum`);
+    assert.ok(ta[0].includes(`maxlength="${WHY_MAX}"`));
+    assert.ok(html.includes(`<label for="${id}">Why should we pick you?`));
+  }
   assert.ok(html.includes('data-error-for="why"'));
   const js = await (await fetch(`${base}/assets/site.js`)).text();
-  assert.ok(js.includes("why: 'why'") && js.includes(`WHY_MIN = ${WHY_MIN}`) && js.includes(`WHY_MAX = ${WHY_MAX}`), 'the browser checks the same rule');
+  assert.ok(js.includes("why: 'why'") && js.includes(`WHY_MAX = ${WHY_MAX}`) && !js.includes('WHY_MIN'), 'the browser checks the same rule');
+});
+
+test('beta: the hero has the first step (email and the two ticks), the lower form the same, step 2 behind it', async () => {
+  const html = await (await fetch(`${base}/`)).text();
+  const hero = html.slice(html.indexOf('<form class="apply apply-hero"'), html.indexOf('</form>', html.indexOf('<form class="apply apply-hero"')));
+  assert.ok(hero.includes('id="hero-form"') && hero.includes('data-source="hero"') && hero.includes('name="source" value="hero"'));
+  assert.ok(/<input id="hero-email" name="email" type="email"[^>]*\brequired\b/.test(hero));
+  assert.ok(hero.includes('Apply for the beta</button>'));
+  assert.ok(/id="hero-age" name="age_ok" type="checkbox"[^>]*\brequired\b/.test(hero) && hero.includes("I am 13 or older, or I'm a parent signing up for my child."));
+  assert.ok(/id="hero-consent" name="consent" type="checkbox"[^>]*\brequired\b/.test(hero) && hero.includes('Savant may email me about the beta.'));
+  assert.ok(html.indexOf('id="hero-form"') < html.indexOf('class="twin"'), 'the form is in the hero, before the example');
+  for (const p of ['hero', 'beta']) {
+    for (const v of ['math', 'english', 'reading', 'spanish', 'iq', 'act', 'chess', 'piano', 'basketball']) {
+      assert.ok(html.includes(`<input type="checkbox" name="interests" value="${v}">`), `${p}: ${v} chip`);
+    }
+    assert.ok(html.includes(`name="interests_other"`) && html.includes(`id="${p}-other"`), `${p}: something else`);
+    assert.ok(/name="role" value="learner"/.test(html) && html.includes('value="parent"') && html.includes('value="teacher"'));
+  }
+  assert.ok(html.includes('id="beta-form"') && html.includes('data-source="bottom"') && html.includes('name="source" value="bottom"'), 'the lower form still exists, tagged "bottom"');
+  assert.ok(html.includes('class="apply-fallback"') && html.includes('data-sticky-apply') && html.includes('Apply for the beta — free'));
+  assert.ok(html.includes('Savant learns how you learn, then teaches you any subject your best way.'));
+  assert.ok(html.includes('Built by a 16-year-old founder') && html.includes('Free for beta testers') && html.includes('Every application read by hand'));
+  assert.ok(html.indexOf('Savant takes every small part of learning') > html.indexOf('id="how-title"'), 'the long explanation moved into "Measured first, then taught."');
+  const theme = await (await fetch(`${base}/assets/theme.js`)).text();
+  assert.ok(theme.includes("classList.add('js')"), 'the two steps only hide step 2 when scripts run');
+});
+
+test('beta: link preview tags, canonical link and og.png', async () => {
+  const html = await (await fetch(`${base}/`)).text();
+  const meta = (attr, name) => (html.match(new RegExp(`<meta ${attr}="${name}" content="([^"]*)"`)) || [])[1];
+  assert.strictEqual(meta('property', 'og:title'), 'Savant — From zero to Savant');
+  assert.strictEqual(meta('property', 'og:description'), 'Savant learns how you learn, then teaches you any subject your best way. Apply for the free beta.');
+  assert.strictEqual(meta('property', 'og:url'), 'https://savantedu.com/');
+  assert.strictEqual(meta('property', 'og:image'), 'https://savantedu.com/og.png');
+  assert.strictEqual(meta('property', 'og:image:width'), '1200');
+  assert.strictEqual(meta('property', 'og:image:height'), '630');
+  assert.strictEqual(meta('name', 'twitter:card'), 'summary_large_image');
+  assert.strictEqual(meta('name', 'twitter:image'), 'https://savantedu.com/og.png');
+  assert.ok(html.includes('<link rel="canonical" href="https://savantedu.com/">'));
+  const r = await fetch(`${base}/og.png`);
+  assert.strictEqual(r.status, 200);
+  assert.strictEqual(r.headers.get('content-type'), 'image/png');
+  const png = Buffer.from(await r.arrayBuffer());
+  assert.strictEqual(png.subarray(1, 4).toString(), 'PNG');
+  assert.deepStrictEqual([png.readUInt32BE(16), png.readUInt32BE(20)], [1200, 630], 'the picture is 1200 x 630');
+});
+
+test('beta: investors see the founder line, with the LinkedIn link', async () => {
+  const html = await (await fetch(`${base}/`)).text();
+  assert.ok(html.includes('Landon Davidshofer, 16, Omaha.'));
+  assert.ok(html.includes('href="https://www.linkedin.com/in/landon-davidshofer-aba26a377/" rel="noopener"'));
+});
+
+test('beta: step 1 keeps the email at once as "started"; step 2 completes the same record', async () => {
+  const email = 'two@example.com';
+  const s1 = await post('/api/beta', { step: 1, email: ' Two@Example.com ', age_ok: 'yes', consent: 'yes', source: 'hero', ref: 'creator-7', ...human });
+  assert.strictEqual(s1.status, 200);
+  assert.strictEqual(s1.json.ok, true);
+  assert.ok(typeof s1.json.token === 'string' && s1.json.token.length > 20);
+  let rows = readAll('beta').filter((x) => x.email === email);
+  assert.strictEqual(rows.length, 1);
+  assert.strictEqual(rows[0].status, 'started');
+  assert.strictEqual(rows[0].source, 'hero');
+  assert.strictEqual(rows[0].ref, 'creator-7');
+  assert.strictEqual(rows[0].age_confirmed, true);
+  assert.strictEqual(rows[0].age_text, "I am 13 or older, or I'm a parent signing up for my child.");
+  assert.strictEqual(rows[0].consent, true);
+  assert.strictEqual(rows[0].consent_text, 'Savant may email me about the beta.');
+  assert.ok(!('name' in rows[0]) && !('role' in rows[0]) && !('token' in rows[0]) && !JSON.stringify(rows[0]).includes(s1.json.token));
+  const id = rows[0].id;
+
+  const s2 = await post('/api/beta', { step: 2, token: s1.json.token, email, name: 'Tay', role: 'learner', interests: ['chess', 'math', 'chess', 'astrology'], interests_other: ' rocketry ', why: '', ...human });
+  assert.strictEqual(s2.status, 200);
+  rows = readAll('beta').filter((x) => x.email === email);
+  assert.strictEqual(rows.length, 1, 'the same record, not a second one');
+  assert.strictEqual(rows[0].id, id);
+  assert.strictEqual(rows[0].status, 'applied');
+  assert.strictEqual(rows[0].name, 'Tay');
+  assert.strictEqual(rows[0].role, 'learner');
+  assert.deepStrictEqual(rows[0].interests, ['chess', 'math'], 'only the known subjects, once each');
+  assert.strictEqual(rows[0].interests_other, 'rocketry');
+  assert.strictEqual(rows[0].why, '');
+  assert.strictEqual(rows[0].source, 'hero', 'source and ref from step 1 are kept');
+  assert.strictEqual(rows[0].consent, true);
+  assert.ok(rows[0].completed_at);
+
+  const again = await post('/api/beta', { step: 2, token: s1.json.token, email, name: 'Someone else', role: 'parent', ...human });
+  assert.strictEqual(again.status, 200);
+  assert.strictEqual(readAll('beta').find((x) => x.email === email).name, 'Tay', 'a finished application cannot be changed with the old link');
+});
+
+test('beta: step 1 needs the email and both ticks; step 2 needs a name and a role', async () => {
+  const none = await post('/api/beta', { step: 1, email: 'bad', ...human });
+  assert.strictEqual(none.status, 400);
+  assert.deepStrictEqual(Object.keys(none.json.errors).sort(), ['age_ok', 'consent', 'email']);
+  const noAge = await post('/api/beta', { step: 1, email: 'tick@example.com', consent: 'yes', ...human });
+  assert.deepStrictEqual(Object.keys(noAge.json.errors), ['age_ok']);
+  assert.ok(!readAll('beta').some((x) => x.email === 'tick@example.com'), 'nothing is stored until both ticks are given');
+  const s1 = await post('/api/beta', { step: 1, email: 'tick@example.com', age_ok: 'yes', consent: 'yes', ...human });
+  const bad = await post('/api/beta', { step: 2, token: s1.json.token, email: 'tick@example.com', name: '', role: 'wizard', ...human });
+  assert.strictEqual(bad.status, 400);
+  assert.deepStrictEqual(Object.keys(bad.json.errors).sort(), ['name', 'role']);
+  assert.strictEqual(readAll('beta').find((x) => x.email === 'tick@example.com').status, 'started', 'still started');
+  const longWhy = await post('/api/beta', { step: 2, token: s1.json.token, email: 'tick@example.com', name: 'T', role: 'teacher', why: 'x'.repeat(1001), ...human });
+  assert.ok(longWhy.json.errors.why);
+});
+
+test('beta: step 2 without the step-1 link changes nothing, and says the same thing', async () => {
+  const s1 = await post('/api/beta', { step: 1, email: 'tok@example.com', age_ok: 'yes', consent: 'yes', ...human });
+  const other = await post('/api/beta', { step: 1, email: 'tok2@example.com', age_ok: 'yes', consent: 'yes', ...human });
+  const attempts = [undefined, 'junk', `${Math.floor(Date.now() / 1000) + 99999}.AAAA`, other.json.token, `1000000000.${s1.json.token.split('.')[1]}`, { a: 1 }];
+  for (const token of attempts) {
+    const r = await post('/api/beta', { step: 2, token, email: 'tok@example.com', name: 'Mallory', role: 'parent', ...human });
+    assert.deepStrictEqual(r.json, { ok: true }, 'the same answer as a success');
+  }
+  const row = readAll('beta').find((x) => x.email === 'tok@example.com');
+  assert.strictEqual(row.status, 'started');
+  assert.ok(!('name' in row), 'no name was written');
+  const nobody = await post('/api/beta', { step: 2, token: s1.json.token, email: 'nobody@example.com', name: 'N', role: 'parent', ...human });
+  assert.deepStrictEqual(nobody.json, { ok: true });
+  assert.ok(!readAll('beta').some((x) => x.email === 'nobody@example.com'));
+});
+
+test('beta: a repeat of step 1 never makes a second record or shows who applied', async () => {
+  const a = await post('/api/beta', { step: 1, email: 'rep@example.com', age_ok: 'yes', consent: 'yes', ...human });
+  const b = await post('/api/beta', { step: 1, email: 'rep@example.com', age_ok: 'yes', consent: 'yes', ...human });
+  assert.ok(a.json.token && b.json.token, 'a started application can be picked up again');
+  assert.strictEqual(readAll('beta').filter((x) => x.email === 'rep@example.com').length, 1);
+  await post('/api/beta', { step: 2, token: b.json.token, email: 'rep@example.com', name: 'Rep', role: 'learner', ...human });
+  const c = await post('/api/beta', { step: 1, email: 'rep@example.com', age_ok: 'yes', consent: 'yes', ...human });
+  assert.strictEqual(c.status, 200);
+  assert.ok(typeof c.json.token === 'string', 'same shape for a finished application');
+  const d = await post('/api/beta', { step: 2, token: c.json.token, email: 'rep@example.com', name: 'Mallory', role: 'parent', ...human });
+  assert.deepStrictEqual(d.json, { ok: true });
+  const rows = readAll('beta').filter((x) => x.email === 'rep@example.com');
+  assert.strictEqual(rows.length, 1);
+  assert.strictEqual(rows[0].name, 'Rep');
+});
+
+test('beta: the whole form (no JavaScript) completes a started application', async () => {
+  await post('/api/beta', { step: 1, email: 'whole@example.com', age_ok: 'yes', consent: 'yes', source: 'hero', ...human });
+  const form = { type: 'application/x-www-form-urlencoded', accept: 'text/html' };
+  const r = await post('/api/beta', 'email=whole%40example.com&name=Wen&role=teacher&interests=piano&interests=chess&interests_other=&why=&age_ok=yes&consent=yes&source=bottom&ref=', form);
+  assert.strictEqual(r.status, 303);
+  const rows = readAll('beta').filter((x) => x.email === 'whole@example.com');
+  assert.strictEqual(rows.length, 1);
+  assert.strictEqual(rows[0].status, 'applied');
+  assert.deepStrictEqual(rows[0].interests, ['piano', 'chess']);
+  assert.strictEqual(rows[0].source, 'bottom');
+  assert.ok(!('ref' in rows[0]), 'an empty ref is not stored');
+});
+
+test('beta: source is one of the known forms; ref is a short plain tag', async () => {
+  const mk = (n, extra) => post('/api/beta', { step: 1, email: `src${n}@example.com`, age_ok: 'yes', consent: 'yes', ...extra, ...human });
+  await mk(1, { source: 'sticky', ref: 'Tay_Lor-1.x' });
+  await mk(2, { source: '<script>', ref: '<b>x</b>; DROP' });
+  await mk(3, { source: 'BOTTOM', ref: 'y'.repeat(200) });
+  await mk(4, { source: { a: 1 }, ref: ['a'] });
+  const row = (n) => readAll('beta').find((x) => x.email === `src${n}@example.com`);
+  assert.strictEqual(row(1).source, 'sticky');
+  assert.strictEqual(row(1).ref, 'Tay_Lor-1.x');
+  assert.ok(!('source' in row(2)), 'an unknown source is dropped');
+  assert.ok(/^[\w .\-~+]*$/.test(row(2).ref), 'only plain characters');
+  assert.strictEqual(row(3).source, 'bottom');
+  assert.strictEqual(row(3).ref.length, 64);
+  assert.ok(!('source' in row(4)) && !('ref' in row(4)));
+});
+
+test('beta: step 2 has its own rate limit counter', async () => {
+  const ip = '192.0.2.99';
+  const tokens = [];
+  for (let i = 0; i < 5; i += 1) {
+    const r = await post('/api/beta', { step: 1, email: `lim${i}@example.com`, age_ok: 'yes', consent: 'yes', ...human }, { ip });
+    assert.strictEqual(r.status, 200, `step 1, try ${i + 1}`);
+    tokens.push(r.json.token);
+  }
+  const sixth = await post('/api/beta', { step: 1, email: 'lim6@example.com', age_ok: 'yes', consent: 'yes', ...human }, { ip });
+  assert.strictEqual(sixth.status, 429);
+  const finish = await post('/api/beta', { step: 2, token: tokens[0], email: 'lim0@example.com', name: 'L', role: 'learner', ...human }, { ip });
+  assert.strictEqual(finish.status, 200, 'finishing an application is not blocked by the sign-ups before it');
+  assert.strictEqual(readAll('beta').find((x) => x.email === 'lim0@example.com').status, 'applied');
+});
+
+test('beta: a bot (honeypot, or too fast) gets thanks and nothing is stored at either step', async () => {
+  const before = readAll('beta').length;
+  const a = await post('/api/beta', { step: 1, email: 'bot1@spam.example', age_ok: 'yes', consent: 'yes', website: 'x', ...human });
+  const b = await post('/api/beta', { step: 1, email: 'bot2@spam.example', age_ok: 'yes', consent: 'yes', elapsed: 100 });
+  assert.strictEqual(a.status, 200);
+  assert.strictEqual(b.status, 200);
+  assert.strictEqual(readAll('beta').length, before);
 });
 
 test('contact email: contact@savantedu.com for contact, investors and privacy, everywhere', async () => {
@@ -253,7 +443,8 @@ test('no-JavaScript form posts: redirect to thanks, or an error page', async () 
   const bad = await post('/api/beta', { email: 'nojs@example.com' }, form);
   assert.strictEqual(bad.status, 400);
   assert.ok(bad.text.includes('Choose learner, parent or teacher.'));
-  assert.ok(bad.text.includes('Tell us why we should accept you.'));
+  assert.ok(bad.text.includes('Enter a name or nickname.'));
+  assert.ok(!bad.text.includes('Tell us why'), 'the why is optional');
   assert.ok(!bad.text.includes('<script>alert'));
 });
 
@@ -1869,7 +2060,7 @@ test('visits: CSP unchanged, nothing loaded from other hosts, private files neve
     const res = await fetch(base + p);
     assert.strictEqual(res.headers.get('content-security-policy'), CSP, p);
     const html = await res.text();
-    const loads = [...html.matchAll(/<(?:script|img|iframe|source|video|audio|embed)\b[^>]*\ssrc="([^"]*)"/gi), ...html.matchAll(/<link\b[^>]*\shref="([^"]*)"/gi)].map((m) => m[1]);
+    const loads = [...html.matchAll(/<(?:script|img|iframe|source|video|audio|embed)\b[^>]*\ssrc="([^"]*)"/gi), ...html.matchAll(/<link\b(?![^>]*\srel="canonical")[^>]*\shref="([^"]*)"/gi)].map((m) => m[1]);
     assert.ok(loads.length >= 3, p);
     for (const u of loads) assert.ok(!/^(https?:)?\/\//i.test(u), `${p} loads ${u}`);
     assert.ok(html.includes('src="assets/track.js') || html.includes('src="/assets/track.js'), `${p} has the stats script`);

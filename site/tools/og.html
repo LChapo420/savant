@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Savant link preview (1200 x 630)</title>
+<!-- Source of site/og.png, the picture shown when savantedu.com is shared. Render it with
+     node tools/render-og.js (needs Playwright). Uses the site's own fonts, colours and the real
+     grade counts from assets/grade-levels.js. Not served by the site. -->
+<style>
+@font-face { font-family: "Atkinson Hyperlegible Next"; font-weight: 400 700; src: url(../fonts/atkinson-hyperlegible-next.woff2) format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible Mono"; font-weight: 400 700; src: url(../fonts/atkinson-hyperlegible-mono.woff2) format("woff2"); }
+:root { --page: #ffffff; --well: #f4f5f7; --line: #e3e5e9; --line-strong: #c8ccd3; --ink: #15171b; --ink-2: #4b5059; --ink-3: #666b75; }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: var(--page); color: var(--ink); font-family: "Atkinson Hyperlegible Next", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+.card { position: relative; width: 1200px; height: 630px; padding: 48px 64px; display: grid; grid-template-columns: 600px 1fr; gap: 56px; border-top: 8px solid var(--ink); }
+.brand { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 38px; letter-spacing: -0.02em; }
+.brand svg { width: 30px; height: 33px; fill: currentColor; }
+h1 { margin: 34px 0 0; font-size: 68px; line-height: 1; letter-spacing: -0.025em; font-weight: 700; }
+h1 b { display: block; font-size: 132px; line-height: 1; letter-spacing: -0.035em; margin-top: 2px; }
+.sub { margin: 22px 0 0; max-width: 560px; font-size: 29px; line-height: 1.32; color: var(--ink-2); }
+.bottom { position: absolute; left: 64px; bottom: 44px; display: flex; align-items: center; gap: 24px; }
+.cta { display: inline-flex; align-items: center; height: 64px; padding: 0 32px; border-radius: 8px; background: var(--ink); color: #fff; font-size: 30px; font-weight: 700; }
+.url { font-size: 26px; font-weight: 600; color: var(--ink-3); }
+.panel { align-self: center; padding: 22px 26px 12px; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--page); }
+.panel h2 { margin: 0 0 10px; font-size: 21px; font-weight: 700; color: var(--ink-2); }
+.row { display: grid; grid-template-columns: 44px 1fr; align-items: center; gap: 16px; padding: 7px 0; border-top: 1px solid var(--line); }
+.row:first-of-type { border-top: 0; }
+.sym { display: grid; place-items: center; width: 38px; height: 38px; border: 2px solid var(--c); border-radius: 5px; color: var(--c); font-weight: 700; font-size: 18px; }
+.strip { display: grid; align-items: end; column-gap: 3px; height: 30px; }
+.strip i { display: block; background: var(--c); opacity: 0.88; border-radius: 1px 1px 0 0; }
+.cap { margin: 14px 0 0; font-size: 20px; color: var(--ink-3); }
+</style>
+</head>
+<body>
+<div class="card">
+  <div>
+    <div class="brand">
+      <svg viewBox="0 0 18 20" aria-hidden="true"><rect x="0" y="18.5" width="18" height="1.5"/><rect x="1" y="12" width="2.4" height="7"/><rect x="7.8" y="7" width="2.4" height="12"/><rect x="14.6" y="1" width="2.4" height="18"/></svg>
+      <span>Savant</span>
+    </div>
+    <h1>From zero to <b>Savant</b></h1>
+    <p class="sub">Savant learns how you learn, then teaches you any subject your best way.</p>
+  </div>
+  <div class="panel" id="panel"><h2>Nine subjects in testing now</h2></div>
+  <div class="bottom"><div class="cta">Apply for the free beta</div><div class="url">savantedu.com</div></div>
+</div>
+<script src="../assets/grade-levels.js"></script>
+<script>
+  // Same subjects, symbols and colours as the table on the page (light theme).
+  var SUBJECTS = [
+    ['math', 'Ma', 'oklch(0.50 0.15 262)'], ['english', 'En', 'oklch(0.50 0.15 335)'], ['reading', 'Rd', 'oklch(0.50 0.15 200)'],
+    ['spanish', 'Es', 'oklch(0.50 0.12 75)'], ['iq', 'Iq', 'oklch(0.50 0.15 295)'], ['act', 'Ac', 'oklch(0.45 0.08 235)'],
+    ['chess', 'Ch', 'oklch(0.38 0.02 60)'], ['piano', 'Pi', 'oklch(0.35 0.06 280)'], ['basketball', 'Bb', 'oklch(0.52 0.14 50)']
+  ];
+  var L = window.SAVANT_GRADE_LEVELS || {};
+  var maxN = Math.max.apply(null, SUBJECTS.map(function (s) { return (L[s[0]] || []).length; }));
+  var panel = document.getElementById('panel');
+  SUBJECTS.forEach(function (s) {
+    var counts = L[s[0]] || [];
+    var top = Math.max.apply(null, counts);
+    var row = document.createElement('div'); row.className = 'row'; row.style.setProperty('--c', s[2]);
+    var sym = document.createElement('span'); sym.className = 'sym'; sym.textContent = s[1];
+    var strip = document.createElement('div'); strip.className = 'strip';
+    strip.style.gridTemplateColumns = 'repeat(' + maxN + ', minmax(0, 1fr))';
+    counts.forEach(function (c) { var b = document.createElement('i'); b.style.height = Math.max(3, Math.round(c / top * 28)) + 'px'; strip.appendChild(b); });
+    row.appendChild(sym); row.appendChild(strip); panel.appendChild(row);
+  });
+</script>
+</body>
+</html>

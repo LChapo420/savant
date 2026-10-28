@@ -197,10 +197,78 @@ a:not([class]):focus-visible { border-radius: 2px; }
 /* "From zero to" on the first line, "Savant" larger on its own line. */
 .hero h1 .hero-brand { display: block; font-size: 1.6em; line-height: 1; letter-spacing: -0.035em; margin-top: 0.04em; }
 .lede { font-size: 1.1875rem; line-height: 1.55; color: var(--ink-2); max-width: 44ch; }
+.hero .lede { font-size: 1.3125rem; line-height: 1.45; max-width: 30ch; margin-bottom: 28px; }
+.section-head p + p { margin-top: 12px; }
 .hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: 32px; }
 .hero-note { margin-top: 16px; font-size: var(--t-ui-s); color: var(--ink-3); }
 @media (max-width: 900px) { .hero { grid-template-columns: 1fr; gap: 48px; padding-top: 48px; padding-bottom: 56px; } }
-@media (max-width: 560px) { .hero h1 { font-size: 2.5rem; } .hero-cta .btn-primary { width: 100%; } }
+@media (max-width: 560px) { .hero h1 { font-size: 2.5rem; margin-bottom: 16px; } .hero-cta .btn-primary { width: 100%; } .hero .lede { font-size: 1.1875rem; margin-bottom: 20px; } }
+.proof { margin: 20px 0 0; font-size: var(--t-ui-s); font-weight: 600; color: var(--ink-2); }
+.hero-note a { font-weight: 600; }
+
+/* The beta application: step 1 is the email and two ticks; step 2 appears in place. Without
+   JavaScript (no .js on <html>) the lower form shows both steps and posts once, and the hero
+   shows a plain button to that form instead. */
+.apply-fallback { margin: 0; }
+html.js .apply-fallback { display: none; }
+html:not(.js) .apply-hero { display: none; }
+html:not(.js) .apply-go { display: none; }
+html.js .apply[data-state="1"] .apply-step[data-step="2"] { display: none; }
+html.js .apply[data-state="2"] .apply-step[data-step="1"] { display: none; }
+.apply-saved { margin: 0 0 18px; padding: 10px 14px; border-left: 3px solid var(--correct); border-radius: 0 var(--r-sm) var(--r-sm) 0; background: var(--well); font-size: var(--t-ui-s); color: var(--ink-2); }
+.apply-saved strong { color: var(--ink); }
+.apply-saved[hidden] { display: none; }
+.apply-line { display: flex; gap: 10px; }
+.apply-line input { flex: 1 1 auto; min-width: 0; }
+.apply-line .btn { flex: none; }
+.apply-hero .apply-line input { min-height: 52px; font-size: 1.0625rem; }
+.apply-hero .check { align-items: center; min-height: 44px; margin: 0; }
+.apply-hero .check label { font-size: 0.8125rem; line-height: 1.4; color: var(--ink-2); padding: 6px 0; }
+.apply-hero .check .hint { display: inline; margin: 0; font-size: 0.8125rem; }
+.apply-hero .check + .field-error { margin: 0 0 6px 34px; }
+.apply-hero .apply-row { margin-bottom: 6px; }
+.apply-hero .apply-step[data-step="2"] { padding: 18px; border: 1px solid var(--line-strong); border-radius: var(--r-lg); background: var(--page); }
+.apply-hero .form-status { margin-top: 10px; }
+.apply-hero .form-note:empty { display: none; }
+@media (max-width: 560px) {
+  .apply-line { flex-direction: column; }
+  .apply-line .btn { width: 100%; }
+  .apply-hero .apply-step[data-step="2"] { padding: 16px 14px; }
+}
+
+/* subject chips (step 2): real checkboxes, drawn as tappable pills */
+fieldset.field > legend .hint { display: block; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.chip { position: relative; display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 1px solid var(--control); border-radius: 999px; background: var(--page); color: var(--ink); font-size: var(--t-ui-s); font-weight: 600; cursor: pointer; transition: border-color 0.15s var(--ease), background-color 0.15s var(--ease); }
+.chip:hover { border-color: var(--ink-2); }
+.chip input[type="checkbox"] { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; border-radius: 999px; }
+.chip span { display: inline-flex; align-items: center; gap: 8px; pointer-events: none; }
+.chip span::before { content: ""; display: none; width: 6px; height: 11px; margin: -3px 2px 0 0; border: solid var(--subj); border-width: 0 2.5px 2.5px 0; transform: rotate(45deg); }
+.chip:has(input:checked) { border-color: var(--subj); background: var(--subj-wash); box-shadow: inset 0 0 0 1px var(--subj); }
+.chip:has(input:checked) span::before { display: inline-block; }
+.chip:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+label.other { display: block; font-size: var(--t-ui-s); font-weight: 600; margin: 4px 0 6px; }
+
+/* after applying */
+.form-done .share { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.form-done .share p { margin: 0 0 10px; color: var(--ink); font-weight: 600; }
+.share-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.share-state { font-size: var(--t-ui-s); font-weight: 600; color: var(--correct); }
+.share-state:empty { display: none; }
+
+/* sticky apply bar (phones only): shows once the hero form has scrolled away, and not over the forms */
+.sticky-apply { position: fixed; left: 0; right: 0; bottom: 0; z-index: 35; display: none; padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom)); background: var(--page); border-top: 1px solid var(--line-strong); box-shadow: 0 -6px 20px rgb(0 0 0 / 0.08); visibility: hidden; transform: translateY(100%); }
+.sticky-apply .btn { width: 100%; }
+@media (max-width: 760px) {
+  .sticky-apply { display: block; }
+  .site-footer { padding-bottom: 96px; }
+}
+.sticky-apply.is-visible { visibility: visible; transform: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .sticky-apply { transition: transform 0.22s var(--ease), visibility 0s linear 0.22s; }
+  .sticky-apply.is-visible { transition: transform 0.22s var(--ease), visibility 0s; }
+}
+body:has(.visit-notice) .sticky-apply { display: none; }
 
 /* the marked example in the hero */
 /* Evidence summary page (evidence.html, built by tools/build-evidence-page.js). */

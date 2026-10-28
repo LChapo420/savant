@@ -603,6 +603,9 @@ ${main}
     email: ['Email', (r) => esc(r.email), 'admin-email'],
     name: ['Name', (r) => esc(r.name), 'admin-name'],
     role: ['Role', (r) => esc(r.role), 'admin-short'],
+    status: ['Status', (r) => esc(r.status === 'started' ? 'started (email only)' : r.status), 'admin-short'],
+    learn: ['Wants to learn', (r) => esc([...(Array.isArray(r.interests) ? r.interests : []), r.interests_other].filter((x) => typeof x === 'string' && x).join(', ')), 'admin-name'],
+    from: ['From', (r) => esc([r.source, r.ref && `ref ${r.ref}`].filter((x) => typeof x === 'string' && x).join(', ')), 'admin-short'],
     why: ['Why', (r) => esc(r.why), 'admin-long'],
     firm: ['Firm', (r) => esc(r.firm), 'admin-name'],
     message: ['Message', (r) => esc(r.message), 'admin-long'],
@@ -613,7 +616,7 @@ ${main}
   const TAB_COLS = {
     all: ['when', 'form', 'email', 'name', 'role', 'firm', 'text', 'consent'],
     updates: ['when', 'email', 'consent'],
-    beta: ['when', 'email', 'name', 'role', 'why', 'consent'],
+    beta: ['when', 'email', 'status', 'name', 'role', 'learn', 'why', 'from', 'consent'],
     investors: ['when', 'email', 'name', 'firm', 'message'],
   };
   const link = (tab, q) => `${ADMIN_PATH}?form=${encodeURIComponent(tab)}${q ? `&q=${encodeURIComponent(q)}` : ''}`;

@@ -10,7 +10,8 @@ kept on our own server (see "Visit statistics"), with consent first in the UK, E
 | File | What it is |
 | --- | --- |
 | `config.js` | **The one block you fill in**: contact emails, form endpoint, social links |
-| `index.html` | The page: hero, how it works, subjects, beta, updates, investors, footer |
+| `index.html` | The page: hero (with the first step of the beta application), how it works, subjects, beta, updates, investors, footer |
+| `og.png`, `tools/og.html`, `tools/render-og.js` | The 1200 x 630 link preview (Open Graph / Twitter card image). `NODE_PATH=<folder with node_modules/playwright> node tools/render-og.js` re-renders it from `og.html`, which uses the site's fonts and the real grade counts |
 | `privacy.html` | What the forms collect, how long it is kept, and a "remove my details" form |
 | `thanks.html`, `404.html` | Shown after a form sent without JavaScript; not-found page |
 | `assets/site.css`, `assets/site.js`, `assets/theme.js` | Styles (the app's "Measured and marked" design), form handling, light/dark |
@@ -45,7 +46,7 @@ kept on our own server (see "Visit statistics"), with consent first in the UK, E
    time). Have a lawyer read it with the app's own privacy policy.
 3. **The domain**: once bought, set `SITE_ORIGINS=https://your-domain,https://www.your-domain` for
    `server.js`, and if you like add `<link rel="canonical" href="https://your-domain/">` and an
-   `og:url` meta to `index.html`. An OG preview image is not made yet.
+   `og:url`, `og:image` and Twitter card metas are in `index.html` already (pointing at https://savantedu.com/); change them there if the domain changes.
 4. **Facts on the page** come from `docs/PRODUCT-DECISIONS.md` and the live catalogue on 2026-10-24
    (nine subjects, 219 grades). Update the subjects table if subjects are added.
 
@@ -54,7 +55,7 @@ kept on our own server (see "Visit statistics"), with consent first in the UK, E
 ```
 cd site
 node server.js            # http://127.0.0.1:8787  (PORT=... to change)
-node test.js              # 60 tests, uses a temporary data folder and a tiny fixture geo file
+node test.js              # 71 tests, uses a temporary data folder and a tiny fixture geo file
 ```
 
 `express` is the only dependency. Inside this repo it is found in `../node_modules`; on its own,
@@ -117,11 +118,27 @@ every submission; the privacy page would have to name it. It is not wired in.
   to email.
 - Without JavaScript: the forms post normally to `server.js`, which redirects to `thanks.html` or
   shows a page listing what to fix.
-- Beta: email, name or nickname, role (learner, parent, teacher), "Why should we accept you?"
-  (required, 30 to 1,000 characters, checked in the browser and again in `server.js`, stored as
-  `why` with the question as `why_question`), "I am 13 or older, or I'm a
-  parent signing up for my child" (required), and consent to be emailed (unticked, required).
-  No child email is ever asked for.
+- Beta: two steps, in the hero and again in the form further down the page (the same flow).
+  **Step 1** is the email plus the two required ticks ("I am 13 or older, or I'm a parent signing up
+  for my child", and "Savant may email me about the beta"). `server.js` stores it at once as a
+  `status: "started"` record (so no lead is lost) and answers with a step-2 link (`token`, an HMAC
+  of the record and a 24-hour expiry, keyed by `data/form-key`). **Step 2** appears in place: name or
+  nickname, role (learner, parent, teacher), the subject chips (the nine subjects, stored as
+  `interests`), "Something else" (`interests_other`, 120 characters at most) and an optional
+  "Why should we pick you?" (`why`, 1,000 characters at most, question stored as `why_question`).
+  It completes the same record (`status: "applied"`, `completed_at`). Without the link, or for a
+  record that is already complete, step 2 changes nothing and answers the same, so it never shows
+  who applied. In the admin's Beta tab, "started (email only)" marks people who did not finish.
+  A post with no `step` (the no-JavaScript form, which shows both steps and posts once) does
+  everything at once, and also completes a "started" record for that email.
+  Each application keeps `source` (`hero`, `sticky` for the phone bar's jump to the hero form,
+  or `bottom` for the form lower down) and, if the link had `?ref=` or `?utm_source=`, that tag as
+  `ref` (plain characters, 64 at most). Step 2 has its own rate-limit counter. No child email is
+  ever asked for.
+- On phones a slim bar ("Apply for the beta — free", or "Finish your application" after step 1)
+  appears once the hero form has scrolled out of view, and hides again over either beta form and
+  after applying. After applying, the form is replaced by a thank-you with a copy-link button
+  (and Share on devices that have it).
 - Updates: email and consent (unticked, required). Investors: name, email, firm (optional), message.
 - The exact words of each ticked box are stored with the answer.
 
@@ -129,7 +146,7 @@ every submission; the privacy page would have to name it. It is not wired in.
 
 - Honeypot field (`website`), hidden off-screen; filled in means the bot gets "thanks" and nothing is stored.
 - Minimum fill time: a JavaScript post sent under 1.5 s after the page loaded is treated the same way.
-- Rate limits in memory: 5 posts per IP per form per 10 minutes, 300 per form per hour overall
+- Rate limits in memory: 5 posts per IP per form per 10 minutes (beta step 2 counts separately), 300 per form per hour overall
   (`RATE_PER_IP`, `RATE_PER_FORM`). The IP is never stored with a submission (visit statistics are
   separate; see below).
 - Same-origin only: a POST must carry a matching `Origin` (or `Sec-Fetch-Site: same-origin`, or a

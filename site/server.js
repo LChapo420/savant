@@ -63,10 +63,18 @@ const CONSENT_TEXT = {
   age_ok: "I am 13 or older, or I'm a parent signing up for my child.",
 };
 const ROLES = ['learner', 'parent', 'teacher'];
-// The beta's "Why should we accept you?" answer, in characters after trimming.
-const WHY_MIN = 30;
+// The beta's "Why should we pick you?" answer: optional, at most WHY_MAX characters after trimming.
+// (It used to be required with a 30-character minimum; WHY_MIN stays, as 0, for code that imports it.)
+const WHY_MIN = 0;
 const WHY_MAX = 1000;
-const WHY_QUESTION = 'Why should we accept you?';
+const WHY_QUESTION = 'Why should we pick you?';
+// The subject chips on the beta form (the nine subjects), plus a free-text "Something else".
+const SUBJECTS = ['math', 'english', 'reading', 'spanish', 'iq', 'act', 'chess', 'piano', 'basketball'];
+const INTEREST_OTHER_MAX = 120;
+// Which form on the page an application came from: the hero, the sticky bar's jump to the hero, or the form lower down.
+const SOURCES = ['hero', 'sticky', 'bottom'];
+// How long the step-2 link from step 1 stays valid.
+const STEP_TOKEN_HOURS = 24;
 const EMAIL_RE = /^[^\s@<>()",;:]+@[^\s@<>()",;:]+\.[^\s@<>()",;:]{2,}$/;
 
 /* ── storage ─────────────────────────────────────────────────────────────── */
@@ -160,6 +168,31 @@ function removeRecords(form, match, limit = Infinity) {
 }
 
 /**
+ * Changes the first record of one form that matches, in place (through the serial queue, like
+ * removal). `change(record)` returns the new record, or null to leave it. Returns true if one changed.
+ */
+function updateRecord(form, match, change) {
+  return serial(() => {
+    const file = fileFor(form);
+    let text;
+    try { text = fs.readFileSync(file, 'utf8'); } catch (e) { return false; }
+    let done = false;
+    const lines = text.split('\n').filter(Boolean).map((line) => {
+      if (done) return line;
+      let r;
+      try { r = JSON.parse(line); } catch (e) { return line; }
+      if (r && typeof r === 'object' && match(r)) {
+        const next = change(r);
+        if (next) { done = true; return JSON.stringify(next); }
+      }
+      return line;
+    });
+    if (done) rewrite(file, lines);
+    return done;
+  });
+}
+
+/**
  * Removes every record for an email from every form, and with `analytics`, the
  * visit statistics linked to those submissions (every visit from the IPs they
  * were linked to). Returns { records, visits }: how many of each went.
@@ -201,6 +234,85 @@ function checkName(raw, errors, label) {
   return name;
 }
 
+// A short campaign or creator tag carried through from ?ref= or ?utm_source=.
+// Letters, digits, spaces and . _ - ~ + only, 64 characters at most.
+function cleanRef(raw) {
+  if (typeof raw !== 'string') return '';
+  return clean(raw).replace(/[^\w .\-~+]/g, '').trim().slice(0, 64);
+}
+
+// The step-2 link: step 1's answer carries it, and step 2 must send it back. It is an HMAC of the
+// record and an expiry, with a key kept in the data folder. It is not a login: it only lets step 2
+// fill in a record that is still marked "started", and only from whoever just sent step 1.
+let formKey = null;
+function stepKey() {
+  if (formKey) return formKey;
+  const file = path.join(DATA_DIR, 'form-key');
+  try { formKey = Buffer.from(fs.readFileSync(file, 'utf8').trim(), 'hex'); } catch (e) { formKey = null; }
+  if (!formKey || formKey.length !== 32) {
+    formKey = crypto.randomBytes(32);
+    fs.mkdirSync(DATA_DIR, { recursive: true, mode: 0o700 });
+    fs.writeFileSync(file, formKey.toString('hex'), { mode: 0o600 });
+  }
+  return formKey;
+}
+function stepMac(id, email, exp) {
+  return crypto.createHmac('sha256', stepKey()).update(`${id}|${email}|${exp}`).digest('base64url').slice(0, 32);
+}
+function stepToken(record) {
+  const exp = Math.floor(Date.now() / 1000) + STEP_TOKEN_HOURS * 3600;
+  return `${exp}.${stepMac(record.id, record.email, exp)}`;
+}
+function stepTokenOk(token, record) {
+  if (typeof token !== 'string' || !record || record.status !== 'started') return false;
+  const [exp, mac] = token.split('.');
+  if (!/^\d{9,12}$/.test(exp || '') || Number(exp) < Date.now() / 1000 || typeof mac !== 'string') return false;
+  const want = Buffer.from(stepMac(record.id, record.email, exp));
+  const got = Buffer.from(mac);
+  return want.length === got.length && crypto.timingSafeEqual(want, got);
+}
+
+/** The subject chips: an array (JSON), or one or repeated values (form post). Only the nine known subjects are kept. */
+function cleanInterests(raw) {
+  const list = Array.isArray(raw) ? raw : (typeof raw === 'string' ? raw.split(',') : []);
+  const out = [];
+  for (const v of list) {
+    const k = clean(v).toLowerCase();
+    if (SUBJECTS.includes(k) && !out.includes(k)) out.push(k);
+  }
+  return out;
+}
+
+/**
+ * The beta form has two steps. Step 1: the email and the two ticks only; the record is kept as
+ * "started" at once, so no lead is lost. Step 2: name, role, subjects and an optional "why",
+ * which completes that same record. No step at all (the no-JavaScript form): everything at once.
+ * Returns { errors } or the cleaned values.
+ */
+function validateBeta(body) {
+  const errors = {};
+  const step = Number(body.step) === 1 ? 1 : Number(body.step) === 2 ? 2 : 0;
+  const email = checkEmail(body.email, errors);
+  const out = {};
+  if (step !== 1) {
+    out.name = checkName(body.name, errors, 'Enter a name or nickname.');
+    out.role = clean(body.role);
+    if (!ROLES.includes(out.role)) errors.role = 'Choose learner, parent or teacher.';
+    out.interests = cleanInterests(body.interests);
+    out.interests_other = clean(body.interests_other);
+    if (out.interests_other.length > INTEREST_OTHER_MAX) errors.interests_other = `Keep this under ${INTEREST_OTHER_MAX} characters.`;
+    out.why = clean(body.why, { multiline: true });
+    if (out.why.length > WHY_MAX) errors.why = 'Keep this under 1,000 characters.';
+  }
+  if (step !== 2) {
+    if (!ticked(body.age_ok)) errors.age_ok = 'Please confirm this to apply. Under 13? Ask a parent to apply for you.';
+    if (!ticked(body.consent)) errors.consent = 'Tick this so we can email you about the beta.';
+  }
+  if (Object.keys(errors).length) return { errors };
+  const source = clean(body.source).toLowerCase();
+  return { step, email, ...out, source: SOURCES.includes(source) ? source : '', ref: cleanRef(body.ref) };
+}
+
 /** Returns { errors } or { record } for a form's body. */
 function validate(form, body) {
   const errors = {};
@@ -214,25 +326,24 @@ function validate(form, body) {
     };
   }
   if (form === 'beta') {
-    const email = checkEmail(body.email, errors);
-    const name = checkName(body.name, errors, 'Enter a name or nickname.');
-    const role = clean(body.role);
-    if (!ROLES.includes(role)) errors.role = 'Choose learner, parent or teacher.';
-    const why = clean(body.why, { multiline: true });
-    if (!why) errors.why = 'Tell us why we should accept you.';
-    else if (why.length < WHY_MIN) errors.why = `Tell us a little more: at least ${WHY_MIN} characters.`;
-    else if (why.length > WHY_MAX) errors.why = 'Keep this under 1,000 characters.';
-    if (!ticked(body.age_ok)) errors.age_ok = 'Please confirm this to apply. Under 13? Ask a parent to apply for you.';
-    if (!ticked(body.consent)) errors.consent = 'Tick this so we can email you about the beta.';
-    return Object.keys(errors).length ? { errors } : {
-      record: {
-        id, at, form, email, name, role,
-        why, why_question: WHY_QUESTION,
+    const b = validateBeta(body);
+    if (b.errors) return { errors: b.errors };
+    const record = { id, at, form, email: b.email };
+    if (b.source) record.source = b.source;
+    if (b.ref) record.ref = b.ref;
+    if (b.step !== 1) {
+      Object.assign(record, { name: b.name, role: b.role, interests: b.interests });
+      if (b.interests_other) record.interests_other = b.interests_other;
+      Object.assign(record, { why: b.why, why_question: WHY_QUESTION });
+    }
+    if (b.step !== 2) {
+      Object.assign(record, {
         age_confirmed: true, age_text: CONSENT_TEXT.age_ok,
         consent: true, consent_text: CONSENT_TEXT.beta,
-        status: 'applied',
-      },
-    };
+      });
+    }
+    record.status = b.step === 1 ? 'started' : 'applied';
+    return { step: b.step, record };
   }
   if (form === 'investors') {
     const name = checkName(body.name, errors, 'Enter your name.');
@@ -376,7 +487,7 @@ function createApp(opts = {}) {
   // 16 KB: room for the longest answers in non-Latin scripts (a form post
   // percent-encodes each such character as up to 9 bytes), still small.
   const json = express.json({ limit: '16kb', strict: true });
-  const form = express.urlencoded({ extended: false, limit: '16kb', parameterLimit: 20 });
+  const form = express.urlencoded({ extended: false, limit: '16kb', parameterLimit: 40 });
 
   const wantsHtml = (req) => req.is('application/x-www-form-urlencoded') && !String(req.get('accept') || '').includes('application/json');
   function reply(req, res, status, payload) {
@@ -394,8 +505,11 @@ function createApp(opts = {}) {
       return next();
     }, json, form, async (req, res) => {
       const body = req.body && typeof req.body === 'object' ? req.body : {};
-      const ipWait = limited(`${kind}|${req.ip}`, RATE_PER_IP, IP_WINDOW);
-      const formWait = ipWait ? 0 : limited(`${kind}|*`, RATE_PER_FORM, FORM_WINDOW);
+      // The beta has two steps; step 2 has its own counters, so finishing an application
+      // never uses up the tries of the next applicant on the same connection.
+      const bucket = kind === 'beta' && Number(body.step) === 2 ? 'beta2' : kind;
+      const ipWait = limited(`${bucket}|${req.ip}`, RATE_PER_IP, IP_WINDOW);
+      const formWait = ipWait ? 0 : limited(`${bucket}|*`, RATE_PER_FORM, FORM_WINDOW);
       const wait = ipWait || formWait;
       if (wait) {
         res.set('Retry-After', String(wait));
@@ -407,23 +521,45 @@ function createApp(opts = {}) {
       if (clean(body.website) || (body.elapsed !== undefined && (!Number.isFinite(elapsed) || elapsed < MIN_FILL_MS))) {
         return reply(req, res, 200, { ok: true });
       }
-      const { errors, record } = validate(kind, body);
+      const { errors, record, step } = validate(kind, body);
       if (errors) return reply(req, res, 400, { ok: false, errors });
       try {
         if (kind === 'forget') {
           await forget(record.email, analytics);
           return reply(req, res, 200, { ok: true });
         }
+        if (kind === 'beta' && step === 2) {
+          // Step 2 completes the "started" record from step 1. It needs the step-1 link; without a
+          // valid one (or if that record is already complete) nothing changes, and the answer is
+          // the same, so this never reveals who has applied.
+          const done = await updateRecord('beta', (r) => r.email === record.email && r.status === 'started', (r) => {
+            if (!stepTokenOk(body.token, r)) return null;
+            const next = { ...r };
+            for (const k of ['name', 'role', 'interests', 'interests_other', 'why', 'why_question']) if (k in record) next[k] = record[k];
+            next.status = 'applied';
+            next.completed_at = record.at;
+            return next;
+          });
+          return reply(req, res, 200, done ? { ok: true, done: true } : { ok: true });
+        }
         // Updates and beta: one entry per address. A repeat gets the same answer,
         // so the form never reveals who is already on a list.
-        if (kind !== 'investors' && readAll(kind).some((r) => r.email === record.email)) {
-          return reply(req, res, 200, { ok: true });
+        const existing = kind !== 'investors' ? readAll(kind).find((r) => r.email === record.email) : null;
+        if (existing) {
+          if (kind === 'beta' && existing.status === 'started') {
+            // Back after leaving step 1 (or a whole form sent without JavaScript): complete that record.
+            if (step === 1) return reply(req, res, 200, { ok: true, token: stepToken(existing) });
+            await updateRecord('beta', (r) => r.id === existing.id, (r) => ({ ...r, ...record, id: r.id, at: r.at, status: 'applied', completed_at: record.at }));
+            return reply(req, res, 200, { ok: true });
+          }
+          // Already complete (or on the list): the same answer as a new one, with a link that does nothing.
+          return reply(req, res, 200, kind === 'beta' && step === 1 ? { ok: true, token: stepToken({ ...record, status: 'started' }) } : { ok: true });
         }
         await append(kind, record);
         // Visit statistics: link the submission to this visitor's IP, if it was
         // recorded (identified) in the last 24 hours. The form record is unchanged.
         await analytics.linkSubmission(req.ip, kind, record.id).catch((e) => console.error('[visits] could not link a submission:', e.message));
-        return reply(req, res, 200, { ok: true });
+        return reply(req, res, 200, kind === 'beta' && step === 1 ? { ok: true, token: stepToken(record) } : { ok: true });
       } catch (e) {
         console.error(`[site] could not save ${kind}:`, e.message);
         return reply(req, res, 500, { ok: false, error: 'Something went wrong on our side. Please try again later.' });
@@ -481,7 +617,7 @@ function createApp(opts = {}) {
     '/privacy': 'privacy.html', '/privacy.html': 'privacy.html',
   '/evidence': 'evidence.html', '/evidence.html': 'evidence.html',
     '/thanks': 'thanks.html', '/thanks.html': 'thanks.html',
-    '/config.js': 'config.js', '/favicon.svg': 'favicon.svg',
+    '/config.js': 'config.js', '/favicon.svg': 'favicon.svg', '/og.png': 'og.png',
   };
   for (const [route, file] of Object.entries(PAGES)) {
     app.get(route, (req, res) => {
@@ -564,4 +700,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { createApp, openAnalytics, validate, forget, removeRecords, readAll, toCsv, lockDownData, WHY_MIN, WHY_MAX, DATA_DIR };
+module.exports = { createApp, openAnalytics, validate, forget, removeRecords, updateRecord, readAll, toCsv, lockDownData, WHY_MIN, WHY_MAX, DATA_DIR };

@@ -4,16 +4,29 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Savant | From zero to Savant</title>
-  <meta name="description" content="From zero to Savant. Savant tunes every part of learning to how you learn and what interests you: where you start, what comes next, how each lesson is explained and when each skill comes back. Nine subjects in testing now.">
+  <meta name="description" content="Savant learns how you learn, then teaches you any subject your best way. Apply for the free beta. Nine subjects in testing now.">
+  <link rel="canonical" href="https://savantedu.com/">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
-  <meta property="og:title" content="Savant">
-  <meta property="og:description" content="From zero to Savant: every part of learning tuned to how you learn and what interests you. Now in a small beta.">
+  <meta property="og:site_name" content="Savant">
+  <meta property="og:title" content="Savant — From zero to Savant">
+  <meta property="og:description" content="Savant learns how you learn, then teaches you any subject your best way. Apply for the free beta.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://savantedu.com/">
+  <meta property="og:image" content="https://savantedu.com/og.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Savant: From zero to Savant. Savant learns how you learn, then teaches you any subject your best way. Apply for the free beta.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Savant — From zero to Savant">
+  <meta name="twitter:description" content="Savant learns how you learn, then teaches you any subject your best way. Apply for the free beta.">
+  <meta name="twitter:image" content="https://savantedu.com/og.png">
+  <meta name="twitter:image:alt" content="Savant: From zero to Savant. Apply for the free beta.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/atkinson-hyperlegible-next.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/site.css?v=2026-10-25v">
+  <link rel="stylesheet" href="assets/site.css?v=2026-10-28a">
   <script src="assets/theme.js"></script>
 </head>
 <body>
@@ -46,18 +59,84 @@
     <section class="wrap hero" id="top">
       <div>
         <h1>From zero to <span class="hero-brand">Savant</span></h1>
-        <p class="lede">
-          Savant takes every small part of learning, from where you start and what comes next
-          to how each lesson is explained, the examples it uses and when each skill comes back
-          for review, and tunes it to how you learn and what you are interested in. The result
-          is the most efficient path from knowing nothing to mastering it.
-        </p>
-        <div class="hero-cta">
-          <a class="btn btn-primary btn-lg" href="#beta">Apply for the beta</a>
-          <a href="#updates">Get updates instead</a>
-        </div>
-        <p class="hero-note">In a small beta now. Approved beta testers use it completely free.</p>
-        <p class="hero-note">Built on decades of learning research. <a href="evidence.html">See the evidence</a></p>
+        <p class="lede">Savant learns how you learn, then teaches you any subject your best way.</p>
+
+        <form class="apply apply-hero" id="hero-form" data-form="beta" data-source="hero" data-state="1" action="/api/beta" method="post" aria-label="Apply for the beta">
+          <div class="hp" aria-hidden="true"><label for="hero-website">Leave this empty</label><input id="hero-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+          <input type="hidden" name="source" value="hero">
+          <input type="hidden" name="ref" value="">
+          <div class="apply-step" data-step="1">
+            <div class="apply-row">
+              <label class="visually-hidden" for="hero-email">Email</label>
+              <div class="apply-line">
+                <input id="hero-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required placeholder="Your email" aria-describedby="hero-email-err">
+                <button class="btn btn-primary btn-lg apply-go" type="submit">Apply for the beta</button>
+              </div>
+              <p class="field-error" id="hero-email-err" data-error-for="email" hidden></p>
+            </div>
+            <div class="check">
+              <input id="hero-age" name="age_ok" type="checkbox" value="yes" required aria-describedby="hero-age-err">
+              <label for="hero-age">I am 13 or older, or I'm a parent signing up for my child.</label>
+            </div>
+            <p class="field-error" id="hero-age-err" data-error-for="age_ok" hidden></p>
+            <div class="check">
+              <input id="hero-consent" name="consent" type="checkbox" value="yes" required aria-describedby="hero-consent-err">
+              <label for="hero-consent">Savant may email me about the beta.
+                <span class="hint">Only about the beta. Remove yourself any time on the <a href="privacy.html#remove">privacy page</a>.</span></label>
+            </div>
+            <p class="field-error" id="hero-consent-err" data-error-for="consent" hidden></p>
+          </div>
+
+          <p class="apply-saved" role="status" hidden></p>
+          <div class="apply-step" data-step="2">
+            <div class="field">
+              <label for="hero-name">Name or nickname <span class="hint">What we call you in emails.</span></label>
+              <input id="hero-name" name="name" type="text" autocomplete="nickname" maxlength="80" required aria-describedby="hero-name-err">
+              <p class="field-error" id="hero-name-err" data-error-for="name" hidden></p>
+            </div>
+            <fieldset class="field" aria-describedby="hero-role-err">
+              <legend>I am a</legend>
+              <div class="radios">
+                <label><input type="radio" name="role" value="learner" required> Learner</label>
+                <label><input type="radio" name="role" value="parent"> Parent</label>
+                <label><input type="radio" name="role" value="teacher"> Teacher</label>
+              </div>
+              <p class="field-error" id="hero-role-err" data-error-for="role" hidden></p>
+            </fieldset>
+            <fieldset class="field" aria-describedby="hero-learn-hint">
+              <legend>What do you want to learn? <span class="hint" id="hero-learn-hint">Tap any that fit. Optional.</span></legend>
+              <div class="chips">
+              <label class="chip" data-subject="math"><input type="checkbox" name="interests" value="math"><span>Mathematics</span></label>
+              <label class="chip" data-subject="english"><input type="checkbox" name="interests" value="english"><span>English</span></label>
+              <label class="chip" data-subject="reading"><input type="checkbox" name="interests" value="reading"><span>Reading</span></label>
+              <label class="chip" data-subject="spanish"><input type="checkbox" name="interests" value="spanish"><span>Spanish</span></label>
+              <label class="chip" data-subject="iq"><input type="checkbox" name="interests" value="iq"><span>Reasoning (IQ)</span></label>
+              <label class="chip" data-subject="act"><input type="checkbox" name="interests" value="act"><span>ACT prep</span></label>
+              <label class="chip" data-subject="chess"><input type="checkbox" name="interests" value="chess"><span>Chess</span></label>
+              <label class="chip" data-subject="piano"><input type="checkbox" name="interests" value="piano"><span>Piano</span></label>
+              <label class="chip" data-subject="basketball"><input type="checkbox" name="interests" value="basketball"><span>Basketball</span></label>
+              </div>
+              <label class="other" for="hero-other">Something else</label>
+              <input id="hero-other" name="interests_other" type="text" maxlength="120" autocomplete="off" aria-describedby="hero-other-err">
+              <p class="field-error" id="hero-other-err" data-error-for="interests_other" hidden></p>
+            </fieldset>
+            <div class="field">
+              <label for="hero-why">Why should we pick you? <span class="hint" id="hero-why-hint">Optional. A few sentences help: what you want to learn or teach, and what you would tell us as a tester.</span></label>
+              <textarea id="hero-why" name="why" maxlength="1000" aria-describedby="hero-why-hint hero-why-err"></textarea>
+              <p class="field-meta" data-count-for="why" aria-hidden="true"></p>
+              <p class="field-error" id="hero-why-err" data-error-for="why" hidden></p>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary apply-finish" type="submit">Send application</button>
+            </div>
+          </div>
+          <p class="form-status" role="status" aria-live="polite"></p>
+          <p class="form-note" data-mode-note></p>
+        </form>
+        <p class="apply-fallback"><a class="btn btn-primary btn-lg" href="#beta">Apply for the beta</a></p>
+
+        <p class="proof">Built by a 16-year-old founder <span aria-hidden="true">&middot;</span><span class="visually-hidden">,</span> Free for beta testers <span aria-hidden="true">&middot;</span><span class="visually-hidden">,</span> Every application read by hand</p>
+        <p class="hero-note">In a small beta now. Built on decades of learning research. <a href="evidence.html">See the evidence</a>. Or <a href="#updates">get updates instead</a>.</p>
       </div>
 
       <figure class="twin" data-subject="math" aria-labelledby="twin-caption">
@@ -86,6 +165,10 @@
       <div class="wrap">
         <div class="section-head">
           <h2 id="how-title">Measured first, then taught.</h2>
+          <p>Savant takes every small part of learning, from where you start and what comes next
+            to how each lesson is explained, the examples it uses and when each skill comes back
+            for review, and tunes it to how you learn and what you are interested in. The result
+            is the most efficient path from knowing nothing to mastering it.</p>
           <p>Most study apps start everyone at lesson one, or take your word for where you are.
             Savant checks, so you do not grind through what you already know or get lost in what
             you are not ready for.</p>
@@ -178,50 +261,76 @@
             child's account is set up later, inside the app, with a parent's consent.</p>
         </div>
 
-        <form class="form form-panel" id="beta-form" data-form="beta" action="/api/beta" method="post" aria-labelledby="beta-form-title">
+        <form class="form form-panel apply" id="beta-form" data-form="beta" data-source="bottom" data-state="1" action="/api/beta" method="post" aria-labelledby="beta-form-title">
           <h3 id="beta-form-title">Beta application</h3>
-          <p class="form-intro">Five questions. A few minutes.</p>
+          <p class="form-intro">Two quick steps: your email first, then a few details. About a minute.</p>
           <div class="hp" aria-hidden="true"><label for="beta-website">Leave this empty</label><input id="beta-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
-
-          <div class="field">
-            <label for="beta-email">Email</label>
-            <input id="beta-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required aria-describedby="beta-email-err">
-            <p class="field-error" id="beta-email-err" data-error-for="email" hidden></p>
-          </div>
-          <div class="field">
-            <label for="beta-name">Name or nickname <span class="hint">What we call you in emails.</span></label>
-            <input id="beta-name" name="name" type="text" autocomplete="nickname" maxlength="80" required aria-describedby="beta-name-err">
-            <p class="field-error" id="beta-name-err" data-error-for="name" hidden></p>
-          </div>
-          <fieldset class="field" aria-describedby="beta-role-err">
-            <legend>I am signing up as a</legend>
-            <div class="radios">
-              <label><input type="radio" name="role" value="learner" required> Learner</label>
-              <label><input type="radio" name="role" value="parent"> Parent</label>
-              <label><input type="radio" name="role" value="teacher"> Teacher</label>
+          <input type="hidden" name="source" value="bottom">
+          <input type="hidden" name="ref" value="">
+          <div class="apply-step" data-step="1">
+            <div class="field">
+              <label for="beta-email">Email</label>
+              <div class="apply-line">
+                <input id="beta-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required placeholder="you@example.com" aria-describedby="beta-email-err">
+                <button class="btn btn-primary  apply-go" type="submit">Apply for the beta</button>
+              </div>
+              <p class="field-error" id="beta-email-err" data-error-for="email" hidden></p>
             </div>
-            <p class="field-error" id="beta-role-err" data-error-for="role" hidden></p>
-          </fieldset>
-          <div class="field">
-            <label for="beta-why">Why should we accept you? <span class="hint" id="beta-why-hint">A few sentences: what you want to learn or teach, and what you would tell us as a tester. 30 to 1,000 characters.</span></label>
-            <textarea id="beta-why" name="why" minlength="30" maxlength="1000" required aria-describedby="beta-why-hint beta-why-err"></textarea>
-            <p class="field-meta" data-count-for="why" aria-hidden="true"></p>
-            <p class="field-error" id="beta-why-err" data-error-for="why" hidden></p>
+            <div class="check">
+              <input id="beta-age" name="age_ok" type="checkbox" value="yes" required aria-describedby="beta-age-err">
+              <label for="beta-age">I am 13 or older, or I'm a parent signing up for my child.</label>
+            </div>
+            <p class="field-error" id="beta-age-err" data-error-for="age_ok" hidden></p>
+            <div class="check">
+              <input id="beta-consent" name="consent" type="checkbox" value="yes" required aria-describedby="beta-consent-err">
+              <label for="beta-consent">Savant may email me about the beta.
+                <span class="hint">Only about the beta. Remove yourself any time on the <a href="privacy.html#remove">privacy page</a>.</span></label>
+            </div>
+            <p class="field-error" id="beta-consent-err" data-error-for="consent" hidden></p>
           </div>
-          <div class="check">
-            <input id="beta-age" name="age_ok" type="checkbox" value="yes" required aria-describedby="beta-age-err">
-            <label for="beta-age">I am 13 or older, or I'm a parent signing up for my child.</label>
-          </div>
-          <p class="field-error" id="beta-age-err" data-error-for="age_ok" hidden></p>
-          <div class="check">
-            <input id="beta-consent" name="consent" type="checkbox" value="yes" required aria-describedby="beta-consent-err">
-            <label for="beta-consent">Savant may email me about the beta.
-              <span class="hint">Only about the beta. Remove yourself any time on the <a href="privacy.html#remove">privacy page</a>.</span></label>
-          </div>
-          <p class="field-error" id="beta-consent-err" data-error-for="consent" hidden></p>
 
-          <div class="form-actions">
-            <button class="btn btn-primary" type="submit">Send application</button>
+          <p class="apply-saved" role="status" hidden></p>
+          <div class="apply-step" data-step="2">
+            <div class="field">
+              <label for="beta-name">Name or nickname <span class="hint">What we call you in emails.</span></label>
+              <input id="beta-name" name="name" type="text" autocomplete="nickname" maxlength="80" required aria-describedby="beta-name-err">
+              <p class="field-error" id="beta-name-err" data-error-for="name" hidden></p>
+            </div>
+            <fieldset class="field" aria-describedby="beta-role-err">
+              <legend>I am a</legend>
+              <div class="radios">
+                <label><input type="radio" name="role" value="learner" required> Learner</label>
+                <label><input type="radio" name="role" value="parent"> Parent</label>
+                <label><input type="radio" name="role" value="teacher"> Teacher</label>
+              </div>
+              <p class="field-error" id="beta-role-err" data-error-for="role" hidden></p>
+            </fieldset>
+            <fieldset class="field" aria-describedby="beta-learn-hint">
+              <legend>What do you want to learn? <span class="hint" id="beta-learn-hint">Tap any that fit. Optional.</span></legend>
+              <div class="chips">
+              <label class="chip" data-subject="math"><input type="checkbox" name="interests" value="math"><span>Mathematics</span></label>
+              <label class="chip" data-subject="english"><input type="checkbox" name="interests" value="english"><span>English</span></label>
+              <label class="chip" data-subject="reading"><input type="checkbox" name="interests" value="reading"><span>Reading</span></label>
+              <label class="chip" data-subject="spanish"><input type="checkbox" name="interests" value="spanish"><span>Spanish</span></label>
+              <label class="chip" data-subject="iq"><input type="checkbox" name="interests" value="iq"><span>Reasoning (IQ)</span></label>
+              <label class="chip" data-subject="act"><input type="checkbox" name="interests" value="act"><span>ACT prep</span></label>
+              <label class="chip" data-subject="chess"><input type="checkbox" name="interests" value="chess"><span>Chess</span></label>
+              <label class="chip" data-subject="piano"><input type="checkbox" name="interests" value="piano"><span>Piano</span></label>
+              <label class="chip" data-subject="basketball"><input type="checkbox" name="interests" value="basketball"><span>Basketball</span></label>
+              </div>
+              <label class="other" for="beta-other">Something else</label>
+              <input id="beta-other" name="interests_other" type="text" maxlength="120" autocomplete="off" aria-describedby="beta-other-err">
+              <p class="field-error" id="beta-other-err" data-error-for="interests_other" hidden></p>
+            </fieldset>
+            <div class="field">
+              <label for="beta-why">Why should we pick you? <span class="hint" id="beta-why-hint">Optional. A few sentences help: what you want to learn or teach, and what you would tell us as a tester.</span></label>
+              <textarea id="beta-why" name="why" maxlength="1000" aria-describedby="beta-why-hint beta-why-err"></textarea>
+              <p class="field-meta" data-count-for="why" aria-hidden="true"></p>
+              <p class="field-error" id="beta-why-err" data-error-for="why" hidden></p>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary apply-finish" type="submit">Send application</button>
+            </div>
           </div>
           <p class="form-status" role="status" aria-live="polite"></p>
           <p class="form-note" data-mode-note></p>
@@ -264,6 +373,8 @@
           <p>Savant is built by one founder. Hiring starts after investment.
             This is where it stands today, and what is still a plan.</p>
           <dl class="facts">
+            <div><dt>Founder</dt><dd>Landon Davidshofer, 16, Omaha.
+              <a href="https://www.linkedin.com/in/landon-davidshofer-aba26a377/" rel="noopener">LinkedIn</a></dd></div>
             <div><dt>Built</dt><dd>Nine subjects with 219 grades between them, adaptive placement,
               per-learner paths, spaced review, and a fact-checking pipeline for every lesson.
               In testing with a small group.</dd></div>
@@ -343,9 +454,13 @@
     </div>
   </footer>
 
+  <div class="sticky-apply" data-sticky-apply>
+    <button class="btn btn-primary" type="button" data-sticky-btn>Apply for the beta — free</button>
+  </div>
+
   <script src="config.js?v=2026-10-25k"></script>
   <script src="assets/grade-levels.js?v=2026-10-24d"></script>
-  <script src="assets/track.js?v=2026-10-25a"></script>
-  <script src="assets/site.js?v=2026-10-25v"></script>
+  <script src="assets/track.js?v=2026-10-28a"></script>
+  <script src="assets/site.js?v=2026-10-28a"></script>
 </body>
 </html>

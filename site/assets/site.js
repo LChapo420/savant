@@ -1,6 +1,10 @@
 /* Savant public site: theme toggle, socials and contact links from config.js,
  * the grade strips, and the four forms (updates, beta, investors, removal).
  *
+ * The beta application is two steps (email and the two ticks first, saved at once; then
+ * name, role, subjects and an optional "why"), in the hero and in the section lower down.
+ * A sticky bar on phones jumps back to the hero form. After applying: thanks and a share line.
+ *
  * Forms post JSON to server.js when it answers /api/health. When it does not
  * (a static host, or the file opened from disk), each form opens the visitor's
  * email app with the same details instead. Without JavaScript the forms still
@@ -158,15 +162,25 @@
       tick: { consent: 'Tick this so we can send you updates.' },
       done: function (d) { return ['You are on the list.', 'We will email ' + d.email + ' when there is news.']; },
     },
+    // The beta form, whole: what the email fallback lists and what a post without JavaScript carries.
     beta: {
       to: 'contact', subject: 'Savant beta application',
-      rules: { email: 'email', name: 'name', role: 'role', why: 'why', age_ok: 'tick', consent: 'tick' },
+      rules: { email: 'email', name: 'name', role: 'role', interests_other: 'other', why: 'why', age_ok: 'tick', consent: 'tick' },
       tick: {
         age_ok: 'Please confirm this to apply. Under 13? Ask a parent to apply for you.',
         consent: 'Tick this so we can email you about the beta.',
       },
       done: function (d) { return ['Application received.', 'Thanks, ' + d.name + '. Every application is read by hand. If there is a place, we will email ' + d.email + '.']; },
     },
+    // Its two steps, checked one at a time in the browser (and again in server.js).
+    beta1: {
+      rules: { email: 'email', age_ok: 'tick', consent: 'tick' },
+      tick: {
+        age_ok: 'Please confirm this to apply. Under 13? Ask a parent to apply for you.',
+        consent: 'Tick this so we can email you about the beta.',
+      },
+    },
+    beta2: { rules: { name: 'name', role: 'role', interests_other: 'other', why: 'why' } },
     investors: {
       to: 'investors', subject: 'Savant investor enquiry',
       rules: { name: 'name', email: 'email', firm: 'firm', message: 'message' },
@@ -178,9 +192,9 @@
       done: function (d) { return ['Done.', 'If ' + d.email + ' was on any Savant list, it has been removed.']; },
     },
   };
-  var LABELS = { email: 'Email', name: 'Name', role: 'Role', why: 'Why you should accept me', age_ok: 'Age confirmed', consent: 'OK to email me', firm: 'Firm', message: 'Message' };
-  var WHY_MIN = 30;
-  var WHY_MAX = 1000;
+  var LABELS = { email: 'Email', name: 'Name', role: 'Role', interests: 'Wants to learn', interests_other: 'Something else', source: 'Form', ref: 'Link tag', why: 'Why you should pick me', age_ok: 'Age confirmed', consent: 'OK to email me', firm: 'Firm', message: 'Message' };
+  var WHY_MAX = 1000; // "Why should we pick you?" is optional; this is only the limit
+  var OTHER_MAX = 120;
 
   function check(kind, data) {
     var spec = FORMS[kind];
@@ -199,9 +213,9 @@
       } else if (rule === 'tick') {
         if (v !== 'yes') errors[field] = spec.tick[field];
       } else if (rule === 'why') {
-        if (!v) errors[field] = 'Tell us why we should accept you.';
-        else if (v.length < WHY_MIN) errors[field] = 'Tell us a little more: at least ' + WHY_MIN + ' characters.';
-        else if (v.length > WHY_MAX) errors[field] = 'Keep this under 1,000 characters.';
+        if (v && v.length > WHY_MAX) errors[field] = 'Keep this under 1,000 characters.';
+      } else if (rule === 'other') {
+        if (v && v.length > OTHER_MAX) errors[field] = 'Keep this under ' + OTHER_MAX + ' characters.';
       } else if (rule === 'firm') {
         if (v && v.length > 120) errors[field] = 'Keep this under 120 characters.';
       } else if (rule === 'message') {
@@ -217,6 +231,7 @@
     Array.prototype.forEach.call(form.elements, function (el) {
       if (!el.name || el.disabled) return;
       if ((el.type === 'checkbox' || el.type === 'radio') && !el.checked) return;
+      if (el.name === 'interests') { (data.interests = data.interests || []).push(el.value); return; } // the subject chips
       data[el.name] = typeof el.value === 'string' ? el.value.trim() : el.value;
     });
     if (data.email) data.email = data.email.toLowerCase();
@@ -255,7 +270,54 @@
     s.textContent = text || '';
     s.classList.toggle('is-error', !!isError);
   }
-  function done(form, lines, extra) {
+  function shareBlock() {
+    var url = location.origin + '/';
+    var wrap = document.createElement('div');
+    wrap.className = 'share';
+    var p = document.createElement('p');
+    p.appendChild(document.createTextNode("Know someone who'd want this? Share "));
+    var b = document.createElement('b');
+    b.textContent = 'savantedu.com';
+    p.appendChild(b);
+    wrap.appendChild(p);
+    var row = document.createElement('div');
+    row.className = 'share-actions';
+    var state = document.createElement('span');
+    state.className = 'share-state';
+    state.setAttribute('role', 'status');
+    var copy = document.createElement('button');
+    copy.type = 'button';
+    copy.className = 'btn';
+    copy.setAttribute('data-track', 'share-copy');
+    copy.textContent = 'Copy link';
+    copy.addEventListener('click', function () {
+      var ok = function () { state.textContent = 'Link copied.'; };
+      var fallback = function () {
+        var t = document.createElement('textarea');
+        t.value = url; t.setAttribute('readonly', ''); t.className = 'visually-hidden';
+        document.body.appendChild(t); t.select();
+        try { if (document.execCommand('copy')) ok(); else state.textContent = 'Copy this: ' + url; } catch (e) { state.textContent = 'Copy this: ' + url; }
+        t.remove();
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ok, fallback); else fallback();
+    });
+    row.appendChild(copy);
+    if (navigator.share) {
+      var sh = document.createElement('button');
+      sh.type = 'button';
+      sh.className = 'btn';
+      sh.setAttribute('data-track', 'share-native');
+      sh.textContent = 'Share…';
+      sh.addEventListener('click', function () { navigator.share({ title: 'Savant', text: 'Savant learns how you learn, then teaches you any subject your best way.', url: url }).catch(function () {}); });
+      row.appendChild(sh);
+    }
+    row.appendChild(state);
+    wrap.appendChild(row);
+    return wrap;
+  }
+
+  function done(form, lines, extra, opts) {
+    opts = opts || {};
     var box = document.createElement('div');
     box.className = 'form-done is-drawn' + (form.classList.contains('form-panel') ? ' form-panel' : '');
     box.tabIndex = -1;
@@ -274,9 +336,11 @@
       p2.textContent = extra;
       text.appendChild(p2);
     }
+    if (opts.share) text.appendChild(shareBlock());
     box.appendChild(text);
     form.replaceWith(box);
-    box.focus();
+    if (opts.focus !== false) box.focus();
+    return box;
   }
 
   // Which way the forms send: 'server' or 'mailto'. Decided once, on first need.
@@ -308,7 +372,7 @@
     }
     var lines = Object.keys(spec.rules).map(function (f) {
       var v = data[f];
-      return LABELS[f] + ': ' + (v || '');
+      return LABELS[f] + ': ' + (Array.isArray(v) ? v.join(', ') : (v || ''));
     });
     var href = 'mailto:' + to + '?subject=' + encodeURIComponent(spec.subject) + '&body=' + encodeURIComponent(lines.join('\n') + '\n');
     window.location.href = href;
@@ -354,7 +418,7 @@
 
   document.querySelectorAll('form[data-form]').forEach(function (form) {
     var kind = form.getAttribute('data-form');
-    if (!FORMS[kind]) return;
+    if (!FORMS[kind] || kind === 'beta') return; // the beta forms are the two-step ones, set up below
     form.noValidate = true; // our messages replace the browser's bubbles
     form._shownAt = performance.now();
     if (base) form.action = base + '/api/' + kind;
@@ -405,6 +469,185 @@
       });
     });
   });
+
+  /* ── the beta application: two steps ──────────────────────────────── */
+  // Step 1 sends the email and the two ticks, and the server keeps them at once (a "started"
+  // application). Step 2 appears in the same place and completes that record, using the link the
+  // server handed back. If the server cannot be reached, step 2 falls back to the email app like
+  // the other forms. Without JavaScript the lower form is posted whole.
+  var REF = '';
+  try {
+    var qp = new URLSearchParams(location.search);
+    REF = (qp.get('ref') || qp.get('utm_source') || '').slice(0, 64);
+  } catch (e) { /* no tags */ }
+  var applied = false;
+  var betaForms = Array.prototype.slice.call(document.querySelectorAll('form[data-form="beta"]'));
+
+  function setState(form, n) { form.setAttribute('data-state', String(n)); }
+
+  function reveal(form, data) {
+    setState(form, 2);
+    var saved = form.querySelector('.apply-saved');
+    if (saved) {
+      saved.textContent = '';
+      var s = document.createElement('strong');
+      s.textContent = 'Step 2 of 2.';
+      saved.appendChild(s);
+      saved.appendChild(document.createTextNode(' Email saved (' + data.email + '). A few details so we can read your application.'));
+      saved.hidden = false;
+    }
+    setStatus(form, '');
+    var name = form.elements.name;
+    if (name) {
+      try { name.focus({ preventScroll: true }); } catch (e) { name.focus(); }
+      var r = name.getBoundingClientRect();
+      if (r.bottom > window.innerHeight || r.top < 60) name.scrollIntoView({ block: 'center' });
+    }
+  }
+
+  function finishApply(form, data) {
+    applied = true;
+    updateSticky();
+    var lines = FORMS.beta.done(data);
+    betaForms.forEach(function (f) {
+      if (!f.isConnected) return;
+      done(f, lines, null, { share: true, focus: f === form });
+    });
+  }
+
+  function betaSend(form, data, step) {
+    var btn = form.querySelector('[data-step="' + (step || 2) + '"] [type="submit"]');
+    if (btn) btn.disabled = true;
+    setStatus(form, step === 1 ? 'Saving…' : 'Sending…');
+    var body = {};
+    Object.keys(data).forEach(function (k) { body[k] = data[k]; });
+    body.elapsed = Math.round(performance.now() - (form._shownAt || 0));
+    if (step) body.step = step;
+    if (step === 2 && form._token) body.token = form._token;
+    return fetch(base + '/api/beta', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(body),
+      credentials: 'omit',
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, json: j }; });
+    }).then(function (res) {
+      if (btn) btn.disabled = false;
+      if (res.status >= 200 && res.status < 300 && res.json.ok) {
+        if (step === 1) {
+          form._token = res.json.token || '';
+          reveal(form, data);
+        } else {
+          if (window.SavantTrack) tk('formDone', window.SavantTrack.formName(form));
+          finishApply(form, data);
+        }
+      } else if (res.status === 400 && res.json.errors) {
+        setStatus(form, '');
+        showErrors(form, res.json.errors);
+      } else if (res.status === 429) {
+        setStatus(form, 'Too many tries from this connection. Please wait a few minutes and try again.', true);
+      } else if (res.status === 404 || res.status === 405 || res.status >= 500) {
+        betaFallback(form, data, step);
+      } else {
+        setStatus(form, (res.json && res.json.error) || 'That did not go through. Please try again.', true);
+      }
+    }).catch(function () {
+      if (btn) btn.disabled = false;
+      betaFallback(form, data, step);
+    });
+  }
+
+  // The server is not there (a static copy of the page, or it is down): step 1 just moves on,
+  // and step 2 opens the email app with everything filled in.
+  function betaFallback(form, data, step) {
+    if (step === 1) { form._local = true; reveal(form, data); } else mailto(form, 'beta', data);
+  }
+
+  function initApply(form) {
+    form.noValidate = true; // our messages replace the browser's bubbles
+    form._shownAt = performance.now();
+    if (base) form.action = base + '/api/beta';
+    setState(form, 1);
+    if (form.elements.ref) form.elements.ref.value = REF;
+    form.querySelectorAll('[data-count-for]').forEach(function (meta) {
+      var field = form.elements[meta.getAttribute('data-count-for')];
+      if (!field) return;
+      var max = parseInt(field.getAttribute('maxlength'), 10) || 0;
+      var update = function () {
+        var n = field.value.trim().length;
+        meta.textContent = n + ' / ' + max.toLocaleString('en');
+        meta.classList.toggle('is-over', max > 0 && n > max);
+      };
+      field.addEventListener('input', update);
+      update();
+    });
+    form.addEventListener('input', function (e) {
+      var el = e.target;
+      if (el.getAttribute('aria-invalid') === 'true') {
+        controlsFor(form, el.name).forEach(function (c) { c.removeAttribute('aria-invalid'); });
+        var slot = errorSlot(form, el.name);
+        if (slot) { slot.hidden = true; slot.textContent = ''; }
+        if (!form.querySelector('[aria-invalid="true"]')) setStatus(form, '');
+      }
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (window.SavantTrack) tk('formSubmit', window.SavantTrack.formName(form));
+      clearErrors(form);
+      setStatus(form, '');
+      var step = form.getAttribute('data-state') === '2' ? 2 : 1;
+      var data = read(form);
+      var errors = check(step === 2 ? 'beta2' : 'beta1', data);
+      if (Object.keys(errors).length) {
+        var n = Object.keys(errors).length;
+        setStatus(form, n === 1 ? 'One thing to fix before sending.' : n + ' things to fix before sending.', true);
+        showErrors(form, errors);
+        return;
+      }
+      if (data.website) { if (step === 1) reveal(form, data); else finishApply(form, data); return; } // honeypot: say thanks, send nothing
+      mode().then(function (m) {
+        if (m !== 'server') { betaFallback(form, data, step); return; }
+        if (step === 1) betaSend(form, data, 1);
+        else if (form._local) mailto(form, 'beta', data);
+        else if (form._token) betaSend(form, data, 2);
+        else betaSend(form, data, 0); // step 1 never reached the server: send the whole form
+      });
+    });
+  }
+  betaForms.forEach(initApply);
+
+  /* ── the sticky apply bar (phones) ─────────────────────────────────── */
+  var stickyBar = document.querySelector('[data-sticky-apply]');
+  var heroForm = document.getElementById('hero-form');
+  var watched = { hero: false, lower: false };
+  function updateSticky() {
+    if (!stickyBar) return;
+    var show = !applied && !watched.hero && !watched.lower;
+    stickyBar.classList.toggle('is-visible', show);
+    var btn = stickyBar.querySelector('button');
+    if (btn) {
+      btn.tabIndex = show ? 0 : -1;
+      btn.textContent = heroForm && heroForm.getAttribute('data-state') === '2' ? 'Finish your application' : 'Apply for the beta — free';
+    }
+  }
+  if (stickyBar && heroForm && window.IntersectionObserver) {
+    var lowerForm = document.getElementById('beta-form');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { watched[en.target === heroForm ? 'hero' : 'lower'] = en.isIntersecting; });
+      updateSticky();
+    }, { threshold: 0 });
+    io.observe(heroForm);
+    if (lowerForm) io.observe(lowerForm);
+    new MutationObserver(updateSticky).observe(heroForm, { attributes: true, attributeFilter: ['data-state'] });
+    stickyBar.querySelector('button').addEventListener('click', function () {
+      if (!heroForm.isConnected) return;
+      var src = heroForm.elements.source;
+      if (src) src.value = 'sticky';
+      var target = heroForm.getAttribute('data-state') === '2' ? heroForm.elements.name : heroForm.elements.email;
+      heroForm.scrollIntoView({ block: 'center' });
+      if (target) { try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); } }
+    });
+  }
 
   // In email mode, say so before anyone types.
   if (document.querySelector('form[data-form]')) {
