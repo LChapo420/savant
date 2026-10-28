@@ -43,7 +43,7 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-2. **ACT score entry and test date** (item 2): a small ACT profile with test date, target score, and section
+2. [claimed 2026-10-28T16:25Z] **ACT score entry and test date** (item 2): a small ACT profile with test date, target score, and section
    scores from each official practice test (date, form, English, Math, Reading, optional Science), later the
    real ACT. Show the history as a bar or line chart on an ACT page. Store per user in the existing db layer.
    Done when a learner can record a practice-test score and see it charted, with tests.
