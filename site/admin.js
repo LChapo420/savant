@@ -602,11 +602,12 @@ ${main}
     form: ['Form', (r) => esc(LABEL[r.form] || r.form), 'admin-short'],
     email: ['Email', (r) => esc(r.email), 'admin-email'],
     name: ['Name', (r) => esc(r.name), 'admin-name'],
-    role: ['Role', (r) => esc(r.role), 'admin-short'],
-    status: ['Status', (r) => esc(r.status === 'started' ? 'started (email only)' : r.status), 'admin-short'],
-    learn: ['Wants to learn', (r) => esc([...(Array.isArray(r.interests) ? r.interests : []), r.interests_other].filter((x) => typeof x === 'string' && x).join(', ')), 'admin-name'],
+    phone: ['Phone', (r) => esc(r.phone), 'admin-short'],
+    role: ['I am', (r) => esc(r.role), 'admin-short'],
+    status: ['Status', (r) => esc(r.status === 'started' ? 'Email only' : r.status === 'applied' ? 'Complete' : r.status), 'admin-short'],
+    learn: ['Subjects', (r) => esc([...(Array.isArray(r.interests) ? r.interests : []), r.interests_other].filter((x) => typeof x === 'string' && x).join(', ')), 'admin-name'],
     source: ['Form', (r) => esc(r.source), 'admin-short'],
-    why: ['Why', (r) => esc(r.why), 'admin-long'],
+    why: ['Reason', (r) => esc(r.why), 'admin-long'],
     ref: ['Creator code', (r) => esc(r.ref), 'admin-short'],
     firm: ['Firm', (r) => esc(r.firm), 'admin-name'],
     message: ['Message', (r) => esc(r.message), 'admin-long'],
@@ -617,7 +618,7 @@ ${main}
   const TAB_COLS = {
     all: ['when', 'form', 'email', 'name', 'role', 'firm', 'text', 'consent'],
     updates: ['when', 'email', 'consent'],
-    beta: ['when', 'email', 'status', 'name', 'role', 'learn', 'why', 'source', 'ref', 'consent'],
+    beta: ['when', 'email', 'status', 'name', 'phone', 'role', 'learn', 'why', 'source', 'ref'],
     investors: ['when', 'email', 'name', 'firm', 'message'],
   };
   const link = (tab, q) => `${ADMIN_PATH}?form=${encodeURIComponent(tab)}${q ? `&q=${encodeURIComponent(q)}` : ''}`;

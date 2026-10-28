@@ -55,7 +55,7 @@ kept on our own server (see "Visit statistics"), with consent first in the UK, E
 ```
 cd site
 node server.js            # http://127.0.0.1:8787  (PORT=... to change)
-node test.js              # 71 tests, uses a temporary data folder and a tiny fixture geo file
+node test.js              # 81 tests, uses a temporary data folder and a tiny fixture geo file
 ```
 
 `express` is the only dependency. Inside this repo it is found in `../node_modules`; on its own,
@@ -122,13 +122,19 @@ every submission; the privacy page would have to name it. It is not wired in.
   **Step 1** is the email plus the two required ticks ("I am 13 or older, or I'm a parent signing up
   for my child", and "Savant may email me about the beta"). `server.js` stores it at once as a
   `status: "started"` record (so no lead is lost) and answers with a step-2 link (`token`, an HMAC
-  of the record and a 24-hour expiry, keyed by `data/form-key`). **Step 2** appears in place: name or
-  nickname, role (learner, parent, teacher), the subject chips (the nine subjects, stored as
-  `interests`), "Something else" (`interests_other`, 120 characters at most) and an optional
-  "Why should we pick you?" (`why`, 1,000 characters at most, question stored as `why_question`).
-  It completes the same record (`status: "applied"`, `completed_at`). Without the link, or for a
+  of the record and a 24-hour expiry, keyed by `data/form-key`). **Step 2** appears in place and is entirely optional
+  ("Want to raise your chances? Tell us a bit more"; "Send" or "Skip, I'm done", both ending on the
+  thank-you): name or nickname, phone number (`phone`, type tel, light check: 7 to 15 digits, stored as
+  given, only for contacting the person about the beta), role (learner, parent, teacher), the subject
+  chips (the nine subjects, stored as `interests`), "Something else" (`interests_other`, 120
+  characters at most) and "Why should we pick you?" (`why`, 1,000 characters at most, question
+  stored as `why_question`). Sending it completes the same record (`status: "applied"`,
+  `completed_at`). Without the link, or for a
   record that is already complete, step 2 changes nothing and answers the same, so it never shows
-  who applied. In the admin's Beta tab, "started (email only)" marks people who did not finish.
+  who applied. The admin's Beta tab lists every one of these as an application, newest first, with Status ("Email
+  only" for `started`, "Complete" for `applied`), name, phone, I am, subjects, reason, form (source)
+  and creator code; the CSV export has the same fields. "Remove my details" deletes the whole record,
+  phone included.
   A post with no `step` (the no-JavaScript form, which shows both steps and posts once) does
   everything at once, and also completes a "started" record for that email.
   Each application keeps `source` (`hero`, `sticky` for the phone bar's jump to the hero form,

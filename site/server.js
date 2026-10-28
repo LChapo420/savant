@@ -72,6 +72,7 @@ const WHY_QUESTION = 'Why should we pick you?';
 // The subject chips on the beta form (the nine subjects), plus a free-text "Something else".
 const SUBJECTS = ['math', 'english', 'reading', 'spanish', 'iq', 'act', 'chess', 'piano', 'basketball'];
 const INTEREST_OTHER_MAX = 120;
+const PHONE_MAX = 30;
 // Which form on the page an application came from: the hero, the sticky bar's jump to the hero, or the form lower down.
 const SOURCES = ['hero', 'sticky', 'bottom'];
 // How long the step-2 link from step 1 stays valid.
@@ -277,10 +278,18 @@ function cleanInterests(raw) {
   return out;
 }
 
+// Light check on an optional phone number: digits with the usual + ( ) - . x and spaces, 7 to 15 digits.
+function phoneOk(p) {
+  if (p.length > PHONE_MAX || !/^[0-9+()\-.x\s]+$/i.test(p)) return false;
+  const digits = p.replace(/\D/g, '').length;
+  return digits >= 7 && digits <= 15;
+}
+
 /**
  * The beta form has two steps. Step 1: the email and the two ticks only; the record is kept as
- * "started" at once, so no lead is lost. Step 2: name, role, subjects and an optional "why",
- * which completes that same record. No step at all (the no-JavaScript form): everything at once.
+ * "started" (the admin page's "Email only") at once, so no lead is lost. Step 2 is entirely optional:
+ * name, phone, role, subjects and a "why"; sending it makes the same record "applied" ("Complete").
+ * No step at all (the no-JavaScript form): everything at once.
  * Returns { errors } or the cleaned values.
  */
 function validateBeta(body) {
@@ -289,9 +298,12 @@ function validateBeta(body) {
   const email = checkEmail(body.email, errors);
   const out = {};
   if (step !== 1) {
-    out.name = checkName(body.name, errors, 'Enter a name or nickname.');
+    out.name = clean(body.name);
+    if (out.name.length > 80) errors.name = 'Keep this under 80 characters.';
+    out.phone = clean(body.phone);
+    if (out.phone && !phoneOk(out.phone)) errors.phone = 'That does not look like a phone number. Check it, or leave it blank.';
     out.role = clean(body.role);
-    if (!ROLES.includes(out.role)) errors.role = 'Choose learner, parent or teacher.';
+    if (out.role && !ROLES.includes(out.role)) errors.role = 'Choose learner, parent or teacher.';
     out.interests = cleanInterests(body.interests);
     out.interests_other = clean(body.interests_other);
     if (out.interests_other.length > INTEREST_OTHER_MAX) errors.interests_other = `Keep this under ${INTEREST_OTHER_MAX} characters.`;
@@ -326,7 +338,7 @@ function validate(form, body) {
     if (b.source) record.source = b.source;
     record.ref = creators.pickCode(body) || null; // the creator link's code (?ref=, else ?utm_source=), see creators.js
     if (b.step !== 1) {
-      Object.assign(record, { name: b.name, role: b.role, interests: b.interests });
+      Object.assign(record, { name: b.name, phone: b.phone, role: b.role, interests: b.interests });
       if (b.interests_other) record.interests_other = b.interests_other;
       Object.assign(record, { why: b.why, why_question: WHY_QUESTION });
     }
@@ -336,7 +348,9 @@ function validate(form, body) {
         consent: true, consent_text: CONSENT_TEXT.beta,
       });
     }
-    record.status = b.step === 1 ? 'started' : 'applied';
+    // Step 2, or a whole form with at least one detail, is "applied" (Complete); the email alone is "started" (Email only).
+    const detailed = b.step === 2 || (b.step === 0 && (b.name || b.phone || b.role || b.interests.length || b.interests_other || b.why));
+    record.status = detailed ? 'applied' : 'started';
     return { step: b.step, record };
   }
   if (form === 'investors') {
@@ -529,7 +543,7 @@ function createApp(opts = {}) {
           const done = await updateRecord('beta', (r) => r.email === record.email && r.status === 'started', (r) => {
             if (!stepTokenOk(body.token, r)) return null;
             const next = { ...r };
-            for (const k of ['name', 'role', 'interests', 'interests_other', 'why', 'why_question']) if (k in record) next[k] = record[k];
+            for (const k of ['name', 'phone', 'role', 'interests', 'interests_other', 'why', 'why_question']) if (k in record) next[k] = record[k];
             next.status = 'applied';
             next.completed_at = record.at;
             return next;
@@ -543,7 +557,7 @@ function createApp(opts = {}) {
           if (kind === 'beta' && existing.status === 'started') {
             // Back after leaving step 1 (or a whole form sent without JavaScript): complete that record.
             if (step === 1) return reply(req, res, 200, { ok: true, token: stepToken(existing) });
-            await updateRecord('beta', (r) => r.id === existing.id, (r) => ({ ...r, ...record, id: r.id, at: r.at, status: 'applied', completed_at: record.at }));
+            await updateRecord('beta', (r) => r.id === existing.id, (r) => ({ ...r, ...record, id: r.id, at: r.at, ...(record.status === 'applied' ? { completed_at: record.at } : {}) }));
             return reply(req, res, 200, { ok: true });
           }
           // Already complete (or on the list): the same answer as a new one, with a link that does nothing.

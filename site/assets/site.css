@@ -236,6 +236,13 @@ html.js .apply[data-state="2"] .apply-step[data-step="1"] { display: none; }
   .apply-hero .apply-step[data-step="2"] { padding: 16px 14px; }
 }
 
+.apply-more-title { margin: 0 0 4px; font-size: var(--t-h3); font-weight: 700; line-height: 1.25; }
+.apply-more-note { margin: 0 0 18px; color: var(--ink-2); font-size: var(--t-ui-s); }
+.field-note { margin: 6px 0 0; font-size: var(--t-meta); color: var(--ink-3); }
+.btn-quiet { border-color: transparent; background: transparent; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--control); text-underline-offset: 3px; }
+.btn-quiet:hover { background: var(--well); border-color: transparent; }
+html:not(.js) .apply-skip { display: none; }
+
 /* subject chips (step 2): real checkboxes, drawn as tappable pills */
 fieldset.field > legend .hint { display: block; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
@@ -465,7 +472,7 @@ svg.mark path { vector-effect: non-scaling-stroke; }
 .field-meta { display: flex; justify-content: flex-end; margin: 4px 0 0; font-family: var(--num); font-size: 0.75rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .field-meta.is-over { color: var(--incorrect); font-weight: 600; }
 fieldset.field { border: 0; margin: 0 0 18px; padding: 0; min-width: 0; }
-input[type="text"], input[type="email"], textarea {
+input[type="text"], input[type="email"], input[type="tel"], textarea {
   width: 100%; min-height: 48px; padding: 11px 14px;
   border: 1px solid var(--control); border-radius: var(--r-md);
   background: var(--page); color: var(--ink);
@@ -474,10 +481,10 @@ input[type="text"], input[type="email"], textarea {
 }
 textarea { min-height: 128px; resize: vertical; line-height: 1.55; }
 input::placeholder, textarea::placeholder { color: var(--ink-3); opacity: 1; }
-input[type="text"]:hover, input[type="email"]:hover, textarea:hover { border-color: var(--ink-2); }
-input[type="text"]:focus, input[type="email"]:focus, textarea:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
-input[type="text"][aria-invalid="true"], input[type="email"][aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--incorrect); }
-input[type="text"][aria-invalid="true"]:focus, input[type="email"][aria-invalid="true"]:focus, textarea[aria-invalid="true"]:focus { border-color: var(--incorrect); box-shadow: 0 0 0 1px var(--incorrect); }
+input[type="text"]:hover, input[type="email"]:hover, input[type="tel"]:hover, textarea:hover { border-color: var(--ink-2); }
+input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, textarea:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+input[type="text"][aria-invalid="true"], input[type="email"][aria-invalid="true"], input[type="tel"][aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--incorrect); }
+input[type="text"][aria-invalid="true"]:focus, input[type="email"][aria-invalid="true"]:focus, input[type="tel"][aria-invalid="true"]:focus, textarea[aria-invalid="true"]:focus { border-color: var(--incorrect); box-shadow: 0 0 0 1px var(--incorrect); }
 
 /* Checkboxes and radios are drawn here, so every state (unticked, ticked,
    hover, keyboard focus, error, disabled) keeps the same rounded shape in both

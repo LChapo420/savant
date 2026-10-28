@@ -89,15 +89,23 @@
 
           <p class="apply-saved" role="status" hidden></p>
           <div class="apply-step" data-step="2">
+            <p class="apply-more-title">Want to raise your chances? Tell us a bit more</p>
+            <p class="apply-more-note">Every application is read by hand. These help us pick testers. All of it is optional.</p>
             <div class="field">
               <label for="hero-name">Name or nickname <span class="hint">What we call you in emails.</span></label>
-              <input id="hero-name" name="name" type="text" autocomplete="nickname" maxlength="80" required aria-describedby="hero-name-err">
+              <input id="hero-name" name="name" type="text" autocomplete="nickname" maxlength="80" aria-describedby="hero-name-err">
               <p class="field-error" id="hero-name-err" data-error-for="name" hidden></p>
+            </div>
+            <div class="field">
+              <label for="hero-phone">Phone number</label>
+              <input id="hero-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" aria-describedby="hero-phone-note hero-phone-err">
+              <p class="field-note" id="hero-phone-note">Only used to contact you about the beta.</p>
+              <p class="field-error" id="hero-phone-err" data-error-for="phone" hidden></p>
             </div>
             <fieldset class="field" aria-describedby="hero-role-err">
               <legend>I am a</legend>
               <div class="radios">
-                <label><input type="radio" name="role" value="learner" required> Learner</label>
+                <label><input type="radio" name="role" value="learner"> Learner</label>
                 <label><input type="radio" name="role" value="parent"> Parent</label>
                 <label><input type="radio" name="role" value="teacher"> Teacher</label>
               </div>
@@ -127,7 +135,8 @@
               <p class="field-error" id="hero-why-err" data-error-for="why" hidden></p>
             </div>
             <div class="form-actions">
-              <button class="btn btn-primary apply-finish" type="submit">Send application</button>
+              <button class="btn btn-primary apply-finish" type="submit">Send</button>
+              <button class="btn btn-quiet apply-skip" type="button">Skip — I'm done</button>
             </div>
           </div>
           <p class="form-status" role="status" aria-live="polite"></p>
@@ -135,8 +144,8 @@
         </form>
         <p class="apply-fallback"><a class="btn btn-primary btn-lg" href="#beta">Apply for the beta</a></p>
 
-        <p class="proof">Built by a 16-year-old founder <span aria-hidden="true">&middot;</span><span class="visually-hidden">,</span> Free for beta testers <span aria-hidden="true">&middot;</span><span class="visually-hidden">,</span> Every application read by hand</p>
-        <p class="hero-note">In a small beta now. Built on decades of learning research. <a href="evidence.html">See the evidence</a>. Or <a href="#updates">get updates instead</a>.</p>
+        <p class="proof">Free for beta testers <span aria-hidden="true">&middot;</span><span class="visually-hidden">,</span> Every application read by hand <span aria-hidden="true">&middot;</span><span class="visually-hidden">,</span> Built on decades of learning research</p>
+        <p class="hero-note">In a small beta now. <a href="evidence.html">See the evidence</a>. Or <a href="#updates">get updates instead</a>.</p>
       </div>
 
       <figure class="twin" data-subject="math" aria-labelledby="twin-caption">
@@ -291,15 +300,23 @@
 
           <p class="apply-saved" role="status" hidden></p>
           <div class="apply-step" data-step="2">
+            <p class="apply-more-title">Want to raise your chances? Tell us a bit more</p>
+            <p class="apply-more-note">Every application is read by hand. These help us pick testers. All of it is optional.</p>
             <div class="field">
               <label for="beta-name">Name or nickname <span class="hint">What we call you in emails.</span></label>
-              <input id="beta-name" name="name" type="text" autocomplete="nickname" maxlength="80" required aria-describedby="beta-name-err">
+              <input id="beta-name" name="name" type="text" autocomplete="nickname" maxlength="80" aria-describedby="beta-name-err">
               <p class="field-error" id="beta-name-err" data-error-for="name" hidden></p>
+            </div>
+            <div class="field">
+              <label for="beta-phone">Phone number</label>
+              <input id="beta-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" aria-describedby="beta-phone-note beta-phone-err">
+              <p class="field-note" id="beta-phone-note">Only used to contact you about the beta.</p>
+              <p class="field-error" id="beta-phone-err" data-error-for="phone" hidden></p>
             </div>
             <fieldset class="field" aria-describedby="beta-role-err">
               <legend>I am a</legend>
               <div class="radios">
-                <label><input type="radio" name="role" value="learner" required> Learner</label>
+                <label><input type="radio" name="role" value="learner"> Learner</label>
                 <label><input type="radio" name="role" value="parent"> Parent</label>
                 <label><input type="radio" name="role" value="teacher"> Teacher</label>
               </div>
@@ -329,7 +346,8 @@
               <p class="field-error" id="beta-why-err" data-error-for="why" hidden></p>
             </div>
             <div class="form-actions">
-              <button class="btn btn-primary apply-finish" type="submit">Send application</button>
+              <button class="btn btn-primary apply-finish" type="submit">Send</button>
+              <button class="btn btn-quiet apply-skip" type="button">Skip — I'm done</button>
             </div>
           </div>
           <p class="form-status" role="status" aria-live="polite"></p>
@@ -373,7 +391,7 @@
           <p>Savant is built by one founder. Hiring starts after investment.
             This is where it stands today, and what is still a plan.</p>
           <dl class="facts">
-            <div><dt>Founder</dt><dd>Landon Davidshofer, 16, Omaha.
+            <div><dt>Founder</dt><dd>Landon Davidshofer.
               <a href="https://www.linkedin.com/in/landon-davidshofer-aba26a377/" rel="noopener">LinkedIn</a></dd></div>
             <div><dt>Built</dt><dd>Nine subjects with 219 grades between them, adaptive placement,
               per-learner paths, spaced review, and a fact-checking pipeline for every lesson.

@@ -198,12 +198,12 @@
     // The beta form, whole: what the email fallback lists and what a post without JavaScript carries.
     beta: {
       to: 'contact', subject: 'Savant beta application',
-      rules: { email: 'email', name: 'name', role: 'role', interests_other: 'other', why: 'why', age_ok: 'tick', consent: 'tick' },
+      rules: { email: 'email', name: 'optname', phone: 'phone', role: 'optrole', interests_other: 'other', why: 'why', age_ok: 'tick', consent: 'tick' },
       tick: {
         age_ok: 'Please confirm this to apply. Under 13? Ask a parent to apply for you.',
         consent: 'Tick this so we can email you about the beta.',
       },
-      done: function (d) { return ['Application received.', 'Thanks, ' + d.name + '. Every application is read by hand. If there is a place, we will email ' + d.email + '.']; },
+      done: function (d) { return ['Application received.', 'Thanks' + (d.name ? ', ' + d.name : '') + '. Every application is read by hand. If there is a place, we will email ' + d.email + '.']; },
     },
     // Its two steps, checked one at a time in the browser (and again in server.js).
     beta1: {
@@ -213,7 +213,8 @@
         consent: 'Tick this so we can email you about the beta.',
       },
     },
-    beta2: { rules: { name: 'name', role: 'role', interests_other: 'other', why: 'why' } },
+    // Step 2 is all optional: each answer is only checked if it is given.
+    beta2: { rules: { name: 'optname', phone: 'phone', role: 'optrole', interests_other: 'other', why: 'why' } },
     investors: {
       to: 'investors', subject: 'Savant investor enquiry',
       rules: { name: 'name', email: 'email', firm: 'firm', message: 'message' },
@@ -225,7 +226,7 @@
       done: function (d) { return ['Done.', 'If ' + d.email + ' was on any Savant list, it has been removed.']; },
     },
   };
-  var LABELS = { email: 'Email', name: 'Name', role: 'Role', interests: 'Wants to learn', interests_other: 'Something else', source: 'Form', ref: 'Link tag', why: 'Why you should pick me', age_ok: 'Age confirmed', consent: 'OK to email me', firm: 'Firm', message: 'Message' };
+  var LABELS = { email: 'Email', name: 'Name', role: 'Role', interests: 'Wants to learn', interests_other: 'Something else', phone: 'Phone', source: 'Form', ref: 'Link tag', why: 'Why you should pick me', age_ok: 'Age confirmed', consent: 'OK to email me', firm: 'Firm', message: 'Message' };
   var WHY_MAX = 1000; // "Why should we pick you?" is optional; this is only the limit
   var OTHER_MAX = 120;
 
@@ -241,6 +242,12 @@
       } else if (rule === 'name') {
         if (!v) errors[field] = kind === 'beta' ? 'Enter a name or nickname.' : 'Enter your name.';
         else if (v.length > 80) errors[field] = 'Keep this under 80 characters.';
+      } else if (rule === 'optname') {
+        if (v && v.length > 80) errors[field] = 'Keep this under 80 characters.';
+      } else if (rule === 'optrole') {
+        if (v && ['learner', 'parent', 'teacher'].indexOf(v) < 0) errors[field] = 'Choose learner, parent or teacher.';
+      } else if (rule === 'phone') {
+        if (v && (v.length > 30 || !/^[0-9+()\-.x\s]+$/i.test(v) || v.replace(/\D/g, '').length < 7 || v.replace(/\D/g, '').length > 15)) errors[field] = 'That does not look like a phone number. Check it, or leave it blank.';
       } else if (rule === 'role') {
         if (['learner', 'parent', 'teacher'].indexOf(v) < 0) errors[field] = 'Choose learner, parent or teacher.';
       } else if (rule === 'tick') {
@@ -519,9 +526,9 @@
     if (saved) {
       saved.textContent = '';
       var s = document.createElement('strong');
-      s.textContent = 'Step 2 of 2.';
+      s.textContent = 'Application received.';
       saved.appendChild(s);
-      saved.appendChild(document.createTextNode(' Email saved (' + data.email + '). A few details so we can read your application.'));
+      saved.appendChild(document.createTextNode(' We have ' + data.email + '.'));
       saved.hidden = false;
     }
     setStatus(form, '');
@@ -591,6 +598,17 @@
     if (step === 1) { form._local = true; reveal(form, data); } else mailto(form, 'beta', data);
   }
 
+  function hasDetails(d) {
+    return !!(d.name || d.phone || d.role || d.why || d.interests_other || (d.interests && d.interests.length));
+  }
+
+  // "Skip, I'm done": the application is already in (step 1), so this only ends the form.
+  function skipStep2(form, data) {
+    if (window.SavantTrack) tk('formDone', window.SavantTrack.formName(form));
+    if (form._local) mailto(form, 'beta', data); // no server: the email app is the only way it gets sent
+    else finishApply(form, data);
+  }
+
   function initApply(form) {
     form.noValidate = true; // our messages replace the browser's bubbles
     form._shownAt = performance.now();
@@ -617,6 +635,8 @@
         if (!form.querySelector('[aria-invalid="true"]')) setStatus(form, '');
       }
     });
+    var skip = form.querySelector('.apply-skip');
+    if (skip) skip.addEventListener('click', function () { clearErrors(form); setStatus(form, ''); skipStep2(form, read(form)); });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (window.SavantTrack) tk('formSubmit', window.SavantTrack.formName(form));
@@ -632,6 +652,7 @@
         return;
       }
       if (data.website) { if (step === 1) reveal(form, data); else finishApply(form, data); return; } // honeypot: say thanks, send nothing
+      if (step === 2 && !hasDetails(data)) { skipStep2(form, data); return; } // "Send" with nothing filled in is the same as skipping
       mode().then(function (m) {
         if (m !== 'server') { betaFallback(form, data, step); return; }
         if (step === 1) betaSend(form, data, 1);
@@ -654,7 +675,7 @@
     var btn = stickyBar.querySelector('button');
     if (btn) {
       btn.tabIndex = show ? 0 : -1;
-      btn.textContent = heroForm && heroForm.getAttribute('data-state') === '2' ? 'Finish your application' : 'Apply for the beta — free';
+      btn.textContent = heroForm && heroForm.getAttribute('data-state') === '2' ? 'Add a few details' : 'Apply for the beta — free';
     }
   }
   if (stickyBar && heroForm && window.IntersectionObserver) {
