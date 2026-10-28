@@ -51,6 +51,14 @@ const CHOICES = {
     short: 'Just the essentials',
     teach: 'They want just the essentials, fast: teach the core idea and the one method they need, with the fewest activities that still cover the objective. Skip enrichment and side topics.',
   },
+  // Spanish only (routes/goals.js shows a choice only on the tracks it lists).
+  // The Spanish path reads it in services/spanish/goal-fit.js.
+  conversation: {
+    label: 'Speak and understand everyday Spanish, fast',
+    short: 'Conversation, fast',
+    teach: 'Their goal is to hold everyday conversations soon: favour the most frequent words and set phrases, heard and spoken, over rare vocabulary and grammar terminology.',
+    tracks: ['spanish'],
+  },
   specific: {
     label: 'Something specific (type it)',
     short: 'Something specific',
@@ -67,6 +75,7 @@ const EFFECTS = {
   deep: { placementMode: 'accurate', placementLength: 1.2, items: 0.2, review: 0.05, stretch: 0.1, support: 0, depth: 'thorough' },
   test: { placementMode: 'accurate', placementLength: 1.2, items: 0.1, review: 0.1, stretch: 0.05, support: 0, depth: null },
   essentials: { placementMode: 'quick', placementLength: 0.7, items: -0.25, review: -0.05, stretch: -0.05, support: 0, depth: 'brief' },
+  conversation: { placementMode: 'quick', placementLength: 0.8, items: 0, review: 0.05, stretch: 0, support: 0, depth: 'brief' },
   specific: { placementMode: 'balanced', placementLength: 1, items: 0, review: 0, stretch: 0, support: 0, depth: null },
 };
 
@@ -142,6 +151,7 @@ function set(userId, { trackId, gradeId = null, choice = null, text = '', skippe
   if (!userId || !trackId) return { error: 'Choose a subject first.' };
   const picked = choice ? String(choice) : null;
   if (picked && !CHOICES[picked]) return { error: 'Choose one of the goals.' };
+  if (picked && CHOICES[picked].tracks && !CHOICES[picked].tracks.includes(String(trackId))) return { error: 'Choose one of the goals.' };
   const words = cleanText(text);
   if (picked === 'specific' && !words) return { error: 'Type what you want to get out of it.' };
   const now = new Date().toISOString();

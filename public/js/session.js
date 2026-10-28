@@ -33,6 +33,9 @@ App.mount(async () => {
       // `?ordinary=1` is the way back from a block level that could not be
       // written: the adaptive session teaches the level instead.
       ordinary: App.query('ordinary') === '1' || undefined,
+      // `?classic=1` keeps a Spanish level in this session instead of the
+      // Duolingo-style player (/spanish/learn), which links back here.
+      classic: App.query('classic') === '1' || undefined,
     });
     // A game level is a game, and the server knows which levels are. The page
     // goes straight there rather than building a sitting nobody would sit —

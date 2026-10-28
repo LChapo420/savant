@@ -571,7 +571,25 @@ function unitsToWork(plan, units, statuses, except = -1) {
  */
 function nextLevelAfter(enrollment, grade, level) {
   const next = unitNextLevelAfter(enrollment, grade, level);
-  return compressProven(enrollment, grade, next);
+  return goalFit(enrollment, grade, compressProven(enrollment, grade, next));
+}
+
+/**
+ * Spanish only: the learner's goal may put some levels aside (enrichment,
+ * long writing, extra pronunciation for a "conversation, fast" goal). The path
+ * steps over them; they stay open (services/spanish/goal-fit.js,
+ * docs/spanish-replica/GOAL-FIT.md). Never a checkpoint, a unit check or the
+ * grade's last level.
+ */
+function goalFit(enrollment, grade, next) {
+  if (!enrollment || enrollment.track_id !== 'spanish') return next;
+  try {
+    // eslint-disable-next-line global-require
+    return require('./spanish/goal-fit').stepOverDeferred(enrollment, grade, next);
+  } catch (err) {
+    console.warn(`learner-path: Spanish goal fit failed: ${err.message}`);
+    return next;
+  }
 }
 
 /**

@@ -322,7 +322,7 @@ App.mount(async () => {
     const own = data.enrollments.find((e) => e.track.id === id);
     return own ? own.track.name : String(id || '').replace(/_/g, ' ');
   };
-  const KIND_NAME = { placement: 'Placement', session: 'Session', checkpoint: 'Checkpoint', skip: 'Challenge exam', lesson: 'Lesson' };
+  const KIND_NAME = { placement: 'Placement', session: 'Session', checkpoint: 'Checkpoint', skip: 'Challenge exam', lesson: 'Lesson', spanish: 'Activities' };
   function when(iso) {
     if (!iso) return '';
     const d = new Date(iso);

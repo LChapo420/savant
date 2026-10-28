@@ -20,7 +20,13 @@ const router = express.Router();
 const UPLOAD_DIR = path.join(__dirname, '..', '..', 'data', 'spanish-uploads');
 
 const labOn = () => process.env.NODE_ENV !== 'production' || process.env.SPANISH_LAB === 'on';
-router.use((req, res, next) => (labOn() ? next() : res.status(404).json({ error: 'No such endpoint.' })));
+const esPath = require('../../services/spanish/path');
+// The main Spanish path (services/spanish/path.js) plays its levels through the
+// same checking and voice routes as the lab, so those stay open for it when the
+// lab itself is switched off: the path API, voice, and any call about a run.
+const PATH_ROUTES = /^\/(path\/|status$|tts$|asr$)/;
+const forPath = (req) => PATH_ROUTES.test(String(req.path || '')) || esPath.isRunId(String((req.body && req.body.levelId) || ''));
+router.use((req, res, next) => (labOn() || forPath(req) ? next() : res.status(404).json({ error: 'No such endpoint.' })));
 
 // Everything that calls a model or a voice service, or keeps a file, needs an
 // account. Without one these were open to anyone who could reach the server
@@ -40,8 +46,17 @@ const uid = (req) => (req.user ? req.user.id : null);
 const bad = (res, msg, code = 400) => res.status(code).json({ error: msg });
 
 router.get('/status', (req, res) => {
-  res.json({ ai: ai.isEnabled(), voice: voice.ttsEnabled(), asr: voice.asrEnabled(), levels: lab.LEVELS.length });
+  // Voice and recognition as this account gets them: the LLM Gateway list counts too.
+  const gateway = voice.gatewayFor(uid(req));
+  res.json({ ai: ai.isEnabled(), voice: voice.ttsEnabled() || gateway, asr: voice.asrEnabled() || gateway, levels: lab.LEVELS.length });
 });
+
+router.use('/path', require('./path'));
+
+/** Keep the first answer to an item of a main-path run (signed in, own run only). */
+function notePath(req, levelId, itemId, correct, extra) {
+  if (req.user && esPath.isRunId(levelId)) esPath.recordResult({ runId: levelId, userId: req.user.id, itemId, correct, extra });
+}
 
 router.get('/lab/levels', (req, res) => res.json({ levels: lab.list() }));
 
@@ -64,6 +79,7 @@ router.post('/check', limit('es-check', 600, 60 * 1000), (req, res) => {
   const { levelId, itemId, response } = req.body || {};
   const out = lab.check(String(levelId || ''), String(itemId || ''), response);
   if (!out) return bad(res, 'Unknown item.', 404);
+  notePath(req, String(levelId || ''), String(itemId || ''), !!out.correct);
   res.json(out);
 });
 
@@ -71,6 +87,7 @@ router.post('/dictation/check', limit('es-check', 600, 60 * 1000), (req, res) =>
   const { levelId, lineId, text } = req.body || {};
   const out = lab.dictationCheck(String(levelId || ''), String(lineId || ''), String(text || ''));
   if (!out) return bad(res, 'Unknown line.', 404);
+  notePath(req, String(levelId || ''), String(lineId || ''), !!out.correct, { score: out.score });
   res.json(out);
 });
 
@@ -131,7 +148,12 @@ router.post('/conversation/end', limit('es-ai', 200, 10 * 60 * 1000), async (req
   const level = lab.scenarioFor(String(levelId || ''), part);
   if (!level) return bad(res, 'No such conversation.', 404);
   const goals = Array.isArray(goalsMet) ? goalsMet.map(String) : [];
-  res.json(await acts.conversationRubric(level, cleanHistory(history), goals, uid(req)));
+  const rubric = await acts.conversationRubric(level, cleanHistory(history), goals, uid(req));
+  // A main-path conversation counts by the share of the role-play's goals reached.
+  const known = new Set(level.scenario.goals.map((g) => g.id));
+  const reached = goals.filter((g) => known.has(g)).length;
+  notePath(req, String(levelId || ''), '__convo', reached >= level.scenario.goals.length / 2, { ratio: level.scenario.goals.length ? reached / level.scenario.goals.length : 0, overall: rubric.overall });
+  res.json(rubric);
 });
 
 // ── writing ───────────────────────────────────────────────────────────────
@@ -166,7 +188,7 @@ router.post('/recording/score', limit('es-ai', 200, 10 * 60 * 1000), async (req,
 
 router.post('/reaction', limit('es-ai', 200, 10 * 60 * 1000), async (req, res) => {
   const { levelId, title, text } = req.body || {};
-  const level = lab.byId.get(String(levelId || ''));
+  const level = lab.getLevel(String(levelId || ''));
   if (!level) return bad(res, 'No such level.', 404);
   res.json(await acts.reaction({ ...level, reader: { title } }, String(text || '').slice(0, 400), uid(req)));
 });

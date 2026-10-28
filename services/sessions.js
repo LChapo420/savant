@@ -1022,6 +1022,14 @@ function workDone(sessionList) {
     row.answered += 1;
     if (level !== undefined && level !== null) row.levels.add(level);
   }
+  // A main-path Spanish level (services/spanish/path.js) keeps its answers on
+  // its run, and counts them on its session row.
+  for (const row of byId.values()) {
+    if (row.session.kind === 'spanish' && row.session.es_answered) {
+      row.answered += row.session.es_answered;
+      row.levels.add(row.session.start_level);
+    }
+  }
   // A written checkpoint can be the writing alone, with no quick questions, and
   // a piece handed in is work done just as an answer is.
   for (const essay of db.find('essays', (e) => byId.has(e.session_id) && (e.attempts || []).length)) {

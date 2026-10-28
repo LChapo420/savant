@@ -18,9 +18,18 @@
     ES.audio.warm(lines);
   };
 
-  // The closing screen every engine ends on.
+  // The closing screen every engine ends on. A page that hosts the engines
+  // (the main path's player, public/spanish/js/learn.js) sets ES.flow.host to
+  // take over leaving and finishing; the test lab leaves it unset.
   ES.flow = {
+    host: null,
+    exit() {
+      if (ES.flow.host && ES.flow.host.exit) return ES.flow.host.exit();
+      location.href = '/spanish/lab';
+      return undefined;
+    },
     back(root, { title = 'Level finished', html = '', level }) {
+      if (ES.flow.host && ES.flow.host.back) return ES.flow.host.back(root, { title, html, level });
       root.innerHTML = '';
       const page = h('div', { class: 'es-endscreen es-endscreen--summary' }, `<div class="es-endscreen__char">${ES.character('axo')}</div><h1 class="es-h2">${esc(title)}</h1><div class="es-endscreen__extra">${html}</div>`);
       const footer = h('footer', { class: 'es-footer' });
@@ -57,7 +66,7 @@
     },
   };
 
-  const quit = () => { location.href = '/spanish/lab'; };
+  const quit = () => ES.flow.exit();
 
   // ── lesson (and practice / review game) ─────────────────────────────
   engines.lesson = async (level, root) => {
@@ -67,7 +76,8 @@
     const r = await ES.session.run(frame, { levelId: level.id, items: level.items, practice: !!level.practice });
     if (r.quit) return quit();
     await ui.complete(root, { title: level.practice ? 'Practice complete!' : 'Lesson complete!', xp: r.xp, accuracy: r.accuracy, timeMs: r.timeMs });
-    await ui.streak(root, { days: ES.flow.streakDays() });
+    // A hosting page shows the account's real streak once the server has counted the day.
+    if (!ES.flow.host) await ui.streak(root, { days: ES.flow.streakDays() });
     ES.flow.back(root, { level, title: 'Level finished', html: `<p>${r.results.length} challenges · ${r.accuracy}% first-try accuracy · ${r.xp} XP</p>` });
   };
 

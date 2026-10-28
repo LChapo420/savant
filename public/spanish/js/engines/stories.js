@@ -4,7 +4,7 @@
   const ES = window.ES;
   const { h, esc, icon, ui, sfx } = ES;
   const engines = (ES.engines = ES.engines || {});
-  const quit = () => { location.href = '/spanish/lab'; };
+  const quit = () => ES.flow.exit();
 
   // Render one question inline and resolve with its graded result.
   function askInline(frame, holder, item, levelId, { exam = false } = {}) {
