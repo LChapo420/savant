@@ -44,7 +44,7 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-0. **Creator links for the beta form (do this first: the owner is recruiting creators today).** The site's
+0. [claimed 2026-10-28T12:00Z] **Creator links for the beta form (do this first: the owner is recruiting creators today).** The site's
    beta form is in `site/server.js` (`FORMS` includes `beta`). Add a creator code: links like
    `/beta?ref=<code>` (and `?utm_source=` as a fallback) store the code with each beta application, survive
    the page reload and the form post, and are shown per code in the site admin (applications, consented emails,
