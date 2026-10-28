@@ -39,7 +39,7 @@ const blockLevels = require('../services/block-levels');
 const schemaCheck = require('../services/block-schema');
 const ai = require('../services/ai');
 
-const GRADE_FILES = ['grade-1-entry.js', 'grade-2-intermediate.js', 'grade-3-advanced.js'];
+const GRADE_FILES = ['grade-1-entry.js', 'grade-2-intermediate.js', 'grade-3-advanced-a.js', 'grade-3-advanced-b.js'];
 
 function sha256(value) {
   return crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex');

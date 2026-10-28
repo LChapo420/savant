@@ -1,0 +1,510 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "intermediate",
+  "level": 81,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the six question words inside fixed questions the learner can use today, show that they always carry an accent mark, then practice picking the right word for each need.",
+  "coverage": [
+    "qué = what: ¿Qué es esto?",
+    "quién = who: ¿Quién es?",
+    "dónde = where: ¿Dónde está el baño?",
+    "cuándo = when: ¿Cuándo es la reunión?",
+    "cómo = how: ¿Cómo estás? and ¿Cómo te llamas? (What is your name?)",
+    "cuánto = how much: ¿Cuánto cuesta?; cuántos and cuántas = how many",
+    "Question words always carry a written accent and the question opens with ¿",
+    "Pronunciation: qué is \"keh\" and quién is \"kyehn\" (the u is silent)"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents the six question words, each inside a ready-made question.",
+      "data": {
+        "caption": "Six question words in six questions",
+        "headers": [
+          "Word",
+          "Meaning",
+          "Ready-made question",
+          "In English"
+        ],
+        "rows": [
+          [
+            "qué",
+            "what",
+            "¿Qué es esto?",
+            "What is this?"
+          ],
+          [
+            "quién",
+            "who",
+            "¿Quién es?",
+            "Who is it?"
+          ],
+          [
+            "dónde",
+            "where",
+            "¿Dónde está el baño?",
+            "Where is the bathroom?"
+          ],
+          [
+            "cuándo",
+            "when",
+            "¿Cuándo es la reunión?",
+            "When is the meeting?"
+          ],
+          [
+            "cómo",
+            "how",
+            "¿Cómo estás?",
+            "How are you?"
+          ],
+          [
+            "cuánto",
+            "how much",
+            "¿Cuánto cuesta?",
+            "How much does it cost?"
+          ]
+        ],
+        "highlightColumn": 0
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: the six questions, with the voice falling at the end as in real speech.",
+      "data": {
+        "title": "Ask the six questions",
+        "cueNote": "Qué: keh. Quién: kyehn. Questions with a question word usually fall at the end, not rise.",
+        "duration": 21,
+        "cues": [
+          {
+            "text": "¿Qué es esto?",
+            "start": 0.3,
+            "end": 1.2
+          },
+          {
+            "text": "¿Quién es?",
+            "start": 2.7,
+            "end": 3.5
+          },
+          {
+            "text": "¿Dónde está el baño?",
+            "start": 5,
+            "end": 6.5
+          },
+          {
+            "text": "¿Cuándo es la reunión?",
+            "start": 8,
+            "end": 9.3
+          },
+          {
+            "text": "¿Cómo estás?",
+            "start": 10.8,
+            "end": 11.7
+          },
+          {
+            "text": "¿Cuánto cuesta?",
+            "start": 13.2,
+            "end": 14.1
+          },
+          {
+            "text": "¿Cómo te llamas?",
+            "start": 15.6,
+            "end": 16.7
+          },
+          {
+            "text": "¿Cuántos años tienes?",
+            "start": 18.2,
+            "end": 19.5
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the spelling rule that marks a question word.",
+      "data": {
+        "tag": "Spelling",
+        "ruleName": "Accent on every question word",
+        "anchor": "A question word always carries a written accent: qué, quién, dónde, cuándo, cómo, cuánto.",
+        "prerequisites": [
+          "Without the accent the word has another job: que (that), como (like, as), cuando (when, in a statement).",
+          "The question opens with ¿ and closes with ?.",
+          "The accent does not change the sound of the letters; it tells the reader \"this is a question word\"."
+        ]
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_XRay",
+      "purpose": "X-rays two fixed questions whose English meaning is not word for word.",
+      "data": {
+        "prompt": "Tap each part to see what it means.",
+        "source": "¿{{Cómo te llamas}}? ¿{{Cuántos años tienes}}?",
+        "terms": [
+          {
+            "id": "x1",
+            "label": "What is your name?",
+            "mark": "Cómo te llamas",
+            "note": "Literally \"How do you call yourself?\" This is the normal way to ask a name."
+          },
+          {
+            "id": "x2",
+            "label": "How old are you?",
+            "mark": "Cuántos años tienes",
+            "note": "Literally \"How many years do you have?\" Spanish uses tener (to have) for age."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves each question word by meaning.",
+      "data": {
+        "title": "Word to meaning",
+        "instruction": "Connect each question word to its meaning.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "qué"
+          },
+          {
+            "id": "t2",
+            "label": "quién"
+          },
+          {
+            "id": "t3",
+            "label": "dónde"
+          },
+          {
+            "id": "t4",
+            "label": "cuándo"
+          },
+          {
+            "id": "t5",
+            "label": "cómo"
+          },
+          {
+            "id": "t6",
+            "label": "cuánto"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "who"
+          },
+          {
+            "id": "d4",
+            "label": "when"
+          },
+          {
+            "id": "d6",
+            "label": "how much"
+          },
+          {
+            "id": "d1",
+            "label": "what"
+          },
+          {
+            "id": "d3",
+            "label": "where"
+          },
+          {
+            "id": "d5",
+            "label": "how"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices picking the question word that fits each need.",
+      "data": {
+        "title": "Which question word?",
+        "instructions": "Choose the word that completes each question.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "At a shop: ¿"
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "Cuánto",
+              "Quién",
+              "Dónde"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " cuesta? Lost in a building: ¿"
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "Dónde",
+              "Cuándo",
+              "Qué"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " está el baño? Someone knocks: ¿"
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "Quién",
+              "Cómo",
+              "Cuánto"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " es? Planning: ¿"
+          },
+          {
+            "kind": "blank",
+            "id": "b4",
+            "options": [
+              "Cuándo",
+              "Dónde",
+              "Quién"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " es la reunión?"
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        }
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets translating \"What is your name?\" word for word.",
+      "data": {
+        "question": "How do you naturally ask \"What is your name?\" (to a friend)?",
+        "choices": [
+          "¿Cómo te llamas?",
+          "¿Qué te llamas?",
+          "¿Quién te llamas?",
+          "¿Dónde te llamas?"
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Word-for-word \"what\"",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "English says \"what\", so qué seems to be the word to use."
+        },
+        "whyIntuitionFailed": "English asks \"what\" about a name; Spanish asks \"how\" you call yourself.",
+        "correctReasoning": "The fixed question is ¿Cómo te llamas?; the answer is Me llamo ...",
+        "recoveryTip": "Learn whole questions as chunks; do not build them word by word yet.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the six words as a toolkit.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Question words",
+        "takeaway": "Qué, quién, dónde, cuándo, cómo and cuánto, each with its accent, open almost every question you will need this month.",
+        "terms": [
+          "qué",
+          "quién",
+          "dónde",
+          "cuándo",
+          "cómo",
+          "cuánto"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_questions",
+      "skill_name": "Questions and negation",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "You want to know the price of a shirt. Which question do you ask?",
+      "answer": "¿Cuánto cuesta?",
+      "rationale": "Cuánto asks how much, so ¿Cuánto cuesta? asks the price.",
+      "source": "prewritten",
+      "hint": "You want an amount.",
+      "choices": [
+        "¿Cuánto cuesta?",
+        "¿Quién cuesta?",
+        "¿Cuándo cuesta?",
+        "¿Cómo cuesta?"
+      ],
+      "id": "c1",
+      "after": 5,
+      "focus": "cuánto for prices"
+    },
+    {
+      "skill_id": "es_questions",
+      "skill_name": "Questions and negation",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "What does \"¿Cuándo es la reunión?\" ask?",
+      "answer": "When is the meeting?",
+      "rationale": "Cuándo means when; where would be dónde and who quién.",
+      "source": "prewritten",
+      "hint": "Cuándo is about time.",
+      "choices": [
+        "When is the meeting?",
+        "Where is the meeting?",
+        "Who is at the meeting?",
+        "How is the meeting?"
+      ],
+      "id": "c2",
+      "after": 5,
+      "focus": "understanding cuándo"
+    },
+    {
+      "skill_id": "es_questions",
+      "skill_name": "Questions and negation",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the Spanish question word that means \"where\".",
+      "answer": "dónde",
+      "rationale": "Dónde means where, as in ¿Dónde está el baño?",
+      "source": "prewritten",
+      "accepts": [
+        "donde"
+      ],
+      "hint": "It begins with d.",
+      "id": "c3",
+      "after": 6,
+      "focus": "recalling dónde"
+    },
+    {
+      "skill_id": "es_greetings",
+      "skill_name": "Greetings and courtesy",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Someone asks you \"¿Cómo te llamas?\" Which answer fits?",
+      "answer": "Me llamo Sara.",
+      "rationale": "The question asks your name, so the answer is Me llamo plus your name; the others answer how are you, what is this and how old are you.",
+      "source": "prewritten",
+      "hint": "It is not asking how you are.",
+      "choices": [
+        "Me llamo Sara.",
+        "Estoy bien.",
+        "Es un libro.",
+        "Tengo veinte años."
+      ],
+      "id": "c4",
+      "after": 6,
+      "focus": "answering ¿Cómo te llamas?"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 3,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 3,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/intermediate/81",
+    "version": 1,
+    "sha256": "809b8a62adc7aa52fb3a3220513750e4e961695781ded50f050b9201b8c3eebf",
+    "title": "Question Words as Chunks",
+    "file": "content/spanish-prewritten/intermediate/level-081.json"
+  }
+}

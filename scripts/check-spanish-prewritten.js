@@ -159,10 +159,16 @@ function spellingProblems(row) {
   const problems = [];
   // A fill-the-blank passage is read as the learner reads it: its segments
   // joined, each blank filled with its right option (a question may span a blank).
-  const blockData = row.blocks.map((b) => (b.block === 'Recall_FillTheBlank'
-    ? { ...b.data, segments: undefined, passage: b.data.segments.map((s) => (s.kind === 'blank' ? s.options[s.correctIndex] : s.text)).join(''), options: b.data.segments.filter((s) => s.kind === 'blank').map((s) => s.options) }
-    : b.data));
-  const all = strings({ approach: row.approach, coverage: row.coverage, blocks: blockData, checks: row.checks }, 'lesson', [], new Set(['accepts', 'id', 'correctOptionId', 'skill_id', 'skill_name', 'source']));
+  // Wrong options are left out of the spelling check: a misspelled distractor
+  // ("canciónes") is sometimes the point of the question.
+  const blockData = row.blocks.map((b) => {
+    if (b.block === 'Recall_FillTheBlank') return { ...b.data, segments: undefined, passage: b.data.segments.map((s) => (s.kind === 'blank' ? s.options[s.correctIndex] : s.text)).join('') };
+    if (b.block === 'Trap_CommonError') return { ...b.data, choices: [b.data.choices[b.data.correctIndex]] };
+    if (b.block === 'Interact_MultipleChoice') return { ...b.data, options: b.data.options.filter((o) => o.id === b.data.correctOptionId) };
+    return b.data;
+  });
+  const checkData = row.checks.map((c) => ({ ...c, choices: undefined }));
+  const all = strings({ approach: row.approach, coverage: row.coverage, blocks: blockData, checks: checkData }, 'lesson', [], new Set(['accepts', 'id', 'correctOptionId', 'skill_id', 'skill_name', 'source']));
   for (const [at, s] of all) {
     if (/\n/.test(s)) problems.push(`spelling: line break in ${at}`);
     // Every ¿ is closed by a ? before the next ¿, and every ¡ by a !. A mark

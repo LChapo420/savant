@@ -1,0 +1,484 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "intermediate",
+  "level": 112,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Warn the learner off the false friends that cause real embarrassment (embarazada, éxito, librería, constipado) with the word to use instead, then practice catching them in context.",
+  "coverage": [
+    "A false friend looks like an English word but means something else",
+    "embarazada = pregnant; embarrassed is avergonzado / avergonzada, or me da vergüenza",
+    "éxito = success; exit is salida",
+    "librería = bookstore; library is biblioteca",
+    "constipado = having a cold, stuffed up; constipated is estreñido",
+    "More: carpeta = folder (carpet is alfombra), ropa = clothes (rope is cuerda), sopa = soup (soap is jabón)",
+    "When a cognate seems odd in context, check it rather than trust it"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_TextBlock",
+      "purpose": "Explains false friends and why they matter after a lesson on cognates.",
+      "data": {
+        "eyebrow": "Unit 2.9",
+        "title": "Not every look-alike is a friend",
+        "sections": [
+          {
+            "paragraphs": [
+              "Most look-alike words are real cognates: hotel is hotel. But a few are false friends: they look like an English word and mean something different. A handful of them can turn a simple sentence into a very awkward one.",
+              "Learn these as a short warning list, each paired with the word you actually want."
+            ]
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists the first false friends with their real meanings and the words to use instead.",
+      "data": {
+        "caption": "First warning list",
+        "headers": [
+          "Spanish",
+          "Really means",
+          "Not this",
+          "For that, say"
+        ],
+        "rows": [
+          [
+            "embarazada",
+            "pregnant",
+            "embarrassed",
+            "avergonzado / avergonzada; me da vergüenza"
+          ],
+          [
+            "el éxito",
+            "success",
+            "exit",
+            "la salida"
+          ],
+          [
+            "la librería",
+            "bookstore",
+            "library",
+            "la biblioteca"
+          ],
+          [
+            "constipado / constipada",
+            "having a cold, stuffed up",
+            "constipated",
+            "estreñido / estreñida"
+          ],
+          [
+            "la carpeta",
+            "folder",
+            "carpet",
+            "la alfombra"
+          ],
+          [
+            "la ropa",
+            "clothes",
+            "rope",
+            "la cuerda"
+          ],
+          [
+            "la sopa",
+            "soup",
+            "soap",
+            "el jabón"
+          ]
+        ],
+        "footnote": "Constipado is heard most in Spain; across Latin America people more often say estoy resfriado or estoy resfriada for a cold."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: the false friends and their real partners, in pairs.",
+      "data": {
+        "title": "Say the right word",
+        "cueNote": "¡Qué vergüenza! (keh behr-GWEHN-sah) means \"How embarrassing!\" The ü in vergüenza makes the u heard.",
+        "duration": 19.8,
+        "cues": [
+          {
+            "text": "embarazada, avergonzada",
+            "start": 0.3,
+            "end": 2.5
+          },
+          {
+            "text": "el éxito, la salida",
+            "start": 4,
+            "end": 5.8
+          },
+          {
+            "text": "la librería, la biblioteca",
+            "start": 7.3,
+            "end": 9.3
+          },
+          {
+            "text": "constipado, estreñido",
+            "start": 10.8,
+            "end": 12.6
+          },
+          {
+            "text": "¡Qué vergüenza!",
+            "start": 14.1,
+            "end": 15
+          },
+          {
+            "text": "¿Dónde está la salida?",
+            "start": 16.5,
+            "end": 18.3
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets the most famous false friend in a realistic slip.",
+      "data": {
+        "question": "You spilled coffee on your boss. How do you say you are embarrassed?",
+        "choices": [
+          "¡Qué vergüenza!",
+          "Estoy embarazada.",
+          "Estoy constipada.",
+          "Es un éxito."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Embarazada for embarrassed",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "It looks and sounds like \"embarrassed\"."
+        },
+        "whyIntuitionFailed": "Embarazada starts exactly like \"embarrass\", so the brain files it as a cognate.",
+        "correctReasoning": "Embarazada means pregnant. To say you are embarrassed, say ¡Qué vergüenza! or Estoy avergonzado / avergonzada.",
+        "recoveryTip": "Embarrassed: think vergüenza, not embarazada.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves each false friend by its real meaning.",
+      "data": {
+        "title": "What it really means",
+        "instruction": "Connect each Spanish word to its real meaning.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "embarazada"
+          },
+          {
+            "id": "t2",
+            "label": "éxito"
+          },
+          {
+            "id": "t3",
+            "label": "librería"
+          },
+          {
+            "id": "t4",
+            "label": "carpeta"
+          },
+          {
+            "id": "t5",
+            "label": "ropa"
+          },
+          {
+            "id": "t6",
+            "label": "sopa"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "success"
+          },
+          {
+            "id": "d4",
+            "label": "folder"
+          },
+          {
+            "id": "d6",
+            "label": "soup"
+          },
+          {
+            "id": "d1",
+            "label": "pregnant"
+          },
+          {
+            "id": "d3",
+            "label": "bookstore"
+          },
+          {
+            "id": "d5",
+            "label": "clothes"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices choosing the right word in context.",
+      "data": {
+        "title": "Choose the right word",
+        "instructions": "Choose the word that says what the English means.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "I need to return a book to the library: Necesito ir a la "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "biblioteca",
+              "librería",
+              "carpeta"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". Where is the exit? ¿Dónde está la "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "salida",
+              "éxito",
+              "entrada"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": "? The concert was a success: El concierto fue un "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "éxito",
+              "salida",
+              "sopa"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": "."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        }
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "Pairs each English meaning with the Spanish word to say and the false friend to avoid.",
+      "data": {
+        "title": "Say this, not that",
+        "rows": [
+          {
+            "key": "embarrassed",
+            "value": "avergonzado / avergonzada; ¡Qué vergüenza!",
+            "detail": "Not embarazada, which means pregnant.",
+            "tone": "error"
+          },
+          {
+            "key": "exit",
+            "value": "la salida",
+            "detail": "Not el éxito, which means success.",
+            "tone": "error"
+          },
+          {
+            "key": "library",
+            "value": "la biblioteca",
+            "detail": "Not la librería, which is a bookstore.",
+            "tone": "error"
+          },
+          {
+            "key": "constipated",
+            "value": "estreñido / estreñida",
+            "detail": "Not constipado, which means having a cold.",
+            "tone": "error"
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the warning list and the habit of checking odd look-alikes.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "False friends",
+        "takeaway": "Embarazada is pregnant, éxito is success, librería is a bookstore and constipado is a cold: when a look-alike makes a strange sentence, check it.",
+        "terms": [
+          "embarazada",
+          "éxito",
+          "librería",
+          "constipado",
+          "biblioteca",
+          "salida"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "A coworker says \"Mi hermana está embarazada.\" What is she telling you?",
+      "answer": "Her sister is pregnant.",
+      "rationale": "Embarazada means pregnant; embarrassed is avergonzada.",
+      "source": "prewritten",
+      "hint": "It is a false friend.",
+      "choices": [
+        "Her sister is pregnant.",
+        "Her sister is embarrassed.",
+        "Her sister is sick.",
+        "Her sister is busy."
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "embarazada"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "You want to borrow books for free. Where do you go?",
+      "answer": "a la biblioteca",
+      "rationale": "A library, where you borrow books, is la biblioteca; la librería is a bookstore where you buy them.",
+      "source": "prewritten",
+      "hint": "Librería is where books are sold.",
+      "choices": [
+        "a la biblioteca",
+        "a la librería",
+        "a la salida",
+        "a la carpeta"
+      ],
+      "id": "c2",
+      "after": 5,
+      "focus": "librería vs biblioteca"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "type_in",
+      "prompt": "Type the Spanish word for \"exit\" (as on a door sign).",
+      "answer": "salida",
+      "rationale": "Exit is salida; éxito means success.",
+      "source": "prewritten",
+      "accepts": [
+        "la salida"
+      ],
+      "hint": "It is not éxito.",
+      "id": "c3",
+      "after": 5,
+      "focus": "éxito vs salida"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/intermediate/112",
+    "version": 1,
+    "sha256": "2e59ec189698534081c786766a501f907915cd8ff134de8f3e948d6e6519685c",
+    "title": "False Friends: First Warning List",
+    "file": "content/spanish-prewritten/intermediate/level-112.json"
+  }
+}

@@ -1,0 +1,461 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "intermediate",
+  "level": 122,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Add three more suffix rules (-ic to -ico, -ist to -ista, -ous to -oso), with the gender and accent behavior of each, then practice converting and agreeing them.",
+  "coverage": [
+    "-ic → -ico: fantastic → fantástico, electric → eléctrico, public → público",
+    "Most -ico words from -ic take a written accent on the syllable before -ico",
+    "-ist → -ista: artist → artista, dentist → dentista, tourist → turista",
+    "-ista is the same for a man and a woman: el artista, la artista",
+    "-ous → -oso: famous → famoso, delicious → delicioso, nervous → nervioso",
+    "-ico and -oso adjectives agree: fantástica, famosos, deliciosas"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "Gives the three suffix rules in one reference.",
+      "data": {
+        "title": "Three suffix rules",
+        "rows": [
+          {
+            "key": "-ic → -ico",
+            "value": "fantastic → fantástico, electric → eléctrico, romantic → romántico",
+            "detail": "Usually an accent before -ico: fan-TÁS-ti-co."
+          },
+          {
+            "key": "-ist → -ista",
+            "value": "artist → artista, dentist → dentista, pianist → pianista",
+            "detail": "Same word for a man or a woman: el / la dentista."
+          },
+          {
+            "key": "-ous → -oso",
+            "value": "famous → famoso, delicious → delicioso, curious → curioso",
+            "detail": "Changes for agreement: famosa, famosos."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: words from each rule.",
+      "data": {
+        "title": "Hear the suffixes",
+        "cueNote": "Hear the stress before -ico: fan-TÁS-ti-co, e-LÉC-tri-co, PÚ-bli-co.",
+        "duration": 23.9,
+        "cues": [
+          {
+            "text": "fantástico",
+            "start": 0.3,
+            "end": 1.2
+          },
+          {
+            "text": "eléctrico",
+            "start": 2.7,
+            "end": 3.6
+          },
+          {
+            "text": "público",
+            "start": 5.1,
+            "end": 5.9
+          },
+          {
+            "text": "el artista",
+            "start": 7.4,
+            "end": 8.3
+          },
+          {
+            "text": "la artista",
+            "start": 9.8,
+            "end": 10.7
+          },
+          {
+            "text": "el turista",
+            "start": 12.2,
+            "end": 13.1
+          },
+          {
+            "text": "famoso",
+            "start": 14.6,
+            "end": 15.4
+          },
+          {
+            "text": "famosa",
+            "start": 16.9,
+            "end": 17.7
+          },
+          {
+            "text": "delicioso",
+            "start": 19.2,
+            "end": 20.1
+          },
+          {
+            "text": "nervioso",
+            "start": 21.6,
+            "end": 22.4
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Theory_ContrastSplit",
+      "purpose": "Contrasts -ista, which never changes, with -ico and -oso, which agree.",
+      "data": {
+        "title": "Which endings change?",
+        "leftColumn": {
+          "heading": "-ista: one form",
+          "tone": "neutral",
+          "items": [
+            {
+              "label": "Man",
+              "text": "Él es artista."
+            },
+            {
+              "label": "Woman",
+              "text": "Ella es artista."
+            },
+            {
+              "label": "Plural",
+              "text": "Son turistas."
+            }
+          ]
+        },
+        "rightColumn": {
+          "heading": "-ico, -oso: four forms",
+          "tone": "accent",
+          "items": [
+            {
+              "label": "Man",
+              "text": "Él es famoso."
+            },
+            {
+              "label": "Woman",
+              "text": "Ella es famosa."
+            },
+            {
+              "label": "Plural",
+              "text": "Son famosos. / Son famosas."
+            }
+          ]
+        }
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Practices converting English words by the suffix rules.",
+      "data": {
+        "title": "Convert them",
+        "instruction": "Connect each English word to its Spanish form.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "romantic"
+          },
+          {
+            "id": "t2",
+            "label": "dentist"
+          },
+          {
+            "id": "t3",
+            "label": "generous"
+          },
+          {
+            "id": "t4",
+            "label": "tourist"
+          },
+          {
+            "id": "t5",
+            "label": "electric"
+          },
+          {
+            "id": "t6",
+            "label": "curious"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "dentista"
+          },
+          {
+            "id": "d4",
+            "label": "turista"
+          },
+          {
+            "id": "d6",
+            "label": "curioso"
+          },
+          {
+            "id": "d1",
+            "label": "romántico"
+          },
+          {
+            "id": "d3",
+            "label": "generoso"
+          },
+          {
+            "id": "d5",
+            "label": "eléctrico"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices agreement with -ico and -oso, and the fixed -ista.",
+      "data": {
+        "title": "Make them agree",
+        "instructions": "Choose the form that matches the person or thing.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Shakira es "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "famosa",
+              "famoso",
+              "famosos"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". Los tacos son "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "deliciosos",
+              "delicioso",
+              "deliciosa"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". Mi hermana es "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "dentista",
+              "dentisto",
+              "dentisa"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": "."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b1": "Shakira is a woman: famosa.",
+          "b2": "Los tacos is masculine plural: deliciosos.",
+          "b3": "-ista does not change: la dentista."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets making a masculine form of an -ista word.",
+      "data": {
+        "question": "How do you say \"He is an artist\"?",
+        "choices": [
+          "Él es artista.",
+          "Él es artisto.",
+          "Él es artisto famoso.",
+          "Él es artistico."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Turning -ista into -isto",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "Most Spanish words for a man end in -o, so -isto seems right."
+        },
+        "whyIntuitionFailed": "Learners know the -o / -a pattern and apply it to every ending.",
+        "correctReasoning": "-ista is one form for both: él es artista, ella es artista. Only the article shows gender: el artista, la artista.",
+        "recoveryTip": "-ista never becomes -isto.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the three suffix rules and their agreement behavior.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Cognate suffixes",
+        "takeaway": "-ic becomes -ico (with an accent), -ist becomes -ista (one form for everyone), and -ous becomes -oso (which agrees: famosa, famosos).",
+        "terms": [
+          "fantástico",
+          "artista",
+          "famoso",
+          "delicioso"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "type_in",
+      "prompt": "Use the rule to write the Spanish word for \"nervous\" (describing a man).",
+      "answer": "nervioso",
+      "rationale": "-ous becomes -oso, and for a man the ending is -o: nervous → nervioso.",
+      "source": "prewritten",
+      "hint": "Swap -ous for -oso.",
+      "id": "c1",
+      "after": 3,
+      "focus": "producing an -oso word"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "Which sentence is correct for \"She is a tourist\"?",
+      "answer": "Ella es turista.",
+      "rationale": "-ista has one form for a man or a woman, so a woman is also turista; turística is an adjective (touristic).",
+      "source": "prewritten",
+      "hint": "-ista does not change.",
+      "choices": [
+        "Ella es turista.",
+        "Ella es turisto.",
+        "Ella es turisa.",
+        "Ella es turística."
+      ],
+      "id": "c2",
+      "after": 5,
+      "focus": "-ista for both genders"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "Which form completes \"Las playas son ___.\" (The beaches are fantastic.)?",
+      "answer": "fantásticas",
+      "rationale": "Playas is feminine plural, so the adjective is fantásticas.",
+      "source": "prewritten",
+      "hint": "Las playas: feminine and plural.",
+      "choices": [
+        "fantásticas",
+        "fantásticos",
+        "fantástica",
+        "fantástico"
+      ],
+      "id": "c3",
+      "after": 4,
+      "focus": "agreement of -ico adjectives"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/intermediate/122",
+    "version": 1,
+    "sha256": "63ace2255a968229f830d4ea20385537ab2ecba6ee59afc09ff2aba242a3bf79",
+    "title": "Cognate Suffixes: -ic to -ico, -ist to -ista, -ous to -oso",
+    "file": "content/spanish-prewritten/intermediate/level-122.json"
+  }
+}

@@ -1,0 +1,435 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "intermediate",
+  "level": 85,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach four ready-made ways to ask for things (quiero, necesito, me gustaría, ¿tiene...?) with the politeness each carries, then practice choosing the right one at a café, a store and an office.",
+  "coverage": [
+    "Quiero = I want; fine with por favor, but direct",
+    "Necesito = I need: something necessary",
+    "Me gustaría = I would like: the polite, softer request",
+    "¿Tiene ...? = Do you have ...? to a shopkeeper or anyone you call usted; ¿Tienes ...? to a friend",
+    "Each takes a noun (un café) or a verb in its base form (pagar, reservar)",
+    "Answers you will hear: Sí, tenemos. / No, no tenemos.",
+    "Quisiera = I would like, a very polite alternative you will hear"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents the four request chunks with their tone.",
+      "data": {
+        "caption": "Four ways to ask",
+        "headers": [
+          "Chunk",
+          "Meaning",
+          "Tone",
+          "Example"
+        ],
+        "rows": [
+          [
+            "quiero",
+            "I want",
+            "direct; add por favor",
+            "Quiero un café, por favor."
+          ],
+          [
+            "necesito",
+            "I need",
+            "it is necessary",
+            "Necesito un taxi."
+          ],
+          [
+            "me gustaría",
+            "I would like",
+            "polite, soft",
+            "Me gustaría una mesa para dos."
+          ],
+          [
+            "¿tiene ...?",
+            "do you have ...?",
+            "polite (usted)",
+            "¿Tiene agua fría?"
+          ]
+        ],
+        "footnote": "You will also hear quisiera (I would like), which is even more polite."
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: the four chunks in a café and a store.",
+      "data": {
+        "title": "Asking politely",
+        "cueNote": "Me gustaría: meh goos-tah-REE-ah. Tenemos means \"we have\".",
+        "duration": 19,
+        "cues": [
+          {
+            "text": "Quiero un café, por favor.",
+            "start": 0.3,
+            "end": 2.1
+          },
+          {
+            "text": "Me gustaría una mesa para dos.",
+            "start": 3.6,
+            "end": 6
+          },
+          {
+            "text": "¿Tiene agua fría?",
+            "start": 7.5,
+            "end": 8.6
+          },
+          {
+            "text": "Sí, tenemos.",
+            "start": 10.1,
+            "end": 11
+          },
+          {
+            "text": "Necesito un taxi.",
+            "start": 12.5,
+            "end": 14
+          },
+          {
+            "text": "Me gustaría pagar, por favor.",
+            "start": 15.5,
+            "end": 17.5
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Interact_XRay",
+      "purpose": "X-rays one request to show the chunk followed by a verb in its base form.",
+      "data": {
+        "prompt": "Tap each part of the sentence.",
+        "source": "{{Me gustaría}} {{reservar}} {{una mesa}} {{para dos}}.",
+        "terms": [
+          {
+            "id": "x1",
+            "label": "me gustaría",
+            "mark": "Me gustaría",
+            "note": "I would like: the polite request."
+          },
+          {
+            "id": "x2",
+            "label": "reservar",
+            "mark": "reservar",
+            "note": "to reserve: the second verb stays in its base form."
+          },
+          {
+            "id": "x3",
+            "label": "una mesa",
+            "mark": "una mesa",
+            "note": "a table."
+          },
+          {
+            "id": "x4",
+            "label": "para dos",
+            "mark": "para dos",
+            "note": "for two."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Theory_ContrastSplit",
+      "purpose": "Contrasts ¿Tiene...? and ¿Tienes...?, the formal and friendly forms.",
+      "data": {
+        "title": "¿Tiene? or ¿Tienes?",
+        "leftColumn": {
+          "heading": "¿Tiene ...? (usted)",
+          "tone": "accent",
+          "items": [
+            {
+              "label": "To",
+              "text": "a shopkeeper, a waiter, a stranger, an older person.",
+              "example": "¿Tiene cambio? (Do you have change?)"
+            }
+          ]
+        },
+        "rightColumn": {
+          "heading": "¿Tienes ...? (tú)",
+          "tone": "neutral",
+          "items": [
+            {
+              "label": "To",
+              "text": "a friend, a family member, a child.",
+              "example": "¿Tienes un lápiz?"
+            }
+          ]
+        },
+        "footnote": "In a store, ¿tiene ...? is always safe."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices choosing the chunk that fits each situation.",
+      "data": {
+        "title": "Choose the request",
+        "instructions": "Choose the chunk that fits the situation in brackets.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "(at a pharmacy, to the pharmacist) ¿"
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "Tiene",
+              "Tienes",
+              "Necesito"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " aspirinas? (at a restaurant, politely) "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "Me gustaría",
+              "Necesito",
+              "Tengo"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " ver el menú, por favor. (your phone is dead) "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "Necesito",
+              "Me gustaría",
+              "Tiene"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " un cargador."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b1": "A pharmacist is usted: ¿Tiene ...?",
+          "b3": "It is a real need: Necesito un cargador (I need a charger)."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Interact_MultipleChoice",
+      "purpose": "Applies tone: choosing the most polite way to order.",
+      "data": {
+        "prompt": "You are ordering at a nice restaurant and want to sound polite. Which is best?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Me gustaría el pescado, por favor."
+          },
+          {
+            "id": "b",
+            "text": "Quiero el pescado."
+          },
+          {
+            "id": "c",
+            "text": "Necesito el pescado."
+          },
+          {
+            "id": "d",
+            "text": "¿Tienes el pescado?"
+          }
+        ],
+        "correctOptionId": "a",
+        "feedback": {
+          "correct": "Right.",
+          "incorrect": "Not quite. Read the feedback and try again.",
+          "byOption": {
+            "a": "Yes: me gustaría is the soft, polite request, and por favor adds courtesy.",
+            "b": "Understood, but without por favor it sounds blunt.",
+            "c": "Necesito means you need it, which sounds odd for a menu choice.",
+            "d": "Tienes is for friends; to a waiter use tiene."
+          }
+        }
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets conjugating the second verb instead of keeping its base form.",
+      "data": {
+        "question": "How do you say \"I would like to pay\"?",
+        "choices": [
+          "Me gustaría pagar.",
+          "Me gustaría pago.",
+          "Me gustaría a pagar.",
+          "Me gusto pagar."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Changing the second verb",
+        "trapChoiceIndexes": [
+          1,
+          2
+        ],
+        "trapReasons": {
+          "1": "Pago (I pay) feels like it agrees with \"I\".",
+          "2": "English says \"to pay\", so a word for \"to\" seems needed."
+        },
+        "whyIntuitionFailed": "English marks the second verb with \"to\", and learners look for a Spanish word to do that, or change the verb.",
+        "correctReasoning": "After quiero, necesito or me gustaría, the next verb stays in its base form, with no extra word: Me gustaría pagar.",
+        "recoveryTip": "Chunk + base verb (-ar, -er, -ir): quiero comer, necesito ir, me gustaría pagar.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the four chunks and their tone.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Wants and needs",
+        "takeaway": "Quiero is direct, necesito is a need, me gustaría is polite, and ¿tiene ...? asks a shopkeeper: add a noun or a base verb and por favor.",
+        "terms": [
+          "quiero",
+          "necesito",
+          "me gustaría",
+          "¿tiene...?"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_greetings",
+      "skill_name": "Greetings and courtesy",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "In a store, you want to ask the clerk whether they have a smaller size. Which opener fits?",
+      "answer": "¿Tiene ...?",
+      "rationale": "To a clerk you use usted, so ¿Tiene...? asks politely whether they have something; tienes is for friends.",
+      "source": "prewritten",
+      "hint": "You are asking a question, politely, to someone you do not know.",
+      "choices": [
+        "¿Tiene ...?",
+        "¿Tienes ...?",
+        "Necesito ...",
+        "Quiero ..."
+      ],
+      "id": "c1",
+      "after": 3,
+      "focus": "asking a shopkeeper"
+    },
+    {
+      "skill_id": "es_greetings",
+      "skill_name": "Greetings and courtesy",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which sentence means \"I need to go to the bank\"?",
+      "answer": "Necesito ir al banco.",
+      "rationale": "After necesito the next verb stays in its base form: ir (to go). Voy is already conjugated, and no extra a is needed.",
+      "source": "prewritten",
+      "hint": "Chunk + base verb.",
+      "choices": [
+        "Necesito ir al banco.",
+        "Necesito voy al banco.",
+        "Necesito a ir al banco.",
+        "Necesito el banco ir."
+      ],
+      "id": "c2",
+      "after": 6,
+      "focus": "chunk + infinitive"
+    },
+    {
+      "skill_id": "es_greetings",
+      "skill_name": "Greetings and courtesy",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the two-word polite chunk that means \"I would like\".",
+      "answer": "me gustaría",
+      "rationale": "Me gustaría is the polite way to say I would like; quisiera is also accepted.",
+      "source": "prewritten",
+      "accepts": [
+        "me gustaria",
+        "quisiera"
+      ],
+      "hint": "me + a form of gustar.",
+      "id": "c3",
+      "after": 6,
+      "focus": "recalling me gustaría"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/intermediate/85",
+    "version": 1,
+    "sha256": "a7f9d7d0a4c7f72f94d014d2536a33b82796975e81738910dd071312eed2032f",
+    "title": "Wants and Needs as Chunks",
+    "file": "content/spanish-prewritten/intermediate/level-085.json"
+  }
+}

@@ -183,7 +183,7 @@ function cheat(purpose, { title, subtitle, rows }) {
   return {
     block: 'Memory_CheatSheet',
     purpose,
-    data: clean({ title, subtitle, rows: rows.map(([k, v, d]) => clean({ key: k, value: v, detail: d })) }),
+    data: clean({ title, subtitle, rows: rows.map(([k, v, d, tone]) => clean({ key: k, value: v, detail: d, tone })) }),
   };
 }
 

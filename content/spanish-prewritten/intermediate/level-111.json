@@ -1,0 +1,435 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "intermediate",
+  "level": 111,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the one rule of basic negation (no goes right before the verb), with the survival negatives the learner will say most, the \"No, no ...\" answer, and a check on the English do-support habit.",
+  "coverage": [
+    "No goes right before the verb: No entiendo, No quiero, No tengo",
+    "Spanish has no helper verb like \"do\": No entiendo, never No hago entiendo",
+    "Answering: No, no tengo. The first no answers, the second negates the verb",
+    "Survival negatives: No sé (I don't know), No entiendo (I don't understand), No hablo inglés",
+    "With chunks: No voy a trabajar. No hay agua. No necesito ayuda.",
+    "No is never placed after the verb: Entiendo no is wrong"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States negation as a single placement rule.",
+      "data": {
+        "tag": "Unit 2.9",
+        "ruleName": "No before the verb",
+        "anchor": "To make a sentence negative, put no directly in front of the verb.",
+        "prerequisites": [
+          "Entiendo. → No entiendo. (I understand. → I don't understand.)",
+          "Tengo tiempo. → No tengo tiempo. (I have time. → I don't have time.)",
+          "There is no extra word for \"don't\" or \"doesn't\"."
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists the negatives a beginner says most, with meanings.",
+      "data": {
+        "caption": "Negatives you will say every day",
+        "headers": [
+          "Spanish",
+          "English"
+        ],
+        "rows": [
+          [
+            "No entiendo.",
+            "I don't understand."
+          ],
+          [
+            "No sé.",
+            "I don't know."
+          ],
+          [
+            "No quiero.",
+            "I don't want (to)."
+          ],
+          [
+            "No tengo.",
+            "I don't have (any)."
+          ],
+          [
+            "No hablo inglés.",
+            "I don't speak English."
+          ],
+          [
+            "No hay.",
+            "There isn't any."
+          ],
+          [
+            "No voy a ir.",
+            "I am not going to go."
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: short questions answered with \"No, no ...\".",
+      "data": {
+        "title": "Saying no",
+        "cueNote": "In \"No, no tengo\" the first no answers the question and the second makes the verb negative. Both are needed.",
+        "duration": 17.8,
+        "cues": [
+          {
+            "text": "¿Tienes cambio?",
+            "start": 0.3,
+            "end": 1.2
+          },
+          {
+            "text": "No, no tengo.",
+            "start": 2.7,
+            "end": 3.6
+          },
+          {
+            "text": "¿Entiendes?",
+            "start": 5.1,
+            "end": 5.9
+          },
+          {
+            "text": "No, no entiendo. Más despacio, por favor.",
+            "start": 7.4,
+            "end": 10
+          },
+          {
+            "text": "¿Vas a trabajar mañana?",
+            "start": 11.5,
+            "end": 13.3
+          },
+          {
+            "text": "No, no voy a trabajar.",
+            "start": 14.8,
+            "end": 16.3
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_XRay",
+      "purpose": "X-rays a \"No, no ...\" answer to show what each no does.",
+      "data": {
+        "prompt": "Tap each no to see its job.",
+        "source": "{{No}}, {{no}} {{tengo}} {{tiempo}}.",
+        "terms": [
+          {
+            "id": "x1",
+            "label": "the answer",
+            "mark": "No",
+            "note": "Answers the yes/no question: No."
+          },
+          {
+            "id": "x2",
+            "label": "the negation",
+            "mark": "no",
+            "note": "Makes the verb negative: it sits right before the verb."
+          },
+          {
+            "id": "x3",
+            "label": "the verb",
+            "mark": "tengo",
+            "note": "I have."
+          },
+          {
+            "id": "x4",
+            "label": "the object",
+            "mark": "tiempo",
+            "note": "time. Whole sentence: No, I don't have time."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_SentenceScramble",
+      "purpose": "Builds a negative sentence with no in the right place.",
+      "data": {
+        "prompt": "Tap the words in order: \"I am not going to work today.\"",
+        "tokens": [
+          {
+            "id": "w1",
+            "text": "Hoy"
+          },
+          {
+            "id": "w2",
+            "text": "no"
+          },
+          {
+            "id": "w3",
+            "text": "voy"
+          },
+          {
+            "id": "w4",
+            "text": "a"
+          },
+          {
+            "id": "w5",
+            "text": "trabajar."
+          }
+        ],
+        "chips": [
+          {
+            "id": "w4",
+            "text": "a",
+            "correctIndex": 3
+          },
+          {
+            "id": "w5",
+            "text": "trabajar.",
+            "correctIndex": 4
+          },
+          {
+            "id": "w3",
+            "text": "voy",
+            "correctIndex": 2
+          },
+          {
+            "id": "w2",
+            "text": "no",
+            "correctIndex": 1
+          },
+          {
+            "id": "w1",
+            "text": "Hoy",
+            "correctIndex": 0
+          }
+        ],
+        "feedbackCorrect": "Right: Hoy no voy a trabajar.",
+        "feedbackReset": "That chip comes later. Start again from the first word.",
+        "clearOnMistake": true,
+        "hintAfterAttempts": 2,
+        "hintText": "No goes right before voy."
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets copying the English helper \"do\" into Spanish.",
+      "data": {
+        "question": "How do you say \"I don't understand\"?",
+        "choices": [
+          "No entiendo.",
+          "No hago entiendo.",
+          "Entiendo no.",
+          "Yo no hago entender."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Translating \"don't\" with hacer",
+        "trapChoiceIndexes": [
+          1,
+          3
+        ],
+        "trapReasons": {
+          "1": "\"Don't\" contains \"do\", and hacer means to do."
+        },
+        "whyIntuitionFailed": "English needs \"do\" to make a negative, so learners look for a Spanish \"do\".",
+        "correctReasoning": "Spanish needs only no in front of the verb: No entiendo.",
+        "recoveryTip": "Don't, doesn't, didn't: in Spanish, just no.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices answering in the negative.",
+      "data": {
+        "title": "Answer no",
+        "instructions": "Choose the negative answer.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "¿Tienes coche? No, "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "no tengo",
+              "tengo no",
+              "no hago tengo"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". ¿Quieres café? No, gracias, "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "no quiero",
+              "quiero no",
+              "no hago quiero"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". ¿Hay pan? No, "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "no hay",
+              "hay no",
+              "no tengo hay"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": "."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        }
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the placement rule.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Saying no",
+        "takeaway": "Put no right before the verb, with no helper word: No entiendo, No tengo, No voy a ir; answer with No, no ...",
+        "terms": [
+          "No entiendo",
+          "No sé",
+          "No tengo",
+          "No quiero"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_questions",
+      "skill_name": "Questions and negation",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "Someone asks \"¿Hablas francés?\" and you do not. What do you answer?",
+      "answer": "No, no hablo francés.",
+      "rationale": "First no answers the question, then no goes right before the verb hablo: No, no hablo francés.",
+      "source": "prewritten",
+      "hint": "No goes right before the verb.",
+      "choices": [
+        "No, no hablo francés.",
+        "No, hablo no francés.",
+        "No, no hago hablo francés.",
+        "Hablo francés no."
+      ],
+      "id": "c1",
+      "after": 6,
+      "focus": "answering in the negative"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "type_in",
+      "prompt": "Type \"I don't know\" in Spanish (two words).",
+      "answer": "No sé.",
+      "rationale": "Sé is I know; put no in front: No sé.",
+      "source": "prewritten",
+      "accepts": [
+        "yo no sé"
+      ],
+      "hint": "No + the word for I know.",
+      "id": "c2",
+      "after": 2,
+      "focus": "producing no sé"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "type_in",
+      "prompt": "Make this sentence negative and type it: \"Quiero café.\"",
+      "answer": "No quiero café.",
+      "rationale": "No goes directly before the verb quiero: No quiero café.",
+      "source": "prewritten",
+      "accepts": [
+        "yo no quiero café"
+      ],
+      "hint": "Add one word before the verb.",
+      "id": "c3",
+      "after": 5,
+      "focus": "placing no"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 1,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 1,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/intermediate/111",
+    "version": 1,
+    "sha256": "e8a32412f26f0b4283036b77b83cba2667d9921b8146164993d6184fb0752e5a",
+    "title": "Saying No: Basic Negation",
+    "file": "content/spanish-prewritten/intermediate/level-111.json"
+  }
+}
