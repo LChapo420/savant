@@ -51,19 +51,45 @@
   }
   audio.browserVoice = () => { const v = spanishVoice(); return v ? `${v.name} (${v.lang})` : null; };
 
+  // Spanish only ever comes out in a Spanish voice. A device with no Spanish
+  // voice would read the line in its default (English) voice, which teaches the
+  // wrong sounds, so then nothing is spoken: a small notice offers a retry of the
+  // server audio instead, and listening activities can be skipped without penalty
+  // ("Can't listen now", see session.js).
+  const NOTICE_TEXT = "Spanish audio isn't available right now. Tap to try again.";
+  let lastLine = null;
+  function hideNotice() {
+    const n = document.querySelector('.es-audio-notice');
+    if (n) n.remove();
+  }
+  function showNotice() {
+    if (document.querySelector('.es-audio-notice')) return;
+    const host = document.getElementById('lesson-body') || document.getElementById('app') || document.body;
+    const n = document.createElement('button');
+    n.type = 'button'; n.className = 'es-audio-notice'; n.setAttribute('role', 'status');
+    n.textContent = NOTICE_TEXT;
+    n.addEventListener('click', () => {
+      n.remove();
+      serverOffUntil = 0;                 // try the server voice again
+      if (lastLine) audio.say(lastLine.text, lastLine.opts);
+    });
+    host.insertBefore(n, host.firstChild);
+  }
+  audio.hasBrowserVoice = () => !!spanishVoice();
+
   async function browserSay(text, slow) {
     await voicesReady();
+    if (!('speechSynthesis' in window) || !spanishVoice()) { showNotice(); return false; }
+    hideNotice();
     return new Promise((resolve) => {
-      if (!('speechSynthesis' in window)) return resolve();
       speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'es-ES';
       const v = spanishVoice();
-      if (v) { u.voice = v; u.lang = v.lang; }
+      u.voice = v; u.lang = v.lang;
       u.rate = slow ? 0.65 : 0.95;
-      u.onend = u.onerror = () => resolve();
+      u.onend = u.onerror = () => resolve(true);
       speechSynthesis.speak(u);
-      setTimeout(resolve, 2000 + text.length * 160); // never hang a lesson on a stuck voice
+      setTimeout(() => resolve(true), 2000 + text.length * 160); // never hang a lesson on a stuck voice
     });
   }
 
@@ -80,12 +106,14 @@
   audio.say = async function say(text, opts = {}) {
     const { voice = 'narrator', slow = false, char = null } = opts;
     if (!text) return;
+    lastLine = { text, opts };
     audio.stop();
     // One clip per line; slow playback is the same clip played at 0.7x.
     const url = await render(text, voice, false);
     talk(char, true);
     try {
       if (!url) { await browserSay(text, slow); return; }
+      hideNotice();
       await new Promise((resolve) => {
         const el = new Audio(url);
         el.playbackRate = slow ? 0.7 : 1;
