@@ -34,7 +34,7 @@ const sj = require('./structured-json');
 const KEY = () => String(process.env.XKIRO_API_KEY || '').trim();
 const BASE = () => String(process.env.XKIRO_BASE_URL || 'https://api.xkiro.com/v1').replace(/\/$/, '');
 const USAGE_FILE = () => process.env.XKIRO_USAGE_FILE || path.join(__dirname, '..', '..', 'data', 'xkiro-usage.json');
-const DAILY_TOKENS = () => Number(process.env.XKIRO_DAILY_TOKENS || 450000);
+const DAILY_TOKENS = () => Number(process.env.XKIRO_DAILY_TOKENS || 950000);
 const pipelineOptIn = () => process.env.XKIRO_PIPELINE === '1';
 
 let fetchImpl = (...args) => fetch(...args);
@@ -176,7 +176,7 @@ async function postOnce(body, timeoutMs, signal = null) {
     const why = GRANTS()[body.model] ? (grantLocked.has(body.model) ? 'its grant was refused by xKiro' : 'its free token grant is used up') : 'it is not listed free at $0';
     throw Object.assign(new Error(`xkiro: ${body.model} refused: ${why}`), { status: 402 });
   }
-  // The 500K-a-day cap is the free plan's, for free models; a grant has its own total.
+  // The 1M-a-day cap is the free plan's (verified account; 950K leaves a margin), for free models; a grant has its own total.
   if (free && freeTokensToday() + (body.max_tokens || 0) > DAILY_TOKENS()) throw Object.assign(new Error(`xkiro: daily free allowance used (${DAILY_TOKENS()} tokens per day)`), { status: 429, daily: true });
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), timeoutMs);
