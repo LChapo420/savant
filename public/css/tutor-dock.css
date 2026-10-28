@@ -1,0 +1,15 @@
+/* The tutor dock. Colours come only from the app's CSS variables so the redesign carries it along. */
+.tdock-btn { position: fixed; right: 16px; bottom: 16px; z-index: 40; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px; border: 0; border-radius: 22px; background: var(--action); color: var(--on-action); font: inherit; font-weight: 600; cursor: pointer; box-shadow: 0 2px 10px rgb(0 0 0 / .2); }
+.tdock-panel { position: fixed; right: 16px; bottom: 70px; z-index: 40; width: min(380px, calc(100vw - 32px)); max-height: min(70vh, 520px); display: none; flex-direction: column; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--surface); color: var(--text); box-shadow: 0 6px 24px rgb(0 0 0 / .25); }
+.tdock-panel[data-open="true"] { display: flex; }
+.tdock-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--border); font-weight: 600; }
+.tdock-note { padding: 6px 12px; font-size: .85em; background: var(--surface-2); color: var(--muted); }
+.tdock-log { flex: 1 1 auto; overflow: auto; display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; font-size: .95em; }
+.tdock-log .me { align-self: flex-end; max-width: 85%; padding: 6px 10px; border-radius: 10px; background: var(--subj-wash); }
+.tdock-log .bot { align-self: flex-start; max-width: 92%; white-space: pre-wrap; }
+.tdock-form { display: flex; gap: 6px; padding: 8px 12px; border-top: 1px solid var(--border); }
+.tdock-form input { flex: 1 1 auto; min-width: 0; min-height: 40px; padding: 0 10px; border: 1px solid var(--control); border-radius: 8px; background: var(--surface); color: var(--text); font: inherit; }
+.tdock-form button, .tdock-head button { min-height: 40px; min-width: 40px; padding: 0 10px; border: 1px solid var(--border-strong); border-radius: 8px; background: var(--surface); color: var(--text); font: inherit; cursor: pointer; }
+.tdock-form button[aria-pressed="true"], .tdock-head button[aria-pressed="true"] { background: var(--subj-wash); border-color: var(--subj); }
+.tdock-form button.go { background: var(--action); color: var(--on-action); border-color: var(--action); }
+@media (max-width: 480px) { .tdock-panel { right: 8px; left: 8px; width: auto; } }

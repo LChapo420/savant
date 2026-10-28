@@ -70,23 +70,15 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    Privacy: tell the learner in plain words where their file goes and how to delete it; follow
    `docs/yc/PRIVACY.md`. Copyright: personal study use only, never shared with other learners.
 
-0c. [claimed 2026-10-28T22:17Z, slice: server-side context builder + dock] **The tutor talks, and it is in every feature with full context (owner's request, 2026-10-28).**
-   - **Everywhere:** a self-contained tutor dock (`public/js/tutor-dock.js` and a small CSS file using the CSS
-     variables; the redesign will place it in the new app shell) on every page of the app, reusing the existing
-     tutor and its memory. Find the current tutor code first.
-   - **Context:** a server-side context builder gives the tutor a token-budgeted summary of the page and item the
-     learner is on, their goals and test dates, today's plan and what comes next, mastery by skill, recent
-     mistakes and the diagnosed misconceptions, the review schedule, learning style and interests, uploaded-material
-     courses, ACT scores, and the tutor's memory. Tests check what goes in and the budget.
-   - **Voice:** push-to-talk. Text-to-speech uses the browser's built-in voice by default (free); a better voice
-     through LLM Gateway is allowed only through its ledger ($5 total, speech only) with a per-user daily cap.
-     Speech-to-text uses LLM Gateway STT through the same ledger, or the browser's recognizer where available.
-     In Spanish lessons it can speak Spanish. Text always stays available.
-   - **Integrity:** during placement, mastery quizzes, timed tasks and any study test, the tutor gives no
-     answers (hints about method only, or off, and say so). It **never** appears on `/spanish-check` or
-     `/spanish-listening` (sealed; check by path in the dock, never edit those files).
-   - Learner data goes only to learner-class providers through `services/pool.js`, never OpenRouter. Tests with
-     a mocked provider.
+0c. **The tutor talks, remaining slices** (first slice is under Done).
+   - **(b) Better voice through the ledger.** Text-to-speech and speech-to-text through LLM Gateway, only via its
+     ledger ($5 total, speech only) with a per-user daily cap; the browser voice and recognizer stay the free default.
+   - **(c) Context gaps.** The builder reads `material_courses` once item 0b creates it (name it there or adjust
+     `materialLines` in `services/tutor-context.js`); add the item and passage on screen from the lesson, practice and
+     mastery pages (pages pass it in `pageInfo()`), and a "no answers" mode for timed tasks and finals once those
+     pages exist (add their paths to `METHOD_ONLY`).
+   - **(d) Look at the dock at 375 px in a real browser, signed in** (a cloud run has no session), including push-to-talk
+     on a phone, and Spanish speech on the Spanish lab.
 
 0d. **Tutor: voice and text modes, and it can see the screen (owner's spec, 2026-10-28; do right after 0c's first slice).**
    - **Two modes, one button:** the learner can talk (push-to-talk or tap-to-talk, with the tutor answering out
@@ -161,6 +153,8 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+
+- 2026-10-28: **The tutor dock, first slice** (item 0c; commit in this push). `public/js/tutor-dock.js` + `public/css/tutor-dock.css` (CSS variables only): a button and chat panel on every page, loaded by `js/app.js`, shown only to a signed-in learner, reusing the existing tutor memory (`services/tutor.js`). `services/tutor-context.js` builds a context block capped at 3,600 characters in priority order (page, goals, ACT date and scores, today's plan with review items due, mastery, weak skills and recent mistakes, diagnosed misconceptions, recent and upcoming topics, style and interests, own courses once 0b exists). Routes `GET/POST /api/tutor/dock`. Integrity is decided on the server from the page path: the sealed Spanish pages get no dock and a 403, placement, subject placement, stage check, skip, enforcer and review pages get "hints about method only, no answers" with a visible note, recent mistakes left out. Voice is the browser's own: speech out on a toggle (Spanish on `/spanish*` pages), push-to-talk where the browser has a recognizer; text always works. Learner data goes only through `ai.talk`, nothing new spends money. Checked: `scripts/tutor-dock-test.js` (32 checks, mocked provider: modes by path, what goes in, the budget, the integrity note, routes, wiring, sealed files untouched) and full `npm test` with the one timing step under Blocked excluded: all steps pass. Not checked: the dock in a real browser at 375 px or push-to-talk (Queue 0c(d)); the paid voice (0c(b)).
 
 - 2026-10-28: **Savant vs Duolingo study kit, first slice** (item 0a; commit in this push). `docs/yc/DUOLINGO-STUDY-PROTOCOL.md` (DRAFT, unsealed, `OWNER:` lines for dose, sample target and sealing; states limits and what a small sample cannot show). `services/spanish-study.js` + `routes/spanish-study.js` (`/api/spanish-study`: me, join, checkin, leave, admin report and CSV): consent (adults, or 13 to 17 with a parent-knows box; under 13 refused; beginners only), arm drawn from the public drand beacon in permuted blocks of four with the round and randomness stored so the draw can be recomputed, Savant minutes from the app's study-session clock, Duolingo minutes self-reported daily with a screenshot tick (missing days flagged), chance-corrected pre/post gain on two tests, gain per hour, per-arm mean with t intervals, Welch difference interval, minimum sample per arm, every participant listed (dropouts included, nothing imputed), demo/test accounts excluded. New collections `spanish_study`, `spanish_study_checkins`, `spanish_study_tests` are in `config/db.js` and the account export and deletion. The sealed Spanish files are untouched. Checked: `scripts/spanish-study-test.js` (about 45 checks, fake beacon, no network) and full `npm test` exit 0 ("All steps passed"). Not built: the sealed participant tests, the pages (see the Queue). Not checked: the live drand call.
 
