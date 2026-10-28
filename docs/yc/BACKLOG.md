@@ -44,17 +44,7 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-0a. **Head-to-head study kit, remaining slices** (first slice is under Done). The claim: *per hour of study, Savant teaches everyday Spanish more than Duolingo.*
-   - **(b) Sealed multi-participant tests.** Create `spanish-study-tests/` (a new module, **never edit `spanish-check/`,
-     `spanish-check-lc/` or their routes and pages**) that copies their engine code with its own fresh seal, per-participant
-     draws and logs, and the same integrity rules (timed, one sitting per day, no Spanish text in listening). Pre-test day 0,
-     post-test last day; write results with `recordTest` in `services/spanish-study.js`. Until this exists the study cannot run end to end.
-   - **(c) Participant and admin pages:** sign-up with consent (teen parental box), daily check-in with the screenshot tick,
-     and an admin results page with a per-arm bar chart of gain per hour, the CI and a CSV link (use CSS variables; redesign in progress).
-   - **(d) End-to-end fixture test** once (b) and (c) exist. Then the owner fills the `OWNER:` lines in
-     `docs/yc/DUOLINGO-STUDY-PROTOCOL.md`, seals and time-stamps it before anyone joins.
-   - [local only, later] Find Duolingo's own published efficacy studies and cite them in the protocol, marked UNVERIFIED until a person checks them.
-
+   **Priority (owner, 2026-10-28 evening): 0b and 0c come first — they are the TikTok demo pieces. Ship a working, demo-able first slice of each as fast as possible.**
 0b. **Learn from your own material (owner's request, 2026-10-28; high YC value: it is the "learn anything" demo).**
    A learner uploads study material (PDF, DOCX, TXT/Markdown, or pasted text; photos of notes later) and Savant turns
    it into a course taught with the app's own engine: placement, lessons, retrieval practice, mastery at 75%,
@@ -97,6 +87,17 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
      `/spanish-listening` (sealed; check by path in the dock, never edit those files).
    - Learner data goes only to learner-class providers through `services/pool.js`, never OpenRouter. Tests with
      a mocked provider.
+
+0a. **Head-to-head study kit, remaining slices** (first slice is under Done). The claim: *per hour of study, Savant teaches everyday Spanish more than Duolingo.*
+   - **(b) Sealed multi-participant tests.** Create `spanish-study-tests/` (a new module, **never edit `spanish-check/`,
+     `spanish-check-lc/` or their routes and pages**) that copies their engine code with its own fresh seal, per-participant
+     draws and logs, and the same integrity rules (timed, one sitting per day, no Spanish text in listening). Pre-test day 0,
+     post-test last day; write results with `recordTest` in `services/spanish-study.js`. Until this exists the study cannot run end to end.
+   - **(c) Participant and admin pages:** sign-up with consent (teen parental box), daily check-in with the screenshot tick,
+     and an admin results page with a per-arm bar chart of gain per hour, the CI and a CSV link (use CSS variables; redesign in progress).
+   - **(d) End-to-end fixture test** once (b) and (c) exist. Then the owner fills the `OWNER:` lines in
+     `docs/yc/DUOLINGO-STUDY-PROTOCOL.md`, seals and time-stamps it before anyone joins.
+   - [local only, later] Find Duolingo's own published efficacy studies and cite them in the protocol, marked UNVERIFIED until a person checks them.
 
 3. **Measurement kit, third slice** (local: needs the owner). (a) The owner fills the `OWNER:` lines in
    `docs/yc/ACT-STUDY-PROTOCOL.md`, then seals and RFC 3161 time-stamps it with `spanish-check/scripts/`; (b) the
