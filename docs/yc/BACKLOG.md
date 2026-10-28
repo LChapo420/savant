@@ -43,8 +43,6 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-1. [claimed 2026-10-28T09:16:18Z] **`npm test` passes on a clean clone.** Ship or skip the ACT coverage-map check when the file is missing,
-   with a message (`ACT-READINESS.md` item 12). Done when `npm ci && npm test` passes on a fresh clone.
 2. **ACT score entry and test date** (item 2): a small ACT profile with test date, target score, and section
    scores from each official practice test (date, form, English, Math, Reading, optional Science), later the
    real ACT. Show the history as a bar or line chart on an ACT page. Store per user in the existing db layer.
@@ -96,6 +94,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 
 ## Done
 
+- 2026-10-28: **`npm test` passes on a clean clone** (commit: see `git log` for "npm test passes on a clean clone"). `npm test` now runs `scripts/run-tests.js`; the step list moved to `scripts/test-steps.json`. A step whose gitignored `data/` input is missing is SKIPPED loudly (12 steps: `db.json` ×7, five workbook CSVs); the ACT coverage-map check skips inside its own test. Checked: deleted `data/`, ran `npm test` on this fresh checkout after `npm ci`, exit 0 with the skip list; `scripts/run-tests-test.js` guards the step list. Note: a skip is not a pass, `--strict` fails on any skip, and the full suite still needs the owner's machine.
 - 2026-10-28: the overnight review combined the Duolingo-style Spanish activities, 53 pre-written lessons,
   real-user metrics, the demo account, the beta kit, the YC research pack and the LLM Gateway budget into
   `integration-2026-10-28`; `yc-next` starts from it.
