@@ -1,0 +1,217 @@
+/* Style: editorial  (mockup design-options/01-editorial, "A study journal")
+ *
+ * Light. Savant as a well-made book: warm paper, near-black ink, hairline rules
+ * instead of boxes, serif headings and questions (Newsreader), Inter for the UI.
+ * One red-pen accent (vermilion) marks only the next action and the highlighted
+ * words. Flat, square-cornered buttons; progress is a thin line and a numeral.
+ *
+ * Tokens (plus this style's @font-face and a few small refinements at the end);
+ * see css/styles/README.md.
+ */
+
+/* Newsreader (variable weight 300-600 with optical size; roman and italic) and
+   Inter (variable 400-600), Latin subset, self-hosted. Downloaded only when this
+   style is active. */
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 300 500;
+  font-display: swap;
+  src: url(/fonts/newsreader-300-500i.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 300 600;
+  font-display: swap;
+  src: url(/fonts/newsreader-300-600.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url(/fonts/inter-400-600.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root[data-style="editorial"] {
+  color-scheme: light;
+
+  /* surfaces: paper, and the cards sit on it with only a hairline */
+  --page: #FAF8F3;
+  --well: #F1ECE0;
+  --well-2: #E9E4D8;
+  --card-bg: #FAF8F3;
+  --card-line: #D8D1C2;
+  --field-bg: #FFFFFF;
+  --nav-bg: #FAF8F3;
+  --line: #D8D1C2;
+  --line-strong: #BDB4A0;
+  --control: #8C8473;            /* input outlines: 3.5:1 on paper */
+
+  /* ink (on --page: 16.4, 7.1, 4.8) */
+  --ink: #1C1A17;
+  --ink-2: #5A5449;
+  --ink-3: #756E60;
+
+  /* the red pen: the next action and what is highlighted */
+  --action: #BF2F17;
+  --action-hover: #A52812;
+  --action-edge: #BF2F17;
+  --on-action: #FFF8F2;
+  --action-tint: #F4DDD2;
+  --action-mid: #E3B3A2;
+  --action-ink: #8F2210;
+
+  /* reward: the red pen is already the accent, so "reward" is a warm well and ink */
+  --reward: #1C1A17;
+  --reward-edge: #1C1A17;
+  --reward-tint: #F1ECE0;
+  --reward-line: #D8D1C2;
+  --on-reward: #FAF8F3;
+  --reward-ink: #3A352C;
+  --flame: #BF2F17;
+  --flame-core: #F4DDD2;
+
+  --correct: #2B6B3E;
+  --correct-wash: #E3EBDC;
+  --correct-edge: #2B6B3E;
+  --incorrect: #BF2F17;
+  --incorrect-wash: #F4DDD2;
+  --incorrect-edge: #BF2F17;
+  --warn: #8A5A00;
+
+  --off-bg: transparent;
+  --off-ink: #756E60;
+  --off-edge: #D8D1C2;
+
+  --focus: #BF2F17;
+  --focus-ring: rgba(191, 47, 23, 0.25);
+  --field-focus: #1C1A17;
+  --focus-ring-w: 3px;
+  --chip-bg: transparent;
+  --chip-ink: #5A5449;
+  --chip-line: #BDB4A0;
+  --chip2-bg: #F4DDD2; --chip2-ink: #8F2210; --chip2-line: transparent;
+  --chip2-case: uppercase; --chip2-tracking: 0.14em; --chip2-weight: 600;
+  --shadow-lg: 0 1px 2px rgba(28, 26, 23, 0.08), 0 10px 28px -8px rgba(28, 26, 23, 0.22);
+
+  /* type: serif for headings and questions, Inter for the interface */
+  --font: 'Inter', ui-sans-serif, system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
+  --display: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --num: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --read-font: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --w-body: 400;
+  --w-strong: 500;
+  --w-head: 400;
+  --w-btn: 500;
+  --w-label: 500;
+  --tracking-head: -0.02em;
+  --num-feature: 'tnum', 'lnum';
+  --t-meta: 0.8125rem;
+  --t-ui-s: 0.9375rem;
+  --t-ui: 1rem;
+  --t-read: 1.1875rem;
+  --t-stem: clamp(1.625rem, 1.35rem + 1.1vw, 2.125rem);
+  --t-h3: 1.3125rem;
+  --t-h2: clamp(1.5rem, 1.3rem + 0.8vw, 1.875rem);
+  --t-h1: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);
+  --t-disp: clamp(2.5rem, 1.6rem + 3.6vw, 3.75rem);
+  --eyebrow-size: 0.6875rem;
+  --eyebrow-weight: 600;
+  --eyebrow-case: uppercase;
+  --eyebrow-tracking: 0.16em;
+  --eyebrow-font: var(--font);
+  --icon-sw: 1.5;
+
+  /* shape: almost square, like a printed page */
+  --r-xs: 2px; --r-sm: 2px; --r-md: 2px; --r-lg: 2px; --r-pill: 999px;
+  --r-card: 2px;
+  --r-btn: 2px;
+  --r-input: 2px;
+  --r-choice: 2px;
+  --r-chip: 2px;
+  --r-bar: 0px;
+  --r-icon: 50%;
+
+  /* borders: hairlines, no edges */
+  --bw-card: 1px;
+  --bw-card-edge: 1px;
+  --bw-control: 1px;
+  --bw-nav: 1px;
+  --btn1-bw: 0px;
+  --btn1-edge-w: 0px;
+  --btn2-bw: 1px;
+  --btn2-edge-w: 1px;
+  --btn2-bg: transparent;
+  --btn2-line: #1C1A17;
+  --btn2-ink: #1C1A17;
+  --press: 0px;
+
+  /* sizes */
+  --btn-h: 48px;
+  --btn-h-lg: 54px;
+  --btn-h-sm: 40px;
+  --btn-px: 22px;
+  --btn-size: 1rem;
+  --btn-size-lg: 1.0625rem;
+  --input-h: 50px;
+  --choice-h: 64px;
+  --key-size: 28px;
+  --choice-line: #D8D1C2;
+  --key-bw: 0px;
+
+  /* selection: a highlighter wash and a red rule */
+  --sel-bg: #F4DDD2;
+  --sel-line: #BF2F17;
+  --sel-edge: #BF2F17;
+  --sel-ink: #1C1A17;
+  --sel-key-bg: transparent;
+  --sel-key-ink: #BF2F17;
+  --sel-ring: 0px;
+  --hl-line: #1C1A17;
+
+  /* progress: a thin line */
+  --bar-h: 2px;
+  --bar-h-sm: 2px;
+  --bar-bg: #D8D1C2;
+  --bar-fill: #1C1A17;
+  --bar-fill-2: #BF2F17;
+  --bar-shine: transparent;
+
+  /* shell */
+  --side-w: 248px;
+  --tab-h: 68px;
+  --tab-pad: 8px;
+  --tab-item-h: 52px;
+  --tab-item-r: 2px;
+  --tab-item-bw: 0px;
+  --tab-on-bg: transparent;
+  --tab-on-ink: #1C1A17;
+  --tab-on-line: transparent;
+  --tab-on-edge: 0px;
+  --brand-color: #1C1A17;
+  --brand-size: 1.375rem;
+  --brand-weight: 400;
+  /* brand mark: a bookmark in ink with a red dot, drawn as the bars */
+  --bm-tile: none; --bm-bars: #1C1A17; --bm-hi: #BF2F17; --bm-ring-display: none; --bm-bars-display: inline;
+  /* home "this week" panel: a quiet well with a red ring */
+  --hero-bg: #F1ECE0; --hero-ink: #1C1A17; --hero-line: #D8D1C2; --hero-edge: #D8D1C2;
+  --ring-track: #D8D1C2; --ring-fill: #BF2F17; --hero-pill-bg: #FAF8F3; --hero-diamond: #BF2F17;
+}
+:root[data-style="editorial"] body { font-weight: var(--w-body); font-feature-settings: 'lnum'; }
+
+/* Refinements the tokens cannot express. */
+:root[data-style="editorial"] .btn,
+:root[data-style="editorial"] .chip,
+:root[data-style="editorial"] .tab-label { font-family: var(--font); }
+:root[data-style="editorial"] .brand { font-style: italic; }
+:root[data-style="editorial"] .btn-primary { letter-spacing: 0.01em; }
+/* a card is a ruled block: rules above and below, nothing at the sides */
+:root[data-style="editorial"] .card:not(.modal):not(.plan-later-row):not(.look-card) { border-width: 1px 0; border-radius: 0; background: transparent; }
+:root[data-style="editorial"] .card-hl { border-top-color: var(--ink); }
+:root[data-style="editorial"] .pf-stats > div,
+:root[data-style="editorial"] .plan-later-row { border-radius: 0; }

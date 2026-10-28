@@ -7,11 +7,16 @@ App.mount(async () => {
   App.header(user, 'profile');
 
   const root = document.getElementById('root');
-  const [profile, progress, card] = await Promise.all([
+  const [profile, progress, card, act] = await Promise.all([
     App.api.get('/api/profile'),
     App.api.get('/api/progress'),
     App.api.get('/api/scorecard'),
+    // ACT practice scores: only what the learner typed in. A failure just leaves the card empty.
+    App.api.get('/api/act/scores').catch(() => null),
   ]);
+  const masteryOf = new Map(await Promise.all(progress.enrollments
+    .filter((e) => e.status !== 'placement_pending')
+    .map(async (e) => [e.id, await App.api.get(`/api/mastery/${e.id}`)])));
 
   /** All hundred stats, grouped and collapsed, with how sure each one is. */
   function scorecardCategories(c) {
@@ -150,21 +155,165 @@ App.mount(async () => {
     return `<h2 class="section-title">${window.icon('settings')}Display and wellbeing</h2><div class="card">${rows.join('')}</div>`;
   }
 
-  root.innerHTML = `
-    <div class="row-between" style="margin-bottom:12px">
-      <div>
-        <h1 style="margin-bottom:2px">${App.escapeHtml(user.display_name)}</h1>
-        <div class="small muted">${App.escapeHtml(user.email)}, joined ${new Date(user.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</div>
-      </div>
-      <a class="btn btn-ghost btn-sm" href="/dashboard">${window.icon('arrow-left')}Dashboard</a>
-    </div>
+  const esc = App.escapeHtml;
 
-    <dl class="facts">
-      <div data-stat${user.hide_stats ? ' class="hidden"' : ''}><dt>Days in a row</dt><dd>${user.streak || 0}</dd></div>
-      <div data-stat${user.hide_stats ? ' class="hidden"' : ''}><dt>Total XP</dt><dd>${user.xp || 0}</dd></div>
-      <div><dt>Sessions analyzed</dt><dd>${profile.evidence_count}</dd></div>
+  // ── top of the page: who, the numbers, the last seven days ─────────────────
+  const allSkills = [...masteryOf.values()].flatMap((m) => m.skills || []);
+  const mastered = allSkills.filter((k) => k.mastery >= 0.8).length;
+
+  // Questions answered on each of the last seven days, from the learner's own sittings
+  // (GET /api/progress `week`). Nothing is estimated: a day with no sitting is an empty bar.
+  function weekChart() {
+    const days = [];
+    const start = new Date(); start.setHours(0, 0, 0, 0); start.setDate(start.getDate() - 6);
+    for (let i = 0; i < 7; i += 1) {
+      const d = new Date(start); d.setDate(start.getDate() + i);
+      days.push({ d, n: 0, key: `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}` });
+    }
+    for (const w of progress.week || []) {
+      const t = new Date(w.ended_at);
+      const hit = days.find((x) => x.key === `${t.getFullYear()}-${t.getMonth()}-${t.getDate()}`);
+      if (hit) hit.n += Number(w.answered) || 0;
+    }
+    const total = days.reduce((sum, x) => sum + x.n, 0);
+    const top = Math.max(1, ...days.map((x) => x.n));
+    const label = days.map((x) => `${x.d.toLocaleDateString(undefined, { weekday: 'long' })} ${x.n}`).join(', ');
+    return `
+      <div class="card pf-week">
+        <div class="sec-head"><h2>Questions answered</h2><span>last 7 days</span></div>
+        ${total ? `
+        <div class="pf-bars" role="img" aria-label="Questions answered per day, last 7 days: ${esc(label)}">
+          ${days.map((x, i) => `
+            <div class="pf-bar${i === 6 ? ' today' : ''}${x.n ? '' : ' none'}">
+              <span class="pf-bar-n num">${x.n || ''}</span>
+              <i style="height:${x.n ? Math.max(8, Math.round((x.n / top) * 100)) : 0}%"></i>
+              <b>${x.d.toLocaleDateString(undefined, { weekday: 'short' })}</b>
+            </div>`).join('')}
+        </div>` : '<p class="small muted pf-empty">No questions answered in the last 7 days yet. Your week fills in as you study.</p>'}
+      </div>`;
+  }
+
+  function actCard() {
+    const p = act && act.profile ? act.profile : {};
+    const scores = act && act.scores ? act.scores.filter((x) => x.composite !== null) : [];
+    const latest = scores.slice(-2).reverse();
+    const days = act ? act.days_to_test : null;
+    const head = days !== null && days !== undefined && days >= 0 ? `<span>${days} day${days === 1 ? '' : 's'} to your test</span>` : '';
+    return `
+      <div class="card pf-act">
+        <div class="sec-head"><h2>ACT practice</h2>${head}</div>
+        ${latest.length ? `
+          <ul class="pf-scores">
+            ${latest.map((x) => `<li><b class="num">${x.composite}</b><span>${esc(x.taken_on)}</span></li>`).join('')}
+          </ul>
+          ${p.target ? `<p class="small muted pf-note">Target ${p.target}${act.points_to_target > 0 ? `, ${act.points_to_target} above your latest` : ', reached'}.</p>` : ''}`
+          : '<p class="small muted pf-empty">No practice-test scores yet. Type in the score from each official practice test and see it charted.</p>'}
+        <a class="btn btn-sm" href="/act-scores">${latest.length ? 'Open ACT scores' : 'Add a score'}</a>
+      </div>`;
+  }
+
+  function subjectBars() {
+    if (!progress.enrollments.length) {
+      return '<div class="card pf-subjects"><div class="sec-head"><h2>Subjects</h2></div><p class="small muted pf-empty">No subjects yet. <a href="/onboarding">Pick one.</a></p></div>';
+    }
+    return `
+      <div class="card pf-subjects">
+        <div class="sec-head"><h2>Subjects</h2><span>average mastery</span></div>
+        <ul class="pf-mastery">
+          ${progress.enrollments.map((e) => {
+            const m = masteryOf.get(e.id);
+            const skills = m ? m.skills || [] : [];
+            if (!skills.length) {
+              return `<li data-subject="${esc(e.track.id)}"><span class="pf-m-name">${esc(e.track.name)}</span><span class="pf-m-none">${m ? 'no skills yet' : 'placement not taken'}</span></li>`;
+            }
+            const avg = skills.reduce((sum, k) => sum + k.mastery, 0) / skills.length;
+            return `<li data-subject="${esc(e.track.id)}"><span class="pf-m-name">${esc(e.track.name)}</span><span class="meter"><span style="width:${Math.round(avg * 100)}%"></span></span><span class="pf-m-pct num">${App.pct(avg)}</span></li>`;
+          }).join('')}
+        </ul>
+      </div>`;
+  }
+
+  // ── the style picker ("Look") ───────────────────────────────────────────────
+  const LOOKS = ['chunky', 'night', 'bento', 'editorial', 'desk', 'notebook'];
+  const SW = window.SavantStyle ? window.SavantStyle.STYLES : {};
+  function lookCards() {
+    const state = window.SavantStyle ? window.SavantStyle.state() : { pref: 'auto' };
+    const card = (id, name, note) => {
+      const ready = id === 'auto' || (SW[id] && SW[id].ready);
+      const on = state.pref === id;
+      return `<button type="button" class="look-card${on ? ' on' : ''}" role="radio" aria-checked="${on}" data-look="${id}"${ready ? '' : ' disabled'}>
+        <span class="look-swatch" data-swatch="${id}" aria-hidden="true"><i class="sw-bar"></i><i class="sw-line"></i><i class="sw-line s"></i><i class="sw-pill"></i></span>
+        <span class="look-name">${esc(name)}</span>
+        <span class="look-note">${esc(ready ? note : 'Coming soon')}</span>
+      </button>`;
+    };
+    const notes = { auto: 'Light by day, dark at night', chunky: 'Bold and friendly', night: 'Dark and calm', bento: 'Soft pastel tiles', editorial: 'Like a printed journal', desk: 'Warm paper and ink', notebook: 'Ruled lines, handwritten' };
+    return card('auto', 'Auto', notes.auto) + LOOKS.map((id) => card(id, SW[id] ? SW[id].label : id, notes[id])).join('');
+  }
+  function themeNow() {
+    try { const t = window.localStorage.getItem('polymath.theme'); return t === 'light' || t === 'dark' ? t : 'device'; } catch (e) { return 'device'; }
+  }
+  function lookBlock() {
+    const t = themeNow();
+    const seg = (v, text) => `<button type="button" class="pf-seg${t === v ? ' on' : ''}" role="radio" aria-checked="${t === v}" data-theme-pick="${v}">${text}</button>`;
+    return `
+      <div class="sec-head pf-sec"><h2>Look</h2><span>how Savant is drawn</span></div>
+      <div class="card pf-look">
+        <div class="look-grid" role="radiogroup" aria-label="Look">${lookCards()}</div>
+        <div class="pf-appearance">
+          <div><b>Light or dark</b><span class="small muted">Used by Auto. Choosing one here puts Look back on Auto.</span></div>
+          <div class="pf-segs" role="radiogroup" aria-label="Light or dark">${seg('device', 'Match device')}${seg('light', 'Light')}${seg('dark', 'Dark')}</div>
+        </div>
+      </div>`;
+  }
+
+  const joined = new Date(user.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+  const initial = (String(user.display_name || user.email || '?').trim()[0] || '?').toUpperCase();
+  const actLine = act && act.profile && act.profile.test_date && act.days_to_test !== null && act.days_to_test >= 0
+    ? ` &middot; <b>ACT ${esc(act.profile.test_date)}</b> (${act.days_to_test} day${act.days_to_test === 1 ? '' : 's'})` : '';
+
+  function settingRows() {
+    const row = (href, label, value, extra = '') => `<a class="pf-row" href="${href}"${extra}><span class="pf-row-label">${label}</span><span class="pf-row-value">${value}</span>${window.icon('chevron-right')}</a>`;
+    const answered = Object.keys(profile.survey_fields || {}).filter((k) => String((profile.survey || {})[k] || '').trim()).length;
+    return `
+      <div class="card pf-rows">
+        ${row('/style-quiz?next=/profile', 'Learning style', profile.took_style_quiz ? 'Taken' : 'Not taken yet')}
+        ${row('/survey?next=/profile', 'Interests and goals', answered ? `${answered} answered` : 'Not filled in')}
+        ${row('/act-scores', 'ACT scores', act && act.scores && act.scores.length ? `${act.scores.length} recorded` : 'None yet')}
+        ${row('/api/account/export', 'Download my data', 'JSON file', ' download')}
+      </div>`;
+  }
+
+  root.innerHTML = `
+    <div class="pf">
+    <header class="pf-head">
+      <span class="pf-avatar" aria-hidden="true">${esc(initial)}</span>
+      <div class="pf-who">
+        <h1>${esc(user.display_name)}</h1>
+        <p class="muted">${esc(user.email)}, joined ${joined}${actLine}</p>
+      </div>
+    </header>
+
+    <dl class="pf-stats">
+      <div data-stat${user.hide_stats ? ' class="hidden"' : ''}>${window.icon('flame')}<dd class="num">${user.streak || 0}</dd><dt>day streak</dt></div>
+      <div data-stat${user.hide_stats ? ' class="hidden"' : ''}>${window.icon('star')}<dd class="num">${user.xp || 0}</dd><dt>total XP</dt></div>
+      <div>${window.icon('award')}<dd class="num">${mastered}</dd><dt>skills mastered</dt></div>
+      <div>${window.icon('chart')}<dd class="num">${profile.evidence_count}</dd><dt>sessions analyzed</dt></div>
     </dl>
 
+    <div class="pf-grid">
+      ${weekChart()}
+      ${actCard()}
+      ${subjectBars()}
+    </div>
+
+    ${lookBlock()}
+
+    <div class="sec-head pf-sec"><h2>Settings</h2></div>
+    ${settingRows()}
+    ${displayCard() ? `<div class="pf-display">${displayCard()}</div>` : ''}
+
+    <div class="sec-head pf-sec"><h2>How Savant sees you</h2><span>and what it changes</span></div>
     <h2 class="section-title">${window.icon('settings')}What this changes in your sessions</h2>
     <div class="card">
       <table class="data"><tbody>
@@ -201,7 +350,6 @@ App.mount(async () => {
       </div>
     </div>
 
-    ${displayCard()}
 
     <h2 class="section-title">${window.icon('user')}Your plan</h2>
     <div class="card">
@@ -213,12 +361,6 @@ App.mount(async () => {
         </select>
       </label>
       <p class="small muted" id="plan-note" style="margin:0">${planNote(profile)}</p>
-    </div>
-
-    <h2 class="section-title">${window.icon('chart')}ACT scores</h2>
-    <div class="card">
-      <p class="small muted">Record your test date, your target, and the score from each practice test, and see them charted.</p>
-      <a class="btn btn-sm" href="/act-scores">Open ACT scores</a>
     </div>
 
     <h2 class="section-title">${window.icon('edit')}Your goals</h2>
@@ -299,7 +441,41 @@ App.mount(async () => {
     <div class="card">
       <p class="small muted">Everything the app holds on you, as one JSON file: your profile, every session, every answer, and every event.</p>
       <a class="btn btn-sm" href="/api/account/export" download>Download my data</a>
+    </div>
     </div>`;
+
+
+  // ── Look: pick a style, apply it now, save it to the account ────────────────
+  const lookHost = root.querySelector('.pf-look');
+  function refreshLook() {
+    const state = window.SavantStyle ? window.SavantStyle.state() : { pref: 'auto' };
+    lookHost.querySelectorAll('.look-card').forEach((b) => {
+      const on = b.dataset.look === state.pref;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-checked', String(on));
+    });
+    const t = themeNow();
+    lookHost.querySelectorAll('.pf-seg').forEach((b) => {
+      const on = b.dataset.themePick === t;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-checked', String(on));
+    });
+  }
+  lookHost.addEventListener('click', async (event) => {
+    const pick = event.target.closest('[data-look]');
+    const theme = event.target.closest('[data-theme-pick]');
+    if (pick && !pick.disabled) {
+      await App.setStyle(pick.dataset.look);
+      refreshLook();
+      App.announce(`${pick.querySelector('.look-name').textContent} look on`);
+    } else if (theme && window.SavantStyle) {
+      const mode = theme.dataset.themePick === 'device' ? null : theme.dataset.themePick;
+      window.SavantStyle.setTheme(mode);
+      try { await App.api.post('/api/prefs', { style: 'auto' }); } catch (err) { /* kept on this device */ }
+      refreshLook();
+      App.announce('Look set to Auto');
+    }
+  });
 
   // ── display and wellbeing ────────────────────────────────────────────────────
   async function savePref(input, patch, done) {
@@ -355,9 +531,6 @@ App.mount(async () => {
   if (window.GoalPicker) window.GoalPicker.list(document.getElementById('goals-card'));
 
   const masteryHost = document.getElementById('mastery');
-  const masteryOf = new Map(await Promise.all(progress.enrollments
-    .filter((e) => e.status !== 'placement_pending')
-    .map(async (e) => [e.id, await App.api.get(`/api/mastery/${e.id}`)])));
   for (const enrollment of progress.enrollments) {
     if (enrollment.status === 'placement_pending') {
       masteryHost.appendChild(App.el('div', { class: 'card' }, `

@@ -237,7 +237,15 @@ App.mount(async () => {
       // Spanish Grades 1-2 play as Duolingo-style activities (/spanish/learn,
       // services/spanish/path.js), so a question count says nothing there.
       if (e.track.id === 'spanish' && ['entry', 'intermediate'].includes(e.grade.id)) detail = 'Listening, speaking and word activities with audio.';
-      else if (progress) detail = `${progress.items} of ${progress.required.minItems} questions answered at this level.`;
+      else if (progress) {
+        // The count keeps climbing past the minimum, so say it plainly once the minimum is met
+        // rather than "50 of 12". Moving on also needs the skills to be strong enough.
+        const n = Number(progress.items) || 0;
+        const need = Number(progress.required && progress.required.minItems) || 0;
+        detail = n >= need
+          ? `${n} question${n === 1 ? '' : 's'} answered at this level.`
+          : `${n} of ${need} questions answered at this level.`;
+      }
     }
     // A catch-up grade says where it sits in the route.
     if (child) {
@@ -494,26 +502,27 @@ App.mount(async () => {
       <section class="home-subjects">
         <div class="sec-head"><h2>Your subjects</h2><span>level on the path</span></div>
         <div class="subject-cards">${ordered.map((e) => subjectGroup(e)).join('')}</div>
-        <a class="btn btn-text add-subject" href="/onboarding">Add a subject</a>
-        <div id="tutor-host"></div>
+        <div class="home-actions" aria-label="More ways to learn">
+          <a class="btn btn-sm" href="/onboarding">Add a subject</a>
+          <div id="tutor-host" class="home-tutor"></div>
+        </div>
       </section>
 
       ${data.recent.length ? `
       <section class="home-recent">
         <div class="sec-head"><h2>Recent sessions</h2></div>
-        <div class="card card-tight"><div class="table-scroll" tabindex="0" role="region" aria-label="Recent sessions"><table class="data recent-table">
-          <thead><tr><th>When</th><th>Subject</th><th>Type</th><th class="n">Score</th>${hideStats ? '' : '<th class="n">XP</th>'}</tr></thead>
-          <tbody>
+        <div class="card card-tight recent-card">
+          <div class="recent-head" aria-hidden="true"><span>When</span><span>Subject</span><span>Type</span><span class="n">Score</span>${hideStats ? '' : '<span class="n">XP</span>'}</div>
+          <ul class="recent-list${hideStats ? ' no-xp' : ''}" aria-label="Recent sessions">
             ${data.recent.map((s) => `
-              <tr>
-                <td class="nowrap">${when(s.ended_at)}</td>
-                <td>${esc(trackName(s.track_id))}${s.kind === 'placement' ? '' : recentLevels(s)}</td>
-                <td>${esc(KIND_NAME[s.kind] || String(s.kind || '').replace(/^./, (c) => c.toUpperCase()))}</td>
-                <td class="n nowrap">${score(s)}</td>
-                ${hideStats ? '' : `<td class="n">${s.xp || 0}</td>`}
-              </tr>`).join('')}
-          </tbody>
-        </table></div></div>
+              <li class="recent-row">
+                <span class="r-subject"><b>${esc(trackName(s.track_id))}</b>${s.kind === 'placement' ? '' : `<small>${recentLevels(s).replace(/^, l/, 'L')}</small>`}</span>
+                <span class="r-meta"><span class="r-when">${when(s.ended_at)}</span><span class="r-type">${esc(KIND_NAME[s.kind] || String(s.kind || '').replace(/^./, (c) => c.toUpperCase()))}</span></span>
+                <span class="r-score num">${score(s)}</span>
+                ${hideStats ? '' : `<span class="r-xp num">${s.xp || 0}<small> XP</small></span>`}
+              </li>`).join('')}
+          </ul>
+        </div>
       </section>` : ''}
 
       <aside class="home-aside" aria-label="More">

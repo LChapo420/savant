@@ -45,9 +45,9 @@
   var STYLES = {
     chunky:     { label: 'Chunky',     mode: 'light', ready: true,  chrome: '#F7F6F2' },
     night:      { label: 'Night',      mode: 'dark',  ready: true,  chrome: '#0F1115' },
-    editorial:  { label: 'Editorial',  mode: 'light', ready: false, chrome: '#FBF8F3' },
-    desk:       { label: 'Study desk', mode: 'light', ready: false, chrome: '#F4EFE6' },
-    notebook:   { label: 'Notebook',   mode: 'light', ready: false, chrome: '#FFFDF6' },
+    editorial:  { label: 'Editorial',  mode: 'light', ready: true , chrome: '#FAF8F3' },
+    desk:       { label: 'Study desk', mode: 'light', ready: true , chrome: '#F6F1E7' },
+    notebook:   { label: 'Notebook',   mode: 'light', ready: true , chrome: '#FBFAF5' },
     bento:      { label: 'Bento',      mode: 'light', ready: true , chrome: '#F3F3F1' }
   };
   var AUTO = { light: 'chunky', dark: 'night' };
