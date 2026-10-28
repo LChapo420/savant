@@ -230,7 +230,10 @@ App.mount(async () => {
     } else {
       const title = parts && parts.title ? `, ${esc(parts.title)}` : '';
       heading = `Next: ${step.kind === 'lesson' ? 'lesson' : 'level'} ${e.current_level}${title}`;
-      if (progress) detail = `${progress.items} of ${progress.required.minItems} questions answered at this level.`;
+      // Spanish Grades 1-2 play as Duolingo-style activities (/spanish/learn,
+      // services/spanish/path.js), so a question count says nothing there.
+      if (e.track.id === 'spanish' && ['entry', 'intermediate'].includes(e.grade.id)) detail = 'Listening, speaking and word activities with audio.';
+      else if (progress) detail = `${progress.items} of ${progress.required.minItems} questions answered at this level.`;
     }
     // A catch-up grade says where it sits in the route.
     if (child) {

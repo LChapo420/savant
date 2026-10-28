@@ -696,7 +696,7 @@ App.mount(async () => {
              <a class="btn btn-text" href="/session?enrollment=${enrollment.id}">Adaptive session instead</a>
              <span class="small">The full lesson for this level, the same for everyone on this course.</span>`
           : `<a class="btn btn-primary btn-lg" href="/session?enrollment=${enrollment.id}">Start lesson ${enrollment.current_level}</a>
-             <span class="small">${enrollment.lesson_ready ? 'Written for you and ready.' : 'Written for you when you open it.'}</span>`)
+             ${hereNode && hereNode.activities ? '' : `<span class="small">${enrollment.lesson_ready ? 'Written for you and ready.' : 'Written for you when you open it.'}</span>`}`)
         : `<a class="btn btn-primary btn-lg" href="/session?enrollment=${enrollment.id}">Start level ${enrollment.current_level}</a>
          <span class="small"><span class="num">${params.itemCount}</span> questions, about <span class="num">${Math.max(3, Math.round(params.itemCount * 0.8))}</span>&nbsp;minutes.</span>`;
 

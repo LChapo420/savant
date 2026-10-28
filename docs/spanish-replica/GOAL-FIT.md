@@ -127,7 +127,7 @@ está…?, no entiendo), 2 = common, 3 = topical or rare (socorro, catorce, posi
 ## 5. Passing a level
 
 A level counts as done when the learner finishes it and their first-try answers reach the pass mark:
-60% for ordinary levels, 80% for Checkpoints, none for Unit Checks (they never block, as the curriculum
+60% for ordinary levels, 80% for Checkpoints and Input Sessions (the curriculum's marks), none for Unit Checks (they never block, as the curriculum
 says). A Conversation Lab needs half of the role-play's goals reached. A Fluency Sprint counts on
 completion (its score is shown and kept), because a timed game scored by a speech recogniser should not
 hold the path. Below the mark the level is offered again, freshly built, with the missed phrases

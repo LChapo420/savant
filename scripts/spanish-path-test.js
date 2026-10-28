@@ -296,10 +296,34 @@ check('runs: a level other than the current one is practice and never moves the 
   assert.strictEqual(db.byId('enrollments', e.id).current_level, 20);
 });
 
+check('runs: old runs are pruned (30 kept per learner)', () => {
+  const u = db.insert('users', { email: 'many@example.com', display_name: 'M', xp: 0, streak: 0 });
+  const e = enroll(u, 'entry', 7);
+  for (let i = 0; i < 33; i++) assert.ok(esPath.startRun({ user: u, enrollment: e, level: 7 }), `run ${i}`);
+  const kept = db.find('es_path_runs', (r) => r.user_id === u.id).length;
+  assert.ok(kept <= 31 && kept >= 30, `${kept} runs kept`);
+});
+
 check('runs: a checkpoint needs 80%, a unit check never blocks', () => {
   assert.strictEqual(esPath.PASS.checkpoint, 0.8);
   assert.strictEqual(esPath.PASS.review, 0);
   assert.strictEqual(esPath.PASS.sprint, 0);
+  assert.strictEqual(esPath.PASS.input, 0.8);
+});
+
+check('runs: dictation lines are graded and counted', () => {
+  const u = db.insert('users', { email: 'dict@example.com', display_name: 'D', xp: 0, streak: 0 });
+  const e = enroll(u, 'entry', 10);
+  const lvl = esPath.startRun({ user: u, enrollment: e, level: 10 });
+  assert.strictEqual(lvl.engine, 'dictation');
+  for (const line of lvl.lines) {
+    const out = lab.dictationCheck(lvl.id, line.id, 'nada');
+    assert.ok(out && !out.correct);
+    esPath.recordResult({ runId: lvl.id, userId: u.id, itemId: line.id, correct: out.correct });
+  }
+  const res = esPath.finishRun({ user: u, runId: lvl.id });
+  assert.strictEqual(res.answered, lvl.lines.length);
+  assert.strictEqual(res.passed, false, 'a dictation typed wrong does not pass');
 });
 
 // ── goal fit ────────────────────────────────────────────────────────────

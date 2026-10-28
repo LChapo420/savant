@@ -564,7 +564,7 @@ function listeningLabLevel(unit) {
 
 function dictationLevel(unit, rand) {
   const lines = unit.scene.lines.filter((l) => l.who !== 'narrator' && bareWords(l.es).length <= 9);
-  return { engine: 'dictation', lines: shuffle(lines, rand).slice(0, 4).map((l, i) => ({ id: `d${i + 1}`, who: l.who, es: l.es, skill: 'es_vocab_core' })) };
+  return { engine: 'dictation', lines: shuffle(lines, rand).slice(0, 4).map((l, i) => ({ id: `d${i + 1}`, kind: 'dictation', who: l.who, es: l.es, skill: 'es_vocab_core' })) };
 }
 
 function introLevel(unit, row, rand) {
@@ -654,7 +654,8 @@ const isRunId = (id) => typeof id === 'string' && id.startsWith(RUN_PREFIX);
 function pruneRuns(userId) {
   const cutoff = Date.now() - 7 * 24 * 3600 * 1000;
   const mine = db.find('es_path_runs', (r) => r.user_id === userId).sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at));
-  mine.forEach((r, i) => { if (i >= 30 || Date.parse(r.created_at) < cutoff) db.remove('es_path_runs', r.id); });
+  const drop = new Set(mine.filter((r, i) => i >= 30 || Date.parse(r.created_at) < cutoff).map((r) => r.id));
+  if (drop.size) db.remove('es_path_runs', (r) => drop.has(r.id));
 }
 
 /**
@@ -717,11 +718,12 @@ function itemsOf(level) {
   return out;
 }
 
-// First-try share needed to pass, by slot. A unit check never blocks (the
-// curriculum says so); a fluency sprint counts on completion, since a timed
+// First-try share needed to pass, by slot. An input session needs 80% on its
+// picture checks and a checkpoint 80% (the curriculum's marks); a unit check
+// never blocks (the curriculum says so); a fluency sprint counts on completion, since a timed
 // speaking game scored by a recogniser should not hold the path; a role-play
 // needs half its goals.
-const PASS = { checkpoint: 0.8, review: 0, sprint: 0, conversation: 0.5, default: 0.6 };
+const PASS = { checkpoint: 0.8, input: 0.8, review: 0, sprint: 0, conversation: 0.5, default: 0.6 };
 
 /**
  * Close a run: mastery evidence, review queue, XP and streak, and the move to
