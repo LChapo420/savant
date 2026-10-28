@@ -349,6 +349,7 @@ Write exactly ${bad.length} NEW questions in the same shape. Every wrong option 
     schemaName: 'submit_game_questions',
     maxTokens: 16000,
     userId,
+    dataClass: userId ? 'learner' : 'pipeline',
     lane: process.env.BLOCK_LANE || 'background',
   });
   const fresh = normalizeReply(got && got.data);
@@ -491,6 +492,7 @@ async function ensure(userId, trackId, gradeId, level, opts = {}) {
       // careless one.
       maxTokens: Math.min(60000, 6000 + schema.questionCount * 440),
       userId,
+      dataClass: userId ? 'learner' : 'pipeline',
       lane: process.env.BLOCK_LANE || 'background',
     });
     reply = normalizeReply(reply);
