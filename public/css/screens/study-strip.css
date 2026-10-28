@@ -16,3 +16,9 @@
   .study-strip-idle .study-row { padding-block: 6px 0; }
   .study-idle .study-actions .btn-text { display: none; }
 }
+/* A running or paused session: one line on a phone too. */
+@media (max-width: 640px) {
+  .study-strip .study-row:has(.study-clock) { flex-wrap: nowrap; min-height: 48px; }
+  .study-strip .study-row:has(.study-clock) .study-what { flex: 1 1 auto; }
+  .study-strip .study-row:has(.study-clock) .study-actions { flex: none; flex-wrap: nowrap; gap: 4px 8px; }
+}

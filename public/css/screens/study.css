@@ -370,3 +370,39 @@ body:has(.session-player .check-bar) main.page, body:has(.session-player #item >
   .unit-group { padding: 0 var(--s-3); }
   .node-current { margin: 0 calc(-1 * var(--s-3)); padding-inline: var(--s-3); border-radius: 0; border-inline: 0; }
 }
+
+/* ── the session summary ───────────────────────────────────────────────── */
+.session-player .recap-title { font-size: var(--t-h1); font-weight: var(--w-head); letter-spacing: var(--tracking-head); margin: var(--s-4) 0 var(--s-5); }
+.session-player > .row-wrap { gap: 10px; }
+.session-player > .row-wrap > .btn-primary { min-height: var(--btn-h-lg); font-size: var(--btn-size-lg); }
+.session-player > .notice { margin-bottom: var(--s-4); }
+@media (max-width: 640px) {
+  .session-player > .row-wrap > .btn { flex: 1 1 100%; }
+  .session-player > .row-wrap > .btn-ghost { flex-basis: auto; }
+}
+
+/* ── retention enforcer, calendar, review ──────────────────────────────── */
+.enf-option {
+  min-height: 68px; padding: 14px 16px; background: var(--card-bg);
+  border: var(--bw-card) solid var(--choice-line); border-bottom-width: var(--bw-card-edge); border-radius: var(--r-choice);
+}
+.enf-option:has(input:checked) { background: var(--sel-bg); border-color: var(--sel-line); border-bottom-color: var(--sel-edge); box-shadow: none; }
+.enf-option input { width: 22px; height: 22px; accent-color: var(--action); }
+.enf-name { font-size: 1.0625rem; font-weight: var(--w-strong); }
+.enf-choose legend { font-weight: var(--w-head); }
+.enf-foot .btn-primary { min-height: var(--btn-h-lg); }
+.enf-lede { font-weight: var(--w-body); }
+
+.cal-bar .btn { min-width: 44px; }
+.cal-month { font-weight: var(--w-head); font-size: var(--t-h3); }
+.cal-grid th { font-weight: var(--w-label); }
+.cal-day.is-today { background: var(--action-tint); box-shadow: inset 0 3px 0 var(--action); }
+.cal-day.is-today .cal-n { color: var(--action-ink); }
+.cal-tag { border-radius: var(--r-chip); font-weight: var(--w-label); }
+.cal-ev.is-due .cal-tag, .cal-ev.is-today .cal-tag { background: var(--action); border-color: var(--action); color: var(--on-action); }
+.cal-legend { padding: var(--s-3) var(--s-4); background: var(--card-bg); border: var(--bw-card) solid var(--card-line); border-radius: var(--r-card); }
+
+.review-now .path-actions .btn-lg { min-height: var(--btn-h-lg); }
+.review-row { padding: 14px var(--s-4); margin-top: 8px; background: var(--card-bg); border: var(--bw-card) solid var(--card-line); border-bottom-width: var(--bw-card-edge); border-radius: var(--r-card); }
+.review-list { display: grid; }
+.review-title { font-weight: var(--w-strong); }

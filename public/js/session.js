@@ -965,6 +965,9 @@ function renderRubricResult(result) {
 
   function renderLevelClose(outcome) {
     const itemHost = document.getElementById('item');
+    host.setAttribute('data-view', 'close');
+    const counter = document.getElementById('counter');
+    if (counter) counter.textContent = '';
     const advanced = !!outcome.level_up;
     const wasLesson = outcome.kind === 'lesson';
     const nextKind = outcome.next_kind;
@@ -1237,7 +1240,7 @@ function renderRubricResult(result) {
     }
 
     host.innerHTML = `
-      <h1 class="visually-hidden">Session summary</h1>
+      <h1 class="recap-title">Session summary</h1>
       ${banner}
       ${outcome.skip && outcome.skip.offered ? `
       <div class="card" style="border-color:var(--accent)">
