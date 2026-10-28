@@ -88,6 +88,25 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    - Learner data goes only to learner-class providers through `services/pool.js`, never OpenRouter. Tests with
      a mocked provider.
 
+0d. **Tutor: voice and text modes, and it can see the screen (owner's spec, 2026-10-28; do right after 0c's first slice).**
+   - **Two modes, one button:** the learner can talk (push-to-talk or tap-to-talk, with the tutor answering out
+     loud) or type (with the tutor answering in text). One clearly visible toggle switches between them at any
+     time. **The default is whichever mode the learner used for their last message** (remember it per learner,
+     server-side, plus localStorage for instant paint). In voice mode, show the transcript too.
+   - **Speech:** as in 0c: browser voices are free, and the better TTS/STT goes through the LLM Gateway ledger
+     ($5 total, speech only) with a per-user daily cap. In Spanish lessons, use a Spanish voice; never read
+     Spanish in an English voice (`public/spanish/js/core/audio.js` already refuses to).
+   - **Sees the screen:** the tutor can look at what the learner is looking at in Savant. Build a client-side
+     snapshot of the current page: the visible question or lesson text, the choices, what the learner selected or
+     typed, any feedback shown, and the scroll position, as structured text. When that isn't enough (a graph, a
+     chess board, a drawing), send an image of the page area to a vision-capable, learner-class model through
+     `services/pool.js`. It covers only Savant's own page, never other tabs or the device's screen. When the
+     dock opens, say plainly "The tutor can see this page." The server also knows "what should be on the
+     screen" (the current item and its answer key), but the tutor must not reveal answers during
+     placement, mastery quizzes, timed tasks or study tests.
+   - Tests with a mocked provider, including the mode memory, the toggle, the snapshot builder, and the
+     no-answers rule during tests.
+
 0a. **Head-to-head study kit, remaining slices** (first slice is under Done). The claim: *per hour of study, Savant teaches everyday Spanish more than Duolingo.*
    - **(b) Sealed multi-participant tests.** Create `spanish-study-tests/` (a new module, **never edit `spanish-check/`,
      `spanish-check-lc/` or their routes and pages**) that copies their engine code with its own fresh seal, per-participant
