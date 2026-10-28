@@ -38,6 +38,20 @@
   const interacting = () => Date.now() - lastInput < IDLE_MS
     || (document.activeElement && document.activeElement.tagName === 'IFRAME');
   const onEnforcerPage = () => /^\/enforcer/.test(window.location.pathname);
+  // Where the idle "Start a session" prompt belongs: the home page and the path.
+  // A running or waiting session still shows on the other pages, but never inside
+  // a question player (a lesson, a quiz, a placement, a stage check).
+  const onIdleHome = () => /^\/(dashboard|path)(\.html)?\/?$/.test(window.location.pathname);
+  const inPlayer = () => !!document.querySelector('.player');
+  // The strip's own small stylesheet, so a page that does not load study.css gets the compact look too.
+  (function loadStripCss() {
+    if (document.querySelector('link[data-study-css]')) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/css/screens/study-strip.css';
+    link.setAttribute('data-study-css', '');
+    document.head.appendChild(link);
+  }());
 
   function minutes(ms) {
     const m = Math.max(0, Math.floor((Number(ms) || 0) / 60000));
@@ -129,12 +143,15 @@
   }
 
   function draw() {
-    if (off || onEnforcerPage()) { if (host) host.remove(); host = null; return; }
-    const el = place();
-    if (!el) return;
     const s = state && state.study;
     const o = state && state.offer;
+    // The idle prompt only where it belongs; nothing at all inside a question player.
+    const hide = off || onEnforcerPage() || inPlayer() || (!s && !o && !onIdleHome());
+    if (hide) { if (host) host.remove(); host = null; return; }
+    const el = place();
+    if (!el) return;
     let html = '';
+    el.classList.remove('study-strip-idle');
     if (s && ending) {
       html = `
         <div class="wrap study-row">
@@ -165,9 +182,10 @@
           </span>
         </div>`;
     } else {
+      el.classList.add('study-strip-idle');
       html = `
-        <div class="wrap study-row">
-          <span class="study-what">Start a session to time your study. At the end, a short retention enforcer locks it in.</span>
+        <div class="wrap study-row study-idle">
+          <span class="study-what"><strong>Time your study.</strong><span class="study-note"> A short retention enforcer locks it in at the end.</span></span>
           <span class="study-actions">
             <button class="btn btn-sm" type="button" data-study="start">Start session</button>
             <a class="btn-text" href="/calendar">Calendar</a>
