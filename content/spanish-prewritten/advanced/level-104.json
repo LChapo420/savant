@@ -182,11 +182,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
+              "está",
               "es",
-              "tiene",
-              "está"
+              "tiene"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -210,11 +210,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
-              "verdes",
               "verde",
-              "verdas"
+              "verdas",
+              "verdes"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -238,19 +238,19 @@
       "data": {
         "question": "How do you say \"He has blue eyes\"?",
         "choices": [
-          "Tiene ojos azules.",
           "Es ojos azules.",
           "Tiene ojos azul.",
-          "Es azules ojos."
+          "Es azules ojos.",
+          "Tiene ojos azules."
         ],
-        "correctIndex": 0,
+        "correctIndex": 3,
         "commonErrorLabel": "Ser with a feature, or no agreement",
         "trapChoiceIndexes": [
-          1,
-          2
+          0,
+          1
         ],
         "trapReasons": {
-          "2": "Azul looks like it should not change."
+          "1": "Azul looks like it should not change."
         },
         "whyIntuitionFailed": "Learners mix the two patterns, or forget that the color agrees with ojos.",
         "correctReasoning": "Features use tener, and the color agrees with plural ojos: Tiene ojos azules.",
@@ -314,10 +314,10 @@
       "source": "prewritten",
       "hint": "Short height is bajo / baja.",
       "choices": [
+        "Mi hermana es corta.",
         "Mi hermana es baja.",
         "Mi hermana tiene baja.",
-        "Mi hermana es bajo.",
-        "Mi hermana es corta."
+        "Mi hermana es bajo."
       ],
       "id": "c2",
       "after": 3,
@@ -368,8 +368,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -377,7 +377,7 @@
   "prewritten": {
     "id": "spanish/advanced/104",
     "version": 1,
-    "sha256": "0d7c9ad71fc2343ffeab83954edc86e6d12f20050f87ded313717d7f37d2c3e2",
+    "sha256": "1cf7e63595c0c74fca2daae85e030f6ff7a468545d4cdc231365fd7fb45b2c43",
     "title": "Describing People: Appearance",
     "file": "content/spanish-prewritten/advanced/level-104.json"
   }

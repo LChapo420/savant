@@ -29,7 +29,7 @@
           "un hombre inteligente, una mujer inteligente.",
           "un examen fácil, una pregunta fácil.",
           "Plural: inteligentes, fáciles.",
-          "Exception: nationalities and -or adjectives add -a: española, trabajadora."
+          "Exception: nationalities ending in a consonant, and -or adjectives like trabajador, add -a: española, trabajadora (but mayor, menor, mejor and peor never change)."
         ]
       },
       "repaired": false,
@@ -228,22 +228,22 @@
       "data": {
         "question": "Which is correct for \"an easy question\" (una pregunta)?",
         "choices": [
-          "una pregunta fácil",
           "una pregunta fácila",
           "una pregunta fáciles",
-          "una fácila pregunta"
+          "una fácila pregunta",
+          "una pregunta fácil"
         ],
-        "correctIndex": 0,
+        "correctIndex": 3,
         "commonErrorLabel": "Adding -a to every adjective",
         "trapChoiceIndexes": [
-          1
+          0
         ],
         "trapReasons": {
-          "1": "Feminine nouns often take -a adjectives, so -a seems needed."
+          "0": "Feminine nouns often take -a adjectives, so -a seems needed."
         },
         "whyIntuitionFailed": "After learning alto / alta, learners add -a everywhere.",
         "correctReasoning": "Fácil ends in a consonant and has one singular form: una pregunta fácil. Plural: preguntas fáciles.",
-        "recoveryTip": "Only -o adjectives, nationalities and -or adjectives change to -a.",
+        "recoveryTip": "Only -o adjectives, consonant-ending nationalities and -or adjectives like trabajador change to -a.",
         "difficulty": "Trap"
       },
       "repaired": false,
@@ -357,8 +357,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -366,7 +366,7 @@
   "prewritten": {
     "id": "spanish/advanced/80",
     "version": 1,
-    "sha256": "349da71d0ea5bb9891f079e66e4469959ae261ab3f9146a1394ccb7d994d8546",
+    "sha256": "6308fe142e2e7b17a671a4f3bd6882ae1dd000ab6a63fe1e8ee19b52e04c4f4c",
     "title": "Adjectives Ending in -e or a Consonant",
     "file": "content/spanish-prewritten/advanced/level-080.json"
   }

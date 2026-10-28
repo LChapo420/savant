@@ -269,11 +269,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
+              "abuelo",
               "tío",
-              "primo",
-              "abuelo"
+              "primo"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -297,11 +297,11 @@
             "kind": "blank",
             "id": "b4",
             "options": [
-              "sobrino",
               "nieto",
-              "primo"
+              "primo",
+              "sobrino"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -322,18 +322,18 @@
       "data": {
         "question": "Your coworker says \"Mis padres viven en Texas.\" Who lives in Texas?",
         "choices": [
-          "Her mother and father",
           "Only her father",
           "Her two fathers, certainly",
-          "Her relatives in general"
+          "Her relatives in general",
+          "Her mother and father"
         ],
-        "correctIndex": 0,
+        "correctIndex": 3,
         "commonErrorLabel": "Padres as fathers only",
         "trapChoiceIndexes": [
-          1
+          0
         ],
         "trapReasons": {
-          "1": "Padre means father, so padres looks like \"fathers\"."
+          "0": "Padre means father, so padres looks like \"fathers\"."
         },
         "whyIntuitionFailed": "Padre means father, so the plural looks like it should mean fathers.",
         "correctReasoning": "Los padres is the normal word for parents, a mother and a father together.",
@@ -377,10 +377,10 @@
       "source": "prewritten",
       "hint": "An aunt.",
       "choices": [
-        "tu tía",
         "tu prima",
         "tu abuela",
-        "tu sobrina"
+        "tu sobrina",
+        "tu tía"
       ],
       "id": "c1",
       "after": 4,
@@ -397,10 +397,10 @@
       "source": "prewritten",
       "hint": "Mixed group.",
       "choices": [
-        "Tengo dos hermanos.",
         "Tengo dos hermanas.",
         "Tengo dos hermano.",
-        "Tengo un hermanos."
+        "Tengo un hermanos.",
+        "Tengo dos hermanos."
       ],
       "id": "c2",
       "after": 2,
@@ -454,8 +454,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -463,7 +463,7 @@
   "prewritten": {
     "id": "spanish/advanced/92",
     "version": 1,
-    "sha256": "3d869fa08b30efd783fb3839f6346a65e5279ac90568bc19bda6e3851d493dfd",
+    "sha256": "5340a8b283643598fa42b62446ec06da12645ef11d73f61dcd5f29af7afc4a73",
     "title": "Family Members and Relatives",
     "file": "content/spanish-prewritten/advanced/level-092.json"
   }

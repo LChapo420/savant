@@ -27,7 +27,10 @@
  *   served     servable under the key's gate and without it, never queued for
  *              a re-check, and the page payload (publicPlan) carries no answer
  *   render     every block renders in jsdom from its data, without an error,
- *              and so do the check blocks with what the page is sent
+ *              and so do the check blocks with what the page is sent; then the
+ *              whole lesson is laid out in real Chromium (Playwright) the way
+ *              the page does it, every audio block's Play is pressed, and any
+ *              page error or empty block fails it (--no-browser skips this)
  *   spelling   no unbalanced ¿ or ¡, no line breaks, and none of the common
  *              misspellings of accented words this course teaches
  */
@@ -136,6 +139,58 @@ async function renderAll(pub) {
     dom.window.close();
   }
   return problems;
+}
+
+/**
+ * Lay every lesson out in real Chromium, as public/js/block-level.js does
+ * (compiler.js + each block's file, then compile), press Play on each audio
+ * block, and report page errors and blocks that rendered nothing. jsdom has no
+ * Web Audio, so a block can pass there and still throw in a browser.
+ */
+async function browserRenderAll(pubs) {
+  let chromium;
+  try { ({ chromium } = require('playwright')); } catch { return new Map([['*', ['browser: playwright is not installed (run with --no-browser to skip)']]]); }
+  const out = new Map();
+  const browser = await chromium.launch();
+  try {
+    for (const [where, pub] of pubs) {
+      const page = await browser.newPage({ viewport: { width: 420, height: 900 } });
+      const errors = [];
+      page.on('pageerror', (e) => errors.push(e.message));
+      await page.setContent('<!doctype html><html><head><meta charset="utf-8"></head><body><div id="stage"></div></body></html>');
+      await page.addScriptTag({ content: fs.readFileSync(path.join(ROOT, 'public', 'engine', 'compiler.js'), 'utf8') });
+      for (const url of pub.files) await page.addScriptTag({ content: blockSource(url) });
+      const result = await page.evaluate((entries) => {
+        const stage = document.getElementById('stage');
+        const res = [];
+        entries.forEach((e, i) => {
+          const section = document.createElement('section');
+          stage.appendChild(section);
+          try {
+            const mod = window.LessonBlocks.get(e.block);
+            mod.renderBlock(section, e.data);
+            res.push({ i, block: e.block, empty: !section.textContent.trim() && !section.querySelector('canvas,svg') });
+          } catch (err) {
+            res.push({ i, block: e.block, threw: String(err && err.message) });
+          }
+        });
+        return res;
+      }, pub.entries);
+      // Play each audio block briefly.
+      const plays = await page.$$('section button[aria-label="Play"]');
+      for (const b of plays) { await b.click(); await page.waitForTimeout(150); await b.click().catch(() => {}); }
+      await page.waitForTimeout(100);
+      const problems = [];
+      result.filter((r) => r.threw).forEach((r) => problems.push(`browser: entry ${r.i} ${r.block} threw: ${r.threw}`));
+      result.filter((r) => r.empty).forEach((r) => problems.push(`browser: entry ${r.i} ${r.block} rendered nothing`));
+      errors.forEach((e) => problems.push(`browser: page error: ${e.split('\n')[0]}`));
+      out.set(where, problems);
+      await page.close();
+    }
+  } finally {
+    await browser.close();
+  }
+  return out;
 }
 
 /** A short string from the data that the rendered block must show. */
@@ -318,7 +373,7 @@ async function checkLesson(file, indexEntry) {
   // spelling
   problems.push(...spellingProblems(row));
 
-  return { where, problems, notes, blocks: row.blocks.length, checks: row.checks.length, mc: row.checks.filter((c) => c.format === 'multiple_choice').length };
+  return { where, problems, notes, blocks: row.blocks.length, checks: row.checks.length, mc: row.checks.filter((c) => c.format === 'multiple_choice').length, pub };
 }
 
 async function main() {
@@ -332,6 +387,31 @@ async function main() {
     // eslint-disable-next-line no-await-in-loop
     results.push(await checkLesson(path.join(DIR, l.file), l));
   }
+  if (!args.includes('--no-browser')) {
+    const rendered = await browserRenderAll(results.map((r) => [r.where, r.pub]));
+    for (const r of results) r.problems.push(...(rendered.get(r.where) || []), ...(rendered.get('*') || []));
+  }
+  for (const r of results) delete r.pub;
+  // No block or check shuffles its options, so the right answer's position is
+  // what the learner sees: it must not sit in one slot most of the time.
+  if (!only.length) {
+    const slots = {};
+    let total = 0;
+    for (const l of lessons) {
+      const row = JSON.parse(fs.readFileSync(path.join(DIR, l.file), 'utf8'));
+      const keys = [
+        ...row.checks.filter((c) => c.format === 'multiple_choice').map((c) => c.choices.indexOf(c.answer)),
+        ...row.blocks.filter((b) => b.block === 'Trap_CommonError').map((b) => b.data.correctIndex),
+        ...row.blocks.filter((b) => b.block === 'Interact_MultipleChoice').map((b) => b.data.options.findIndex((o) => o.id === b.data.correctOptionId)),
+        ...row.blocks.filter((b) => b.block === 'Recall_FillTheBlank').flatMap((b) => b.data.segments.filter((x) => x.kind === 'blank').map((x) => x.correctIndex)),
+      ];
+      keys.forEach((k) => { slots[k] = (slots[k] || 0) + 1; total++; });
+    }
+    const worst = Math.max(...Object.values(slots));
+    const corpus = { where: 'all lessons', problems: [], notes: [`right-answer positions: ${JSON.stringify(slots)}`], blocks: '-', checks: '-' };
+    if (total && worst / total > 0.45) corpus.problems.push(`answers: ${worst} of ${total} right answers sit in the same position`);
+    results.push(corpus);
+  }
   const failed = results.filter((r) => r.problems.length);
   if (json) {
     console.log(JSON.stringify({ checked: results.length, failed: failed.length, results }, null, 2));
@@ -340,7 +420,8 @@ async function main() {
       console.log(`${r.problems.length ? 'FAIL' : 'PASS'}  ${r.where}  (${r.blocks} blocks, ${r.checks} checks)${r.notes.length ? `  note: ${r.notes.join('; ')}` : ''}`);
       r.problems.forEach((p) => console.log(`      - ${p}`));
     }
-    console.log(`\n${results.length - failed.length}/${results.length} lessons pass`);
+    const lessonRows = results.filter((r) => r.where !== 'all lessons');
+    console.log(`\n${lessonRows.filter((r) => !r.problems.length).length}/${lessonRows.length} lessons pass${results.length > lessonRows.length ? `; corpus check ${failed.some((r) => r.where === 'all lessons') ? 'FAILS' : 'passes'}` : ''}`);
   }
   if (failed.length) process.exitCode = 1;
 }

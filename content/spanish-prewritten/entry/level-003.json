@@ -250,30 +250,30 @@
         "options": [
           {
             "id": "a",
-            "text": "¡Hola!"
-          },
-          {
-            "id": "b",
-            "text": "¡Adiós!"
-          },
-          {
-            "id": "c",
             "text": "¡Gracias!"
           },
           {
-            "id": "d",
+            "id": "b",
             "text": "¡No!"
+          },
+          {
+            "id": "c",
+            "text": "¡Hola!"
+          },
+          {
+            "id": "d",
+            "text": "¡Adiós!"
           }
         ],
-        "correctOptionId": "a",
+        "correctOptionId": "c",
         "feedback": {
           "correct": "Right.",
           "incorrect": "Not quite. Read the feedback and try again.",
           "byOption": {
-            "a": "Yes: hola is the everyday hello, right for a first greeting.",
-            "b": "Adiós is goodbye. Save it for when you leave.",
-            "c": "Gracias is thank you. Nothing has happened yet to thank them for.",
-            "d": "No answers a question. Start with a greeting."
+            "a": "Gracias is thank you. Nothing has happened yet to thank them for.",
+            "b": "No answers a question. Start with a greeting.",
+            "c": "Yes: hola is the everyday hello, right for a first greeting.",
+            "d": "Adiós is goodbye. Save it for when you leave."
           }
         }
       },
@@ -413,10 +413,10 @@
       "source": "prewritten",
       "hint": "You want to thank them.",
       "choices": [
-        "gracias",
-        "hola",
         "adiós",
-        "amiga"
+        "amiga",
+        "gracias",
+        "hola"
       ],
       "id": "c2",
       "after": 6,
@@ -447,10 +447,10 @@
       "source": "prewritten",
       "hint": "Spanish vowels keep one sound. Think of sí.",
       "choices": [
-        "see",
         "sit",
         "sigh",
-        "say"
+        "say",
+        "see"
       ],
       "id": "c4",
       "after": 2,
@@ -496,8 +496,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -505,7 +505,7 @@
   "prewritten": {
     "id": "spanish/entry/3",
     "version": 1,
-    "sha256": "084761db7087fbdb4a99f88cd82c2e683a3ad61ddc23be490e52e27c85c8ff30",
+    "sha256": "fe19f796aec6421e62a38fda551417f19a239d7d84826eaf92d3650886b2dbcd",
     "title": "Welcome to Spanish: Where It Is Spoken and How It Sounds",
     "file": "content/spanish-prewritten/entry/level-003.json"
   }

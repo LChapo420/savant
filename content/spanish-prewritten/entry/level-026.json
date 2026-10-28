@@ -339,11 +339,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
+              "diez",
               "dos",
-              "doce",
-              "diez"
+              "doce"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -353,11 +353,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
-              "uno",
               "una",
-              "un"
+              "un",
+              "uno"
             ],
-            "correctIndex": 1
+            "correctIndex": 0
           },
           {
             "kind": "text",
@@ -367,11 +367,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
+              "seis",
               "cinco",
-              "cuatro",
-              "seis"
+              "cuatro"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -395,18 +395,18 @@
       "data": {
         "question": "How do you order one coffee?",
         "choices": [
+          "Unos café, por favor.",
           "Un café, por favor.",
           "Uno café, por favor.",
-          "Una café, por favor.",
-          "Unos café, por favor."
+          "Una café, por favor."
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "commonErrorLabel": "Uno before a noun",
         "trapChoiceIndexes": [
-          1
+          2
         ],
         "trapReasons": {
-          "1": "Uno is the counting word you just learned, so it seems right everywhere."
+          "2": "Uno is the counting word you just learned, so it seems right everywhere."
         },
         "whyIntuitionFailed": "In the counting list the word is uno, so learners carry it into sentences.",
         "correctReasoning": "Before a masculine noun uno shortens to un: un café. Café is masculine, so it is not una.",
@@ -455,10 +455,10 @@
       "source": "prewritten",
       "hint": "NWEH-beh.",
       "choices": [
-        "9",
         "7",
         "5",
-        "2"
+        "2",
+        "9"
       ],
       "id": "c1",
       "after": 4,
@@ -503,10 +503,10 @@
       "source": "prewritten",
       "hint": "Botella ends in -a.",
       "choices": [
-        "Una botella de agua, por favor.",
         "Uno botella de agua, por favor.",
         "Un botella de agua, por favor.",
-        "Unos botella de agua, por favor."
+        "Unos botella de agua, por favor.",
+        "Una botella de agua, por favor."
       ],
       "id": "c4",
       "after": 6,
@@ -543,8 +543,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -552,7 +552,7 @@
   "prewritten": {
     "id": "spanish/entry/26",
     "version": 1,
-    "sha256": "7b220ce72aad619641ce5a5db59e91d41074c09f318312bfbe31f1dabf8cce69",
+    "sha256": "88f2d78b17a2586fdb47b04bfb7baf71de97013739ea7749094bc9f6928683ec",
     "title": "Numbers 0 to 10",
     "file": "content/spanish-prewritten/entry/level-026.json"
   }

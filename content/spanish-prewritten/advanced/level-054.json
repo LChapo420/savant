@@ -150,7 +150,7 @@
         "prerequisites": [
           "Juan → Juanito; Ana → Anita; Carlos → Carlitos.",
           "Guadalupe → Lupe → Lupita.",
-          "The same ending makes things small or dear: un café → un cafecito."
+          "The same ending makes things small or dear: un momento → un momentito (wait a moment: un momentito)."
         ]
       },
       "repaired": false,
@@ -251,22 +251,22 @@
       "data": {
         "question": "Your client's card reads \"Lic. José Martínez\". At your first meeting, how do you greet him?",
         "choices": [
+          "¡Hola, José Pepe!",
           "Buenos días, licenciado Martínez.",
           "¡Hola, Pepe!",
-          "Buenos días, Pepito.",
-          "¡Hola, José Pepe!"
+          "Buenos días, Pepito."
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "commonErrorLabel": "The nickname too soon",
         "trapChoiceIndexes": [
-          1
+          2
         ],
         "trapReasons": {
-          "1": "You know that Pepe is José, and it sounds friendly."
+          "2": "You know that Pepe is José, and it sounds friendly."
         },
         "whyIntuitionFailed": "Knowing the nickname makes it tempting to use it to sound warm.",
         "correctReasoning": "In a first, formal meeting use the title and surname. Switch to Pepe only if he uses it or invites you to.",
-        "recoveryTip": "Wait to be invited: \"Dime Pepe\" (Call me Pepe).",
+        "recoveryTip": "Wait to be invited: \"Dígame Pepe\" or, between friends, \"Dime Pepe\" (Call me Pepe).",
         "difficulty": "Trap"
       },
       "repaired": false,
@@ -306,10 +306,10 @@
       "source": "prewritten",
       "hint": "Paco is a nickname for Francisco.",
       "choices": [
-        "He wants you to call him Paco.",
-        "He is introducing his friend Paco.",
         "He wants to know your nickname.",
-        "He is saying goodbye."
+        "He is saying goodbye.",
+        "He wants you to call him Paco.",
+        "He is introducing his friend Paco."
       ],
       "id": "c1",
       "after": 4,
@@ -326,10 +326,10 @@
       "source": "prewritten",
       "hint": "It looks unrelated to the name.",
       "choices": [
-        "José",
         "Pedro",
         "Pablo",
-        "Felipe"
+        "Felipe",
+        "José"
       ],
       "id": "c2",
       "after": 4,
@@ -380,8 +380,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -389,7 +389,7 @@
   "prewritten": {
     "id": "spanish/advanced/54",
     "version": 1,
-    "sha256": "9b5adc7c622900df9eeebb25a26375d1a97bdb53e58eac02a22457652a623d00",
+    "sha256": "9dd154e1ce1d45210af3d37d1b7693a80d4a0cc69f1a271256c1874554d50a5e",
     "title": "Nicknames and Pet Forms of Names: Pepe, Paco, Lupita, Chuy",
     "file": "content/spanish-prewritten/advanced/level-054.json"
   }

@@ -289,11 +289,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
-              "Dónde",
               "Cuándo",
-              "Qué"
+              "Qué",
+              "Dónde"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -303,25 +303,25 @@
             "kind": "blank",
             "id": "b3",
             "options": [
-              "Quién",
               "Cómo",
-              "Cuánto"
+              "Cuánto",
+              "Quién"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
-            "text": " es? Planning: ¿"
+            "text": " es? Asking what day or time: ¿"
           },
           {
             "kind": "blank",
             "id": "b4",
             "options": [
-              "Cuándo",
-              "Dónde",
-              "Quién"
+              "Cómo",
+              "Quién",
+              "Cuándo"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -342,18 +342,18 @@
       "data": {
         "question": "How do you naturally ask \"What is your name?\" (to a friend)?",
         "choices": [
-          "¿Cómo te llamas?",
-          "¿Qué te llamas?",
           "¿Quién te llamas?",
-          "¿Dónde te llamas?"
+          "¿Dónde te llamas?",
+          "¿Cómo te llamas?",
+          "¿Qué te llamas?"
         ],
-        "correctIndex": 0,
+        "correctIndex": 2,
         "commonErrorLabel": "Word-for-word \"what\"",
         "trapChoiceIndexes": [
-          1
+          3
         ],
         "trapReasons": {
-          "1": "English says \"what\", so qué seems to be the word to use."
+          "3": "English says \"what\", so qué seems to be the word to use."
         },
         "whyIntuitionFailed": "English asks \"what\" about a name; Spanish asks \"how\" you call yourself.",
         "correctReasoning": "The fixed question is ¿Cómo te llamas?; the answer is Me llamo ...",
@@ -397,10 +397,10 @@
       "source": "prewritten",
       "hint": "You want an amount.",
       "choices": [
-        "¿Cuánto cuesta?",
-        "¿Quién cuesta?",
         "¿Cuándo cuesta?",
-        "¿Cómo cuesta?"
+        "¿Cómo cuesta?",
+        "¿Cuánto cuesta?",
+        "¿Quién cuesta?"
       ],
       "id": "c1",
       "after": 5,
@@ -417,10 +417,10 @@
       "source": "prewritten",
       "hint": "Cuándo is about time.",
       "choices": [
-        "When is the meeting?",
-        "Where is the meeting?",
         "Who is at the meeting?",
-        "How is the meeting?"
+        "How is the meeting?",
+        "When is the meeting?",
+        "Where is the meeting?"
       ],
       "id": "c2",
       "after": 5,
@@ -454,10 +454,10 @@
       "source": "prewritten",
       "hint": "It is not asking how you are.",
       "choices": [
-        "Me llamo Sara.",
-        "Estoy bien.",
         "Es un libro.",
-        "Tengo veinte años."
+        "Tengo veinte años.",
+        "Me llamo Sara.",
+        "Estoy bien."
       ],
       "id": "c4",
       "after": 6,
@@ -494,8 +494,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -503,7 +503,7 @@
   "prewritten": {
     "id": "spanish/intermediate/81",
     "version": 1,
-    "sha256": "809b8a62adc7aa52fb3a3220513750e4e961695781ded50f050b9201b8c3eebf",
+    "sha256": "4ef1fd6472abe311a4331f9e66209440b1c4d3461d1499c1f2e1bcfc319c5027",
     "title": "Question Words as Chunks",
     "file": "content/spanish-prewritten/intermediate/level-081.json"
   }

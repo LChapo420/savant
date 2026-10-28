@@ -163,11 +163,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
+              "unos",
               "una",
-              "un",
-              "unos"
+              "un"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -177,11 +177,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
-              "(nothing)",
               "un",
-              "una"
+              "una",
+              "(nothing)"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -191,11 +191,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
-              "unos",
               "unas",
-              "un"
+              "un",
+              "unos"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -205,11 +205,11 @@
             "kind": "blank",
             "id": "b4",
             "options": [
+              "un otra",
               "otra",
-              "una otra",
-              "un otra"
+              "una otra"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -234,18 +234,18 @@
       "data": {
         "question": "How do you ask for another coffee?",
         "choices": [
-          "Otro café, por favor.",
-          "Un otro café, por favor.",
           "Una otra café, por favor.",
-          "Más uno café, por favor."
+          "Más uno café, por favor.",
+          "Otro café, por favor.",
+          "Un otro café, por favor."
         ],
-        "correctIndex": 0,
+        "correctIndex": 2,
         "commonErrorLabel": "un otro",
         "trapChoiceIndexes": [
-          1
+          3
         ],
         "trapReasons": {
-          "1": "\"Another\" seems to contain \"an\", so un is added."
+          "3": "\"Another\" seems to contain \"an\", so un is added."
         },
         "whyIntuitionFailed": "English \"another\" is \"an + other\", so learners translate both parts.",
         "correctReasoning": "Otro already means another: Otro café, por favor. Otra for a feminine noun: otra cerveza.",
@@ -288,10 +288,10 @@
       "source": "prewritten",
       "hint": "A bare job after ser.",
       "choices": [
-        "Mi hermana es enfermera.",
         "Mi hermana es una enfermera.",
         "Mi hermana es un enfermera.",
-        "Mi hermana una enfermera es."
+        "Mi hermana una enfermera es.",
+        "Mi hermana es enfermera."
       ],
       "id": "c1",
       "after": 4,
@@ -308,10 +308,10 @@
       "source": "prewritten",
       "hint": "Unos with a number is an estimate.",
       "choices": [
-        "I have about twenty dollars.",
-        "I have twenty-one dollars.",
         "I have one twenty-dollar bill.",
-        "I have exactly twenty dollars."
+        "I have exactly twenty dollars.",
+        "I have about twenty dollars.",
+        "I have twenty-one dollars."
       ],
       "id": "c2",
       "after": 0,
@@ -326,6 +326,9 @@
       "answer": "unas",
       "rationale": "Amigas is feminine plural, so some is unas.",
       "source": "prewritten",
+      "accepts": [
+        "algunas"
+      ],
       "hint": "Feminine and plural.",
       "id": "c3",
       "after": 4,
@@ -362,8 +365,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -371,7 +374,7 @@
   "prewritten": {
     "id": "spanish/advanced/28",
     "version": 1,
-    "sha256": "eb189d24ee3fc0098b00a2d3c4e715d4c6faa27427ef81a8d88e8102f9ca0dcd",
+    "sha256": "ee1dad0157ae798e3cbb8137862bd417479a3c491ba1dc7687bd9403d0bbe8cb",
     "title": "Indefinite Articles: Un, Una, Unos, Unas",
     "file": "content/spanish-prewritten/advanced/level-028.json"
   }

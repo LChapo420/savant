@@ -13,6 +13,7 @@
     "Yes/no questions: same words with a rising voice: ¿Ana es de Chile? or ¿Es Ana de Chile?",
     "No helper \"do\": ¿Hablas español?",
     "Information questions: question word + verb + subject: ¿Dónde vive tu hermana?",
+    "Cómo asks what something is like and quién asks who: ¿Cómo es tu casa? ¿Quién es él?",
     "Cuál + es + noun asks \"what is your ...?\": ¿Cuál es tu número? Qué + es asks for a definition: ¿Qué es esto?",
     "Cuántos / cuántas and quién / quiénes agree: ¿Cuántas hermanas tienes?",
     "A preposition goes first: ¿De dónde eres? ¿Con quién vives?",
@@ -34,7 +35,7 @@
           {
             "key": "Information",
             "value": "question word + verb + subject",
-            "detail": "¿Dónde vive tu hermana? ¿Qué estudia Pedro?"
+            "detail": "¿Dónde vive tu hermana? ¿Qué estudia Pedro? ¿Cómo es tu casa? ¿Quién es él?"
           },
           {
             "key": "Preposition first",
@@ -88,7 +89,7 @@
       "data": {
         "title": "Ask it right",
         "cueNote": "Yes/no questions rise at the end; questions with a question word usually fall.",
-        "duration": 21.1,
+        "duration": 26.2,
         "cues": [
           {
             "text": "¿Hablas español?",
@@ -101,29 +102,39 @@
             "end": 4.7
           },
           {
-            "text": "¿Cuál es tu número de teléfono?",
+            "text": "¿Cómo es tu casa?",
             "start": 6.2,
-            "end": 8.6
+            "end": 7.5
+          },
+          {
+            "text": "¿Quién es él?",
+            "start": 9,
+            "end": 9.8
+          },
+          {
+            "text": "¿Cuál es tu número de teléfono?",
+            "start": 11.3,
+            "end": 13.7
           },
           {
             "text": "¿Cuántas hermanas tienes?",
-            "start": 10.1,
-            "end": 11.6
+            "start": 15.2,
+            "end": 16.7
           },
           {
             "text": "¿De dónde eres?",
-            "start": 13.1,
-            "end": 14.2
+            "start": 18.2,
+            "end": 19.3
           },
           {
             "text": "¿Con quién vives?",
-            "start": 15.7,
-            "end": 16.6
+            "start": 20.8,
+            "end": 21.7
           },
           {
             "text": "Eres de Texas, ¿verdad?",
-            "start": 18.1,
-            "end": 19.6
+            "start": 23.2,
+            "end": 24.7
           }
         ],
         "playLabel": "Play",
@@ -178,11 +189,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
-              "Cuál",
               "Qué",
-              "Quién"
+              "Quién",
+              "Cuál"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -192,11 +203,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
-              "Cuántas",
               "Cuántos",
-              "Cuánta"
+              "Cuánta",
+              "Cuántas"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -206,11 +217,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
-              "De dónde",
               "Dónde",
-              "Dónde de"
+              "Dónde de",
+              "De dónde"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -365,8 +376,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -374,7 +385,7 @@
   "prewritten": {
     "id": "spanish/advanced/119",
     "version": 1,
-    "sha256": "491e0e853aaabc8fda66d378f1037c8e939795431779a385a41d785c6261919a",
+    "sha256": "9125da300e7c6e54266d0464ea3d37c0c7c729b053376d917cfb766c0e05133c",
     "title": "Asking Questions: Question Words and Word Order",
     "file": "content/spanish-prewritten/advanced/level-119.json"
   }

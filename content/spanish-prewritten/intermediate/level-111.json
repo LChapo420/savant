@@ -229,19 +229,19 @@
       "data": {
         "question": "How do you say \"I don't understand\"?",
         "choices": [
+          "Yo no hago entender.",
           "No entiendo.",
           "No hago entiendo.",
-          "Entiendo no.",
-          "Yo no hago entender."
+          "Entiendo no."
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "commonErrorLabel": "Translating \"don't\" with hacer",
         "trapChoiceIndexes": [
-          1,
-          3
+          2,
+          0
         ],
         "trapReasons": {
-          "1": "\"Don't\" contains \"do\", and hacer means to do."
+          "2": "\"Don't\" contains \"do\", and hacer means to do."
         },
         "whyIntuitionFailed": "English needs \"do\" to make a negative, so learners look for a Spanish \"do\".",
         "correctReasoning": "Spanish needs only no in front of the verb: No entiendo.",
@@ -266,11 +266,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
+              "no hago tengo",
               "no tengo",
-              "tengo no",
-              "no hago tengo"
+              "tengo no"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -280,11 +280,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
-              "no quiero",
               "quiero no",
-              "no hago quiero"
+              "no hago quiero",
+              "no quiero"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -294,11 +294,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
+              "no tengo hay",
               "no hay",
-              "hay no",
-              "no tengo hay"
+              "hay no"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -345,10 +345,10 @@
       "source": "prewritten",
       "hint": "No goes right before the verb.",
       "choices": [
-        "No, no hablo francés.",
-        "No, hablo no francés.",
         "No, no hago hablo francés.",
-        "Hablo francés no."
+        "Hablo francés no.",
+        "No, no hablo francés.",
+        "No, hablo no francés."
       ],
       "id": "c1",
       "after": 6,
@@ -419,8 +419,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -428,7 +428,7 @@
   "prewritten": {
     "id": "spanish/intermediate/111",
     "version": 1,
-    "sha256": "e8a32412f26f0b4283036b77b83cba2667d9921b8146164993d6184fb0752e5a",
+    "sha256": "62320f9fc3150e55eefd6ebd200232896818fb5738111d59ae968b2fbe3aee83",
     "title": "Saying No: Basic Negation",
     "file": "content/spanish-prewritten/intermediate/level-111.json"
   }

@@ -168,11 +168,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
+              "pequeñas",
               "pequeña",
-              "pequeño",
-              "pequeñas"
+              "pequeño"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -182,11 +182,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
-              "simpáticos",
               "simpático",
-              "simpáticas"
+              "simpáticas",
+              "simpáticos"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -196,11 +196,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
-              "muchas",
               "muchos",
-              "mucha"
+              "mucha",
+              "muchas"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -225,18 +225,18 @@
       "data": {
         "question": "Carlos is talking about his house. Which is correct?",
         "choices": [
-          "Mi casa es bonita.",
           "Mi casa es bonito.",
           "Mi casa es bonitos.",
-          "Mi casa son bonita."
+          "Mi casa son bonita.",
+          "Mi casa es bonita."
         ],
-        "correctIndex": 0,
+        "correctIndex": 3,
         "commonErrorLabel": "Agreeing with the speaker",
         "trapChoiceIndexes": [
-          1
+          0
         ],
         "trapReasons": {
-          "1": "Carlos is a man, so a masculine ending feels right."
+          "0": "Carlos is a man, so a masculine ending feels right."
         },
         "whyIntuitionFailed": "Learners match the adjective to the person speaking, not to the noun.",
         "correctReasoning": "The adjective describes casa, which is feminine singular: bonita, whoever is talking.",
@@ -280,10 +280,10 @@
       "source": "prewritten",
       "hint": "Every word: feminine plural.",
       "choices": [
+        "unas amigas simpática",
         "unas amigas simpáticas",
         "unas amigas simpáticos",
-        "unos amigas simpáticas",
-        "unas amigas simpática"
+        "unos amigas simpáticas"
       ],
       "id": "c1",
       "after": 4,
@@ -300,10 +300,10 @@
       "source": "prewritten",
       "hint": "A man and a woman together.",
       "choices": [
-        "Ana y Luis son altos.",
-        "Ana y Luis son altas.",
         "Ana y Luis son alto.",
-        "Ana y Luis es altos."
+        "Ana y Luis es altos.",
+        "Ana y Luis son altos.",
+        "Ana y Luis son altas."
       ],
       "id": "c2",
       "after": 0,
@@ -354,8 +354,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -363,7 +363,7 @@
   "prewritten": {
     "id": "spanish/advanced/70",
     "version": 1,
-    "sha256": "fbb34892a48d7d78162ebb12d5ff159313a470e730d9fce5e83be441e6eef043",
+    "sha256": "90176299b3bd1f8c57d3cb8e3125459ffddc3f00354ccfe84404bd59bf9ed43c",
     "title": "Adjective Agreement in Gender and Number",
     "file": "content/spanish-prewritten/advanced/level-070.json"
   }

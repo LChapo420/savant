@@ -55,7 +55,7 @@
             "Do you (all) / they have children?"
           ]
         ],
-        "footnote": "Car is coche in Mexico and Spain, carro in much of Latin America, and auto in Argentina, Uruguay and Chile. All are understood."
+        "footnote": "Car is coche in Spain and in Mexico (where carro is also very common), carro in Central America, Colombia, Venezuela and the Caribbean, and auto in Argentina, Uruguay and Chile. All are understood."
       },
       "repaired": false,
       "index": 0
@@ -190,11 +190,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
-              "Tienes",
               "Tengo",
-              "Tienen"
+              "Tienen",
+              "Tienes"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -204,11 +204,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
-              "tengo",
               "tiene",
-              "tienes"
+              "tienes",
+              "tengo"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -218,11 +218,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
+              "tenemos",
               "tienen",
-              "tiene",
-              "tenemos"
+              "tiene"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -232,11 +232,11 @@
             "kind": "blank",
             "id": "b4",
             "options": [
+              "Soy",
               "Tengo",
-              "Estoy",
-              "Soy"
+              "Estoy"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -337,10 +337,10 @@
       "source": "prewritten",
       "hint": "A tener expression.",
       "choices": [
-        "Tenemos prisa.",
-        "Somos prisa.",
         "Estamos prisa.",
-        "Tienen prisa."
+        "Tienen prisa.",
+        "Tenemos prisa.",
+        "Somos prisa."
       ],
       "id": "c1",
       "after": 3,
@@ -357,10 +357,10 @@
       "source": "prewritten",
       "hint": "Answer with the yo form.",
       "choices": [
-        "No, no tengo hijos.",
-        "No, no tienes hijos.",
         "No, tengo no hijos.",
-        "No, no soy hijos."
+        "No, no soy hijos.",
+        "No, no tengo hijos.",
+        "No, no tienes hijos."
       ],
       "id": "c2",
       "after": 4,
@@ -414,8 +414,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -423,7 +423,7 @@
   "prewritten": {
     "id": "spanish/advanced/66",
     "version": 1,
-    "sha256": "d162103ec9bc46446a7def26f450505bc344ea7c577527b9c0f3999a98976116",
+    "sha256": "3ac7bdb2f265b789dc53b5ec414c71effa5f615776e808658f91ae1728cd3406",
     "title": "Tener for Everyday Possession: Tengo, Tienes, Tiene in Conversation",
     "file": "content/spanish-prewritten/advanced/level-066.json"
   }

@@ -45,7 +45,7 @@
             "tone": "accent"
           },
           {
-            "key": "-e, consonant",
+            "key": "other -e and consonant endings",
             "value": "no rule",
             "detail": "el café, la noche, el papel, la piel: learn each one",
             "tone": "caution"
@@ -262,18 +262,18 @@
       "data": {
         "question": "Which is correct for \"the cold water\"?",
         "choices": [
+          "la agua frío",
           "el agua fría",
           "el agua frío",
-          "la agua fría",
-          "la agua frío"
+          "la agua fría"
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "commonErrorLabel": "el agua read as masculine",
         "trapChoiceIndexes": [
-          1
+          2
         ],
         "trapReasons": {
-          "1": "If the article is el, a masculine adjective seems to follow."
+          "2": "If the article is el, a masculine adjective seems to follow."
         },
         "whyIntuitionFailed": "Learners see el and conclude the noun is masculine.",
         "correctReasoning": "Agua is feminine. It takes el only before its stressed first a; the adjective still agrees in the feminine: el agua fría.",
@@ -337,10 +337,10 @@
       "source": "prewritten",
       "hint": "Día is an exception.",
       "choices": [
-        "Buenos días",
         "Buenas días",
         "Buenos díos",
-        "Buena día"
+        "Buena día",
+        "Buenos días"
       ],
       "id": "c2",
       "after": 2,
@@ -391,8 +391,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -400,7 +400,7 @@
   "prewritten": {
     "id": "spanish/advanced/16",
     "version": 1,
-    "sha256": "6bd79423f49e7f031df3d100fd75bed16090eb72720021b7effac9e297becda8",
+    "sha256": "d7d7f2a4d92f19fcf4907b77da89518d20850d1c3d01fe8f210b935237a50174",
     "title": "Gender Patterns and Common Exceptions",
     "file": "content/spanish-prewritten/advanced/level-016.json"
   }

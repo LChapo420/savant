@@ -58,7 +58,8 @@ function audio(purpose, { title, subtitle, lines, cueNote, repeatGap = 1.5 }) {
 }
 
 /** Multiple choice with feedback on every option. options: [{ text, why }], correct: index. */
-function mc(purpose, { prompt, passage, passageLabel, options, correct, correctMsg }) {
+function mc(purpose, { prompt, passage, passageLabel, options: given, correct: givenCorrect, correctMsg }) {
+  const { list: options, at: correct } = place(given, givenCorrect, prompt);
   const ids = 'abcdef'.split('');
   const byOption = {};
   options.forEach((o, i) => { if (o.why) byOption[ids[i]] = o.why; });
@@ -87,7 +88,8 @@ function fill(purpose, { title, instructions, parts, correctMsg, incorrectMsg })
     const id = `b${n}`;
     if (p.note) perBlank[id] = p.note;
     if (!(p.correct >= 0 && p.correct < p.options.length)) throw new Error(`blank ${id}: correct index out of range`);
-    return { kind: 'blank', id, options: p.options, correctIndex: p.correct };
+    const { list, at } = place(p.options, p.correct, `${title || ''}|${id}|${p.options.join('|')}`);
+    return { kind: 'blank', id, options: list, correctIndex: at };
   });
   return {
     block: 'Recall_FillTheBlank',
@@ -149,7 +151,10 @@ function scramble(purpose, { prompt, words, contextLabel, hintText, feedbackCorr
 }
 
 /** The most common mistake, as a question with its reveal. */
-function trap(purpose, { question, context, choices, correct, traps, label, why, reasoning, tip, trapReasons, difficulty }) {
+function trap(purpose, { question, context, choices: given, correct: givenCorrect, traps: givenTraps, label, why, reasoning, tip, trapReasons: givenReasons, difficulty }) {
+  const { list: choices, at: correct, moved } = place(given, givenCorrect, question);
+  const traps = givenTraps.map(moved);
+  const trapReasons = givenReasons ? Object.fromEntries(Object.entries(givenReasons).map(([k, v]) => [String(moved(Number(k))), v])) : undefined;
   return {
     block: 'Trap_CommonError',
     purpose,
@@ -232,7 +237,8 @@ function dilemma(purpose, { eyebrow, prompt, context, left, right, footerNote })
 
 // ── checks ────────────────────────────────────────────────────────────────
 /** A graded multiple-choice check: four choices, `answer` is one of them. */
-function check(skill, { prompt, choices, answer, rationale, hint, focus, after }) {
+function check(skill, { prompt, choices: given, answer, rationale, hint, focus, after }) {
+  const { list: choices } = place(given, given.indexOf(answer), prompt);
   return { skill, format: 'multiple_choice', prompt, choices, answer, accepts: [], rationale, hint, focus, after };
 }
 
@@ -251,6 +257,25 @@ function typed(skill, { prompt, answer, accepts = [], rationale, hint, focus, af
 }
 
 // ── plumbing ──────────────────────────────────────────────────────────────
+/**
+ * Put the right option at a position fixed by the question's own text, so
+ * answers do not always sit in the same slot (no block or check shuffles its
+ * options on the page). The list is rotated, so distractors keep their order.
+ * Returns the new list, the right option's new index, and a function mapping
+ * any old index to its new one.
+ */
+function place(list, correct, seed) {
+  if (!Array.isArray(list) || correct < 0 || correct >= list.length) throw new Error(`no right option in "${String(seed).slice(0, 60)}"`);
+  const n = list.length;
+  let h = 0;
+  for (const ch of String(seed)) h = (h * 31 + ch.codePointAt(0)) >>> 0;
+  const at = h % n;
+  const moved = (i) => (i - correct + at + n) % n;
+  const out = new Array(n);
+  list.forEach((item, i) => { out[moved(i)] = item; });
+  return { list: out, at, moved };
+}
+
 function round1(n) { return Math.round(n * 10) / 10; }
 
 /** Drop undefined fields, so optional fields that were not written are absent rather than null. */

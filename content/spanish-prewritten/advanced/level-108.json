@@ -225,18 +225,18 @@
       "data": {
         "question": "How do you say \"The house is very big\"?",
         "choices": [
-          "La casa es muy grande.",
           "La casa es mucho grande.",
           "La casa es muy grandes.",
-          "La casa es grande muy."
+          "La casa es grande muy.",
+          "La casa es muy grande."
         ],
-        "correctIndex": 0,
+        "correctIndex": 3,
         "commonErrorLabel": "Mucho for \"very\"",
         "trapChoiceIndexes": [
-          1
+          0
         ],
         "trapReasons": {
-          "1": "Mucho means a lot, which feels like very."
+          "0": "Mucho means a lot, which feels like very."
         },
         "whyIntuitionFailed": "Both muy and mucho translate as \"very much\" or \"a lot\", so they get swapped.",
         "correctReasoning": "Before an adjective, use muy, which never changes: muy grande. Mucho goes with nouns: muchas casas.",
@@ -252,7 +252,7 @@
       "data": {
         "badgeLabel": "Key takeaway",
         "topic": "Adjective position and muy",
-        "takeaway": "Noun first, then the adjective (una casa grande), with muy right before it; only numbers, quantity words, buen, mal and gran come first.",
+        "takeaway": "Noun first, then the adjective (una casa grande), with muy right before it; numbers, quantity words like mucho and otro, possessives like mi, and buen, mal and gran come first.",
         "terms": [
           "muy",
           "buen",
@@ -279,10 +279,10 @@
       "source": "prewritten",
       "hint": "Colors go after.",
       "choices": [
+        "rojo un carro",
         "un carro rojo",
         "un rojo carro",
-        "un carro roja",
-        "rojo un carro"
+        "un carro roja"
       ],
       "id": "c1",
       "after": 4,
@@ -299,10 +299,10 @@
       "source": "prewritten",
       "hint": "Bueno shortens before the noun.",
       "choices": [
-        "Es un buen amigo.",
-        "Es un bueno amigo.",
         "Es un amigo buen.",
-        "Es un muy bueno amigo."
+        "Es un muy bueno amigo.",
+        "Es un buen amigo.",
+        "Es un bueno amigo."
       ],
       "id": "c2",
       "after": 1,
@@ -353,8 +353,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -362,7 +362,7 @@
   "prewritten": {
     "id": "spanish/advanced/108",
     "version": 1,
-    "sha256": "d15c346079e6875ab42df28acb54174cd7dc3dbf3e3e6a9fd077a019ab0b35b2",
+    "sha256": "1a71318ea57f2d60a706b613e3318787eb55e31730052cc65379c435f484d398",
     "title": "Adjective Position and Muy",
     "file": "content/spanish-prewritten/advanced/level-108.json"
   }

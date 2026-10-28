@@ -246,11 +246,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
-              "cuenta",
               "realicé",
-              "actual"
+              "actual",
+              "cuenta"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -274,11 +274,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
-              "padres",
               "parientes",
-              "colegios"
+              "colegios",
+              "padres"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -299,19 +299,19 @@
       "data": {
         "question": "Your boss writes \"Mañana asisto a la conferencia.\" What will she do?",
         "choices": [
-          "Attend the conference.",
           "Help organize the conference.",
           "Assist the speaker.",
-          "Cancel the conference."
+          "Cancel the conference.",
+          "Attend the conference."
         ],
-        "correctIndex": 0,
+        "correctIndex": 3,
         "commonErrorLabel": "Asistir as assist",
         "trapChoiceIndexes": [
-          1,
-          2
+          0,
+          1
         ],
         "trapReasons": {
-          "2": "Asistir looks like \"assist\"."
+          "1": "Asistir looks like \"assist\"."
         },
         "whyIntuitionFailed": "Asistir and \"assist\" look nearly the same.",
         "correctReasoning": "Asistir a usually means to attend. To help or assist is ayudar.",
@@ -375,10 +375,10 @@
       "source": "prewritten",
       "hint": "The look-alike means sensitive.",
       "choices": [
-        "Mi hija es muy sensible.",
         "Mi hija es muy sensata.",
-        "Mi hija es muy sentida.",
-        "Mi hija es muy sensitiva."
+        "Mi hija es muy realista.",
+        "Mi hija es muy seria.",
+        "Mi hija es muy sensible."
       ],
       "id": "c2",
       "after": 3,
@@ -429,8 +429,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -438,7 +438,7 @@
   "prewritten": {
     "id": "spanish/advanced/134",
     "version": 1,
-    "sha256": "c2ef23beb7e9756a9189ba5b17ef419cfabdead875b55ba70817d76f280a88d1",
+    "sha256": "82922adcaf31e1758e9176f8f8da232eb796f069e558f0b0835c6fb4649061f4",
     "title": "False Friends Set One",
     "file": "content/spanish-prewritten/advanced/level-134.json"
   }

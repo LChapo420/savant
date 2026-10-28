@@ -547,7 +547,11 @@
     });
   });
 
-  if (audio) {
+  // The synthesized stand-in (no audioSrc) drives its own labels and paints and
+  // has no event target: only a real <audio> element gets these listeners.
+  // Without the guard a clip-less block threw in every browser with Web Audio,
+  // and the page lost every block after it.
+  if (audio && typeof audio.addEventListener === 'function') {
     audio.addEventListener('timeupdate', paint);
     audio.addEventListener('loadedmetadata', function () {
       if (isFinite(audio.duration) && audio.duration > 0) duration = audio.duration;

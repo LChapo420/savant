@@ -14,7 +14,7 @@
     "Most -ico words from -ic take a written accent on the syllable before -ico",
     "-ist → -ista: artist → artista, dentist → dentista, tourist → turista",
     "-ista is the same for a man and a woman: el artista, la artista",
-    "-ous → -oso: famous → famoso, delicious → delicioso, nervous → nervioso",
+    "-ous → -oso: famous → famoso, delicious → delicioso; a few add an i: nervous → nervioso",
     "-ico and -oso adjectives agree: fantástica, famosos, deliciosas"
   ],
   "layout_fallback": false,
@@ -260,11 +260,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
+              "famosos",
               "famosa",
-              "famoso",
-              "famosos"
+              "famoso"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -274,11 +274,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
+              "deliciosa",
               "deliciosos",
-              "delicioso",
-              "deliciosa"
+              "delicioso"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -288,11 +288,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
-              "dentista",
               "dentisto",
-              "dentisa"
+              "dentisa",
+              "dentista"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -318,18 +318,18 @@
       "data": {
         "question": "How do you say \"He is an artist\"?",
         "choices": [
+          "Él es artistico.",
           "Él es artista.",
           "Él es artisto.",
-          "Él es artisto famoso.",
-          "Él es artistico."
+          "Él es artisto famoso."
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "commonErrorLabel": "Turning -ista into -isto",
         "trapChoiceIndexes": [
-          1
+          2
         ],
         "trapReasons": {
-          "1": "Most Spanish words for a man end in -o, so -isto seems right."
+          "2": "Most Spanish words for a man end in -o, so -isto seems right."
         },
         "whyIntuitionFailed": "Learners know the -o / -a pattern and apply it to every ending.",
         "correctReasoning": "-ista is one form for both: él es artista, ella es artista. Only the article shows gender: el artista, la artista.",
@@ -345,7 +345,7 @@
       "data": {
         "badgeLabel": "Key takeaway",
         "topic": "Cognate suffixes",
-        "takeaway": "-ic becomes -ico (with an accent), -ist becomes -ista (one form for everyone), and -ous becomes -oso (which agrees: famosa, famosos).",
+        "takeaway": "-ic becomes -ico (usually with an accent), -ist becomes -ista (one form for everyone), and -ous becomes -oso (which agrees: famosa, famosos).",
         "terms": [
           "fantástico",
           "artista",
@@ -365,9 +365,9 @@
       "skill_name": "Core vocabulary",
       "difficulty": 3,
       "format": "type_in",
-      "prompt": "Use the rule to write the Spanish word for \"nervous\" (describing a man).",
-      "answer": "nervioso",
-      "rationale": "-ous becomes -oso, and for a man the ending is -o: nervous → nervioso.",
+      "prompt": "Use the rule to write the Spanish word for \"fabulous\" (describing a man).",
+      "answer": "fabuloso",
+      "rationale": "-ous becomes -oso, and for a man the ending is -o: fabulous → fabuloso.",
       "source": "prewritten",
       "hint": "Swap -ous for -oso.",
       "id": "c1",
@@ -385,10 +385,10 @@
       "source": "prewritten",
       "hint": "-ista does not change.",
       "choices": [
-        "Ella es turista.",
         "Ella es turisto.",
         "Ella es turisa.",
-        "Ella es turística."
+        "Ella es turística.",
+        "Ella es turista."
       ],
       "id": "c2",
       "after": 5,
@@ -405,10 +405,10 @@
       "source": "prewritten",
       "hint": "Las playas: feminine and plural.",
       "choices": [
-        "fantásticas",
         "fantásticos",
         "fantástica",
-        "fantástico"
+        "fantástico",
+        "fantásticas"
       ],
       "id": "c3",
       "after": 4,
@@ -445,8 +445,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -454,7 +454,7 @@
   "prewritten": {
     "id": "spanish/intermediate/122",
     "version": 1,
-    "sha256": "63ace2255a968229f830d4ea20385537ab2ecba6ee59afc09ff2aba242a3bf79",
+    "sha256": "e36274da4a8f54b6dd06bc1a36067f2f7b89854f1d89412feaaa7afffc5f0e61",
     "title": "Cognate Suffixes: -ic to -ico, -ist to -ista, -ous to -oso",
     "file": "content/spanish-prewritten/intermediate/level-122.json"
   }

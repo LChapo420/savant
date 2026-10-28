@@ -197,7 +197,7 @@
       "purpose": "Practices putting the right information in each field.",
       "data": {
         "title": "Fill it in",
-        "instructions": "Your name is Daniel Ortiz Romero, born on 3 March 1995. Choose what goes in each field.",
+        "instructions": "Your name is Daniel Ortiz Romero (Ortiz from your father, Romero from your mother), born on 5 March 1995. Choose what goes in each field.",
         "segments": [
           {
             "kind": "text",
@@ -207,11 +207,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
+              "Daniel",
               "Ortiz",
-              "Romero",
-              "Daniel"
+              "Romero"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -221,11 +221,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
+              "Daniel",
               "Romero",
-              "Ortiz",
-              "Daniel"
+              "Ortiz"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -235,9 +235,9 @@
             "kind": "blank",
             "id": "b3",
             "options": [
-              "03/03/1995",
-              "03/30/1995",
-              "1995/03"
+              "05/03/1995",
+              "03/05/1995",
+              "1995/05/03"
             ],
             "correctIndex": 0
           },
@@ -251,7 +251,7 @@
           "incorrect": "At least one choice is off. Change it and check again."
         },
         "perBlankFeedback": {
-          "b3": "Day 03, month 03, year 1995."
+          "b3": "Day first: 05 (day), 03 (month), 1995."
         }
       },
       "repaired": false,
@@ -263,18 +263,18 @@
       "data": {
         "question": "You were born on June 8, 1992. What do you write on a Mexican form?",
         "choices": [
-          "08/06/1992",
-          "06/08/1992",
           "1992/08/06",
-          "8/1992/6"
+          "8/1992/6",
+          "08/06/1992",
+          "06/08/1992"
         ],
-        "correctIndex": 0,
+        "correctIndex": 2,
         "commonErrorLabel": "Month first",
         "trapChoiceIndexes": [
-          1
+          3
         ],
         "trapReasons": {
-          "1": "That is how the date is written in the US."
+          "3": "That is how the date is written in the US."
         },
         "whyIntuitionFailed": "US forms put the month first, and the habit carries over.",
         "correctReasoning": "Spanish-speaking countries write the day first: 08/06/1992 is 8 June 1992.",
@@ -318,10 +318,10 @@
       "source": "prewritten",
       "hint": "Day / month / year.",
       "choices": [
-        "November 10, 1985",
         "October 11, 1985",
         "November 1, 1985",
-        "October 1, 1985"
+        "October 1, 1985",
+        "November 10, 1985"
       ],
       "id": "c1",
       "after": 1,
@@ -338,10 +338,10 @@
       "source": "prewritten",
       "hint": "Materno: from the mother, the second surname.",
       "choices": [
+        "Gómez Ruiz",
         "Ruiz",
         "Gómez",
-        "Laura",
-        "Gómez Ruiz"
+        "Laura"
       ],
       "id": "c2",
       "after": 4,
@@ -395,8 +395,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -404,7 +404,7 @@
   "prewritten": {
     "id": "spanish/advanced/131",
     "version": 1,
-    "sha256": "a50ebedf2c9f678ed862415b2d46ab801116a2d7cc22361a7aebc7e9d8381762",
+    "sha256": "dee12cfbd152d590741b555e2383b769c9f02fdcbb8d17a7f2176784943061db",
     "title": "Hispanic Naming and Official Forms",
     "file": "content/spanish-prewritten/advanced/level-131.json"
   }

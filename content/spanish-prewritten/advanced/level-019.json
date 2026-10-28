@@ -163,11 +163,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
-              "lápices",
               "lápizes",
-              "lápizs"
+              "lápizs",
+              "lápices"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -177,11 +177,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
+              "profesoros",
               "profesores",
-              "profesors",
-              "profesoros"
+              "profesors"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -191,11 +191,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
+              "cancións",
               "canciones",
-              "canciónes",
-              "cancións"
+              "canciónes"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -296,20 +296,20 @@
       "data": {
         "question": "What is the plural of \"el lápiz\" (the pencil)?",
         "choices": [
+          "las lápices",
           "los lápices",
           "los lápizes",
-          "los lápizs",
-          "las lápices"
+          "los lápizs"
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "commonErrorLabel": "Keeping the z",
         "trapChoiceIndexes": [
-          1
+          2
         ],
         "trapReasons": {
-          "1": "It follows the consonant rule (+ es) and keeps the spelling."
+          "2": "It follows the consonant rule (+ es) and keeps the spelling."
         },
-        "whyIntuitionFailed": "The +es rule is right, but Spanish spelling does not allow z before e, so it changes to c.",
+        "whyIntuitionFailed": "The +es rule is right, but Spanish spelling normally changes z to c before e.",
         "correctReasoning": "lápiz → lápic + es → lápices. Same for luz → luces and vez → veces.",
         "recoveryTip": "z + es → ces.",
         "difficulty": "Trap"
@@ -423,8 +423,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -432,7 +432,7 @@
   "prewritten": {
     "id": "spanish/advanced/19",
     "version": 1,
-    "sha256": "3ca7e2cbbff7a8388104d90bc69d273d60989048925531697dc5d7af93924daf",
+    "sha256": "eef747b3b5fa462dac716ad56c50fa2c1338dbe235c5f391cb2bf2f9ef268062",
     "title": "Making Nouns Plural",
     "file": "content/spanish-prewritten/advanced/level-019.json"
   }

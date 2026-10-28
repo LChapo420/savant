@@ -141,8 +141,9 @@ function buildRow(def, blind) {
     },
     check_tier: 'prewritten',
     fact_sheet: null,
-    model: 'prewritten',
-    layout_model: 'prewritten',
+    // Shown on the page as "Written by ..." (public/js/block-level.js).
+    model: 'Claude, pre-written and fact-checked',
+    layout_model: 'Claude, pre-written and fact-checked',
     usage: null,
     seconds: 0,
     brief_hash: null,

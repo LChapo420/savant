@@ -170,30 +170,30 @@
         "options": [
           {
             "id": "a",
-            "text": "¿Hay wifi?"
+            "text": "Ya no hay wifi."
           },
           {
             "id": "b",
-            "text": "¿Tengo wifi?"
+            "text": "¿Hay wifi?"
           },
           {
             "id": "c",
-            "text": "¿Voy wifi?"
+            "text": "¿Tengo wifi?"
           },
           {
             "id": "d",
-            "text": "Ya no hay wifi."
+            "text": "¿Voy wifi?"
           }
         ],
-        "correctOptionId": "a",
+        "correctOptionId": "b",
         "feedback": {
           "correct": "Right.",
           "incorrect": "Not quite. Read the feedback and try again.",
           "byOption": {
-            "a": "Yes: hay asks whether something is there or available.",
-            "b": "Tengo means I have. You would be asking whether you have wifi.",
-            "c": "Voy means I am going. It does not fit here.",
-            "d": "This is a statement: there is no more wifi. It does not ask anything."
+            "a": "This is a statement: there is no more wifi. It does not ask anything.",
+            "b": "Yes: hay asks whether something is there or available.",
+            "c": "Tengo means I have. You would be asking whether you have wifi.",
+            "d": "Voy means I am going. It does not fit here."
           }
         }
       },
@@ -215,11 +215,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
+              "No",
               "Hay",
-              "Ya",
-              "No"
+              "Ya"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -229,11 +229,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
+              "ya no hay",
               "hay",
-              "no hay",
-              "ya no hay"
+              "no hay"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -243,11 +243,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
+              "sí hay",
               "ya no hay",
-              "hay",
-              "sí hay"
+              "hay"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -272,18 +272,18 @@
       "data": {
         "question": "How do you say hay?",
         "choices": [
-          "Like the English word \"eye\"",
-          "Like the English word \"hay\" (hey)",
           "Like \"high\", with an h",
-          "Like \"hah-ee\", two syllables"
+          "Like \"hah-ee\", two syllables",
+          "Like the English word \"eye\"",
+          "Like the English word \"hay\" (hey)"
         ],
-        "correctIndex": 0,
+        "correctIndex": 2,
         "commonErrorLabel": "Reading hay as English",
         "trapChoiceIndexes": [
-          1
+          3
         ],
         "trapReasons": {
-          "1": "Hay is also an English word (dried grass), so the eye reads it in English."
+          "3": "Hay is also an English word (dried grass), so the eye reads it in English."
         },
         "whyIntuitionFailed": "The word is spelled like an English word, so the English sound comes first.",
         "correctReasoning": "The h is silent and a + y blend into one sound: \"eye\".",
@@ -324,10 +324,10 @@
       "source": "prewritten",
       "hint": "Ya no adds \"anymore\".",
       "choices": [
-        "There is no more chicken.",
-        "There is chicken now.",
         "The chicken is ready.",
-        "I do not want chicken."
+        "I do not want chicken.",
+        "There is no more chicken.",
+        "There is chicken now."
       ],
       "id": "c1",
       "after": 5,
@@ -404,8 +404,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -413,7 +413,7 @@
   "prewritten": {
     "id": "spanish/entry/31",
     "version": 1,
-    "sha256": "6bfd3fcf4acb50b1f9a53a37229b516023ec39374be958cea658ea340757b5fd",
+    "sha256": "c6b2ca9ac06ca9f014210710c3afa01226e6b2b0a0ae1752e61b68abbd9329c7",
     "title": "Hay as a Survival Chunk: ¿Hay Baño? and No Hay",
     "file": "content/spanish-prewritten/entry/level-031.json"
   }

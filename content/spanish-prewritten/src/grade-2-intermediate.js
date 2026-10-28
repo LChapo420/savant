@@ -197,8 +197,8 @@ module.exports = [
         parts: [
           'At a shop: ¿', { options: ['Cuánto', 'Quién', 'Dónde'], correct: 0 }, ' cuesta? Lost in a building: ¿',
           { options: ['Dónde', 'Cuándo', 'Qué'], correct: 0 }, ' está el baño? Someone knocks: ¿',
-          { options: ['Quién', 'Cómo', 'Cuánto'], correct: 0 }, ' es? Planning: ¿',
-          { options: ['Cuándo', 'Dónde', 'Quién'], correct: 0 }, ' es la reunión?',
+          { options: ['Quién', 'Cómo', 'Cuánto'], correct: 0 }, ' es? Asking what day or time: ¿',
+          { options: ['Cuándo', 'Cómo', 'Quién'], correct: 0 }, ' es la reunión?',
         ],
       }),
       trap('Targets translating "What is your name?" word for word.', {
@@ -310,8 +310,8 @@ module.exports = [
         instructions: 'Choose the chunk that fits the situation in brackets.',
         parts: [
           '(at a pharmacy, to the pharmacist) ¿', { options: ['Tiene', 'Tienes', 'Necesito'], correct: 0, note: 'A pharmacist is usted: ¿Tiene ...?' }, ' aspirinas? (at a restaurant, politely) ',
-          { options: ['Me gustaría', 'Necesito', 'Tengo'], correct: 0 }, ' ver el menú, por favor. (your phone is dead) ',
-          { options: ['Necesito', 'Me gustaría', 'Tiene'], correct: 0, note: 'It is a real need: Necesito un cargador (I need a charger).' }, ' un cargador.',
+          { options: ['Me gustaría', 'Necesito', 'Tengo'], correct: 0 }, ' ver el menú, por favor. (your phone is dead and you must call a taxi now) ',
+          { options: ['Necesito', 'Tengo', 'Tiene'], correct: 0, note: 'It is a real need: Necesito un cargador (I need a charger).' }, ' un cargador.',
         ],
       }),
       mc('Applies tone: choosing the most polite way to order.', {
@@ -711,7 +711,7 @@ module.exports = [
       'embarazada = pregnant; embarrassed is avergonzado / avergonzada, or me da vergüenza',
       'éxito = success; exit is salida',
       'librería = bookstore; library is biblioteca',
-      'constipado = having a cold, stuffed up; constipated is estreñido',
+      'constipado changes meaning by country (a cold in Spain, constipated in parts of Latin America): avoid it; say resfriado for a cold and estreñido for constipated',
       'More: carpeta = folder (carpet is alfombra), ropa = clothes (rope is cuerda), sopa = soup (soap is jabón)',
       'When a cognate seems odd in context, check it rather than trust it',
     ],
@@ -733,16 +733,16 @@ module.exports = [
           ['embarazada', 'pregnant', 'embarrassed', 'avergonzado / avergonzada; me da vergüenza'],
           ['el éxito', 'success', 'exit', 'la salida'],
           ['la librería', 'bookstore', 'library', 'la biblioteca'],
-          ['constipado / constipada', 'having a cold, stuffed up', 'constipated', 'estreñido / estreñida'],
+          ['constipado / constipada', 'in Spain, having a cold; in parts of Latin America, constipated', '(a word to avoid)', 'resfriado / resfriada (a cold); estreñido / estreñida (constipated)'],
           ['la carpeta', 'folder', 'carpet', 'la alfombra'],
           ['la ropa', 'clothes', 'rope', 'la cuerda'],
           ['la sopa', 'soup', 'soap', 'el jabón'],
         ],
-        footnote: 'Constipado is heard most in Spain; across Latin America people more often say estoy resfriado or estoy resfriada for a cold.',
+        footnote: 'Constipado is a trap both ways: in Spain it means having a cold, while in parts of Latin America (Paraguay and Argentina, for example) it is used for constipated. Say estoy resfriado / resfriada for a cold.',
       }),
       audio('The audio script: the false friends and their real partners, in pairs.', {
         title: 'Say the right word',
-        lines: ['embarazada, avergonzada', 'el éxito, la salida', 'la librería, la biblioteca', 'constipado, estreñido', '¡Qué vergüenza!', '¿Dónde está la salida?'],
+        lines: ['embarazada, avergonzada', 'el éxito, la salida', 'la librería, la biblioteca', 'resfriado, estreñido', '¡Qué vergüenza!', '¿Dónde está la salida?'],
         cueNote: '¡Qué vergüenza! (keh behr-GWEHN-sah) means "How embarrassing!" The ü in vergüenza makes the u heard.',
       }),
       trap('Targets the most famous false friend in a realistic slip.', {
@@ -776,12 +776,13 @@ module.exports = [
           ['embarrassed', 'avergonzado / avergonzada; ¡Qué vergüenza!', 'Not embarazada, which means pregnant.', 'error'],
           ['exit', 'la salida', 'Not el éxito, which means success.', 'error'],
           ['library', 'la biblioteca', 'Not la librería, which is a bookstore.', 'error'],
-          ['constipated', 'estreñido / estreñida', 'Not constipado, which means having a cold.', 'error'],
+          ['constipated', 'estreñido / estreñida', 'Avoid constipado: its meaning changes by country.', 'error'],
+          ['a cold', 'estoy resfriado / resfriada', 'Clear everywhere.', 'success'],
         ],
       }),
       takeaway('Closes with the warning list and the habit of checking odd look-alikes.', {
         topic: 'False friends',
-        takeaway: 'Embarazada is pregnant, éxito is success, librería is a bookstore and constipado is a cold: when a look-alike makes a strange sentence, check it.',
+        takeaway: 'Embarazada is pregnant, éxito is success, librería is a bookstore, and constipado is best avoided: when a look-alike makes a strange sentence, check it.',
         terms: ['embarazada', 'éxito', 'librería', 'constipado', 'biblioteca', 'salida'],
       }),
     ],
@@ -877,7 +878,7 @@ module.exports = [
         instructions: 'Choose the correct Spanish form.',
         parts: [
           'Voy a la ', { options: ['universidad', 'universión', 'universimente'], correct: 0 }, '. Necesito más ',
-          { options: ['información', 'informidad', 'informamente'], correct: 0 }, '. ', { options: ['Finalmente', 'Finalción', 'Finalidad'], correct: 0, note: 'finally → finalmente.' }, ', es viernes.',
+          { options: ['información', 'informidad', 'informamente'], correct: 0 }, '. ', { options: ['Finalmente', 'Finalción', 'Finalidad'], correct: 0, note: 'finally → finalmente (in the end).' }, ', vamos a la playa.',
         ],
       }),
       trap('Targets assuming every -tion word converts the same way.', {
@@ -947,7 +948,7 @@ module.exports = [
       'Most -ico words from -ic take a written accent on the syllable before -ico',
       '-ist → -ista: artist → artista, dentist → dentista, tourist → turista',
       '-ista is the same for a man and a woman: el artista, la artista',
-      '-ous → -oso: famous → famoso, delicious → delicioso, nervous → nervioso',
+      '-ous → -oso: famous → famoso, delicious → delicioso; a few add an i: nervous → nervioso',
       '-ico and -oso adjectives agree: fantástica, famosos, deliciosas',
     ],
     blocks: [
@@ -996,15 +997,15 @@ module.exports = [
       }),
       takeaway('Closes with the three suffix rules and their agreement behavior.', {
         topic: 'Cognate suffixes',
-        takeaway: '-ic becomes -ico (with an accent), -ist becomes -ista (one form for everyone), and -ous becomes -oso (which agrees: famosa, famosos).',
+        takeaway: '-ic becomes -ico (usually with an accent), -ist becomes -ista (one form for everyone), and -ous becomes -oso (which agrees: famosa, famosos).',
         terms: ['fantástico', 'artista', 'famoso', 'delicioso'],
       }),
     ],
     checks: [
       typed('es_vocab_core', {
-        prompt: 'Use the rule to write the Spanish word for "nervous" (describing a man).',
-        answer: 'nervioso',
-        rationale: '-ous becomes -oso, and for a man the ending is -o: nervous → nervioso.',
+        prompt: 'Use the rule to write the Spanish word for "fabulous" (describing a man).',
+        answer: 'fabuloso',
+        rationale: '-ous becomes -oso, and for a man the ending is -o: fabulous → fabuloso.',
         hint: 'Swap -ous for -oso.',
         focus: 'producing an -oso word',
         after: 3,

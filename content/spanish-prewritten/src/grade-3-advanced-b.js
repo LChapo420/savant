@@ -105,7 +105,7 @@ module.exports = [
         after: 2,
       }),
       typed('es_vocab_core', {
-        prompt: 'Complete with one word: "Nosotros ___ treinta años." (We are thirty.)',
+        prompt: 'Complete with one word: "Nosotros ___ treinta años." (We are thirty years old.)',
         answer: 'tenemos',
         rationale: 'The nosotros form of tener is tenemos.',
         hint: 'The we form of tener.',
@@ -141,7 +141,7 @@ module.exports = [
           ['Mi jefe no tiene tiempo.', 'My boss doesn\'t have time.'],
           ['¿Tienen hijos?', 'Do you (all) / they have children?'],
         ],
-        footnote: 'Car is coche in Mexico and Spain, carro in much of Latin America, and auto in Argentina, Uruguay and Chile. All are understood.',
+        footnote: 'Car is coche in Spain and in Mexico (where carro is also very common), carro in Central America, Colombia, Venezuela and the Caribbean, and auto in Argentina, Uruguay and Chile. All are understood.',
       }),
       audio('The audio script: a conversation about what people have.', {
         title: 'What do you have?',
@@ -456,7 +456,7 @@ module.exports = [
           'un hombre inteligente, una mujer inteligente.',
           'un examen fácil, una pregunta fácil.',
           'Plural: inteligentes, fáciles.',
-          'Exception: nationalities and -or adjectives add -a: española, trabajadora.',
+          'Exception: nationalities ending in a consonant, and -or adjectives like trabajador, add -a: española, trabajadora (but mayor, menor, mejor and peor never change).',
         ],
       }),
       table('Shows the singular and plural forms of one-form adjectives.', {
@@ -500,7 +500,7 @@ module.exports = [
         trapReasons: { 1: 'Feminine nouns often take -a adjectives, so -a seems needed.' },
         why: 'After learning alto / alta, learners add -a everywhere.',
         reasoning: 'Fácil ends in a consonant and has one singular form: una pregunta fácil. Plural: preguntas fáciles.',
-        tip: 'Only -o adjectives, nationalities and -or adjectives change to -a.',
+        tip: 'Only -o adjectives, consonant-ending nationalities and -or adjectives like trabajador change to -a.',
       }),
       takeaway('Closes with the rule and its exceptions.', {
         topic: 'Adjectives in -e or a consonant',
@@ -1084,7 +1084,7 @@ module.exports = [
         points: [
           'mis padres: plural, because padres is plural (even though "I" is one person).',
           'nuestra casa: feminine, because casa is feminine (even if "we" are men).',
-          'Only nuestro also changes for gender; mi, tu and su change only for number.',
+          'Only nuestro (and Spain\'s vuestro) also changes for gender; mi, tu and su change only for number.',
         ],
       }),
       audio('The audio script: talking about whose things are whose.', {
@@ -1521,7 +1521,7 @@ module.exports = [
       }),
       takeaway('Closes with the order rules.', {
         topic: 'Adjective position and muy',
-        takeaway: 'Noun first, then the adjective (una casa grande), with muy right before it; only numbers, quantity words, buen, mal and gran come first.',
+        takeaway: 'Noun first, then the adjective (una casa grande), with muy right before it; numbers, quantity words like mucho and otro, possessives like mi, and buen, mal and gran come first.',
         terms: ['muy', 'buen', 'mal', 'gran', 'grande'],
       }),
     ],
@@ -1634,7 +1634,7 @@ module.exports = [
       }),
       check('es_ser_estar', {
         prompt: 'Which is the polite way to say "My neighbor is an older lady"?',
-        choices: ['Mi vecina es una señora mayor.', 'Mi vecina es una señora vieja.', 'Mi vecina es una señora larga.', 'Mi vecina es una señora grande.'],
+        choices: ['Mi vecina es una señora mayor.', 'Mi vecina es una señora vieja.', 'Mi vecina es una señora larga.', 'Mi vecina es una señora nueva.'],
         answer: 'Mi vecina es una señora mayor.',
         rationale: 'For people, mayor is the polite word for older; vieja can sound rude.',
         hint: 'Viejo can sound rude for people.',
@@ -1661,6 +1661,7 @@ module.exports = [
       'Yes/no questions: same words with a rising voice: ¿Ana es de Chile? or ¿Es Ana de Chile?',
       'No helper "do": ¿Hablas español?',
       'Information questions: question word + verb + subject: ¿Dónde vive tu hermana?',
+      'Cómo asks what something is like and quién asks who: ¿Cómo es tu casa? ¿Quién es él?',
       'Cuál + es + noun asks "what is your ...?": ¿Cuál es tu número? Qué + es asks for a definition: ¿Qué es esto?',
       'Cuántos / cuántas and quién / quiénes agree: ¿Cuántas hermanas tienes?',
       'A preposition goes first: ¿De dónde eres? ¿Con quién vives?',
@@ -1671,7 +1672,7 @@ module.exports = [
         title: 'Building questions',
         rows: [
           ['Yes / no', 'same order, rising voice', '¿Ana es de Chile? / ¿Es Ana de Chile?'],
-          ['Information', 'question word + verb + subject', '¿Dónde vive tu hermana? ¿Qué estudia Pedro?'],
+          ['Information', 'question word + verb + subject', '¿Dónde vive tu hermana? ¿Qué estudia Pedro? ¿Cómo es tu casa? ¿Quién es él?'],
           ['Preposition first', 'de, con, para ... + question word', '¿De dónde eres? ¿Con quién vives?'],
           ['Tag', 'statement + ¿verdad? or ¿no?', 'Eres de Texas, ¿verdad? Es caro, ¿no?'],
         ],
@@ -1683,7 +1684,7 @@ module.exports = [
       }),
       audio('The audio script: questions of each type.', {
         title: 'Ask it right',
-        lines: ['¿Hablas español?', '¿Dónde vive tu hermana?', '¿Cuál es tu número de teléfono?', '¿Cuántas hermanas tienes?', '¿De dónde eres?', '¿Con quién vives?', 'Eres de Texas, ¿verdad?'],
+        lines: ['¿Hablas español?', '¿Dónde vive tu hermana?', '¿Cómo es tu casa?', '¿Quién es él?', '¿Cuál es tu número de teléfono?', '¿Cuántas hermanas tienes?', '¿De dónde eres?', '¿Con quién vives?', 'Eres de Texas, ¿verdad?'],
         cueNote: 'Yes/no questions rise at the end; questions with a question word usually fall.',
       }),
       xray('X-rays an information question to show its order.', {
@@ -1903,10 +1904,10 @@ module.exports = [
       }),
       fill('Practices putting the right information in each field.', {
         title: 'Fill it in',
-        instructions: 'Your name is Daniel Ortiz Romero, born on 3 March 1995. Choose what goes in each field.',
+        instructions: 'Your name is Daniel Ortiz Romero (Ortiz from your father, Romero from your mother), born on 5 March 1995. Choose what goes in each field.',
         parts: [
           'Apellido paterno: ', { options: ['Ortiz', 'Romero', 'Daniel'], correct: 0 }, '. Apellido materno: ', { options: ['Romero', 'Ortiz', 'Daniel'], correct: 0 }, '. Fecha de nacimiento: ',
-          { options: ['03/03/1995', '03/30/1995', '1995/03'], correct: 0, note: 'Day 03, month 03, year 1995.' }, '.',
+          { options: ['05/03/1995', '03/05/1995', '1995/05/03'], correct: 0, note: 'Day first: 05 (day), 03 (month), 1995.' }, '.',
         ],
       }),
       trap('Targets writing the date month first.', {
@@ -2043,7 +2044,7 @@ module.exports = [
       }),
       check('es_vocab_core', {
         prompt: 'Which sentence says "My daughter is very sensitive"?',
-        choices: ['Mi hija es muy sensible.', 'Mi hija es muy sensata.', 'Mi hija es muy sentida.', 'Mi hija es muy sensitiva.'],
+        choices: ['Mi hija es muy sensible.', 'Mi hija es muy sensata.', 'Mi hija es muy realista.', 'Mi hija es muy seria.'],
         answer: 'Mi hija es muy sensible.',
         rationale: 'Sensible means sensitive; sensata would mean sensible (reasonable).',
         hint: 'The look-alike means sensitive.',
@@ -2142,7 +2143,7 @@ module.exports = [
         after: 4,
       }),
       check('es_vocab_core', {
-        prompt: 'Which country is NOT included by the word "latino" but IS included by "hispano"?',
+        prompt: 'As this lesson defines the words, which country is included by "hispano" but NOT by "latino"?',
         choices: ['España', 'Brasil', 'México', 'Colombia'],
         answer: 'España',
         rationale: 'Hispano covers Spanish-speaking countries including Spain; latino covers Latin America, which does not include Spain.',

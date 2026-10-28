@@ -173,11 +173,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
+              "sí",
               "también",
-              "tampoco",
-              "sí"
+              "tampoco"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -187,11 +187,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
+              "no",
               "tampoco",
-              "también",
-              "no"
+              "también"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -226,19 +226,19 @@
       "data": {
         "question": "Your friend says \"No me gusta el frío.\" You don't like it either. What do you say?",
         "choices": [
+          "Yo sí.",
           "A mí tampoco.",
           "A mí también.",
-          "Yo también.",
-          "Yo sí."
+          "Yo también."
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "commonErrorLabel": "También after a negative",
         "trapChoiceIndexes": [
-          1,
-          2
+          2,
+          3
         ],
         "trapReasons": {
-          "1": "English \"me too\" is often used for both."
+          "2": "English \"me too\" is often used for both."
         },
         "whyIntuitionFailed": "In casual English \"me too\" can answer a negative, so learners say también.",
         "correctReasoning": "Agreeing with a negative needs tampoco, and with gustar it is a mí: A mí tampoco.",
@@ -303,10 +303,10 @@
       "source": "prewritten",
       "hint": "Two negatives.",
       "choices": [
-        "No hay nadie aquí.",
-        "Hay nadie aquí.",
         "No hay alguien aquí.",
-        "Nadie no hay aquí."
+        "Nadie no hay aquí.",
+        "No hay nadie aquí.",
+        "Hay nadie aquí."
       ],
       "id": "c2",
       "after": 2,
@@ -361,8 +361,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -370,7 +370,7 @@
   "prewritten": {
     "id": "spanish/advanced/120",
     "version": 1,
-    "sha256": "63967c0ca74187a30bb2601a543f72d67a2016498b48049a3c990ecf58c212f9",
+    "sha256": "336672282444984e5c222c8b513d7909110f9a6a73fd887b6645151e43e0d6bc",
     "title": "Negatives, También, and Tampoco",
     "file": "content/spanish-prewritten/advanced/level-120.json"
   }

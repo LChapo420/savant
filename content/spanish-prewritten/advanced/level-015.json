@@ -51,7 +51,7 @@
           [
             "el amigo",
             "la amiga",
-            "a man / a woman"
+            "a male friend / a female friend"
           ],
           [
             "el niño",
@@ -236,18 +236,18 @@
       "data": {
         "question": "Which article goes with \"casa\" (house)?",
         "choices": [
+          "it depends on who lives there",
           "la",
           "el",
-          "los",
-          "it depends on who lives there"
+          "los"
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "commonErrorLabel": "Gender from meaning",
         "trapChoiceIndexes": [
-          3
+          0
         ],
         "trapReasons": {
-          "3": "English links he and she to people, so it seems gender should depend on a person."
+          "0": "English links he and she to people, so it seems gender should depend on a person."
         },
         "whyIntuitionFailed": "English only marks gender for people and some animals, so learners look for a reason in the meaning.",
         "correctReasoning": "Casa ends in -a and is feminine: la casa, always, whoever lives there.",
@@ -289,10 +289,10 @@
       "source": "prewritten",
       "hint": "Look at the last letter.",
       "choices": [
-        "el cuaderno",
         "la cuaderno",
         "los cuaderno",
-        "las cuaderno"
+        "las cuaderno",
+        "el cuaderno"
       ],
       "id": "c1",
       "after": 3,
@@ -363,8 +363,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -372,7 +372,7 @@
   "prewritten": {
     "id": "spanish/advanced/15",
     "version": 1,
-    "sha256": "048f47ec2047e66de3711b5d2b01fd789b56155970d9ac30ebf8a79ef9732017",
+    "sha256": "a6a82acf7fc0f4e2de5fd608711b0b431dd3359ce02a5fcef6b7255bfbb9f3a3",
     "title": "Noun Gender with -o and -a",
     "file": "content/spanish-prewritten/advanced/level-015.json"
   }

@@ -71,7 +71,7 @@
         "prerequisites": [
           "mis padres: plural, because padres is plural (even though \"I\" is one person).",
           "nuestra casa: feminine, because casa is feminine (even if \"we\" are men).",
-          "Only nuestro also changes for gender; mi, tu and su change only for number."
+          "Only nuestro (and Spain's vuestro) also changes for gender; mi, tu and su change only for number."
         ]
       },
       "repaired": false,
@@ -159,11 +159,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
-              "mis",
               "mi",
-              "mío"
+              "mío",
+              "mis"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -173,11 +173,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
-              "nuestra",
               "nuestro",
-              "nuestras"
+              "nuestras",
+              "nuestra"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -187,11 +187,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
-              "tus",
               "tu",
-              "tú"
+              "tú",
+              "tus"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -216,20 +216,20 @@
       "data": {
         "question": "Two brothers talk about the house they share. Which is correct?",
         "choices": [
-          "Nuestra casa es grande.",
-          "Nuestro casa es grande.",
           "Nuestros casa es grande.",
-          "Nos casa es grande."
+          "Nos casa es grande.",
+          "Nuestra casa es grande.",
+          "Nuestro casa es grande."
         ],
-        "correctIndex": 0,
+        "correctIndex": 2,
         "commonErrorLabel": "Agreeing with the owners",
         "trapChoiceIndexes": [
-          1,
-          2
+          3,
+          0
         ],
         "trapReasons": {
-          "1": "The owners are men, so a masculine form seems right.",
-          "2": "There are two owners, so a plural seems right."
+          "0": "There are two owners, so a plural seems right.",
+          "3": "The owners are men, so a masculine form seems right."
         },
         "whyIntuitionFailed": "In English \"our\" never changes, so learners look at who owns the thing.",
         "correctReasoning": "Nuestro agrees with casa, which is feminine singular: nuestra casa.",
@@ -273,10 +273,10 @@
       "source": "prewritten",
       "hint": "Agree with the thing owned.",
       "choices": [
+        "mis padre",
         "mis padres",
         "mi padres",
-        "mío padres",
-        "mis padre"
+        "mío padres"
       ],
       "id": "c1",
       "after": 4,
@@ -293,10 +293,10 @@
       "source": "prewritten",
       "hint": "Feminine and plural.",
       "choices": [
-        "nuestras hijas",
-        "nuestros hijas",
         "nuestra hijas",
-        "nuestro hijas"
+        "nuestro hijas",
+        "nuestras hijas",
+        "nuestros hijas"
       ],
       "id": "c2",
       "after": 4,
@@ -350,8 +350,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -359,7 +359,7 @@
   "prewritten": {
     "id": "spanish/advanced/96",
     "version": 1,
-    "sha256": "c51822f66da016aee3c335b829783dcaa12f4d2bb21796f7c22c634320558469",
+    "sha256": "901eb3f97fedd8ca302a153184a9adaf7de48d6138fb69e069dfedcb500ab75b",
     "title": "Possessive Adjectives: Mi, Tu, Su",
     "file": "content/spanish-prewritten/advanced/level-096.json"
   }

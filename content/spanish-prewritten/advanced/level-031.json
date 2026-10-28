@@ -95,8 +95,8 @@
           },
           {
             "key": "accents",
-            "value": "veintidós, veintitrés, veintiséis",
-            "detail": "the three that end in a stressed syllable"
+            "value": "veintidós, veintitrés, veintiséis (and veintiún)",
+            "detail": "they end in a stressed syllable"
           },
           {
             "key": "31-99: three words",
@@ -118,7 +118,7 @@
       "purpose": "The audio script: the tens, a run of combined numbers, then ages and prices.",
       "data": {
         "title": "Count by tens and combine",
-        "cueNote": "Treinta y cinco is said almost as one word: TRAYN-tay-SEEN-koh.",
+        "cueNote": "Treinta y cinco is said almost as one word: TRAYN-tie-SEEN-koh.",
         "duration": 30.4,
         "cues": [
           {
@@ -229,18 +229,18 @@
       "data": {
         "question": "The price is \"setenta dólares\". How much is it?",
         "choices": [
-          "$70",
           "$60",
           "$17",
-          "$7"
+          "$7",
+          "$70"
         ],
-        "correctIndex": 0,
+        "correctIndex": 3,
         "commonErrorLabel": "Sesenta or setenta",
         "trapChoiceIndexes": [
-          1
+          0
         ],
         "trapReasons": {
-          "1": "Sesenta and setenta differ by one letter."
+          "0": "Sesenta and setenta differ by one letter."
         },
         "whyIntuitionFailed": "The two words differ only in their middle consonant, so they blur together.",
         "correctReasoning": "Setenta has a t like siete (7): 70. Sesenta has an s like seis (6): 60.",
@@ -265,11 +265,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
-              "sesenta y dos",
               "setenta y dos",
-              "seis y dos"
+              "seis y dos",
+              "sesenta y dos"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -279,11 +279,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
+              "veinte y uno",
               "veintiún",
-              "veintiuno",
-              "veinte y uno"
+              "veintiuno"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -293,11 +293,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
+              "uno cien",
               "cien",
-              "ciento",
-              "uno cien"
+              "ciento"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -364,7 +364,7 @@
       "hint": "One word, with an accent.",
       "choices": [
         "veintidós",
-        "veinte y dos",
+        "veintedos",
         "vientidos",
         "veintedós"
       ],
@@ -383,10 +383,10 @@
       "source": "prewritten",
       "hint": "Uno shortens before a noun.",
       "choices": [
-        "Tengo treinta y un años.",
-        "Tengo treinta y uno años.",
         "Soy treinta y uno.",
-        "Tengo treinta un años."
+        "Tengo treinta un años.",
+        "Tengo treinta y un años.",
+        "Tengo treinta y uno años."
       ],
       "id": "c3",
       "after": 5,
@@ -423,8 +423,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -432,7 +432,7 @@
   "prewritten": {
     "id": "spanish/advanced/31",
     "version": 1,
-    "sha256": "98f052c8a423050c9b6bc001ec81d05dfb2b18c272d8883a27434d5500ebca63",
+    "sha256": "9d07a45b87ca1780f7950e9ab521677aacdc7d7cd77825c6b849a6a067ee0495",
     "title": "Numbers 21 to 100",
     "file": "content/spanish-prewritten/advanced/level-031.json"
   }

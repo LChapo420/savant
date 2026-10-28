@@ -286,18 +286,18 @@
       "data": {
         "question": "You have a goldfish at home. Which sentence is right?",
         "choices": [
-          "Tengo un pez.",
           "Tengo un pescado.",
           "Tengo una pez.",
-          "Tengo un peces."
+          "Tengo un peces.",
+          "Tengo un pez."
         ],
-        "correctIndex": 0,
+        "correctIndex": 3,
         "commonErrorLabel": "Pescado for a pet",
         "trapChoiceIndexes": [
-          1
+          0
         ],
         "trapReasons": {
-          "1": "Pescado is the fish you see on menus, so it is often learned first."
+          "0": "Pescado is the fish you see on menus, so it is often learned first."
         },
         "whyIntuitionFailed": "English uses \"fish\" for both the animal and the food.",
         "correctReasoning": "A live fish is un pez (plural peces); pescado is fish as food.",
@@ -361,10 +361,10 @@
       "source": "prewritten",
       "hint": "A man speaking, singular.",
       "choices": [
-        "Estoy casado.",
-        "Tengo casado.",
         "Estoy casada.",
-        "Soy casados."
+        "Soy casados.",
+        "Estoy casado.",
+        "Tengo casado."
       ],
       "id": "c2",
       "after": 1,
@@ -418,8 +418,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -427,7 +427,7 @@
   "prewritten": {
     "id": "spanish/advanced/93",
     "version": 1,
-    "sha256": "133429c6a55571036a80be5a1ec28a06233fcac5e4731036db4e17876fd3e104",
+    "sha256": "eff0df00464107bb4fde0c6620f948675a9f0e10c139615fd1981dfba8416425",
     "title": "Extended Family, Marital Status, and Pets",
     "file": "content/spanish-prewritten/advanced/level-093.json"
   }

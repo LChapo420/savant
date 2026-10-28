@@ -192,11 +192,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
-              "de",
               "del",
-              "de el"
+              "de el",
+              "de"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -249,18 +249,18 @@
       "data": {
         "question": "How do you say \"Pedro's house\"?",
         "choices": [
-          "la casa de Pedro",
-          "Pedro's casa",
           "la Pedro casa",
-          "la casa Pedro"
+          "la casa Pedro",
+          "la casa de Pedro",
+          "Pedro's casa"
         ],
-        "correctIndex": 0,
+        "correctIndex": 2,
         "commonErrorLabel": "Apostrophe s in Spanish",
         "trapChoiceIndexes": [
-          1
+          3
         ],
         "trapReasons": {
-          "1": "It keeps the English pattern."
+          "3": "It keeps the English pattern."
         },
         "whyIntuitionFailed": "English marks the owner with 's before the thing, and that habit carries over.",
         "correctReasoning": "Spanish has no 's: the thing comes first, then de + owner: la casa de Pedro.",
@@ -302,10 +302,10 @@
       "source": "prewritten",
       "hint": "de + el = ?",
       "choices": [
+        "el consultorio médico's",
         "el consultorio del médico",
         "el consultorio de el médico",
-        "el médico consultorio",
-        "el consultorio médico's"
+        "el médico consultorio"
       ],
       "id": "c1",
       "after": 4,
@@ -322,10 +322,10 @@
       "source": "prewritten",
       "hint": "De + quién.",
       "choices": [
+        "¿De dónde es?",
         "¿De quién es?",
         "¿Quién es?",
-        "¿Qué es?",
-        "¿De dónde es?"
+        "¿Qué es?"
       ],
       "id": "c2",
       "after": 2,
@@ -379,8 +379,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -388,7 +388,7 @@
   "prewritten": {
     "id": "spanish/advanced/97",
     "version": 1,
-    "sha256": "f4c0b066cdf121403e2563ae309f91603e7b5ec447ba5ce212c7b3b5487f7db5",
+    "sha256": "acd5c22ba9268b920710024bf2bbc8c577803956bb45efa283bf2ebe0166c33b",
     "title": "Possession with De",
     "file": "content/spanish-prewritten/advanced/level-097.json"
   }

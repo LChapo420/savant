@@ -229,18 +229,18 @@
       "data": {
         "question": "How do you say \"I am an engineer\" (a woman speaking)?",
         "choices": [
+          "Estoy ingeniera.",
           "Soy ingeniera.",
           "Soy una ingeniera.",
-          "Soy ingeniero.",
-          "Estoy ingeniera."
+          "Soy ingeniero."
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "commonErrorLabel": "Adding \"a\" to the job",
         "trapChoiceIndexes": [
-          1
+          2
         ],
         "trapReasons": {
-          "1": "English needs \"an engineer\"."
+          "2": "English needs \"an engineer\"."
         },
         "whyIntuitionFailed": "English always puts a or an before a job.",
         "correctReasoning": "With ser, a profession alone takes no article, and a woman uses the feminine form: Soy ingeniera.",
@@ -372,10 +372,10 @@
       "source": "prewritten",
       "hint": "-or → -ora.",
       "choices": [
-        "Es profesora.",
-        "Es profesor.",
         "Es una profesor.",
-        "Es profesoro."
+        "Es profesoro.",
+        "Es profesora.",
+        "Es profesor."
       ],
       "id": "c1",
       "after": 4,
@@ -392,10 +392,10 @@
       "source": "prewritten",
       "hint": "Dedicarse: to work at, to devote yourself to.",
       "choices": [
-        "¿A qué te dedicas?",
         "¿De dónde eres?",
         "¿Cuántos años tienes?",
-        "¿Cómo te llamas?"
+        "¿Cómo te llamas?",
+        "¿A qué te dedicas?"
       ],
       "id": "c2",
       "after": 2,
@@ -449,8 +449,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -458,7 +458,7 @@
   "prewritten": {
     "id": "spanish/advanced/85",
     "version": 1,
-    "sha256": "fa39399314d999c480b995968e9808168d19a2430c5fe974d8dc6883ebb282dd",
+    "sha256": "26e26dc8be29a0e7c0a0ab49305e0e8a6522e514d4ad0a24a225943a5d5484ca",
     "title": "Jobs and Professions",
     "file": "content/spanish-prewritten/advanced/level-085.json"
   }

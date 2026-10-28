@@ -181,11 +181,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
-              "argentino",
               "argentina",
-              "Argentino"
+              "Argentino",
+              "argentino"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -195,11 +195,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
+              "juezas",
               "jueza",
-              "un juez",
-              "juezas"
+              "un juez"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -209,11 +209,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
-              "ingeniera",
               "ingeniero",
-              "una ingeniero"
+              "una ingeniero",
+              "ingeniera"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -234,20 +234,20 @@
       "data": {
         "question": "How do you say \"Shakira is a Colombian singer\"?",
         "choices": [
-          "Shakira es una cantante colombiana.",
-          "Shakira está una cantante colombiana.",
           "Shakira es una colombiana cantante.",
-          "Shakira es un cantante colombiano."
+          "Shakira es un cantante colombiano.",
+          "Shakira es una cantante colombiana.",
+          "Shakira está una cantante colombiana."
         ],
-        "correctIndex": 0,
+        "correctIndex": 2,
         "commonErrorLabel": "Estar or English word order",
         "trapChoiceIndexes": [
-          1,
-          2
+          3,
+          0
         ],
         "trapReasons": {
-          "1": "Estar also means \"to be\".",
-          "2": "English puts the nationality first: Colombian singer."
+          "0": "English puts the nationality first: Colombian singer.",
+          "3": "Estar also means \"to be\"."
         },
         "whyIntuitionFailed": "Two English habits combine: any \"to be\", and adjective before noun.",
         "correctReasoning": "Identity uses ser; with an adjective added the article returns (una cantante); the nationality goes after the noun and agrees: una cantante colombiana.",
@@ -367,10 +367,10 @@
       "source": "prewritten",
       "hint": "Ser, feminine, small letter.",
       "choices": [
+        "Shakira es Colombiana.",
         "Shakira es colombiana.",
         "Shakira es colombiano.",
-        "Shakira está colombiana.",
-        "Shakira es Colombiana."
+        "Shakira está colombiana."
       ],
       "id": "c1",
       "after": 3,
@@ -387,10 +387,10 @@
       "source": "prewritten",
       "hint": "Feminine, no article.",
       "choices": [
-        "ingeniera",
-        "ingeniero",
         "una ingeniero",
-        "ingenieras"
+        "ingenieras",
+        "ingeniera",
+        "ingeniero"
       ],
       "id": "c2",
       "after": 4,
@@ -450,8 +450,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -459,7 +459,7 @@
   "prewritten": {
     "id": "spanish/advanced/163",
     "version": 1,
-    "sha256": "d285ee752f2f2b4f87637b5ffc70208068a95caa8f5839e6f79f2902fb3beb8d",
+    "sha256": "8cbac5df74387201f89e11d96d1810e5c13681ffb1916f1163afda9949153e37",
     "title": "Famous Hispanic Figures",
     "file": "content/spanish-prewritten/advanced/level-163.json"
   }

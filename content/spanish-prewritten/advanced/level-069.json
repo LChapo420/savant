@@ -192,11 +192,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
-              "pesa",
               "mide",
-              "cuesta"
+              "cuesta",
+              "pesa"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -206,11 +206,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
-              "mide",
               "pesa",
-              "es"
+              "es",
+              "mide"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -248,18 +248,18 @@
       "data": {
         "question": "How do you say \"I am 1.65 m tall\"?",
         "choices": [
-          "Mido un metro sesenta y cinco.",
           "Soy un metro sesenta y cinco.",
           "Estoy un metro sesenta y cinco.",
-          "Tengo un metro sesenta y cinco."
+          "Tengo un metro sesenta y cinco.",
+          "Mido un metro sesenta y cinco."
         ],
-        "correctIndex": 0,
+        "correctIndex": 3,
         "commonErrorLabel": "Height with ser",
         "trapChoiceIndexes": [
-          1
+          0
         ],
         "trapReasons": {
-          "1": "English says \"I am ... tall\", and soy means \"I am\"."
+          "0": "English says \"I am ... tall\", and soy means \"I am\"."
         },
         "whyIntuitionFailed": "English uses \"to be\" for height, so learners reach for soy.",
         "correctReasoning": "Spanish measures height with medir: Mido un metro sesenta y cinco. (Soy alto, \"I am tall\", is fine without a number.)",
@@ -303,10 +303,10 @@
       "source": "prewritten",
       "hint": "Weight needs its own verb.",
       "choices": [
-        "El bebé pesa cuatro kilos.",
         "El bebé es cuatro kilos.",
         "El bebé mide cuatro kilos.",
-        "El bebé cuesta cuatro kilos."
+        "El bebé cuesta cuatro kilos.",
+        "El bebé pesa cuatro kilos."
       ],
       "id": "c1",
       "after": 4,
@@ -323,10 +323,10 @@
       "source": "prewritten",
       "hint": "Plural and price.",
       "choices": [
+        "¿Cuánto pesan?",
         "¿Cuánto cuestan?",
         "¿Cuánto cuesta?",
-        "¿Cuánto miden?",
-        "¿Cuánto pesan?"
+        "¿Cuánto miden?"
       ],
       "id": "c2",
       "after": 4,
@@ -377,8 +377,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -386,7 +386,7 @@
   "prewritten": {
     "id": "spanish/advanced/69",
     "version": 1,
-    "sha256": "49df35b5969171a360fa3f1aac1ae5dac987b528af0b992b7bde1dc442559ff9",
+    "sha256": "cee1a776e9e974a4568fd0aea080bfca994ffe173a26195dd0ac968b68d3e94f",
     "title": "Height, Weight, and Measurements: Mide, Pesa, Cuesta",
     "file": "content/spanish-prewritten/advanced/level-069.json"
   }

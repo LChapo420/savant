@@ -261,11 +261,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
-              "universidad",
               "universión",
-              "universimente"
+              "universimente",
+              "universidad"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -289,15 +289,15 @@
             "kind": "blank",
             "id": "b3",
             "options": [
-              "Finalmente",
               "Finalción",
-              "Finalidad"
+              "Finalidad",
+              "Finalmente"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
-            "text": ", es viernes."
+            "text": ", vamos a la playa."
           }
         ],
         "feedback": {
@@ -305,7 +305,7 @@
           "incorrect": "At least one choice is off. Change it and check again."
         },
         "perBlankFeedback": {
-          "b3": "finally → finalmente."
+          "b3": "finally → finalmente (in the end)."
         }
       },
       "repaired": false,
@@ -317,18 +317,18 @@
       "data": {
         "question": "Which Spanish word is the everyday word for \"a question\" (something you ask)?",
         "choices": [
+          "una preguntación",
           "una pregunta",
           "una cuestión",
-          "una questión",
-          "una preguntación"
+          "una questión"
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "commonErrorLabel": "Over-applying -ción",
         "trapChoiceIndexes": [
-          1
+          2
         ],
         "trapReasons": {
-          "1": "Cuestión follows the -tion rule, so it looks like the obvious answer."
+          "2": "Cuestión follows the -tion rule, so it looks like the obvious answer."
         },
         "whyIntuitionFailed": "The rule works so often that learners apply it everywhere.",
         "correctReasoning": "Cuestión exists but means an issue or a matter. A question you ask is una pregunta, as in Tengo una pregunta.",
@@ -405,10 +405,10 @@
       "source": "prewritten",
       "hint": "Actualmente is a false friend.",
       "choices": [
+        "I used to live in Chicago.",
         "These days I live in Chicago.",
         "Actually, I live in Chicago.",
-        "I finally live in Chicago.",
-        "I used to live in Chicago."
+        "I finally live in Chicago."
       ],
       "id": "c3",
       "after": 4,
@@ -425,10 +425,10 @@
       "source": "prewritten",
       "hint": "Feminine, and the accent goes away.",
       "choices": [
-        "las canciones",
         "las canciónes",
         "las cancións",
-        "los canciones"
+        "los canciones",
+        "las canciones"
       ],
       "id": "c4",
       "after": 2,
@@ -465,8 +465,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -474,7 +474,7 @@
   "prewritten": {
     "id": "spanish/intermediate/121",
     "version": 1,
-    "sha256": "5436e2246f338be91ec5ea92ae91ce4e889536fddb2003d08d599d293b8d2ec7",
+    "sha256": "56d46327c2f22a750df9f474fa26011543ef033d886f2e9d43439be167a31684",
     "title": "Cognate Conversion Rules: -tion to -ción, -ity to -idad, -ly to -mente",
     "file": "content/spanish-prewritten/intermediate/level-121.json"
   }

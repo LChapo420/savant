@@ -39,7 +39,7 @@ module.exports = [
           ['ustedes', 'you (plural)', 'any group you speak to, formal or not'],
           ['ellos / ellas', 'they', 'ellas only for a group of all women'],
         ],
-        footnote: 'For recognition: Spain also uses vosotros (you, plural, informal), and Argentina and Uruguay use vos for tú.',
+        footnote: 'For recognition: Spain also uses vosotros (you, plural, informal), and Argentina, Uruguay, Paraguay and much of Central America use vos for tú.',
         highlightColumn: 0,
       }),
       audio('The audio script: each pronoun, then two sentences that keep a pronoun for contrast.', {
@@ -96,7 +96,7 @@ module.exports = [
       }),
       takeaway('Closes with the pronoun set and the dropping habit.', {
         topic: 'Subject pronouns',
-        takeaway: 'Learn yo, tú, usted, él, ella, nosotros, ustedes, ellos, ellas, then mostly leave them out: the verb says who, and Spanish has no "it".',
+        takeaway: 'Learn yo, tú, usted, él, ella, nosotros, ustedes, ellos, ellas, then mostly leave them out: the verb says who, and Spanish has no subject pronoun for "it".',
         terms: ['yo', 'tú', 'usted', 'nosotros', 'ustedes', 'ellos'],
       }),
     ],
@@ -372,7 +372,7 @@ module.exports = [
         caption: 'Gender in action',
         headers: ['Masculine (el)', 'Feminine (la)', 'Note'],
         rows: [
-          ['el amigo', 'la amiga', 'a man / a woman'],
+          ['el amigo', 'la amiga', 'a male friend / a female friend'],
           ['el niño', 'la niña', 'a boy / a girl'],
           ['el hermano', 'la hermana', 'brother / sister'],
           ['el libro', 'la casa', 'things: one gender each'],
@@ -469,7 +469,7 @@ module.exports = [
           ['-ción, -sión', 'feminine', 'la canción, la información, la televisión', 'success'],
           ['-dad, -tad, -tud', 'feminine', 'la ciudad, la libertad, la actitud', 'success'],
           ['-ma (Greek words)', 'masculine', 'el problema, el sistema, el tema, el idioma, el programa, el clima', 'accent'],
-          ['-e, consonant', 'no rule', 'el café, la noche, el papel, la piel: learn each one', 'caution'],
+          ['other -e and consonant endings', 'no rule', 'el café, la noche, el papel, la piel: learn each one', 'caution'],
         ],
       }),
       table('Lists the everyday exceptions to -o / -a.', {
@@ -613,7 +613,7 @@ module.exports = [
         traps: [1],
         label: 'Keeping the z',
         trapReasons: { 1: 'It follows the consonant rule (+ es) and keeps the spelling.' },
-        why: 'The +es rule is right, but Spanish spelling does not allow z before e, so it changes to c.',
+        why: 'The +es rule is right, but Spanish spelling normally changes z to c before e.',
         reasoning: 'lápiz → lápic + es → lápices. Same for luz → luces and vez → veces.',
         tip: 'z + es → ces.',
       }),
@@ -671,7 +671,7 @@ module.exports = [
       rule('States why accents move in plurals, in one idea.', {
         tag: 'Spelling',
         ruleName: 'The stress stays put',
-        anchor: 'A plural keeps the stress on the same syllable as the singular, so the written accent appears or disappears to show it.',
+        anchor: 'A plural almost always keeps the stress on the same syllable as the singular, so the written accent appears or disappears to show it.',
         points: [
           'jo-ven → JÓ-ve-nes: adding a syllable needs an accent to keep the stress on jo.',
           'can-CIÓN → can-CIO-nes: the stress now falls there naturally, so the accent goes.',
@@ -726,7 +726,7 @@ module.exports = [
       }),
       takeaway('Closes with the stress rule and the unchanging nouns.', {
         topic: 'Tricky plurals',
-        takeaway: 'The stress never moves, so accents appear (jóvenes, exámenes) or disappear (canciones, ingleses); words like lunes, paraguas and family names stay the same.',
+        takeaway: 'The stress stays put (with rare exceptions such as carácter, caracteres), so accents appear (jóvenes, exámenes) or disappear (canciones, ingleses); words like lunes, paraguas and family names stay the same.',
         terms: ['jóvenes', 'exámenes', 'canciones', 'los lunes', 'los García'],
       }),
     ],
@@ -822,7 +822,7 @@ module.exports = [
         label: 'de + el left apart',
         trapReasons: { 1: 'It follows "of the" word for word.' },
         why: 'Like a + el, de + el looks like two separate words in English.',
-        reasoning: 'de + el always fuses into del: el carro del profesor. With la nothing fuses: la casa de la profesora.',
+        reasoning: 'de + el fuses into del: el carro del profesor. With la nothing fuses (la casa de la profesora), nor with a name that includes El (de El Salvador) or with él, him (de él).',
         tip: 'a + el = al, de + el = del.',
       }),
       takeaway('Closes with the four articles and the extra places they appear.', {
@@ -853,7 +853,7 @@ module.exports = [
       typed('es_vocab_core', {
         prompt: 'Combine and type the one word for "a + el".',
         answer: 'al',
-        rationale: 'a + el always contracts to al, as in voy al banco.',
+        rationale: 'a + el contracts to al, as in voy al banco (but not with a name that includes El: a El Salvador).',
         hint: 'Two letters.',
         focus: 'al',
         after: 5,
@@ -951,6 +951,7 @@ module.exports = [
       typed('es_vocab_core', {
         prompt: 'Type the word that completes "Tengo ___ amigas en México." (I have some friends in Mexico.)',
         answer: 'unas',
+        accepts: ['algunas'],
         rationale: 'Amigas is feminine plural, so some is unas.',
         hint: 'Feminine and plural.',
         focus: 'unas',
@@ -987,7 +988,7 @@ module.exports = [
         title: 'Building numbers',
         rows: [
           ['21-29: one word', 'veinti + unit', 'veintiuno, veintidós, veintitrés, veinticuatro, veinticinco, veintiséis, veintisiete, veintiocho, veintinueve'],
-          ['accents', 'veintidós, veintitrés, veintiséis', 'the three that end in a stressed syllable'],
+          ['accents', 'veintidós, veintitrés, veintiséis (and veintiún)', 'they end in a stressed syllable'],
           ['31-99: three words', 'ten + y + unit', 'treinta y uno, cuarenta y cinco, setenta y ocho, noventa y nueve'],
           ['before a noun', 'veintiún, treinta y un; veintiuna', 'veintiún años, treinta y un dólares, veintiuna personas'],
         ],
@@ -995,7 +996,7 @@ module.exports = [
       audio('The audio script: the tens, a run of combined numbers, then ages and prices.', {
         title: 'Count by tens and combine',
         lines: ['veinte, treinta, cuarenta, cincuenta, sesenta, setenta, ochenta, noventa, cien', 'veintiuno', 'veintidós', 'treinta y cinco', 'cuarenta y ocho', 'sesenta y seis', 'setenta y siete', 'noventa y nueve', 'Tengo veintiún años.', 'Son cincuenta y cinco dólares.'],
-        cueNote: 'Treinta y cinco is said almost as one word: TRAYN-tay-SEEN-koh.',
+        cueNote: 'Treinta y cinco is said almost as one word: TRAYN-tie-SEEN-koh.',
       }),
       reveal('Self-tests number building by saying it first.', {
         title: 'Say it, then check',
@@ -1039,7 +1040,7 @@ module.exports = [
       }),
       check('es_numbers', {
         prompt: 'Which is the correct spelling of 22?',
-        choices: ['veintidós', 'veinte y dos', 'vientidos', 'veintedós'],
+        choices: ['veintidós', 'veintedos', 'vientidos', 'veintedós'],
         answer: 'veintidós',
         rationale: 'The twenties are one word starting veinti-, and 22 carries an accent on the last syllable: veintidós.',
         hint: 'One word, with an accent.',
@@ -1111,7 +1112,7 @@ module.exports = [
         points: [
           'Juan → Juanito; Ana → Anita; Carlos → Carlitos.',
           'Guadalupe → Lupe → Lupita.',
-          'The same ending makes things small or dear: un café → un cafecito.',
+          'The same ending makes things small or dear: un momento → un momentito (wait a moment: un momentito).',
         ],
       }),
       match('Retrieves each nickname by its full name.', {
@@ -1128,7 +1129,7 @@ module.exports = [
         trapReasons: { 1: 'You know that Pepe is José, and it sounds friendly.' },
         why: 'Knowing the nickname makes it tempting to use it to sound warm.',
         reasoning: 'In a first, formal meeting use the title and surname. Switch to Pepe only if he uses it or invites you to.',
-        tip: 'Wait to be invited: "Dime Pepe" (Call me Pepe).',
+        tip: 'Wait to be invited: "Dígame Pepe" or, between friends, "Dime Pepe" (Call me Pepe).',
       }),
       takeaway('Closes with the list and the rule of use.', {
         topic: 'Nicknames',

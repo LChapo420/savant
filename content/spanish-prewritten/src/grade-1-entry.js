@@ -195,7 +195,7 @@ module.exports = [
         rows: [
           ['el hotel', 'the hotel', 'el oh-TEL'],
           ['el hospital', 'the hospital', 'el ohs-pee-TAHL'],
-          ['el restaurante', 'the restaurant', 'el rehs-tow-RAHN-teh'],
+          ['el restaurante', 'the restaurant', 'el rehs-tah-oo-RAHN-teh'],
           ['la familia', 'the family', 'lah fah-MEE-lyah'],
           ['importante', 'important', 'eem-por-TAHN-teh'],
           ['la música', 'the music', 'lah MOO-see-kah'],
@@ -242,13 +242,13 @@ module.exports = [
       }),
       trap('Targets the habit of saying a cognate the English way.', {
         question: 'How do you say hotel in Spanish?',
-        choices: ['oh-TEL, no h sound, stress at the end', 'HOH-tel, like English', 'HOH-tel, stress at the start', 'oh-TEEL, with a long e'],
+        choices: ['oh-TEL, no h sound, stress at the end', 'hoh-TEL, with an English h', 'OH-tel, no h sound, stress at the start', 'oh-TEEL, with a long e'],
         correct: 0,
         traps: [1, 2],
         label: 'English sound on a Spanish word',
         trapReasons: { 1: 'It is spelled exactly like the English word, so it is tempting to say it the English way.' },
         why: 'A cognate looks English, so the brain reads it in English. But the spelling is Spanish, and Spanish rules decide the sound.',
-        reasoning: 'Silent h, clean vowels: o-TEL. The stress falls on the last syllable, as it does in most Spanish words ending in l.',
+        reasoning: 'Silent h, clean vowels: oh-TEL. The stress falls on the last syllable, as it does in most Spanish words ending in l.',
         tip: 'Read a cognate twice: once for meaning (English), once for sound (Spanish).',
       }),
       takeaway('Sums up cognates as a shortcut and names the patterns to carry forward.', {
@@ -299,7 +299,7 @@ module.exports = [
       'Puedo = I can, can I: ¿Puedo pasar? = May I come in?',
       'Voy = I am going: Voy al baño',
       'Necesito = I need: Necesito ayuda',
-      'The -o ending already means "I", so yo is not needed',
+      'The ending (-o, or -oy in voy) already means "I", so yo is not needed',
       'Each chunk takes a noun (quiero agua) or a verb in its base form (puedo pagar)',
       'a + el contracts to al: voy al baño, never voy a el baño',
     ],
@@ -310,7 +310,7 @@ module.exports = [
         sections: [
           { paragraphs: [
             'You do not need grammar to start speaking. Five verb forms, learned as fixed chunks, cover a huge share of what a visitor or a new neighbor needs to say.',
-            'All five end in -o, and that -o already means "I". So quiero alone means "I want". Spanish speakers usually leave out yo (I) unless they want to stress it.',
+            'Four of them end in -o (quiero, tengo, puedo, necesito) and voy ends in -oy, and that ending already means "I". So quiero alone means "I want". Spanish speakers usually leave out yo (I) unless they want to stress it.',
           ] },
         ],
       }),
@@ -1044,7 +1044,7 @@ module.exports = [
         rows: [
           ['Father', 'Juan Pérez Ruiz', 'Pérez'],
           ['Mother', 'María García López', 'García'],
-          ['Their daughter', 'Ana Pérez García', 'Pérez (from her father), then García (from her mother)'],
+          ['Their daughter', 'Ana Pérez García', 'Pérez (from her father); her second surname, García, is from her mother'],
         ],
         footnote: 'Each child takes the first surname of each parent.',
       }),
@@ -1248,6 +1248,9 @@ module.exports = [
           { paragraphs: [
             'The United States is one of the largest Spanish-speaking countries in the world. About 43 million people here speak Spanish at home, according to the Census Bureau\'s 2023 survey. Counting people who speak it as a second language, estimates come close to 60 million.',
             'About 65 million people in the US are Hispanic or Latino. Not all of them speak Spanish, and many Spanish speakers are not Hispanic. Most Hispanic Americans have roots in Mexico; Puerto Rican, Salvadoran, Cuban and Dominican roots are the next largest groups.',
+          ] },
+          { heading: 'Where to notice it', paragraphs: [
+            'On TV and radio: Univision and Telemundo are the largest Spanish-language networks in the US. On products: read the Spanish side of bilingual labels, such as Instrucciones (instructions), Ingredientes (ingredients) and Hecho en México (made in Mexico). Between neighbors: listen for ¡Buenos días!, ¿Qué tal? (How is it going?) and ¡Nos vemos! (See you!).',
           ] },
         ],
       }),

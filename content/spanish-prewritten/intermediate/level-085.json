@@ -191,11 +191,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
-              "Tiene",
               "Tienes",
-              "Necesito"
+              "Necesito",
+              "Tiene"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -213,14 +213,14 @@
           },
           {
             "kind": "text",
-            "text": " ver el menú, por favor. (your phone is dead) "
+            "text": " ver el menú, por favor. (your phone is dead and you must call a taxi now) "
           },
           {
             "kind": "blank",
             "id": "b3",
             "options": [
               "Necesito",
-              "Me gustaría",
+              "Tengo",
               "Tiene"
             ],
             "correctIndex": 0
@@ -250,30 +250,30 @@
         "options": [
           {
             "id": "a",
-            "text": "Me gustaría el pescado, por favor."
-          },
-          {
-            "id": "b",
             "text": "Quiero el pescado."
           },
           {
-            "id": "c",
+            "id": "b",
             "text": "Necesito el pescado."
           },
           {
-            "id": "d",
+            "id": "c",
             "text": "¿Tienes el pescado?"
+          },
+          {
+            "id": "d",
+            "text": "Me gustaría el pescado, por favor."
           }
         ],
-        "correctOptionId": "a",
+        "correctOptionId": "d",
         "feedback": {
           "correct": "Right.",
           "incorrect": "Not quite. Read the feedback and try again.",
           "byOption": {
-            "a": "Yes: me gustaría is the soft, polite request, and por favor adds courtesy.",
-            "b": "Understood, but without por favor it sounds blunt.",
-            "c": "Necesito means you need it, which sounds odd for a menu choice.",
-            "d": "Tienes is for friends; to a waiter use tiene."
+            "a": "Understood, but without por favor it sounds blunt.",
+            "b": "Necesito means you need it, which sounds odd for a menu choice.",
+            "c": "Tienes is for friends; to a waiter use tiene.",
+            "d": "Yes: me gustaría is the soft, polite request, and por favor adds courtesy."
           }
         }
       },
@@ -341,10 +341,10 @@
       "source": "prewritten",
       "hint": "You are asking a question, politely, to someone you do not know.",
       "choices": [
-        "¿Tiene ...?",
-        "¿Tienes ...?",
         "Necesito ...",
-        "Quiero ..."
+        "Quiero ...",
+        "¿Tiene ...?",
+        "¿Tienes ...?"
       ],
       "id": "c1",
       "after": 3,
@@ -361,10 +361,10 @@
       "source": "prewritten",
       "hint": "Chunk + base verb.",
       "choices": [
+        "Necesito el banco ir.",
         "Necesito ir al banco.",
         "Necesito voy al banco.",
-        "Necesito a ir al banco.",
-        "Necesito el banco ir."
+        "Necesito a ir al banco."
       ],
       "id": "c2",
       "after": 6,
@@ -419,8 +419,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -428,7 +428,7 @@
   "prewritten": {
     "id": "spanish/intermediate/85",
     "version": 1,
-    "sha256": "a7f9d7d0a4c7f72f94d014d2536a33b82796975e81738910dd071312eed2032f",
+    "sha256": "a310b1bbaac2cb022d0d068269315eb72efaaebb9917be0ea88157c49cbc32c6",
     "title": "Wants and Needs as Chunks",
     "file": "content/spanish-prewritten/intermediate/level-085.json"
   }

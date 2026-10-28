@@ -145,11 +145,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
-              "somos",
               "son",
-              "es"
+              "es",
+              "somos"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -159,11 +159,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
+              "eres",
               "son",
-              "somos",
-              "eres"
+              "somos"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -173,11 +173,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
-              "son",
               "somos",
-              "es"
+              "es",
+              "son"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -249,19 +249,19 @@
       "data": {
         "question": "How do you ask two coworkers \"Are you (all) from Mexico?\"",
         "choices": [
-          "¿Ustedes son de México?",
           "¿Ustedes somos de México?",
           "¿Ustedes eres de México?",
-          "¿Ustedes es de México?"
+          "¿Ustedes es de México?",
+          "¿Ustedes son de México?"
         ],
-        "correctIndex": 0,
+        "correctIndex": 3,
         "commonErrorLabel": "The wrong form with ustedes",
         "trapChoiceIndexes": [
-          1,
-          2
+          0,
+          1
         ],
         "trapReasons": {
-          "2": "Eres is the \"you\" form, and ustedes means \"you\"."
+          "1": "Eres is the \"you\" form, and ustedes means \"you\"."
         },
         "whyIntuitionFailed": "Ustedes means \"you\", so learners reach for a \"you\" form or a plural \"we\" form.",
         "correctReasoning": "Ustedes uses the same form as ellos and ellas: son.",
@@ -337,10 +337,10 @@
       "source": "prewritten",
       "hint": "Two women: feminine plural throughout.",
       "choices": [
+        "Ellas somos médicas.",
         "Ellas son médicas.",
         "Ellos son médicos.",
-        "Ellas son médicos.",
-        "Ellas somos médicas."
+        "Ellas son médicos."
       ],
       "id": "c3",
       "after": 4,
@@ -377,8 +377,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -386,7 +386,7 @@
   "prewritten": {
     "id": "spanish/advanced/7",
     "version": 1,
-    "sha256": "2aa427262d81ec9abcc33b3683776da7296c90cfb47a74257cf1343440eec124",
+    "sha256": "fc9041a9d0c35ecc55aab41d2fe7cc290dd2ad1bd7a9dc85d5d3bcf8bd32690d",
     "title": "Ser Plural Forms and Ustedes",
     "file": "content/spanish-prewritten/advanced/level-007.json"
   }

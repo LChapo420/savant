@@ -203,18 +203,18 @@
       "data": {
         "question": "Your elderly neighbor is Manuel Gómez. How do you greet him with respect?",
         "choices": [
-          "Buenos días, don Manuel.",
-          "Buenos días, don Gómez.",
           "Buenos días, el don Manuel.",
-          "Buenos días, licenciado Manuel."
+          "Buenos días, licenciado Manuel.",
+          "Buenos días, don Manuel.",
+          "Buenos días, don Gómez."
         ],
-        "correctIndex": 0,
+        "correctIndex": 2,
         "commonErrorLabel": "Don with the surname",
         "trapChoiceIndexes": [
-          1
+          3
         ],
         "trapReasons": {
-          "1": "Mr. goes with the surname in English, so don seems to as well."
+          "3": "Mr. goes with the surname in English, so don seems to as well."
         },
         "whyIntuitionFailed": "Learners map don onto Mr., and Mr. takes a surname.",
         "correctReasoning": "Don and doña go with the first name: don Manuel. No article when you speak to him.",
@@ -232,30 +232,30 @@
         "options": [
           {
             "id": "a",
-            "text": "Buenos días, ingeniera Méndez."
-          },
-          {
-            "id": "b",
-            "text": "Buenos días, ingeniero Méndez."
-          },
-          {
-            "id": "c",
             "text": "Buenos días, doña Méndez."
           },
           {
-            "id": "d",
+            "id": "b",
             "text": "Buenos días, la ingeniera Méndez."
+          },
+          {
+            "id": "c",
+            "text": "Buenos días, ingeniera Méndez."
+          },
+          {
+            "id": "d",
+            "text": "Buenos días, ingeniero Méndez."
           }
         ],
-        "correctOptionId": "a",
+        "correctOptionId": "c",
         "feedback": {
           "correct": "Right.",
           "incorrect": "Not quite. Read the feedback and try again.",
           "byOption": {
-            "a": "Yes: the feminine title ingeniera with her surname.",
-            "b": "Ingeniero is for a man; for a woman it is ingeniera.",
-            "c": "Doña goes with a first name, and at work the professional title fits better.",
-            "d": "Speaking to her, leave out la."
+            "a": "Doña goes with a first name, and at work the professional title fits better.",
+            "b": "Speaking to her, leave out la.",
+            "c": "Yes: the feminine title ingeniera with her surname.",
+            "d": "Ingeniero is for a man; for a woman it is ingeniera."
           }
         }
       },
@@ -295,10 +295,10 @@
       "source": "prewritten",
       "hint": "You are asking permission to pass.",
       "choices": [
-        "Con permiso.",
-        "Mucho gusto.",
         "Buenas tardes.",
-        "Don Manuel."
+        "Don Manuel.",
+        "Con permiso.",
+        "Mucho gusto."
       ],
       "id": "c1",
       "after": 4,
@@ -315,10 +315,10 @@
       "source": "prewritten",
       "hint": "Feminine title + first name.",
       "choices": [
-        "Buenos días, doña Rosa.",
         "Buenos días, doña Fernández.",
         "Buenos días, don Rosa.",
-        "Buenos días, la doña Rosa."
+        "Buenos días, la doña Rosa.",
+        "Buenos días, doña Rosa."
       ],
       "id": "c2",
       "after": 5,
@@ -373,8 +373,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -382,7 +382,7 @@
   "prewritten": {
     "id": "spanish/entry/81",
     "version": 1,
-    "sha256": "b45c3e5e221ca4758f9fa59db5440a0363d75fd72f7041168897f55057afc072",
+    "sha256": "c1bfb18fca4bbd25caabb8f9ee89d9f58a5969b6adbb6db11030b5aaf65d0f97",
     "title": "Don, Doña, Señor, and Professional Titles Like Licenciado and Ingeniero",
     "file": "content/spanish-prewritten/entry/level-081.json"
   }

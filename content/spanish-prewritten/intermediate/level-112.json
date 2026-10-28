@@ -14,7 +14,7 @@
     "embarazada = pregnant; embarrassed is avergonzado / avergonzada, or me da vergüenza",
     "éxito = success; exit is salida",
     "librería = bookstore; library is biblioteca",
-    "constipado = having a cold, stuffed up; constipated is estreñido",
+    "constipado changes meaning by country (a cold in Spain, constipated in parts of Latin America): avoid it; say resfriado for a cold and estreñido for constipated",
     "More: carpeta = folder (carpet is alfombra), ropa = clothes (rope is cuerda), sopa = soup (soap is jabón)",
     "When a cognate seems odd in context, check it rather than trust it"
   ],
@@ -70,9 +70,9 @@
           ],
           [
             "constipado / constipada",
-            "having a cold, stuffed up",
-            "constipated",
-            "estreñido / estreñida"
+            "in Spain, having a cold; in parts of Latin America, constipated",
+            "(a word to avoid)",
+            "resfriado / resfriada (a cold); estreñido / estreñida (constipated)"
           ],
           [
             "la carpeta",
@@ -93,7 +93,7 @@
             "el jabón"
           ]
         ],
-        "footnote": "Constipado is heard most in Spain; across Latin America people more often say estoy resfriado or estoy resfriada for a cold."
+        "footnote": "Constipado is a trap both ways: in Spain it means having a cold, while in parts of Latin America (Paraguay and Argentina, for example) it is used for constipated. Say estoy resfriado / resfriada for a cold."
       },
       "repaired": false,
       "index": 1
@@ -104,7 +104,7 @@
       "data": {
         "title": "Say the right word",
         "cueNote": "¡Qué vergüenza! (keh behr-GWEHN-sah) means \"How embarrassing!\" The ü in vergüenza makes the u heard.",
-        "duration": 19.8,
+        "duration": 19.5,
         "cues": [
           {
             "text": "embarazada, avergonzada",
@@ -122,19 +122,19 @@
             "end": 9.3
           },
           {
-            "text": "constipado, estreñido",
+            "text": "resfriado, estreñido",
             "start": 10.8,
-            "end": 12.6
+            "end": 12.3
           },
           {
             "text": "¡Qué vergüenza!",
-            "start": 14.1,
-            "end": 15
+            "start": 13.8,
+            "end": 14.7
           },
           {
             "text": "¿Dónde está la salida?",
-            "start": 16.5,
-            "end": 18.3
+            "start": 16.2,
+            "end": 18
           }
         ],
         "playLabel": "Play",
@@ -150,18 +150,18 @@
       "data": {
         "question": "You spilled coffee on your boss. How do you say you are embarrassed?",
         "choices": [
+          "Es un éxito.",
           "¡Qué vergüenza!",
           "Estoy embarazada.",
-          "Estoy constipada.",
-          "Es un éxito."
+          "Estoy constipada."
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "commonErrorLabel": "Embarazada for embarrassed",
         "trapChoiceIndexes": [
-          1
+          2
         ],
         "trapReasons": {
-          "1": "It looks and sounds like \"embarrassed\"."
+          "2": "It looks and sounds like \"embarrassed\"."
         },
         "whyIntuitionFailed": "Embarazada starts exactly like \"embarrass\", so the brain files it as a cognate.",
         "correctReasoning": "Embarazada means pregnant. To say you are embarrassed, say ¡Qué vergüenza! or Estoy avergonzado / avergonzada.",
@@ -275,11 +275,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
+              "carpeta",
               "biblioteca",
-              "librería",
-              "carpeta"
+              "librería"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -349,8 +349,14 @@
           {
             "key": "constipated",
             "value": "estreñido / estreñida",
-            "detail": "Not constipado, which means having a cold.",
+            "detail": "Avoid constipado: its meaning changes by country.",
             "tone": "error"
+          },
+          {
+            "key": "a cold",
+            "value": "estoy resfriado / resfriada",
+            "detail": "Clear everywhere.",
+            "tone": "success"
           }
         ]
       },
@@ -363,7 +369,7 @@
       "data": {
         "badgeLabel": "Key takeaway",
         "topic": "False friends",
-        "takeaway": "Embarazada is pregnant, éxito is success, librería is a bookstore and constipado is a cold: when a look-alike makes a strange sentence, check it.",
+        "takeaway": "Embarazada is pregnant, éxito is success, librería is a bookstore, and constipado is best avoided: when a look-alike makes a strange sentence, check it.",
         "terms": [
           "embarazada",
           "éxito",
@@ -391,10 +397,10 @@
       "source": "prewritten",
       "hint": "It is a false friend.",
       "choices": [
+        "Her sister is busy.",
         "Her sister is pregnant.",
         "Her sister is embarrassed.",
-        "Her sister is sick.",
-        "Her sister is busy."
+        "Her sister is sick."
       ],
       "id": "c1",
       "after": 4,
@@ -411,10 +417,10 @@
       "source": "prewritten",
       "hint": "Librería is where books are sold.",
       "choices": [
-        "a la biblioteca",
-        "a la librería",
         "a la salida",
-        "a la carpeta"
+        "a la carpeta",
+        "a la biblioteca",
+        "a la librería"
       ],
       "id": "c2",
       "after": 5,
@@ -468,8 +474,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -477,7 +483,7 @@
   "prewritten": {
     "id": "spanish/intermediate/112",
     "version": 1,
-    "sha256": "2e59ec189698534081c786766a501f907915cd8ff134de8f3e948d6e6519685c",
+    "sha256": "994746c767e58d3caec7518cdf900dc85dd256d211efaca2d8307e0093226b3a",
     "title": "False Friends: First Warning List",
     "file": "content/spanish-prewritten/intermediate/level-112.json"
   }

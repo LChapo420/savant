@@ -15,7 +15,7 @@
     "Puedo = I can, can I: ¿Puedo pasar? = May I come in?",
     "Voy = I am going: Voy al baño",
     "Necesito = I need: Necesito ayuda",
-    "The -o ending already means \"I\", so yo is not needed",
+    "The ending (-o, or -oy in voy) already means \"I\", so yo is not needed",
     "Each chunk takes a noun (quiero agua) or a verb in its base form (puedo pagar)",
     "a + el contracts to al: voy al baño, never voy a el baño"
   ],
@@ -31,7 +31,7 @@
           {
             "paragraphs": [
               "You do not need grammar to start speaking. Five verb forms, learned as fixed chunks, cover a huge share of what a visitor or a new neighbor needs to say.",
-              "All five end in -o, and that -o already means \"I\". So quiero alone means \"I want\". Spanish speakers usually leave out yo (I) unless they want to stress it."
+              "Four of them end in -o (quiero, tengo, puedo, necesito) and voy ends in -oy, and that ending already means \"I\". So quiero alone means \"I want\". Spanish speakers usually leave out yo (I) unless they want to stress it."
             ]
           }
         ]
@@ -173,11 +173,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
+              "Puedo",
               "Quiero",
-              "Voy",
-              "Puedo"
+              "Voy"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -201,11 +201,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
+              "tengo",
               "voy",
-              "quiero",
-              "tengo"
+              "quiero"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -246,18 +246,18 @@
       "data": {
         "question": "How do you say \"I am going to the bathroom\"?",
         "choices": [
-          "Voy al baño.",
           "Voy a el baño.",
           "Soy al baño.",
-          "Voy el baño."
+          "Voy el baño.",
+          "Voy al baño."
         ],
-        "correctIndex": 0,
+        "correctIndex": 3,
         "commonErrorLabel": "a + el left apart",
         "trapChoiceIndexes": [
-          1
+          0
         ],
         "trapReasons": {
-          "1": "It is a word-for-word copy of \"to the\", which feels logical."
+          "0": "It is a word-for-word copy of \"to the\", which feels logical."
         },
         "whyIntuitionFailed": "English keeps \"to\" and \"the\" apart, so the first instinct is a + el. Spanish always fuses them.",
         "correctReasoning": "a (to) + el (the) is always written and said al: Voy al baño. With la nothing changes: Voy a la tienda.",
@@ -377,10 +377,10 @@
       "source": "prewritten",
       "hint": "Which chunk means I need?",
       "choices": [
-        "Necesito ayuda.",
         "Tengo ayuda.",
         "Voy ayuda.",
-        "Puedo ayuda."
+        "Puedo ayuda.",
+        "Necesito ayuda."
       ],
       "id": "c1",
       "after": 4,
@@ -397,10 +397,10 @@
       "source": "prewritten",
       "hint": "Puedo asks permission.",
       "choices": [
-        "May I come in?",
-        "Do you want to go?",
         "Am I going in?",
-        "Do you have a pass?"
+        "Do you have a pass?",
+        "May I come in?",
+        "Do you want to go?"
       ],
       "id": "c2",
       "after": 4,
@@ -471,8 +471,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -480,7 +480,7 @@
   "prewritten": {
     "id": "spanish/entry/16",
     "version": 1,
-    "sha256": "6151b1a3984222bbd577f12c671768d17583e68daf0f12d890d287a50774459b",
+    "sha256": "dbc43dd2fd9888c375b701a2710756677c0adb1937042362cb87bb10dad84e5e",
     "title": "Five Power Verbs as Chunks: Quiero, Tengo, Puedo, Voy, Necesito",
     "file": "content/spanish-prewritten/entry/level-016.json"
   }

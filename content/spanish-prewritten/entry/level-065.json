@@ -357,30 +357,30 @@
         "options": [
           {
             "id": "a",
-            "text": "Close the book."
-          },
-          {
-            "id": "b",
-            "text": "Open the book."
-          },
-          {
-            "id": "c",
             "text": "Read the book."
           },
           {
-            "id": "d",
+            "id": "b",
             "text": "Write in the notebook."
+          },
+          {
+            "id": "c",
+            "text": "Close the book."
+          },
+          {
+            "id": "d",
+            "text": "Open the book."
           }
         ],
-        "correctOptionId": "a",
+        "correctOptionId": "c",
         "feedback": {
           "correct": "Right.",
           "incorrect": "Not quite. Read the feedback and try again.",
           "byOption": {
-            "a": "Yes: cierren means close (said to the class).",
-            "b": "Open is abran.",
-            "c": "Read is lean.",
-            "d": "Write is escriban."
+            "a": "Read is lean.",
+            "b": "Write is escriban.",
+            "c": "Yes: cierren means close (said to the class).",
+            "d": "Open is abran."
           }
         }
       },
@@ -402,11 +402,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
-              "libro",
               "mesa",
-              "puerta"
+              "puerta",
+              "libro"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -416,11 +416,11 @@
             "kind": "blank",
             "id": "b2",
             "options": [
+              "cuaderno",
               "silla",
-              "lápiz",
-              "cuaderno"
+              "lápiz"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -487,10 +487,10 @@
       "source": "prewritten",
       "hint": "Think of ventilation: air comes in through it.",
       "choices": [
-        "la ventana",
-        "la puerta",
         "la mesa",
-        "la silla"
+        "la silla",
+        "la ventana",
+        "la puerta"
       ],
       "id": "c1",
       "after": 4,
@@ -507,10 +507,10 @@
       "source": "prewritten",
       "hint": "You want them to slow down.",
       "choices": [
-        "Más despacio, por favor.",
-        "Abran el libro, por favor.",
         "Escuchen, por favor.",
-        "Es una mesa, por favor."
+        "Es una mesa, por favor.",
+        "Más despacio, por favor.",
+        "Abran el libro, por favor."
       ],
       "id": "c2",
       "after": 5,
@@ -565,8 +565,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -574,7 +574,7 @@
   "prewritten": {
     "id": "spanish/entry/65",
     "version": 1,
-    "sha256": "ab4bd2d99419f0d68e17cc102b83a4913c91aa7e40e4f4278842c12363401907",
+    "sha256": "4a9dec7c032a7efe5687abafe2dcd620c44e592c380d29f6a77d0132a4fea6a6",
     "title": "Classroom Words and Objects",
     "file": "content/spanish-prewritten/entry/level-065.json"
   }

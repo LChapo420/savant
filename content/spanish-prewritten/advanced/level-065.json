@@ -169,11 +169,11 @@
             "kind": "blank",
             "id": "b1",
             "options": [
-              "tengo",
               "tiene",
-              "soy"
+              "soy",
+              "tengo"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -197,11 +197,11 @@
             "kind": "blank",
             "id": "b3",
             "options": [
+              "son",
               "tienen",
-              "tiene",
-              "son"
+              "tiene"
             ],
-            "correctIndex": 0
+            "correctIndex": 1
           },
           {
             "kind": "text",
@@ -211,11 +211,11 @@
             "kind": "blank",
             "id": "b4",
             "options": [
-              "tienes",
               "tiene",
-              "eres"
+              "eres",
+              "tienes"
             ],
-            "correctIndex": 0
+            "correctIndex": 2
           },
           {
             "kind": "text",
@@ -236,19 +236,19 @@
       "data": {
         "question": "How do you say \"I am 25 years old\"?",
         "choices": [
-          "Tengo veinticinco años.",
           "Soy veinticinco años.",
           "Estoy veinticinco años.",
-          "Soy veinticinco."
+          "Soy veinticinco.",
+          "Tengo veinticinco años."
         ],
-        "correctIndex": 0,
+        "correctIndex": 3,
         "commonErrorLabel": "Age with ser",
         "trapChoiceIndexes": [
-          1,
-          3
+          0,
+          2
         ],
         "trapReasons": {
-          "1": "English says \"I am\", and soy means \"I am\"."
+          "0": "English says \"I am\", and soy means \"I am\"."
         },
         "whyIntuitionFailed": "English uses \"to be\" for age, so learners reach for soy.",
         "correctReasoning": "Spanish treats age as something you have: Tengo veinticinco años.",
@@ -292,10 +292,10 @@
       "source": "prewritten",
       "hint": "Age is something you have.",
       "choices": [
+        "Mi madre tengo sesenta años.",
         "Mi madre tiene sesenta años.",
         "Mi madre es sesenta años.",
-        "Mi madre está sesenta años.",
-        "Mi madre tengo sesenta años."
+        "Mi madre está sesenta años."
       ],
       "id": "c1",
       "after": 5,
@@ -325,7 +325,7 @@
       "skill_name": "Core vocabulary",
       "difficulty": 2,
       "format": "type_in",
-      "prompt": "Complete with one word: \"Nosotros ___ treinta años.\" (We are thirty.)",
+      "prompt": "Complete with one word: \"Nosotros ___ treinta años.\" (We are thirty years old.)",
       "answer": "tenemos",
       "rationale": "The nosotros form of tener is tenemos.",
       "source": "prewritten",
@@ -365,8 +365,8 @@
   },
   "check_tier": "prewritten",
   "fact_sheet": null,
-  "model": "prewritten",
-  "layout_model": "prewritten",
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
   "usage": null,
   "seconds": 0,
   "brief_hash": null,
@@ -374,7 +374,7 @@
   "prewritten": {
     "id": "spanish/advanced/65",
     "version": 1,
-    "sha256": "d3b2d28e47215e9558a6d227b4af9cf96c1cdb9e56b3280ab2dea16e87f55b20",
+    "sha256": "d0b0d9aec64185ecbf7a453b13a0d93c35b34ab126280c5a164ad2c8dfbdbd32",
     "title": "Age with Tener: Tengo Años",
     "file": "content/spanish-prewritten/advanced/level-065.json"
   }
