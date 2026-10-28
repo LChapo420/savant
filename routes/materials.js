@@ -5,7 +5,9 @@
  *   POST   /api/materials?name=x   the file as the raw body (PDF, DOCX, TXT, MD), up to 20 MB
  *   POST   /api/materials/paste    { title?, text }
  *   GET    /api/materials/:id      one material with its full text
- *   DELETE /api/materials/:id      gone from the store and the disk copy
+ *   DELETE /api/materials/:id      gone from the store and the disk copy, and its course with it
+ *   POST   /api/materials/:id/course   start building the course (202; resumes a partial one)
+ *   GET    /api/materials/:id/course   the course's status and skill list (no answers)
  *
  * Child accounts cannot upload or paste (routes/consent.js CHILD_MEDIA_UPLOAD); they can still delete.
  */
@@ -13,6 +15,7 @@ const express = require('express');
 const { requireAuth } = require('../middleware/auth');
 const { limit } = require('../utils/rate-limit');
 const materials = require('../services/materials');
+const courses = require('../services/course-builder');
 
 const router = express.Router();
 
@@ -48,6 +51,21 @@ router.post('/', requireAuth, limit('materials-upload', 12, 60 * 60 * 1000), raw
   }
   if (out.error) return refuse(res, out);
   res.status(201).json({ material: out.value, materials: materials.list(req.user.id) });
+});
+
+router.post('/:id/course', requireAuth, limit('materials-course', 6, 60 * 60 * 1000), (req, res) => {
+  const m = materials.get(req.user.id, req.params.id, false);
+  if (!m) return res.status(404).json({ error: 'No such material.' });
+  const userId = req.user.id;
+  const existing = courses.get(userId, m.id);
+  if (existing && existing.status === 'ready' && existing.version === courses.VERSION) return res.json({ course: courses.summary(existing), cached: true });
+  courses.build(userId, m.id, {}).then((out) => { if (out.error && out.code !== 'busy') console.warn(`course-builder: ${out.code}`); });
+  res.status(202).json({ started: true });
+});
+
+router.get('/:id/course', requireAuth, (req, res) => {
+  if (!materials.get(req.user.id, req.params.id, false)) return res.status(404).json({ error: 'No such material.' });
+  res.json({ course: courses.summary(courses.get(req.user.id, req.params.id)) });
 });
 
 router.get('/:id', requireAuth, (req, res) => {

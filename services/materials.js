@@ -203,7 +203,10 @@ function addPaste(userId, title, text) {
 /** Delete for real: the row leaves the store and the store is written to disk now. */
 function remove(userId, id) {
   const n = db.remove('materials', (m) => m.id === Number(id) && m.user_id === userId);
-  if (n) db.flush();
+  if (n) {
+    require('./course-builder').removeForMaterial(userId, id); // eslint-disable-line global-require
+    db.flush();
+  }
   return n > 0;
 }
 

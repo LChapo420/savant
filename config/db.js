@@ -64,6 +64,7 @@ const COLLECTIONS = [
   'spanish_study',           // Savant vs Duolingo beginner-Spanish study: one per participant, arm drawn from drand (services/spanish-study.js)
   'spanish_study_checkins',  // Duolingo-arm daily self-reported minutes
   'spanish_study_tests',     // pre/post scores on the sealed external tests
+  'material_courses',        // courses built from a learner's material (services/course-builder.js), private to them
   'materials',               // learn from your own material: the extracted text of a learner's upload or paste, private to them (services/materials.js)
   'es_review',               // main-path Spanish: the item-level review queue, one per learner per phrase: box, due time, right/wrong (services/spanish/path.js)
 ];
