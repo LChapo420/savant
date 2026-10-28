@@ -1,0 +1,525 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "entry",
+  "level": 4,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Show the learner how much Spanish they can already read: identical and near cognates, the spelling patterns that disguise them, each word heard with its Spanish sound, then practice spotting and decoding them.",
+  "coverage": [
+    "A cognate is a word that looks alike and means the same in two languages",
+    "Some cognates are spelled exactly like English: hotel, hospital, animal, chocolate, doctor",
+    "Many differ by a small change: restaurante, familia, importante, música, teléfono",
+    "Pattern: English st- at the start becomes est- (student, estudiante)",
+    "Pattern: ph becomes f and th becomes t (telephone, teléfono; theater, teatro)",
+    "Pattern: many English words gain a final -e, -o or -a (important, importante)",
+    "Cognates are said the Spanish way: hotel is oh-TEL",
+    "Not every word is a cognate: casa, perro and mesa must be learned"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "Defines a cognate and why it gives a beginner hundreds of words at once.",
+      "data": {
+        "tag": "Vocabulary",
+        "ruleName": "Cognates",
+        "anchor": "A cognate is a Spanish word that looks like an English word and means the same thing, so you can read it the first time you see it.",
+        "prerequisites": [
+          "Spanish and English share thousands of words from Latin and from each other.",
+          "Some are spelled the same: hotel, hospital, animal, chocolate, doctor, actor, color, idea.",
+          "Most differ by a letter or two: restaurante, familia, importante, música, teléfono.",
+          "Always say them the Spanish way: clean vowels and a silent h."
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lays out cognates with their meanings and Spanish pronunciation.",
+      "data": {
+        "caption": "Words you can already read",
+        "headers": [
+          "Spanish",
+          "English",
+          "Say it"
+        ],
+        "rows": [
+          [
+            "el hotel",
+            "the hotel",
+            "el oh-TEL"
+          ],
+          [
+            "el hospital",
+            "the hospital",
+            "el ohs-pee-TAHL"
+          ],
+          [
+            "el restaurante",
+            "the restaurant",
+            "el rehs-tow-RAHN-teh"
+          ],
+          [
+            "la familia",
+            "the family",
+            "lah fah-MEE-lyah"
+          ],
+          [
+            "importante",
+            "important",
+            "eem-por-TAHN-teh"
+          ],
+          [
+            "la música",
+            "the music",
+            "lah MOO-see-kah"
+          ],
+          [
+            "el teléfono",
+            "the telephone",
+            "el teh-LEH-foh-noh"
+          ],
+          [
+            "la universidad",
+            "the university",
+            "lah oo-nee-behr-see-DAHD"
+          ],
+          [
+            "el animal",
+            "the animal",
+            "el ah-nee-MAHL"
+          ],
+          [
+            "el chocolate",
+            "the chocolate",
+            "el choh-koh-LAH-teh"
+          ]
+        ],
+        "footnote": "El and la both mean \"the\". Spanish words come with one or the other; you will learn why in Grade 3.",
+        "highlightColumn": 0
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: every cognate in the table, heard and repeated with Spanish vowels.",
+      "data": {
+        "title": "Hear the cognates",
+        "subtitle": "Same word, Spanish sound",
+        "cueNote": "Listen for the stress: ho-TEL, hos-pi-TAL, res-tau-RAN-te, MÚ-si-ca, te-LÉ-fo-no.",
+        "duration": 25.2,
+        "cues": [
+          {
+            "text": "el hotel",
+            "start": 0.3,
+            "end": 1.1
+          },
+          {
+            "text": "el hospital",
+            "start": 2.6,
+            "end": 3.5
+          },
+          {
+            "text": "el restaurante",
+            "start": 5,
+            "end": 6.1
+          },
+          {
+            "text": "la familia",
+            "start": 7.6,
+            "end": 8.5
+          },
+          {
+            "text": "importante",
+            "start": 10,
+            "end": 10.9
+          },
+          {
+            "text": "la música",
+            "start": 12.4,
+            "end": 13.3
+          },
+          {
+            "text": "el teléfono",
+            "start": 14.8,
+            "end": 15.9
+          },
+          {
+            "text": "la universidad",
+            "start": 17.4,
+            "end": 18.7
+          },
+          {
+            "text": "el animal",
+            "start": 20.2,
+            "end": 21.1
+          },
+          {
+            "text": "el chocolate",
+            "start": 22.6,
+            "end": 23.7
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "Collects the spelling patterns that disguise a cognate, so new ones can be decoded.",
+      "data": {
+        "title": "Patterns that hide a cognate",
+        "rows": [
+          {
+            "key": "st- → est-",
+            "value": "student → estudiante, station → estación",
+            "detail": "Spanish words do not start with s + consonant, so an e is added."
+          },
+          {
+            "key": "ph → f",
+            "value": "telephone → teléfono, photo → foto"
+          },
+          {
+            "key": "th → t",
+            "value": "theater → teatro, theme → tema"
+          },
+          {
+            "key": "add -e, -o, -a",
+            "value": "important → importante, moment → momento, problem → problema"
+          },
+          {
+            "key": "double letter → single",
+            "value": "professor → profesor, class → clase"
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Decodes cognates by matching Spanish to English across the patterns.",
+      "data": {
+        "title": "Decode the cognates",
+        "instruction": "Connect each Spanish word to its English meaning.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "estudiante"
+          },
+          {
+            "id": "t2",
+            "label": "teatro"
+          },
+          {
+            "id": "t3",
+            "label": "foto"
+          },
+          {
+            "id": "t4",
+            "label": "momento"
+          },
+          {
+            "id": "t5",
+            "label": "profesor"
+          },
+          {
+            "id": "t6",
+            "label": "diferente"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "theater"
+          },
+          {
+            "id": "d4",
+            "label": "moment"
+          },
+          {
+            "id": "d6",
+            "label": "different"
+          },
+          {
+            "id": "d1",
+            "label": "student"
+          },
+          {
+            "id": "d3",
+            "label": "photo"
+          },
+          {
+            "id": "d5",
+            "label": "teacher, professor"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Interact_CategorySort",
+      "purpose": "Practices telling a cognate from a word that has to be learned.",
+      "data": {
+        "title": "Cognate or new word?",
+        "instruction": "Put each Spanish word in the right bucket.",
+        "categories": [
+          {
+            "id": "cog",
+            "label": "Cognate: I can read it",
+            "hint": "Looks like the English word with the same meaning"
+          },
+          {
+            "id": "new",
+            "label": "New word: I must learn it",
+            "hint": "Nothing like the English word"
+          }
+        ],
+        "items": [
+          {
+            "id": "i1",
+            "text": "el hotel",
+            "correctCategoryId": "cog"
+          },
+          {
+            "id": "i2",
+            "text": "la familia",
+            "correctCategoryId": "cog"
+          },
+          {
+            "id": "i3",
+            "text": "el animal",
+            "correctCategoryId": "cog"
+          },
+          {
+            "id": "i4",
+            "text": "importante",
+            "correctCategoryId": "cog"
+          },
+          {
+            "id": "i5",
+            "text": "el teatro",
+            "correctCategoryId": "cog"
+          },
+          {
+            "id": "i6",
+            "text": "la casa",
+            "detail": "house",
+            "correctCategoryId": "new"
+          },
+          {
+            "id": "i7",
+            "text": "el perro",
+            "detail": "dog",
+            "correctCategoryId": "new"
+          },
+          {
+            "id": "i8",
+            "text": "la mesa",
+            "detail": "table",
+            "correctCategoryId": "new"
+          },
+          {
+            "id": "i9",
+            "text": "el gato",
+            "detail": "cat",
+            "correctCategoryId": "new"
+          }
+        ],
+        "shuffle": true
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets the habit of saying a cognate the English way.",
+      "data": {
+        "question": "How do you say hotel in Spanish?",
+        "choices": [
+          "oh-TEL, no h sound, stress at the end",
+          "HOH-tel, like English",
+          "HOH-tel, stress at the start",
+          "oh-TEEL, with a long e"
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "English sound on a Spanish word",
+        "trapChoiceIndexes": [
+          1,
+          2
+        ],
+        "trapReasons": {
+          "1": "It is spelled exactly like the English word, so it is tempting to say it the English way."
+        },
+        "whyIntuitionFailed": "A cognate looks English, so the brain reads it in English. But the spelling is Spanish, and Spanish rules decide the sound.",
+        "correctReasoning": "Silent h, clean vowels: o-TEL. The stress falls on the last syllable, as it does in most Spanish words ending in l.",
+        "recoveryTip": "Read a cognate twice: once for meaning (English), once for sound (Spanish).",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Sums up cognates as a shortcut and names the patterns to carry forward.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Cognates you already know",
+        "takeaway": "Hundreds of Spanish words are English words in disguise: look past st- to est-, ph to f, th to t and an extra final vowel, then say them with Spanish sounds.",
+        "terms": [
+          "hotel",
+          "familia",
+          "importante",
+          "música",
+          "teléfono",
+          "estudiante"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "What does \"la universidad\" mean?",
+      "answer": "the university",
+      "rationale": "Universidad is the cognate of university: the English -ity ending often becomes -idad in Spanish.",
+      "source": "prewritten",
+      "hint": "Think of a place where you study after high school.",
+      "choices": [
+        "the university",
+        "the universe",
+        "the uniform",
+        "the unit"
+      ],
+      "id": "c1",
+      "after": 2,
+      "focus": "reading a near cognate"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "An English word starts with \"sp\", like \"special\". What usually happens to it in Spanish?",
+      "answer": "It gains an e at the start: especial",
+      "rationale": "Spanish words do not begin with s plus a consonant, so an e is added in front: special becomes especial, as student becomes estudiante.",
+      "source": "prewritten",
+      "hint": "Remember student and estudiante.",
+      "choices": [
+        "It gains an e at the start: especial",
+        "It drops the s: pecial",
+        "The s becomes a z: zpecial",
+        "It stays exactly the same: special"
+      ],
+      "id": "c2",
+      "after": 3,
+      "focus": "the s + consonant pattern"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Type the Spanish word for \"telephone\".",
+      "answer": "teléfono",
+      "rationale": "Telephone becomes teléfono: ph turns into f and a final -o is added.",
+      "source": "prewritten",
+      "accepts": [
+        "telefono",
+        "el teléfono",
+        "el telefono"
+      ],
+      "hint": "ph becomes f, and the word ends in -o.",
+      "id": "c3",
+      "after": 4,
+      "focus": "producing a cognate by pattern"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/entry/4",
+    "version": 1,
+    "sha256": "4e6d6ea1ec8a9b1ad18ed27958b4440e48c47a37374c82447597b68f9cb2c46a",
+    "title": "Cognates You Already Know",
+    "file": "content/spanish-prewritten/entry/level-004.json"
+  }
+}

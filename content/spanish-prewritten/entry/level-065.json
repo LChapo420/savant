@@ -1,0 +1,581 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "entry",
+  "level": 65,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Name the objects around a classroom or office with audio for each word, add the teacher instructions a learner will hear, then practice by following instructions and naming things.",
+  "coverage": [
+    "Objects: el libro, el cuaderno, el lápiz, el bolígrafo (la pluma in Mexico), la mesa, la silla, la puerta, la ventana, el pizarrón",
+    "¿Qué es esto? = What is this? Answer: Es un libro. / Es una mesa.",
+    "Teacher words to a group: Escuchen, Repitan, Abran el libro, Cierren el libro, Lean, Escriban",
+    "Useful learner phrases: No entiendo. ¿Cómo se dice ...? Más despacio, por favor.",
+    "Regional variety: pen is bolígrafo, pluma (Mexico) or lapicero (Peru and parts of Central America)"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Teaches the classroom objects with meanings and sound guides.",
+      "data": {
+        "caption": "In the classroom",
+        "headers": [
+          "Spanish",
+          "English",
+          "Say it"
+        ],
+        "rows": [
+          [
+            "el libro",
+            "the book",
+            "LEE-broh"
+          ],
+          [
+            "el cuaderno",
+            "the notebook",
+            "kwah-DEHR-noh"
+          ],
+          [
+            "el lápiz",
+            "the pencil",
+            "LAH-pees"
+          ],
+          [
+            "el bolígrafo / la pluma",
+            "the pen",
+            "boh-LEE-grah-foh / PLOO-mah"
+          ],
+          [
+            "la mesa",
+            "the table",
+            "MEH-sah"
+          ],
+          [
+            "la silla",
+            "the chair",
+            "SEE-yah"
+          ],
+          [
+            "la puerta",
+            "the door",
+            "PWEHR-tah"
+          ],
+          [
+            "la ventana",
+            "the window",
+            "behn-TAH-nah"
+          ],
+          [
+            "el pizarrón",
+            "the board",
+            "pee-sah-RROHN"
+          ]
+        ],
+        "footnote": "Pen varies by country: bolígrafo is understood everywhere; Mexicans often say pluma, and in Peru it is lapicero. Pizarrón is common in Latin America; pizarra is also used.",
+        "highlightColumn": 0
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: each object word, then a teacher pointing and naming.",
+      "data": {
+        "title": "Name it",
+        "cueNote": "The ll in silla sounds like the y in \"yes\" in most of Latin America. ¿Qué es esto? means \"What is this?\"",
+        "duration": 29,
+        "cues": [
+          {
+            "text": "el libro",
+            "start": 0.3,
+            "end": 1.1
+          },
+          {
+            "text": "el cuaderno",
+            "start": 2.6,
+            "end": 3.5
+          },
+          {
+            "text": "el lápiz",
+            "start": 5,
+            "end": 5.8
+          },
+          {
+            "text": "el bolígrafo",
+            "start": 7.3,
+            "end": 8.4
+          },
+          {
+            "text": "la mesa",
+            "start": 9.9,
+            "end": 10.7
+          },
+          {
+            "text": "la silla",
+            "start": 12.2,
+            "end": 13
+          },
+          {
+            "text": "la puerta",
+            "start": 14.5,
+            "end": 15.3
+          },
+          {
+            "text": "la ventana",
+            "start": 16.8,
+            "end": 17.7
+          },
+          {
+            "text": "el pizarrón",
+            "start": 19.2,
+            "end": 20.1
+          },
+          {
+            "text": "¿Qué es esto?",
+            "start": 21.6,
+            "end": 22.5
+          },
+          {
+            "text": "Es un libro.",
+            "start": 24,
+            "end": 24.9
+          },
+          {
+            "text": "Es una silla.",
+            "start": 26.4,
+            "end": 27.5
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Gives the instructions a teacher says to the class, and the learner's own survival phrases.",
+      "data": {
+        "caption": "What the teacher says, and what you say",
+        "headers": [
+          "Spanish",
+          "English"
+        ],
+        "rows": [
+          [
+            "Escuchen.",
+            "Listen."
+          ],
+          [
+            "Repitan.",
+            "Repeat."
+          ],
+          [
+            "Abran el libro.",
+            "Open the book."
+          ],
+          [
+            "Cierren el libro.",
+            "Close the book."
+          ],
+          [
+            "Lean.",
+            "Read."
+          ],
+          [
+            "Escriban.",
+            "Write."
+          ],
+          [
+            "No entiendo.",
+            "I don't understand."
+          ],
+          [
+            "¿Cómo se dice \"pen\"?",
+            "How do you say \"pen\"?"
+          ],
+          [
+            "Más despacio, por favor.",
+            "More slowly, please."
+          ]
+        ],
+        "footnote": "These instructions are said to the whole class (ustedes), which is why they end in -n."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: a teacher giving instructions, and a learner asking for help.",
+      "data": {
+        "title": "In class",
+        "cueNote": "En español means \"in Spanish\".",
+        "duration": 19.6,
+        "cues": [
+          {
+            "text": "Escuchen.",
+            "start": 0.3,
+            "end": 1.1
+          },
+          {
+            "text": "Repitan: la ventana.",
+            "start": 2.6,
+            "end": 4.1
+          },
+          {
+            "text": "Abran el libro.",
+            "start": 5.6,
+            "end": 6.7
+          },
+          {
+            "text": "Escriban.",
+            "start": 8.2,
+            "end": 9
+          },
+          {
+            "text": "No entiendo.",
+            "start": 10.5,
+            "end": 11.4
+          },
+          {
+            "text": "Más despacio, por favor.",
+            "start": 12.9,
+            "end": 14.4
+          },
+          {
+            "text": "¿Cómo se dice \"pen\" en español?",
+            "start": 15.9,
+            "end": 18.1
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves the object words by meaning.",
+      "data": {
+        "title": "Point and name",
+        "instruction": "Connect each word to the object.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "la puerta"
+          },
+          {
+            "id": "t2",
+            "label": "la ventana"
+          },
+          {
+            "id": "t3",
+            "label": "la silla"
+          },
+          {
+            "id": "t4",
+            "label": "la mesa"
+          },
+          {
+            "id": "t5",
+            "label": "el lápiz"
+          },
+          {
+            "id": "t6",
+            "label": "el cuaderno"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "the window"
+          },
+          {
+            "id": "d4",
+            "label": "the table"
+          },
+          {
+            "id": "d6",
+            "label": "the notebook"
+          },
+          {
+            "id": "d1",
+            "label": "the door"
+          },
+          {
+            "id": "d3",
+            "label": "the chair"
+          },
+          {
+            "id": "d5",
+            "label": "the pencil"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Interact_MultipleChoice",
+      "purpose": "Applies the teacher instructions: understanding what to do.",
+      "data": {
+        "prompt": "The teacher says \"Cierren el libro.\" What do you do?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Close the book."
+          },
+          {
+            "id": "b",
+            "text": "Open the book."
+          },
+          {
+            "id": "c",
+            "text": "Read the book."
+          },
+          {
+            "id": "d",
+            "text": "Write in the notebook."
+          }
+        ],
+        "correctOptionId": "a",
+        "feedback": {
+          "correct": "Right.",
+          "incorrect": "Not quite. Read the feedback and try again.",
+          "byOption": {
+            "a": "Yes: cierren means close (said to the class).",
+            "b": "Open is abran.",
+            "c": "Read is lean.",
+            "d": "Write is escriban."
+          }
+        }
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices ¿Qué es esto? with un and una.",
+      "data": {
+        "title": "¿Qué es esto?",
+        "instructions": "Choose the word that names the object in brackets.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "— ¿Qué es esto? — Es un "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "libro",
+              "mesa",
+              "puerta"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". (book) — ¿Y esto? — Es una "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "silla",
+              "lápiz",
+              "cuaderno"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". (chair) — ¿Y esto? — Es un "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "lápiz",
+              "ventana",
+              "puerta"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". (pencil)"
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b2": "Words with la take una: una silla.",
+          "b3": "El lápiz, so un lápiz."
+        }
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the room named and the three phrases that rescue a learner in class.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Classroom words",
+        "takeaway": "You can name the room (libro, mesa, silla, puerta, ventana), follow the teacher (escuchen, repitan, abran) and ask for help (no entiendo, más despacio).",
+        "terms": [
+          "libro",
+          "mesa",
+          "silla",
+          "lápiz",
+          "puerta",
+          "ventana"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which word means \"window\"?",
+      "answer": "la ventana",
+      "rationale": "La ventana is the window; la puerta is the door, la mesa the table, la silla the chair.",
+      "source": "prewritten",
+      "hint": "Think of ventilation: air comes in through it.",
+      "choices": [
+        "la ventana",
+        "la puerta",
+        "la mesa",
+        "la silla"
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "naming objects"
+    },
+    {
+      "skill_id": "es_greetings",
+      "skill_name": "Greetings and courtesy",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "The teacher speaks too fast. What do you say?",
+      "answer": "Más despacio, por favor.",
+      "rationale": "Más despacio, por favor asks for more slowly, please; the others are instructions or a description.",
+      "source": "prewritten",
+      "hint": "You want them to slow down.",
+      "choices": [
+        "Más despacio, por favor.",
+        "Abran el libro, por favor.",
+        "Escuchen, por favor.",
+        "Es una mesa, por favor."
+      ],
+      "id": "c2",
+      "after": 5,
+      "focus": "asking for slower speech"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the Spanish word for \"book\" (with or without el).",
+      "answer": "libro",
+      "rationale": "Book is libro (el libro). It is not librería, which is a bookstore.",
+      "source": "prewritten",
+      "accepts": [
+        "el libro",
+        "un libro"
+      ],
+      "hint": "It sounds like LEE-broh.",
+      "id": "c3",
+      "after": 6,
+      "focus": "producing libro"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/entry/65",
+    "version": 1,
+    "sha256": "ab4bd2d99419f0d68e17cc102b83a4913c91aa7e40e4f4278842c12363401907",
+    "title": "Classroom Words and Objects",
+    "file": "content/spanish-prewritten/entry/level-065.json"
+  }
+}

@@ -1,0 +1,486 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "entry",
+  "level": 52,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the emergency words and a few high-value phrases so the learner can get help fast, with audio for every word, the emergency numbers, and a quick scenario drill.",
+  "coverage": [
+    "¡Ayuda! and ¡Socorro! both shout \"Help!\"; socorro is the urgent cry",
+    "Necesito ayuda = I need help",
+    "el médico / la médica = the doctor; el hospital (silent h)",
+    "la policía = the police; also a police officer",
+    "¡Fuego! = Fire! (un incendio = a fire in a building)",
+    "una ambulancia, los bomberos (firefighters)",
+    "Phrases: ¡Llame a una ambulancia! ¡Llamen a la policía! Es una emergencia. ¿Dónde está el hospital?",
+    "Emergency numbers: 911 in the US and Mexico, 112 in Spain"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Teaches the emergency words with meanings and sound guides.",
+      "data": {
+        "caption": "Emergency words",
+        "headers": [
+          "Spanish",
+          "English",
+          "Say it"
+        ],
+        "rows": [
+          [
+            "¡Ayuda!",
+            "Help!",
+            "ah-YOO-dah"
+          ],
+          [
+            "¡Socorro!",
+            "Help! (urgent cry)",
+            "soh-KOH-rroh"
+          ],
+          [
+            "el médico / la médica",
+            "the doctor",
+            "MEH-dee-koh / MEH-dee-kah"
+          ],
+          [
+            "el hospital",
+            "the hospital",
+            "ohs-pee-TAHL"
+          ],
+          [
+            "la policía",
+            "the police; a police officer",
+            "poh-lee-SEE-ah"
+          ],
+          [
+            "¡Fuego!",
+            "Fire!",
+            "FWEH-goh"
+          ],
+          [
+            "la ambulancia",
+            "the ambulance",
+            "ahm-boo-LAHN-syah"
+          ],
+          [
+            "los bomberos",
+            "the firefighters, the fire department",
+            "bohm-BEH-rohs"
+          ]
+        ],
+        "footnote": "The rr in socorro is a rolled r. If you cannot roll it yet, a strong tapped r is still understood.",
+        "highlightColumn": 0
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: every emergency word, then the key phrases, said with urgency.",
+      "data": {
+        "title": "Get help fast",
+        "cueNote": "Llame (YAH-meh) means \"call!\" to one person you address as usted; llamen (YAH-mehn) is \"call!\" to a group.",
+        "duration": 26.3,
+        "cues": [
+          {
+            "text": "¡Ayuda!",
+            "start": 0.3,
+            "end": 1.1
+          },
+          {
+            "text": "¡Socorro!",
+            "start": 2.6,
+            "end": 3.4
+          },
+          {
+            "text": "Necesito ayuda.",
+            "start": 4.9,
+            "end": 6.4
+          },
+          {
+            "text": "Necesito un médico.",
+            "start": 7.9,
+            "end": 9.7
+          },
+          {
+            "text": "¡Llame a una ambulancia!",
+            "start": 11.2,
+            "end": 13.2
+          },
+          {
+            "text": "¡Llamen a la policía!",
+            "start": 14.7,
+            "end": 16.2
+          },
+          {
+            "text": "¡Fuego!",
+            "start": 17.7,
+            "end": 18.5
+          },
+          {
+            "text": "Es una emergencia.",
+            "start": 20,
+            "end": 21.5
+          },
+          {
+            "text": "¿Dónde está el hospital?",
+            "start": 23,
+            "end": 24.8
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Gives the phrases that do the most in an emergency, with meanings.",
+      "data": {
+        "caption": "Phrases that get help",
+        "headers": [
+          "Spanish",
+          "English"
+        ],
+        "rows": [
+          [
+            "Necesito ayuda.",
+            "I need help."
+          ],
+          [
+            "Necesito un médico.",
+            "I need a doctor."
+          ],
+          [
+            "¡Llame a una ambulancia!",
+            "Call an ambulance! (to one person)"
+          ],
+          [
+            "¡Llamen a la policía!",
+            "Call the police! (to several people)"
+          ],
+          [
+            "Es una emergencia.",
+            "It's an emergency."
+          ],
+          [
+            "¿Dónde está el hospital?",
+            "Where is the hospital?"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the emergency numbers to call, which differ by country.",
+      "data": {
+        "tag": "Know the number",
+        "ruleName": "Emergency numbers",
+        "anchor": "In the United States and in Mexico the emergency number is 911; in Spain it is 112.",
+        "prerequisites": [
+          "Mexico moved to the single number 911 in 2017.",
+          "Other Spanish-speaking countries have their own numbers: check before you travel.",
+          "On the phone, start with the essential: Es una emergencia, then say where you are."
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_MultipleChoice",
+      "purpose": "Applies the words to a scenario: choosing who to call for a fire.",
+      "data": {
+        "prompt": "You see smoke coming from a building. What do you shout to people nearby?",
+        "options": [
+          {
+            "id": "a",
+            "text": "¡Fuego! ¡Llamen a los bomberos!"
+          },
+          {
+            "id": "b",
+            "text": "¡Hola! ¡Llamen a los bomberos!"
+          },
+          {
+            "id": "c",
+            "text": "¡Fuego! ¡Necesito un médico!"
+          },
+          {
+            "id": "d",
+            "text": "Gracias. Es una emergencia."
+          }
+        ],
+        "correctOptionId": "a",
+        "feedback": {
+          "correct": "Right.",
+          "incorrect": "Not quite. Read the feedback and try again.",
+          "byOption": {
+            "a": "Yes: Fire! Call the firefighters!",
+            "b": "Hola is hello. In an emergency, shout what is happening.",
+            "c": "Fuego is right, but a doctor does not put out a fire.",
+            "d": "Gracias means thank you; it does not raise the alarm."
+          }
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves each emergency word by its meaning.",
+      "data": {
+        "title": "Who or what?",
+        "instruction": "Connect each word to its meaning.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "el médico"
+          },
+          {
+            "id": "t2",
+            "label": "la policía"
+          },
+          {
+            "id": "t3",
+            "label": "los bomberos"
+          },
+          {
+            "id": "t4",
+            "label": "la ambulancia"
+          },
+          {
+            "id": "t5",
+            "label": "¡Fuego!"
+          },
+          {
+            "id": "t6",
+            "label": "¡Socorro!"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "the police"
+          },
+          {
+            "id": "d4",
+            "label": "the ambulance"
+          },
+          {
+            "id": "d6",
+            "label": "Help!"
+          },
+          {
+            "id": "d1",
+            "label": "the doctor"
+          },
+          {
+            "id": "d3",
+            "label": "the firefighters"
+          },
+          {
+            "id": "d5",
+            "label": "Fire!"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets the assumption that policía only means the force, not the person.",
+      "data": {
+        "question": "A woman in uniform helps you. Your friend says \"Es policía.\" What does that mean?",
+        "choices": [
+          "She is a police officer.",
+          "It is the police station.",
+          "She is calling the police.",
+          "She is a doctor."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Policía only as \"the police\"",
+        "trapChoiceIndexes": [
+          1,
+          2
+        ],
+        "trapReasons": {
+          "1": "If policía only means \"the police\", the sentence seems to be about a place."
+        },
+        "whyIntuitionFailed": "In English \"police\" is the force and \"police officer\" the person, so learners expect two different words.",
+        "correctReasoning": "Spanish policía means both: la policía is the police force, and el policía or la policía is one officer.",
+        "recoveryTip": "Policía: the force, or one officer. The context decides.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the three lines that matter most in an emergency.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Emergency and help words",
+        "takeaway": "Shout ¡Ayuda! or ¡Socorro!, say Necesito ayuda or Es una emergencia, and call 911 in the US or Mexico.",
+        "terms": [
+          "¡Ayuda!",
+          "¡Socorro!",
+          "médico",
+          "policía",
+          "fuego",
+          "hospital"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Someone has fallen and is badly hurt. What is the most useful thing to say?",
+      "answer": "Necesito un médico.",
+      "rationale": "An injury needs a doctor: Necesito un médico means I need a doctor. Bomberos fight fires.",
+      "source": "prewritten",
+      "hint": "Who treats injuries?",
+      "choices": [
+        "Necesito un médico.",
+        "Necesito un bombero.",
+        "Voy al baño.",
+        "Hay fuego."
+      ],
+      "id": "c1",
+      "after": 5,
+      "focus": "asking for a doctor"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "What does \"¡Socorro!\" mean?",
+      "answer": "Help!",
+      "rationale": "Socorro is the urgent cry for help, like ¡Ayuda!; fire is fuego.",
+      "source": "prewritten",
+      "hint": "It means the same as ¡Ayuda!",
+      "choices": [
+        "Help!",
+        "Fire!",
+        "Hurry!",
+        "Stop!"
+      ],
+      "id": "c2",
+      "after": 5,
+      "focus": "recognizing socorro"
+    },
+    {
+      "skill_id": "es_present_ar",
+      "skill_name": "Present tense: -ar verbs",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the Spanish for \"I need help.\" (two words)",
+      "answer": "Necesito ayuda.",
+      "rationale": "Necesito (I need) + ayuda (help): Necesito ayuda.",
+      "source": "prewritten",
+      "accepts": [
+        "yo necesito ayuda"
+      ],
+      "hint": "Use the chunk for I need, then the word for help.",
+      "id": "c3",
+      "after": 6,
+      "focus": "producing necesito ayuda"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [
+      {
+        "url": "https://www.gob.mx/911",
+        "title": "Mexico: 911 emergency number (Gobierno de México)"
+      },
+      {
+        "url": "https://www.112.es/",
+        "title": "112: Spain's emergency number"
+      }
+    ],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/entry/52",
+    "version": 1,
+    "sha256": "dfb75d92314b1dcfed46c3708fd3cab6448ff52d7ce41151a152c80b951bd9df",
+    "title": "Emergency and Help Words",
+    "file": "content/spanish-prewritten/entry/level-052.json"
+  }
+}

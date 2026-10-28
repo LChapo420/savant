@@ -1,0 +1,386 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "entry",
+  "level": 80,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach how Spanish speakers say their names, the everyday titles señor, señora and señorita, and the two-surname system through one worked family, then practice reading names and addressing people.",
+  "coverage": [
+    "Me llamo ... = My name is ...; ¿Cómo te llamas? / ¿Cómo se llama usted?",
+    "Pronouncing names: José (hoh-SEH), Juan (hwahn), Jorge (HOR-heh); j is a breathy h",
+    "Señor (Mr., sir), señora (Mrs., ma'am), señorita (Miss)",
+    "Abbreviations Sr., Sra., Srta. take a capital; written out, the title is lowercase mid-sentence",
+    "Two surnames: María García López = first name + first surname + second surname",
+    "Traditionally the first surname comes from the father and the second from the mother",
+    "People are called by their first surname: la señora García",
+    "Women usually keep their own surnames when they marry"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_TextBlock",
+      "purpose": "Introduces names in Spanish and the phrases for giving and asking a name.",
+      "data": {
+        "eyebrow": "Unit 1.7",
+        "title": "What's your name?",
+        "sections": [
+          {
+            "paragraphs": [
+              "To give your name, say Me llamo ... (literally \"I call myself\"): Me llamo Ana. To ask a friend: ¿Cómo te llamas? To ask someone you address formally: ¿Cómo se llama usted?",
+              "Spanish names are said with Spanish sounds. The letter j is a breathy h, so José is hoh-SEH, Juan is hwahn and Jorge is HOR-heh. Names stress where the accent mark says: José, Sofía, Andrés, Lucía."
+            ]
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: common first names, then a short introduction exchange.",
+      "data": {
+        "title": "Names and introductions",
+        "cueNote": "Mucho gusto means \"nice to meet you\". ¿Y tú? means \"And you?\"",
+        "duration": 27.6,
+        "cues": [
+          {
+            "text": "José",
+            "start": 0.3,
+            "end": 1.1
+          },
+          {
+            "text": "María",
+            "start": 2.6,
+            "end": 3.4
+          },
+          {
+            "text": "Juan",
+            "start": 4.9,
+            "end": 5.7
+          },
+          {
+            "text": "Ana",
+            "start": 7.2,
+            "end": 8
+          },
+          {
+            "text": "Jorge",
+            "start": 9.5,
+            "end": 10.3
+          },
+          {
+            "text": "Lucía",
+            "start": 11.8,
+            "end": 12.6
+          },
+          {
+            "text": "Andrés",
+            "start": 14.1,
+            "end": 14.9
+          },
+          {
+            "text": "Sofía",
+            "start": 16.4,
+            "end": 17.2
+          },
+          {
+            "text": "¿Cómo te llamas?",
+            "start": 18.7,
+            "end": 19.8
+          },
+          {
+            "text": "Me llamo Andrés. ¿Y tú?",
+            "start": 21.3,
+            "end": 22.6
+          },
+          {
+            "text": "Me llamo Lucía. Mucho gusto.",
+            "start": 24.1,
+            "end": 26.1
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Teaches the everyday titles and their abbreviations.",
+      "data": {
+        "caption": "Everyday titles",
+        "headers": [
+          "Title",
+          "Short form",
+          "Meaning",
+          "Example"
+        ],
+        "rows": [
+          [
+            "señor",
+            "Sr.",
+            "Mr.; sir",
+            "Buenos días, señor Ruiz."
+          ],
+          [
+            "señora",
+            "Sra.",
+            "Mrs.; ma'am",
+            "Gracias, señora."
+          ],
+          [
+            "señorita",
+            "Srta.",
+            "Miss (a young or unmarried woman)",
+            "Perdón, señorita."
+          ]
+        ],
+        "footnote": "The short forms take a capital letter (Sr. Ruiz). Written out in the middle of a sentence, the title is lowercase: el señor Ruiz."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the two-surname system as one rule with its parts.",
+      "data": {
+        "tag": "Culture",
+        "ruleName": "Two surnames",
+        "anchor": "Most Spanish speakers have two surnames: traditionally the first comes from the father and the second from the mother.",
+        "prerequisites": [
+          "María García López: María is her first name, García her first surname, López her second.",
+          "She is called by her first surname: la señora García, not la señora López.",
+          "Women usually keep their own surnames when they marry.",
+          "Some countries now let parents choose which surname goes first."
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Works one family through the system so the learner sees how a child's name is built.",
+      "data": {
+        "caption": "How a child's name is built",
+        "headers": [
+          "Person",
+          "Full name",
+          "First surname"
+        ],
+        "rows": [
+          [
+            "Father",
+            "Juan Pérez Ruiz",
+            "Pérez"
+          ],
+          [
+            "Mother",
+            "María García López",
+            "García"
+          ],
+          [
+            "Their daughter",
+            "Ana Pérez García",
+            "Pérez (from her father), then García (from her mother)"
+          ]
+        ],
+        "footnote": "Each child takes the first surname of each parent."
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Interact_MultipleChoice",
+      "purpose": "Applies the system: finding the name used with señora.",
+      "data": {
+        "prompt": "A form says: Nombre: Carmen. Apellidos: Torres Medina. How do you address her politely?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Señora Torres"
+          },
+          {
+            "id": "b",
+            "text": "Señora Medina"
+          },
+          {
+            "id": "c",
+            "text": "Señora Carmen Medina"
+          },
+          {
+            "id": "d",
+            "text": "Señor Torres"
+          }
+        ],
+        "correctOptionId": "a",
+        "feedback": {
+          "correct": "Right.",
+          "incorrect": "Not quite. Read the feedback and try again.",
+          "byOption": {
+            "a": "Yes: people are addressed by their first surname.",
+            "b": "Medina is her second surname, usually from her mother; it is not the one used with señora.",
+            "c": "This skips her first surname.",
+            "d": "Señor is for a man."
+          }
+        }
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets the common mistake of treating the last name written as the \"main\" surname.",
+      "data": {
+        "question": "Your coworker is Luis Ramírez Ortega. Which surname did he most likely get from his father?",
+        "choices": [
+          "Ramírez",
+          "Ortega",
+          "Luis",
+          "Both equally"
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "The last name is not the family name",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "In English the last word of a name is the family name, so Ortega looks like it."
+        },
+        "whyIntuitionFailed": "English puts the family name last, so learners look at the end of a Spanish name.",
+        "correctReasoning": "Traditionally the first surname, Ramírez, comes from the father, and the second, Ortega, from the mother. He is señor Ramírez.",
+        "recoveryTip": "Use the surname right after the first name.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with how to give a name and address someone by the right surname.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Spanish names and titles",
+        "takeaway": "Say Me llamo ..., use señor, señora or señorita with the first surname, and remember that García López means García is the name to use.",
+        "terms": [
+          "Me llamo",
+          "señor",
+          "señora",
+          "señorita",
+          "apellido"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "Your new boss is Elena Vargas Soto. How do you greet her formally?",
+      "answer": "Buenos días, señora Vargas.",
+      "rationale": "A person is addressed by the first surname, Vargas, and señora is the title for a woman.",
+      "source": "prewritten",
+      "hint": "Use the surname that comes right after the first name.",
+      "choices": [
+        "Buenos días, señora Vargas.",
+        "Buenos días, señora Soto.",
+        "Buenos días, señor Vargas.",
+        "Buenos días, señorita Elena Soto."
+      ],
+      "id": "c1",
+      "after": 6,
+      "focus": "addressing someone by the first surname"
+    },
+    {
+      "skill_id": "es_present_ar",
+      "skill_name": "Present tense: -ar verbs",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "Which sentence says \"My name is Daniel\"?",
+      "answer": "Me llamo Daniel.",
+      "rationale": "Me llamo Daniel is the fixed way to say My name is Daniel: it literally means I call myself Daniel.",
+      "source": "prewritten",
+      "hint": "The chunk is me + llamo.",
+      "choices": [
+        "Me llamo Daniel.",
+        "Yo llamo Daniel.",
+        "Mi llamo Daniel.",
+        "Me llama Daniel."
+      ],
+      "id": "c2",
+      "after": 1,
+      "focus": "giving your name"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "type_in",
+      "prompt": "Juan Pérez Ruiz and María García López have a son, Pablo. Type Pablo's two surnames.",
+      "answer": "Pérez García",
+      "rationale": "A child takes each parent's first surname, traditionally the father's first: Pérez García.",
+      "source": "prewritten",
+      "accepts": [
+        "Pablo Pérez García"
+      ],
+      "hint": "The father's first surname, then the mother's first surname.",
+      "id": "c3",
+      "after": 4,
+      "focus": "building a child's surnames"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/entry/80",
+    "version": 1,
+    "sha256": "2ba3987434d65b06f50d2975941d1afc2e8bea3c0eef83cf692b15f6b867467a",
+    "title": "Spanish Names and Titles",
+    "file": "content/spanish-prewritten/entry/level-080.json"
+  }
+}

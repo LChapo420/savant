@@ -1,0 +1,440 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "entry",
+  "level": 84,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Show the learner the Spanish already around them in the US (who speaks it, where it appears on signs, in place names and in media) so they notice and read it every day.",
+  "coverage": [
+    "About 43 million people in the US speak Spanish at home (Census, 2023)",
+    "Counting second-language speakers, estimates reach roughly 55 to 60 million",
+    "The US Hispanic population is about 65 million; not every Hispanic person speaks Spanish",
+    "Most US Hispanics are of Mexican origin; Puerto Rican, Salvadoran, Cuban and Dominican roots are next",
+    "Signs: Salida, Entrada, Empuje, Jale, Cuidado: piso mojado, Baños, Se habla español",
+    "Place names: Los Ángeles, Las Vegas, Florida, Nevada, Colorado, Montana, El Paso",
+    "Spanish-language media: Univision and Telemundo"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_TextBlock",
+      "purpose": "Gives the real numbers behind \"Spanish in the US\", carefully worded.",
+      "data": {
+        "eyebrow": "Unit 1.7",
+        "title": "Spanish is already around you",
+        "sections": [
+          {
+            "paragraphs": [
+              "The United States is one of the largest Spanish-speaking countries in the world. About 43 million people here speak Spanish at home, according to the Census Bureau's 2023 survey. Counting people who speak it as a second language, estimates come close to 60 million.",
+              "About 65 million people in the US are Hispanic or Latino. Not all of them speak Spanish, and many Spanish speakers are not Hispanic. Most Hispanic Americans have roots in Mexico; Puerto Rican, Salvadoran, Cuban and Dominican roots are the next largest groups."
+            ]
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Teaches the Spanish signs seen in US stores and buildings.",
+      "data": {
+        "caption": "Signs you can read now",
+        "headers": [
+          "Sign",
+          "Meaning"
+        ],
+        "rows": [
+          [
+            "Salida",
+            "Exit"
+          ],
+          [
+            "Entrada",
+            "Entrance"
+          ],
+          [
+            "Empuje",
+            "Push"
+          ],
+          [
+            "Jale",
+            "Pull"
+          ],
+          [
+            "Cuidado: piso mojado",
+            "Caution: wet floor"
+          ],
+          [
+            "Baños",
+            "Restrooms"
+          ],
+          [
+            "Se habla español",
+            "Spanish spoken here"
+          ]
+        ],
+        "footnote": "Jale is the usual word for \"pull\" in Mexico and the US; other countries use hale or tire.",
+        "highlightColumn": 0
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: the sign words read aloud.",
+      "data": {
+        "title": "Read the signs aloud",
+        "cueNote": "The j in jale is a breathy h: HAH-leh. Mojado is moh-HAH-doh.",
+        "duration": 17.9,
+        "cues": [
+          {
+            "text": "Salida",
+            "start": 0.3,
+            "end": 1.1
+          },
+          {
+            "text": "Entrada",
+            "start": 2.6,
+            "end": 3.4
+          },
+          {
+            "text": "Empuje",
+            "start": 4.9,
+            "end": 5.7
+          },
+          {
+            "text": "Jale",
+            "start": 7.2,
+            "end": 8
+          },
+          {
+            "text": "Cuidado: piso mojado",
+            "start": 9.5,
+            "end": 11.3
+          },
+          {
+            "text": "Baños",
+            "start": 12.8,
+            "end": 13.6
+          },
+          {
+            "text": "Se habla español",
+            "start": 15.1,
+            "end": 16.4
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Shows US place names that are Spanish words, with what they mean.",
+      "data": {
+        "caption": "Spanish on the map",
+        "headers": [
+          "Place",
+          "Spanish meaning"
+        ],
+        "rows": [
+          [
+            "Los Ángeles",
+            "the angels"
+          ],
+          [
+            "Las Vegas",
+            "the meadows"
+          ],
+          [
+            "El Paso",
+            "the pass"
+          ],
+          [
+            "Florida",
+            "flowery, full of flowers"
+          ],
+          [
+            "Nevada",
+            "snow-covered"
+          ],
+          [
+            "Colorado",
+            "colored red"
+          ],
+          [
+            "Montana",
+            "from montaña, mountain"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_CategorySort",
+      "purpose": "Practices reading signs by sorting them into where you go and what you do.",
+      "data": {
+        "title": "Where or what?",
+        "instruction": "Sort each sign: does it tell you a place, or what to do?",
+        "categories": [
+          {
+            "id": "place",
+            "label": "A place"
+          },
+          {
+            "id": "do",
+            "label": "What to do or watch for"
+          }
+        ],
+        "items": [
+          {
+            "id": "i1",
+            "text": "Salida",
+            "detail": "exit",
+            "correctCategoryId": "place"
+          },
+          {
+            "id": "i2",
+            "text": "Entrada",
+            "detail": "entrance",
+            "correctCategoryId": "place"
+          },
+          {
+            "id": "i3",
+            "text": "Baños",
+            "detail": "restrooms",
+            "correctCategoryId": "place"
+          },
+          {
+            "id": "i4",
+            "text": "Empuje",
+            "detail": "push",
+            "correctCategoryId": "do"
+          },
+          {
+            "id": "i5",
+            "text": "Jale",
+            "detail": "pull",
+            "correctCategoryId": "do"
+          },
+          {
+            "id": "i6",
+            "text": "Cuidado",
+            "detail": "caution",
+            "correctCategoryId": "do"
+          }
+        ],
+        "shuffle": true
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets the assumption that every Hispanic American speaks Spanish, and that the numbers are the same thing.",
+      "data": {
+        "question": "Which statement is accurate?",
+        "choices": [
+          "About 43 million people in the US speak Spanish at home.",
+          "Every Hispanic person in the US speaks Spanish.",
+          "Spanish is spoken mainly in Florida and nowhere else in the US.",
+          "Fewer than 5 million people in the US speak Spanish."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Hispanic = Spanish speaker",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "The two groups overlap a lot, so they are easy to treat as one."
+        },
+        "whyIntuitionFailed": "Ethnicity and language overlap but are not the same: many Hispanic Americans, especially in later generations, speak mostly English.",
+        "correctReasoning": "The Census counts about 43 million people who speak Spanish at home; the Hispanic population (about 65 million) is a different count.",
+        "recoveryTip": "Hispanic is about heritage; Spanish speaker is about language.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Interact_MultipleChoice",
+      "purpose": "Applies sign reading in a real store situation.",
+      "data": {
+        "prompt": "You see \"Cuidado: piso mojado\" in a store aisle. What should you do?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Watch your step: the floor is wet."
+          },
+          {
+            "id": "b",
+            "text": "Go to the exit."
+          },
+          {
+            "id": "c",
+            "text": "Push the door."
+          },
+          {
+            "id": "d",
+            "text": "Ask for Spanish."
+          }
+        ],
+        "correctOptionId": "a",
+        "feedback": {
+          "correct": "Right.",
+          "incorrect": "Not quite. Read the feedback and try again.",
+          "byOption": {
+            "a": "Yes: cuidado is caution, piso is floor and mojado is wet.",
+            "b": "Exit is salida.",
+            "c": "Push is empuje.",
+            "d": "That would be se habla español."
+          }
+        }
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes by turning the learner's surroundings into daily practice.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Spanish around you in the US",
+        "takeaway": "Tens of millions of people around you speak Spanish, and it is on your signs, your map and your TV: read it out loud every time you see it.",
+        "terms": [
+          "Salida",
+          "Entrada",
+          "Empuje",
+          "Jale",
+          "Se habla español"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "A door sign says \"Jale\". What do you do?",
+      "answer": "Pull the door.",
+      "rationale": "Jale means pull; push is empuje.",
+      "source": "prewritten",
+      "hint": "Its partner sign is empuje (push).",
+      "choices": [
+        "Pull the door.",
+        "Push the door.",
+        "Use another door.",
+        "Wait outside."
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "reading door signs"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "What does the city name \"Los Ángeles\" mean in Spanish?",
+      "answer": "the angels",
+      "rationale": "Ángeles means angels, and los is the plural \"the\".",
+      "source": "prewritten",
+      "hint": "Ángel is a cognate.",
+      "choices": [
+        "the angels",
+        "the eagles",
+        "the saints",
+        "the hills"
+      ],
+      "id": "c2",
+      "after": 3,
+      "focus": "Spanish place names"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "type_in",
+      "prompt": "Type the Spanish word you see on a sign that marks the way out of a building.",
+      "answer": "salida",
+      "rationale": "Salida means exit; entrada is the entrance.",
+      "source": "prewritten",
+      "accepts": [
+        "la salida"
+      ],
+      "hint": "Its opposite is entrada.",
+      "id": "c3",
+      "after": 4,
+      "focus": "reading salida"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [
+      {
+        "url": "https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/",
+        "title": "US Census Bureau, American Community Survey, table S1601 (language spoken at home)"
+      },
+      {
+        "url": "https://www.pewresearch.org/short-reads/2023/09/22/key-facts-about-hispanics-in-the-us/",
+        "title": "Pew Research Center, Key facts about Hispanics in the US"
+      },
+      {
+        "url": "https://cvc.cervantes.es/lengua/espanol_lengua_viva/",
+        "title": "Instituto Cervantes, El español: una lengua viva"
+      }
+    ],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/entry/84",
+    "version": 1,
+    "sha256": "e74b4e244f71bb3fe9d7b982e6ad5ef781f7a6759b2ef8be64cd32f3daa0ee9c",
+    "title": "Spanish Around You in the US",
+    "file": "content/spanish-prewritten/entry/level-084.json"
+  }
+}
