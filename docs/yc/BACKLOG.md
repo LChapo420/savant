@@ -70,7 +70,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    Privacy: tell the learner in plain words where their file goes and how to delete it; follow
    `docs/yc/PRIVACY.md`. Copyright: personal study use only, never shared with other learners.
 
-0c. **The tutor talks, and it is in every feature with full context (owner's request, 2026-10-28).**
+0c. [claimed 2026-10-28T22:17Z, slice: server-side context builder + dock] **The tutor talks, and it is in every feature with full context (owner's request, 2026-10-28).**
    - **Everywhere:** a self-contained tutor dock (`public/js/tutor-dock.js` and a small CSS file using the CSS
      variables; the redesign will place it in the new app shell) on every page of the app, reusing the existing
      tutor and its memory. Find the current tutor code first.
