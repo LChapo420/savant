@@ -199,9 +199,10 @@ async function main() {
   for (const r of report) {
     const who = r.owner === null ? 'shared' : `user ${r.owner}`;
     const extra = r.why ? `: ${r.why}` : `${r.row ? ` (row ${r.row})` : ''}${r.retired && r.retired.length ? `; retires row ${r.retired.join(', ')}` : ''}`;
-    console.log(`  ${r.lesson.padEnd(18)} ${who.padEnd(10)} ${r.action}${extra}`);
+    const action = opts.dryRun ? ({ inserted: 'would insert', updated: 'would update', restored: 'would restore' }[r.action] || r.action) : r.action;
+    console.log(`  ${r.lesson.padEnd(18)} ${who.padEnd(10)} ${action}${extra}`);
   }
-  console.log(`\n${Object.entries(counts).map(([k, v]) => `${v} ${k}`).join(', ')}${retired ? `, ${retired} older row(s) retired` : ''}`);
+  console.log(`\n${opts.dryRun ? 'would be: ' : ''}${Object.entries(counts).map(([k, v]) => `${v} ${k}`).join(', ')}${retired ? `, ${retired} older row(s) ${opts.dryRun ? 'to retire' : 'retired'}` : ''}`);
   if (report.backup) console.log(`backup: ${report.backup}`);
 }
 

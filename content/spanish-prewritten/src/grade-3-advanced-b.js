@@ -1282,7 +1282,7 @@ module.exports = [
           ['Tiene el pelo largo / corto.', 'He / she has long / short hair.'],
           ['Tiene el pelo rizado / lacio.', 'curly / straight hair (liso is also common)'],
           ['Tiene el pelo castaño / negro / canoso.', 'brown / black / gray hair'],
-          ['Tiene ojos azules / verdes.', 'blue / green eyes'],
+          ['Tiene ojos azules / verdes.', 'blue / green eyes (Tiene los ojos azules is just as common)'],
           ['Tiene ojos cafés.', 'brown eyes (Mexico, Central America); marrones in Spain; castaños widely'],
           ['Tiene barba. Usa lentes.', 'He has a beard. He / she wears glasses.'],
         ],

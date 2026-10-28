@@ -27,7 +27,7 @@ module.exports = [
     ],
     sources: [
       ['https://cvc.cervantes.es/lengua/espanol_lengua_viva/', 'Instituto Cervantes, El español: una lengua viva (annual report)'],
-      ['https://www.financialafrik.com/en/2026/01/06/equatorial-guinea-officially-changes-its-capital/', 'Equatorial Guinea officially changes its capital (Jan 2026)'],
+      ['https://www.census.gov/acs/www/data/data-tables-and-tools/subject-tables/', 'US Census Bureau, American Community Survey, table S1601 (language spoken at home)'],
     ],
     blocks: [
       text('Opens the course by placing Spanish on the map and in the learner\'s own country before any word is taught.', {
