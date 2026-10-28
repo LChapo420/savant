@@ -36,8 +36,12 @@ App.mount(async () => {
     root.innerHTML = `
       <div class="row-between" style="margin-bottom:12px; flex-wrap:wrap; gap:8px">
         <h1 style="margin:0">Admin</h1>
-        <a class="btn btn-sm" href="/api/admin/export.csv" download>${window.icon('chart')}Export every scorecard (CSV)</a>
+        <div class="row" style="gap:8px; flex-wrap:wrap">
+          <a class="btn btn-sm" href="#metrics">${window.icon('trending-up')}Real-user metrics</a>
+          <a class="btn btn-sm" href="/api/admin/export.csv" download>${window.icon('chart')}Export every scorecard (CSV)</a>
+        </div>
       </div>
+      <p class="tiny muted" style="margin:0 0 10px">These totals include every account (test, demo and your own). For counts of real users only, open Real-user metrics.</p>
       <div class="grid grid-3">
         <div class="card card-tight stat-block"><span class="value">${t.users}</span><span class="label">Users</span></div>
         <div class="card card-tight stat-block"><span class="value">${t.active_7d}</span><span class="label">Active in 7 days</span></div>
@@ -315,9 +319,162 @@ App.mount(async () => {
     window.scrollTo({ top: 0 });
   }
 
+  /* Real-user metrics: test, demo and founder accounts counted apart (docs/METRICS.md). */
+  async function renderMetrics(days = 30) {
+    root.innerHTML = '<div class="loading"><span class="spinner"></span>Loading metrics</div>';
+    let m;
+    try {
+      m = await App.api.get(`/api/admin/metrics?days=${days}`);
+    } catch (err) {
+      root.innerHTML = `<div class="notice notice-error">${esc(err.message)} <a href="#">Back</a></div>`;
+      return;
+    }
+    const h = m.headline;
+    const l30 = h.last_30_days;
+    const rate = (r) => (r.rate === null ? '—' : App.pct(r.rate));
+    const num = (v, suffix = '') => (v === null || v === undefined ? '—' : `${v}${suffix}`);
+    const usd = (v) => (v === null || v === undefined ? '—' : `$${Number(v).toFixed(v && v < 1 ? 4 : 2)}`);
+    const csv = (table) => `/api/admin/metrics.csv?table=${table}&days=${days}`;
+    const stat = (value, label) => `<div class="card card-tight stat-block"><span class="value">${value}</span><span class="label">${label}</span></div>`;
+    const a = m.accounts;
+    const maxActive = Math.max(1, ...m.daily.map((d) => d.active_learners));
+
+    root.innerHTML = `
+      <div class="row-between" style="margin-bottom:12px; flex-wrap:wrap; gap:8px">
+        <div>
+          <h1 style="margin-bottom:2px">Real-user metrics</h1>
+          <div class="small muted">As of ${esc(new Date(m.generated_at).toLocaleString())} · days are ${esc(m.timezone)} calendar days</div>
+        </div>
+        <a class="btn btn-ghost btn-sm" href="#">${window.icon('arrow-left')}All users</a>
+      </div>
+
+      <div class="notice" style="margin-bottom:14px">
+        <strong>${a.real} real users.</strong> ${a.excluded} account${a.excluded === 1 ? '' : 's'} left out:
+        ${a.founder} founder/team, ${a.test} test, ${a.demo} demo (rules below; every excluded account is listed at the bottom).
+      </div>
+
+      <div class="grid grid-3">
+        ${stat(h.real_users, 'Real users (signed up)')}
+        ${stat(h.ever_active, 'Did anything at all')}
+        ${stat(h.active_2plus_days, 'Active on 2+ distinct days')}
+        ${stat(rate(h.day1_return), `Day-1 return <span class="tiny muted">(${h.day1_return.returned}/${h.day1_return.eligible_users})</span>`)}
+        ${stat(rate(h.day7_return), `Day-7 return <span class="tiny muted">(${h.day7_return.returned}/${h.day7_return.eligible_users})</span>`)}
+        ${stat(rate(h.week1_return), `Back within days 1–7 <span class="tiny muted">(${h.week1_return.returned}/${h.week1_return.eligible_users})</span>`)}
+      </div>
+
+      <h2 class="section-title">${window.icon('trending-up')}Last 30 days, per active learner</h2>
+      <div class="grid grid-3">
+        ${stat(l30.active_learners, 'Active learners')}
+        ${stat(num(l30.sittings_per_active), `Sittings each <span class="tiny muted">(${l30.sittings} in all)</span>`)}
+        ${stat(num(l30.study_minutes_per_active, ' min'), 'Measured study minutes each')}
+        ${stat(num(l30.sitting_minutes_per_active, ' min'), 'Sitting minutes each <span class="tiny muted">(upper estimate)</span>')}
+        ${stat(usd(l30.ai_cost_per_active_usd_estimate), 'AI cost each <span class="tiny muted">(estimate)</span>')}
+        ${stat(l30.ai_calls, 'AI calls for real users')}
+      </div>
+
+      <div class="row-between" style="margin-top:22px; flex-wrap:wrap; gap:8px">
+        <h2 class="section-title" style="margin:0">${window.icon('chart')}Sign-ups and active learners per day</h2>
+        <label class="small">Days
+          <select id="days">${[14, 30, 60, 90, 180, 365].map((n) => `<option value="${n}" ${n === days ? 'selected' : ''}>${n}</option>`).join('')}</select>
+        </label>
+      </div>
+      <div class="card">
+        <div class="table-scroll"><table class="data"><thead><tr><th>Day</th><th>Sign-ups</th><th>Active learners</th><th></th><th>Excluded sign-ups</th><th>Founder active</th></tr></thead><tbody>
+          ${m.daily.slice().reverse().map((d) => `<tr>
+            <td class="small nowrap">${esc(d.day)}</td>
+            <td class="small">${d.signups}</td>
+            <td class="small">${d.active_learners}</td>
+            <td style="width:30%"><div class="meter"><span style="width:${(100 * d.active_learners) / maxActive}%"></span></div></td>
+            <td class="tiny muted">${d.signups_excluded || ''}</td>
+            <td class="tiny muted">${d.founder_active ? 'yes' : ''}</td></tr>`).join('')}
+        </tbody></table></div>
+      </div>
+
+      <h2 class="section-title">${window.icon('refresh')}Return rates by sign-up day</h2>
+      <div class="card">
+        ${m.cohorts.length ? `<div class="table-scroll"><table class="data"><thead><tr><th>Signed up</th><th>Users</th><th>Day 1</th><th>Day 7</th><th>Days 1–7</th></tr></thead><tbody>
+          ${m.cohorts.slice().reverse().map((c) => `<tr>
+            <td class="small nowrap">${esc(c.day)}</td>
+            <td class="small">${c.size}</td>
+            <td class="small">${c.day1_complete ? `${c.day1_returned} · ${App.pct(c.day1_rate)}` : '<span class="muted">not yet</span>'}</td>
+            <td class="small">${c.day7_complete ? `${c.day7_returned} · ${App.pct(c.day7_rate)}` : '<span class="muted">not yet</span>'}</td>
+            <td class="small">${c.day7_complete ? `${c.week1_returned} · ${App.pct(c.week1_rate)}` : '<span class="muted">not yet</span>'}</td></tr>`).join('')}
+        </tbody></table></div>` : '<p class="small muted" style="margin:0">No real sign-ups yet.</p>'}
+      </div>
+
+      <h2 class="section-title">${window.icon('layers')}By month</h2>
+      <div class="card">
+        <div class="table-scroll"><table class="data"><thead><tr>
+          <th>Month</th><th>Sign-ups</th><th>Active</th><th>2+ days</th><th>Sittings each</th><th>Study min each</th><th>Sitting min each</th>
+          <th>AI cost each (est.)</th><th>Ledger ÷ active (upper bound)</th><th>Founder</th>
+        </tr></thead><tbody>
+          ${m.months.slice().reverse().map((x) => `<tr>
+            <td class="small nowrap">${esc(x.month)}${x.month_complete ? '' : ' <span class="chip">so far</span>'}</td>
+            <td class="small">${x.signups}</td>
+            <td class="small">${x.active_learners}</td>
+            <td class="small">${x.active_2plus_days}</td>
+            <td class="small">${num(x.sittings_per_active)}</td>
+            <td class="small">${num(x.study_minutes_per_active)}</td>
+            <td class="small">${num(x.sitting_minutes_per_active)}</td>
+            <td class="small">${usd(x.ai_cost_per_active_usd_estimate)} <span class="tiny muted">of ${usd(x.ai_cost_usd_estimate)}</span></td>
+            <td class="small">${usd(x.ledger_usd_per_active_upper_bound)} <span class="tiny muted">of ${usd(x.ledger_usd)}${x.ledger_partial ? ', partial' : ''}</span></td>
+            <td class="tiny muted">${x.founder.active ? `${x.founder.sittings} sittings · ${usd(x.founder.ai_cost_usd_estimate)}` : ''}</td></tr>`).join('')}
+        </tbody></table></div>
+      </div>
+
+      <h2 class="section-title">${window.icon('chart')}Export (CSV)</h2>
+      <div class="row" style="gap:8px; flex-wrap:wrap">
+        <a class="btn btn-sm" href="${csv('daily')}" download>Per day</a>
+        <a class="btn btn-sm" href="${csv('cohorts')}" download>Return cohorts</a>
+        <a class="btn btn-sm" href="${csv('monthly')}" download>Per month</a>
+        <a class="btn btn-sm" href="${csv('excluded')}" download>Excluded accounts</a>
+      </div>
+
+      <h2 class="section-title">${window.icon('user')}Founder (counted apart)</h2>
+      <div class="card">
+        ${m.founder.length ? `<div class="table-scroll"><table class="data"><tbody>${m.founder.map((f) => `<tr>
+            <td class="small">${esc(f.name || '')}<div class="tiny muted">${esc(f.email || '')}</div></td>
+            <td class="small">${f.active_days} active days${f.last_active ? ` · last ${esc(f.last_active)}` : ''}</td>
+            <td class="small">${f.sittings} sittings · ${num(f.study_minutes)} study min</td>
+            <td class="small">${usd(f.ai_cost_usd_estimate)} AI (est.)</td></tr>`).join('')}</tbody></table></div>`
+          : '<p class="small muted" style="margin:0">No founder or team account in this data file.</p>'}
+      </div>
+
+      <h2 class="section-title">${window.icon('help')}How these are counted</h2>
+      <div class="card">
+        <p class="small" style="margin-top:0"><strong>Left out of every number above</strong>, first matching rule wins:</p>
+        <ol class="small" style="margin:0; padding-left:20px">
+          <li><strong>demo</strong>: accounts flagged demo (the reviewer demo account is).</li>
+          <li><strong>test</strong>: accounts flagged test; addresses in METRICS_EXCLUDE_EMAILS${m.rules.exclude_emails.length ? ` (${m.rules.exclude_emails.length} listed)` : ' (none set)'};
+            addresses at ${esc(m.rules.reserved_tlds.join(', '))} or ${esc(m.rules.reserved_domains.join(', '))} (no real person has one; a child account is judged by its parent's address).</li>
+          <li><strong>founder</strong>: ${esc(m.rules.founder_emails.join(', '))}${m.rules.team_domains.length ? `, and any address at ${esc(m.rules.team_domains.join(', '))}` : ''}.</li>
+        </ol>
+        <ul class="small" style="margin:10px 0 0; padding-left:20px">${m.notes.map((n) => `<li>${esc(n)}</li>`).join('')}</ul>
+        ${m.ledgers.length ? `<p class="tiny muted" style="margin:10px 0 0">Ledgers read: ${m.ledgers.map((l) => `${esc(l.file)}${l.error ? ` (${esc(l.error)})` : ` ($${l.lifetime_usd} recorded in all, ${l.log_entries} log entries${l.oldest_log_day ? ` from ${esc(l.oldest_log_day)}` : ''})`}`).join('; ')}</p>`
+          : '<p class="tiny muted" style="margin:10px 0 0">No spend ledgers found on this machine.</p>'}
+      </div>
+
+      <h2 class="section-title">${window.icon('list')}Excluded accounts (${m.excluded.length})</h2>
+      <div class="card">
+        ${m.excluded.length ? `<div class="table-scroll"><table class="data"><thead><tr><th>Account</th><th>Group</th><th>Rule</th><th>Joined</th></tr></thead><tbody>
+          ${m.excluded.map((e) => `<tr>
+            <td class="small">${esc(e.name || '')}<div class="tiny muted">${esc(e.email || e.username || `#${e.id}`)}</div></td>
+            <td class="small"><span class="chip">${esc(e.group)}</span></td>
+            <td class="tiny">${esc(e.rule)}</td>
+            <td class="tiny nowrap">${esc(e.joined || '')}</td></tr>`).join('')}
+        </tbody></table></div>` : '<p class="small muted" style="margin:0">None.</p>'}
+      </div>`;
+
+    document.getElementById('days').addEventListener('change', (event) => {
+      window.location.hash = `metrics&days=${event.target.value}`;
+    });
+    window.scrollTo({ top: 0 });
+  }
+
   function route() {
     const params = new URLSearchParams(window.location.hash.slice(1));
-    if (params.get('user')) renderUser(params.get('user'), params.get('track') || '');
+    if (params.has('metrics')) renderMetrics(Number(params.get('days')) || 30);
+    else if (params.get('user')) renderUser(params.get('user'), params.get('track') || '');
     else renderList();
   }
   window.addEventListener('hashchange', route);

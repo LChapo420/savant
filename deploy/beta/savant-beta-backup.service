@@ -1,0 +1,16 @@
+# /etc/systemd/system/savant-beta-backup.service : one backup of the beta's data, then
+# the restore test on it (scripts/backup-db.js). Run nightly by savant-beta-backup.timer.
+# A failed restore test exits 1, so `systemctl status savant-beta-backup` shows it.
+[Unit]
+Description=Savant beta nightly backup and restore test
+
+[Service]
+Type=oneshot
+User=savantbeta
+Group=savantbeta
+WorkingDirectory=/srv/savant-beta/app
+EnvironmentFile=/srv/savant-beta/savant-beta.env
+UMask=0077
+ExecStart=/usr/bin/node scripts/backup-db.js
+ExecStart=/usr/bin/node scripts/backup-db.js --restore-test
+SyslogIdentifier=savant-beta-backup
