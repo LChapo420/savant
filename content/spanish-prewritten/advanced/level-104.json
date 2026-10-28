@@ -1,0 +1,384 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 104,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach how to describe someone's looks: ser with build and coloring adjectives (alto, bajo, delgado, moreno, rubio), tener with hair and eyes (Tiene ojos azules), and the regional words for eye color and hair texture.",
+  "coverage": [
+    "ser + build and coloring: Es alto. Es baja. Es delgado. Es morena. Es rubio. Es pelirroja.",
+    "tener + pelo / ojos: Tiene el pelo corto. Tiene ojos azules.",
+    "Hair: largo, corto, rizado, lacio or liso; negro, castaño, rubio, canoso",
+    "Eyes: azules, verdes, negros, cafés (Mexico, Central America), marrones (Spain) or castaños",
+    "Moreno can mean dark-haired or darker-skinned; context decides",
+    "Other features: Tiene barba. Usa lentes (wears glasses)"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents the ser adjectives for build and coloring.",
+      "data": {
+        "caption": "Ser + appearance",
+        "headers": [
+          "Spanish (m / f)",
+          "English"
+        ],
+        "rows": [
+          [
+            "alto / alta",
+            "tall"
+          ],
+          [
+            "bajo / baja",
+            "short (height)"
+          ],
+          [
+            "delgado / delgada",
+            "slim"
+          ],
+          [
+            "moreno / morena",
+            "dark-haired; darker-skinned"
+          ],
+          [
+            "rubio / rubia",
+            "blond"
+          ],
+          [
+            "pelirrojo / pelirroja",
+            "red-haired"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents tener with hair and eyes.",
+      "data": {
+        "caption": "Tener + hair and eyes",
+        "headers": [
+          "Spanish",
+          "English"
+        ],
+        "rows": [
+          [
+            "Tiene el pelo largo / corto.",
+            "He / she has long / short hair."
+          ],
+          [
+            "Tiene el pelo rizado / lacio.",
+            "curly / straight hair (liso is also common)"
+          ],
+          [
+            "Tiene el pelo castaño / negro / canoso.",
+            "brown / black / gray hair"
+          ],
+          [
+            "Tiene ojos azules / verdes.",
+            "blue / green eyes"
+          ],
+          [
+            "Tiene ojos cafés.",
+            "brown eyes (Mexico, Central America); marrones in Spain; castaños widely"
+          ],
+          [
+            "Tiene barba. Usa lentes.",
+            "He has a beard. He / she wears glasses."
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: describing two people.",
+      "data": {
+        "title": "What do they look like?",
+        "cueNote": "Ojos cafés: brown eyes. The adjective agrees with ojos: azules, cafés (both plural).",
+        "duration": 17.5,
+        "cues": [
+          {
+            "text": "Mi hermano es alto y delgado.",
+            "start": 0.3,
+            "end": 2.5
+          },
+          {
+            "text": "Tiene el pelo negro y corto.",
+            "start": 4,
+            "end": 6
+          },
+          {
+            "text": "Tiene ojos cafés y usa lentes.",
+            "start": 7.5,
+            "end": 9.7
+          },
+          {
+            "text": "Mi madre es baja y rubia.",
+            "start": 11.2,
+            "end": 13
+          },
+          {
+            "text": "Tiene ojos azules.",
+            "start": 14.5,
+            "end": 16
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Theory_ContrastSplit",
+      "purpose": "Contrasts ser descriptions with tener descriptions.",
+      "data": {
+        "title": "Es or tiene?",
+        "leftColumn": {
+          "heading": "ser + adjective (what the person is)",
+          "tone": "success",
+          "items": [
+            {
+              "label": "Example",
+              "text": "Es alta. Es pelirrojo. Es delgada."
+            }
+          ]
+        },
+        "rightColumn": {
+          "heading": "tener + feature (what the person has)",
+          "tone": "accent",
+          "items": [
+            {
+              "label": "Example",
+              "text": "Tiene ojos verdes. Tiene el pelo largo. Tiene barba."
+            }
+          ]
+        }
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices ser and tener in a description.",
+      "data": {
+        "title": "Describe Laura",
+        "instructions": "Choose the word that fits.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Laura "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "es",
+              "tiene",
+              "está"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " alta y morena. "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "Tiene",
+              "Es",
+              "Son"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " el pelo rizado y ojos "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "verdes",
+              "verde",
+              "verdas"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": "."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b3": "Ojos is plural: verdes."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets using ser with eyes or hair.",
+      "data": {
+        "question": "How do you say \"He has blue eyes\"?",
+        "choices": [
+          "Tiene ojos azules.",
+          "Es ojos azules.",
+          "Tiene ojos azul.",
+          "Es azules ojos."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Ser with a feature, or no agreement",
+        "trapChoiceIndexes": [
+          1,
+          2
+        ],
+        "trapReasons": {
+          "2": "Azul looks like it should not change."
+        },
+        "whyIntuitionFailed": "Learners mix the two patterns, or forget that the color agrees with ojos.",
+        "correctReasoning": "Features use tener, and the color agrees with plural ojos: Tiene ojos azules.",
+        "recoveryTip": "Eyes and hair: tiene. The color agrees.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the two description patterns.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Describing appearance",
+        "takeaway": "Es alto, es rubia, es delgado; tiene el pelo corto, tiene ojos azules: ser for what someone is, tener for features.",
+        "terms": [
+          "alto",
+          "bajo",
+          "moreno",
+          "rubio",
+          "pelo",
+          "ojos"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which sentence describes a woman with long hair?",
+      "answer": "Tiene el pelo largo.",
+      "rationale": "Hair uses tener, and pelo is masculine, so largo stays masculine: Tiene el pelo largo.",
+      "source": "prewritten",
+      "hint": "The adjective agrees with pelo, not with the woman.",
+      "choices": [
+        "Tiene el pelo largo.",
+        "Es el pelo larga.",
+        "Tiene la pelo larga.",
+        "Es pelo largo."
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "tener with hair"
+    },
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which sentence means \"My sister is short\"?",
+      "answer": "Mi hermana es baja.",
+      "rationale": "Height uses ser + bajo / baja; corto is for length (short hair), not for a person's height.",
+      "source": "prewritten",
+      "hint": "Short height is bajo / baja.",
+      "choices": [
+        "Mi hermana es baja.",
+        "Mi hermana tiene baja.",
+        "Mi hermana es bajo.",
+        "Mi hermana es corta."
+      ],
+      "id": "c2",
+      "after": 3,
+      "focus": "ser with build"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the Spanish adjective for \"blond\" (describing a man).",
+      "answer": "rubio",
+      "rationale": "Blond is rubio, rubia for a woman.",
+      "source": "prewritten",
+      "hint": "It starts with r.",
+      "id": "c3",
+      "after": 0,
+      "focus": "rubio"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/104",
+    "version": 1,
+    "sha256": "0d7c9ad71fc2343ffeab83954edc86e6d12f20050f87ded313717d7f37d2c3e2",
+    "title": "Describing People: Appearance",
+    "file": "content/spanish-prewritten/advanced/level-104.json"
+  }
+}

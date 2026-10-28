@@ -1,0 +1,465 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 85,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the common jobs with ser and no article, the four ways professions show gender (-o/-a, -or/-ora, one form in -ista/-e, special cases), and the questions to ask what someone does.",
+  "coverage": [
+    "Ser + profession, no article: Soy médico. Ella es maestra. Es ingeniero.",
+    "-o / -a: médico, médica; abogado, abogada; ingeniero, ingeniera; maestro, maestra",
+    "-or / -ora: profesor, profesora; doctor, doctora; contador, contadora",
+    "One form: el / la dentista, periodista, estudiante, gerente, policía",
+    "Special: actor, actriz",
+    "¿A qué te dedicas? / ¿En qué trabajas? (What do you do?)",
+    "Waiter varies: mesero (Mexico, Central America), camarero (Spain), mozo (Argentina)"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists common professions in their masculine and feminine forms.",
+      "data": {
+        "caption": "Jobs",
+        "headers": [
+          "Man",
+          "Woman",
+          "English"
+        ],
+        "rows": [
+          [
+            "médico",
+            "médica",
+            "doctor (physician)"
+          ],
+          [
+            "abogado",
+            "abogada",
+            "lawyer"
+          ],
+          [
+            "ingeniero",
+            "ingeniera",
+            "engineer"
+          ],
+          [
+            "maestro",
+            "maestra",
+            "teacher (school)"
+          ],
+          [
+            "enfermero",
+            "enfermera",
+            "nurse"
+          ],
+          [
+            "profesor",
+            "profesora",
+            "teacher, professor"
+          ],
+          [
+            "contador",
+            "contadora",
+            "accountant"
+          ],
+          [
+            "dentista",
+            "dentista",
+            "dentist"
+          ],
+          [
+            "gerente",
+            "gerente",
+            "manager"
+          ],
+          [
+            "estudiante",
+            "estudiante",
+            "student"
+          ],
+          [
+            "actor",
+            "actriz",
+            "actor, actress"
+          ]
+        ],
+        "footnote": "You will also hear la médico for a woman; médica is the standard feminine."
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "States the four gender patterns of professions.",
+      "data": {
+        "title": "How jobs show gender",
+        "rows": [
+          {
+            "key": "-o → -a",
+            "value": "médico, médica; abogado, abogada"
+          },
+          {
+            "key": "-or → -ora",
+            "value": "profesor, profesora; contador, contadora"
+          },
+          {
+            "key": "one form",
+            "value": "el / la dentista, periodista, estudiante, gerente, policía",
+            "detail": "only the article changes"
+          },
+          {
+            "key": "special",
+            "value": "actor, actriz"
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: asking and answering what people do.",
+      "data": {
+        "title": "¿A qué te dedicas?",
+        "cueNote": "¿A qué te dedicas? is the natural way to ask \"What do you do?\" Trabajo en ...: I work at/in ...",
+        "duration": 17.9,
+        "cues": [
+          {
+            "text": "¿A qué te dedicas?",
+            "start": 0.3,
+            "end": 1.6
+          },
+          {
+            "text": "Soy contadora. ¿Y tú?",
+            "start": 3.1,
+            "end": 4.4
+          },
+          {
+            "text": "Soy ingeniero. Trabajo en una fábrica.",
+            "start": 5.9,
+            "end": 9
+          },
+          {
+            "text": "Mi hermana es enfermera.",
+            "start": 10.5,
+            "end": 12.5
+          },
+          {
+            "text": "Mi papá es gerente de un banco.",
+            "start": 14,
+            "end": 16.4
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices the profession forms and the no-article rule.",
+      "data": {
+        "title": "Who does what",
+        "instructions": "Choose the form that fits.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Mi madre es "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "abogada",
+              "una abogado",
+              "abogado"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". Mi tío es "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "dentista",
+              "dentisto",
+              "un dentisto"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". Ana es "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "profesora",
+              "profesor",
+              "profesoro"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " de matemáticas."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        }
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets adding un/una before a bare profession.",
+      "data": {
+        "question": "How do you say \"I am an engineer\" (a woman speaking)?",
+        "choices": [
+          "Soy ingeniera.",
+          "Soy una ingeniera.",
+          "Soy ingeniero.",
+          "Estoy ingeniera."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Adding \"a\" to the job",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "English needs \"an engineer\"."
+        },
+        "whyIntuitionFailed": "English always puts a or an before a job.",
+        "correctReasoning": "With ser, a profession alone takes no article, and a woman uses the feminine form: Soy ingeniera.",
+        "recoveryTip": "Soy + job, no un or una.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves profession words by meaning.",
+      "data": {
+        "title": "Match the jobs",
+        "instruction": "Connect each job to its meaning.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "abogada"
+          },
+          {
+            "id": "t2",
+            "label": "enfermero"
+          },
+          {
+            "id": "t3",
+            "label": "contadora"
+          },
+          {
+            "id": "t4",
+            "label": "gerente"
+          },
+          {
+            "id": "t5",
+            "label": "periodista"
+          },
+          {
+            "id": "t6",
+            "label": "actriz"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "nurse"
+          },
+          {
+            "id": "d4",
+            "label": "manager"
+          },
+          {
+            "id": "d6",
+            "label": "actress"
+          },
+          {
+            "id": "d1",
+            "label": "lawyer"
+          },
+          {
+            "id": "d3",
+            "label": "accountant"
+          },
+          {
+            "id": "d5",
+            "label": "journalist"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the job formula.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Jobs and professions",
+        "takeaway": "Say Soy + job with no article, and match the gender: médico / médica, profesor / profesora, el / la dentista, actor / actriz.",
+        "terms": [
+          "médica",
+          "ingeniero",
+          "profesora",
+          "dentista",
+          "actriz"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which is correct for \"She is a teacher (professor)\"?",
+      "answer": "Es profesora.",
+      "rationale": "-or professions add -a for a woman, and a bare job takes no article: Es profesora.",
+      "source": "prewritten",
+      "hint": "-or → -ora.",
+      "choices": [
+        "Es profesora.",
+        "Es profesor.",
+        "Es una profesor.",
+        "Es profesoro."
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "-or professions"
+    },
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which question asks someone what they do for work?",
+      "answer": "¿A qué te dedicas?",
+      "rationale": "¿A qué te dedicas? asks what you do; the others ask origin, age and name.",
+      "source": "prewritten",
+      "hint": "Dedicarse: to work at, to devote yourself to.",
+      "choices": [
+        "¿A qué te dedicas?",
+        "¿De dónde eres?",
+        "¿Cuántos años tienes?",
+        "¿Cómo te llamas?"
+      ],
+      "id": "c2",
+      "after": 2,
+      "focus": "asking about jobs"
+    },
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the feminine form of \"actor\".",
+      "answer": "actriz",
+      "rationale": "Actor is a special case: the feminine is actriz.",
+      "source": "prewritten",
+      "accepts": [
+        "la actriz"
+      ],
+      "hint": "It is a special case.",
+      "id": "c3",
+      "after": 1,
+      "focus": "actor / actriz"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/85",
+    "version": 1,
+    "sha256": "fa39399314d999c480b995968e9808168d19a2430c5fe974d8dc6883ebb282dd",
+    "title": "Jobs and Professions",
+    "file": "content/spanish-prewritten/advanced/level-085.json"
+  }
+}

@@ -1,0 +1,381 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 119,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach how Spanish questions are built: yes/no questions by intonation, information questions with the question word first and the subject after the verb, cuál versus qué, agreement of cuántos and quiénes, prepositions at the front, and tag questions.",
+  "coverage": [
+    "Yes/no questions: same words with a rising voice: ¿Ana es de Chile? or ¿Es Ana de Chile?",
+    "No helper \"do\": ¿Hablas español?",
+    "Information questions: question word + verb + subject: ¿Dónde vive tu hermana?",
+    "Cuál + es + noun asks \"what is your ...?\": ¿Cuál es tu número? Qué + es asks for a definition: ¿Qué es esto?",
+    "Cuántos / cuántas and quién / quiénes agree: ¿Cuántas hermanas tienes?",
+    "A preposition goes first: ¿De dónde eres? ¿Con quién vives?",
+    "Tag questions: ..., ¿verdad? / ..., ¿no?"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "States the three question types and their word order.",
+      "data": {
+        "title": "Building questions",
+        "rows": [
+          {
+            "key": "Yes / no",
+            "value": "same order, rising voice",
+            "detail": "¿Ana es de Chile? / ¿Es Ana de Chile?"
+          },
+          {
+            "key": "Information",
+            "value": "question word + verb + subject",
+            "detail": "¿Dónde vive tu hermana? ¿Qué estudia Pedro?"
+          },
+          {
+            "key": "Preposition first",
+            "value": "de, con, para ... + question word",
+            "detail": "¿De dónde eres? ¿Con quién vives?"
+          },
+          {
+            "key": "Tag",
+            "value": "statement + ¿verdad? or ¿no?",
+            "detail": "Eres de Texas, ¿verdad? Es caro, ¿no?"
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Theory_ContrastSplit",
+      "purpose": "Contrasts cuál and qué before es.",
+      "data": {
+        "title": "¿Cuál es? or ¿Qué es?",
+        "leftColumn": {
+          "heading": "Cuál es + noun",
+          "tone": "accent",
+          "items": [
+            {
+              "label": "Asks",
+              "text": "for one item of information: \"what is your ...?\"",
+              "example": "¿Cuál es tu número de teléfono? ¿Cuál es tu dirección?"
+            }
+          ]
+        },
+        "rightColumn": {
+          "heading": "Qué es",
+          "tone": "neutral",
+          "items": [
+            {
+              "label": "Asks",
+              "text": "for a definition: \"what is ...?\"",
+              "example": "¿Qué es esto? ¿Qué es una quesadilla?"
+            }
+          ]
+        }
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: questions of each type.",
+      "data": {
+        "title": "Ask it right",
+        "cueNote": "Yes/no questions rise at the end; questions with a question word usually fall.",
+        "duration": 21.1,
+        "cues": [
+          {
+            "text": "¿Hablas español?",
+            "start": 0.3,
+            "end": 1.4
+          },
+          {
+            "text": "¿Dónde vive tu hermana?",
+            "start": 2.9,
+            "end": 4.7
+          },
+          {
+            "text": "¿Cuál es tu número de teléfono?",
+            "start": 6.2,
+            "end": 8.6
+          },
+          {
+            "text": "¿Cuántas hermanas tienes?",
+            "start": 10.1,
+            "end": 11.6
+          },
+          {
+            "text": "¿De dónde eres?",
+            "start": 13.1,
+            "end": 14.2
+          },
+          {
+            "text": "¿Con quién vives?",
+            "start": 15.7,
+            "end": 16.6
+          },
+          {
+            "text": "Eres de Texas, ¿verdad?",
+            "start": 18.1,
+            "end": 19.6
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_XRay",
+      "purpose": "X-rays an information question to show its order.",
+      "data": {
+        "prompt": "Tap each part of the question.",
+        "source": "¿{{Dónde}} {{vive}} {{tu hermana}}?",
+        "terms": [
+          {
+            "id": "x1",
+            "label": "question word",
+            "mark": "Dónde",
+            "note": "Where: first."
+          },
+          {
+            "id": "x2",
+            "label": "verb",
+            "mark": "vive",
+            "note": "lives: second."
+          },
+          {
+            "id": "x3",
+            "label": "subject",
+            "mark": "tu hermana",
+            "note": "your sister: after the verb, unlike English."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices choosing cuál or qué and agreeing cuántos.",
+      "data": {
+        "title": "Complete the questions",
+        "instructions": "Choose the word that fits.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "¿"
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "Cuál",
+              "Qué",
+              "Quién"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " es tu dirección? ¿"
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "Cuántas",
+              "Cuántos",
+              "Cuánta"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " hermanas tienes? ¿"
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "De dónde",
+              "Dónde",
+              "Dónde de"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " eres?"
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b2": "Hermanas is feminine plural."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets leaving the preposition at the end, English style.",
+      "data": {
+        "question": "How do you ask \"Where are you from?\"",
+        "choices": [
+          "¿De dónde eres?",
+          "¿Dónde eres de?",
+          "¿Dónde eres?",
+          "¿De eres dónde?"
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "The preposition at the end",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "English puts \"from\" at the end."
+        },
+        "whyIntuitionFailed": "English often ends a question with a preposition (\"from\", \"with\").",
+        "correctReasoning": "Spanish never leaves a preposition at the end: it goes in front of the question word: ¿De dónde eres? ¿Con quién vives?",
+        "recoveryTip": "Preposition first: de dónde, con quién, para qué.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the question patterns.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Asking questions",
+        "takeaway": "Raise your voice for yes/no; put the question word first and the subject after the verb; use cuál es for \"what is your ...\"; and put prepositions in front: ¿De dónde eres?",
+        "terms": [
+          "¿Cuál es...?",
+          "¿Qué es...?",
+          "¿Cuántos...?",
+          "¿De dónde...?",
+          "¿verdad?"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_questions",
+      "skill_name": "Questions and negation",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "How do you ask \"What is your phone number?\"",
+      "answer": "¿Cuál es tu número de teléfono?",
+      "rationale": "Asking for one item of information with es + noun uses cuál: ¿Cuál es tu número de teléfono?",
+      "source": "prewritten",
+      "hint": "Which one of all possible numbers?",
+      "choices": [
+        "¿Cuál es tu número de teléfono?",
+        "¿Cuántos es tu número de teléfono?",
+        "¿Quién es tu número de teléfono?",
+        "¿Dónde es tu número de teléfono?"
+      ],
+      "id": "c1",
+      "after": 1,
+      "focus": "cuál es"
+    },
+    {
+      "skill_id": "es_questions",
+      "skill_name": "Questions and negation",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which question asks \"Who do you live with?\"",
+      "answer": "¿Con quién vives?",
+      "rationale": "The preposition goes first: con quién; Spanish never ends a question with con.",
+      "source": "prewritten",
+      "hint": "Preposition first.",
+      "choices": [
+        "¿Con quién vives?",
+        "¿Quién vives con?",
+        "¿Quién con vives?",
+        "¿Con qué vives?"
+      ],
+      "id": "c2",
+      "after": 5,
+      "focus": "preposition first"
+    },
+    {
+      "skill_id": "es_numbers",
+      "skill_name": "Numbers and time",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the question word that completes \"¿___ hijos tienes?\" (How many children do you have?)",
+      "answer": "cuántos",
+      "rationale": "Hijos is masculine plural, so how many is cuántos.",
+      "source": "prewritten",
+      "accepts": [
+        "cuantos"
+      ],
+      "hint": "It agrees with hijos.",
+      "id": "c3",
+      "after": 4,
+      "focus": "cuántos agreement"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/119",
+    "version": 1,
+    "sha256": "491e0e853aaabc8fda66d378f1037c8e939795431779a385a41d785c6261919a",
+    "title": "Asking Questions: Question Words and Word Order",
+    "file": "content/spanish-prewritten/advanced/level-119.json"
+  }
+}

@@ -1,0 +1,453 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 109,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the common adjective pairs as opposites so each word anchors the other, with the false friend largo, the polite mayor for older people, and practice describing and contrasting.",
+  "coverage": [
+    "alto / bajo, grande / pequeño, nuevo / viejo, caro / barato",
+    "fácil / difícil, bueno / malo, largo / corto, rápido / lento",
+    "rico / pobre, limpio / sucio, joven / mayor",
+    "Largo means long, not large (large is grande)",
+    "For people, mayor (older) is more polite than viejo",
+    "Opposites agree like any adjective: unas casas caras, unos zapatos baratos"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents the opposite pairs.",
+      "data": {
+        "caption": "Opposites",
+        "headers": [
+          "Adjective",
+          "Opposite",
+          "English"
+        ],
+        "rows": [
+          [
+            "alto",
+            "bajo",
+            "tall / short"
+          ],
+          [
+            "grande",
+            "pequeño",
+            "big / small"
+          ],
+          [
+            "nuevo",
+            "viejo",
+            "new / old"
+          ],
+          [
+            "caro",
+            "barato",
+            "expensive / cheap"
+          ],
+          [
+            "fácil",
+            "difícil",
+            "easy / difficult"
+          ],
+          [
+            "bueno",
+            "malo",
+            "good / bad"
+          ],
+          [
+            "largo",
+            "corto",
+            "long / short (length)"
+          ],
+          [
+            "rápido",
+            "lento",
+            "fast / slow"
+          ],
+          [
+            "limpio",
+            "sucio",
+            "clean / dirty"
+          ],
+          [
+            "joven",
+            "mayor",
+            "young / older (polite)"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: pairs in contrast sentences.",
+      "data": {
+        "title": "This, not that",
+        "cueNote": "Pero: but. Una persona mayor: an older person, the polite way to say it.",
+        "duration": 18.5,
+        "cues": [
+          {
+            "text": "El carro es nuevo, no es viejo.",
+            "start": 0.3,
+            "end": 2.5
+          },
+          {
+            "text": "El hotel es caro, pero el hostal es barato.",
+            "start": 4,
+            "end": 7.3
+          },
+          {
+            "text": "La lección es fácil.",
+            "start": 8.8,
+            "end": 10.1
+          },
+          {
+            "text": "El viaje es largo.",
+            "start": 11.6,
+            "end": 12.9
+          },
+          {
+            "text": "Mi abuelo es una persona mayor.",
+            "start": 14.4,
+            "end": 17
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_CautionFlag",
+      "purpose": "Flags largo and the politeness of viejo.",
+      "data": {
+        "conceptLabel": "Opposites",
+        "flagTitle": "Watch these two",
+        "cautions": [
+          {
+            "kind": "illegal_transfer",
+            "title": "Largo is long, not large",
+            "detail": "Large is grande.",
+            "wrongExample": "una pizza larga (meaning a large pizza)",
+            "rightExample": "una pizza grande"
+          },
+          {
+            "kind": "pitfall",
+            "title": "Viejo for people can sound rude",
+            "detail": "For older people, say mayor: una señora mayor.",
+            "rightExample": "Mi abuela es mayor. Mi carro es viejo."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves each adjective's opposite.",
+      "data": {
+        "title": "Find the opposite",
+        "instruction": "Connect each adjective to its opposite.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "caro"
+          },
+          {
+            "id": "t2",
+            "label": "limpio"
+          },
+          {
+            "id": "t3",
+            "label": "rápido"
+          },
+          {
+            "id": "t4",
+            "label": "fácil"
+          },
+          {
+            "id": "t5",
+            "label": "largo"
+          },
+          {
+            "id": "t6",
+            "label": "nuevo"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "sucio"
+          },
+          {
+            "id": "d4",
+            "label": "difícil"
+          },
+          {
+            "id": "d6",
+            "label": "viejo"
+          },
+          {
+            "id": "d1",
+            "label": "barato"
+          },
+          {
+            "id": "d3",
+            "label": "lento"
+          },
+          {
+            "id": "d5",
+            "label": "corto"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices choosing the opposite that agrees.",
+      "data": {
+        "title": "Say the opposite",
+        "instructions": "Choose the opposite, in the right form.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "La camisa no es cara, es "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "barata",
+              "barato",
+              "baratas"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". Los exámenes no son fáciles, son "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "difíciles",
+              "difícil",
+              "difíciles de"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". El tren no es rápido, es "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "lento",
+              "lenta",
+              "corto"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": "."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets largo as \"large\".",
+      "data": {
+        "question": "You want a large coffee. What do you ask for?",
+        "choices": [
+          "Un café grande, por favor.",
+          "Un café largo, por favor.",
+          "Un café alto, por favor.",
+          "Un café mayor, por favor."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Largo for large",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "Largo looks like \"large\"."
+        },
+        "whyIntuitionFailed": "Largo and large share most of their letters.",
+        "correctReasoning": "Large in size is grande. Largo means long.",
+        "recoveryTip": "Large: grande. Long: largo.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the pairs.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Opposites",
+        "takeaway": "Learn adjectives in pairs (caro / barato, fácil / difícil, largo / corto) and remember: largo is long, and mayor is the polite \"older\".",
+        "terms": [
+          "caro",
+          "barato",
+          "largo",
+          "corto",
+          "nuevo",
+          "viejo"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "What is the opposite of \"limpio\"?",
+      "answer": "sucio",
+      "rationale": "Limpio means clean and its opposite is sucio, dirty.",
+      "source": "prewritten",
+      "hint": "Clean and ...",
+      "choices": [
+        "sucio",
+        "lento",
+        "barato",
+        "corto"
+      ],
+      "id": "c1",
+      "after": 3,
+      "focus": "limpio / sucio"
+    },
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which is the polite way to say \"My neighbor is an older lady\"?",
+      "answer": "Mi vecina es una señora mayor.",
+      "rationale": "For people, mayor is the polite word for older; vieja can sound rude.",
+      "source": "prewritten",
+      "hint": "Viejo can sound rude for people.",
+      "choices": [
+        "Mi vecina es una señora mayor.",
+        "Mi vecina es una señora vieja.",
+        "Mi vecina es una señora larga.",
+        "Mi vecina es una señora grande."
+      ],
+      "id": "c2",
+      "after": 2,
+      "focus": "mayor vs viejo"
+    },
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the opposite of \"caro\" (expensive), masculine form.",
+      "answer": "barato",
+      "rationale": "The opposite of caro (expensive) is barato (cheap).",
+      "source": "prewritten",
+      "hint": "It starts with b.",
+      "id": "c3",
+      "after": 3,
+      "focus": "caro / barato"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/109",
+    "version": 1,
+    "sha256": "2d003f0e3f3cfd2d260ba175f73ae0c62699762e196c4ac4fef500e92e832e7b",
+    "title": "Opposites: Common Adjective Antonym Pairs",
+    "file": "content/spanish-prewritten/advanced/level-109.json"
+  }
+}

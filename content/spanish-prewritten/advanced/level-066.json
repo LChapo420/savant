@@ -1,0 +1,430 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 66,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Use tener for what people have (family, things, time) in real conversation, add the common tener expressions for states like hunger, and practice questions and negatives.",
+  "coverage": [
+    "Tener for possession: Tengo dos hermanos. ¿Tienes coche? No tiene tiempo.",
+    "Questions: ¿Tienes ...? (friend), ¿Tiene ...? (usted)",
+    "Negatives: No tengo coche. No tenemos tiempo.",
+    "Short answers: Sí, tengo uno. / No, no tengo.",
+    "Tener expressions: tener hambre (to be hungry), tener sed, tener frío, tener calor, tener prisa",
+    "These use tener, not ser or estar: Tengo hambre",
+    "Car: coche, carro or auto depending on the country"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Shows tener for possession in questions, answers and negatives.",
+      "data": {
+        "caption": "Tener in conversation",
+        "headers": [
+          "Spanish",
+          "English"
+        ],
+        "rows": [
+          [
+            "Tengo dos hermanos.",
+            "I have two siblings."
+          ],
+          [
+            "¿Tienes coche?",
+            "Do you have a car?"
+          ],
+          [
+            "Sí, tengo uno.",
+            "Yes, I have one."
+          ],
+          [
+            "No, no tengo.",
+            "No, I don't."
+          ],
+          [
+            "Mi jefe no tiene tiempo.",
+            "My boss doesn't have time."
+          ],
+          [
+            "¿Tienen hijos?",
+            "Do you (all) / they have children?"
+          ]
+        ],
+        "footnote": "Car is coche in Mexico and Spain, carro in much of Latin America, and auto in Argentina, Uruguay and Chile. All are understood."
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: a conversation about what people have.",
+      "data": {
+        "title": "What do you have?",
+        "cueNote": "Tengo hambre: I am hungry. Tiempo para comer: time to eat.",
+        "duration": 21.1,
+        "cues": [
+          {
+            "text": "¿Tienes hermanos?",
+            "start": 0.3,
+            "end": 1.4
+          },
+          {
+            "text": "Sí, tengo dos hermanos y una hermana.",
+            "start": 2.9,
+            "end": 5.5
+          },
+          {
+            "text": "¿Tienes coche?",
+            "start": 7,
+            "end": 7.9
+          },
+          {
+            "text": "No, no tengo coche. Tengo una bicicleta.",
+            "start": 9.4,
+            "end": 12.5
+          },
+          {
+            "text": "Tengo hambre. ¿Tienes tiempo para comer?",
+            "start": 14,
+            "end": 16.6
+          },
+          {
+            "text": "Sí, tengo una hora.",
+            "start": 18.1,
+            "end": 19.6
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "Lists the tener expressions where English uses \"to be\".",
+      "data": {
+        "title": "Tener where English says \"be\"",
+        "rows": [
+          {
+            "key": "tener hambre",
+            "value": "to be hungry",
+            "detail": "Tengo hambre."
+          },
+          {
+            "key": "tener sed",
+            "value": "to be thirsty",
+            "detail": "¿Tienes sed?"
+          },
+          {
+            "key": "tener frío",
+            "value": "to be cold (a person)",
+            "detail": "Tengo frío."
+          },
+          {
+            "key": "tener calor",
+            "value": "to be hot (a person)",
+            "detail": "Tenemos calor."
+          },
+          {
+            "key": "tener prisa",
+            "value": "to be in a hurry",
+            "detail": "Tengo prisa."
+          },
+          {
+            "key": "tener ... años",
+            "value": "to be ... years old",
+            "detail": "Tengo treinta años."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets using estar or ser in the tener expressions.",
+      "data": {
+        "question": "How do you say \"I am hungry\"?",
+        "choices": [
+          "Tengo hambre.",
+          "Estoy hambre.",
+          "Soy hambre.",
+          "Tengo hambriento."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "\"Am\" in tener expressions",
+        "trapChoiceIndexes": [
+          1,
+          2
+        ],
+        "trapReasons": {
+          "1": "Estoy means \"I am\", which is what English says."
+        },
+        "whyIntuitionFailed": "English uses \"to be\" for hunger, thirst and feeling cold, so learners reach for estoy or soy.",
+        "correctReasoning": "Spanish says you have hunger: Tengo hambre. The same for sed, frío, calor and prisa.",
+        "recoveryTip": "Hungry, thirsty, cold, hot, in a hurry: tengo.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices tener for possession and states.",
+      "data": {
+        "title": "Use tener",
+        "instructions": "Choose the form that fits.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "¿"
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "Tienes",
+              "Tengo",
+              "Tienen"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " perro? (to a friend) No, no "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "tengo",
+              "tiene",
+              "tienes"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " perro. Mis vecinos "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "tienen",
+              "tiene",
+              "tenemos"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " tres gatos. ¡Vamos a comer! "
+          },
+          {
+            "kind": "blank",
+            "id": "b4",
+            "options": [
+              "Tengo",
+              "Estoy",
+              "Soy"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " hambre."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Interact_CategorySort",
+      "purpose": "Practices the meaning of tener sentences.",
+      "data": {
+        "title": "Having or feeling?",
+        "instruction": "Sort each sentence: is it about owning something, or a state or feeling?",
+        "categories": [
+          {
+            "id": "own",
+            "label": "Owning or having"
+          },
+          {
+            "id": "feel",
+            "label": "A state or feeling"
+          }
+        ],
+        "items": [
+          {
+            "id": "i1",
+            "text": "Tengo dos hermanos.",
+            "correctCategoryId": "own"
+          },
+          {
+            "id": "i2",
+            "text": "Tengo sed.",
+            "correctCategoryId": "feel"
+          },
+          {
+            "id": "i3",
+            "text": "¿Tienes coche?",
+            "correctCategoryId": "own"
+          },
+          {
+            "id": "i4",
+            "text": "Tengo frío.",
+            "correctCategoryId": "feel"
+          },
+          {
+            "id": "i5",
+            "text": "Tenemos prisa.",
+            "correctCategoryId": "feel"
+          },
+          {
+            "id": "i6",
+            "text": "No tiene tiempo.",
+            "correctCategoryId": "own"
+          }
+        ],
+        "shuffle": true
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with tener for possession and states.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Tener in conversation",
+        "takeaway": "Tener says what you have (Tengo dos hermanos, ¿Tienes coche?) and how you feel where English uses \"be\" (Tengo hambre, Tengo frío).",
+        "terms": [
+          "tengo",
+          "tienes",
+          "tiene",
+          "tener hambre",
+          "tener prisa"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "How do you say \"We are in a hurry\"?",
+      "answer": "Tenemos prisa.",
+      "rationale": "Being in a hurry is tener prisa, and the we form is tenemos.",
+      "source": "prewritten",
+      "hint": "A tener expression.",
+      "choices": [
+        "Tenemos prisa.",
+        "Somos prisa.",
+        "Estamos prisa.",
+        "Tienen prisa."
+      ],
+      "id": "c1",
+      "after": 3,
+      "focus": "tener expressions"
+    },
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "A friend asks \"¿Tienes hijos?\" You have none. What do you answer?",
+      "answer": "No, no tengo hijos.",
+      "rationale": "You answer about yourself with tengo, and no goes right before the verb.",
+      "source": "prewritten",
+      "hint": "Answer with the yo form.",
+      "choices": [
+        "No, no tengo hijos.",
+        "No, no tienes hijos.",
+        "No, tengo no hijos.",
+        "No, no soy hijos."
+      ],
+      "id": "c2",
+      "after": 4,
+      "focus": "answering with tengo"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type \"I am thirsty\" in Spanish (two words).",
+      "answer": "Tengo sed.",
+      "rationale": "Thirst is a tener expression: Tengo sed.",
+      "source": "prewritten",
+      "accepts": [
+        "yo tengo sed"
+      ],
+      "hint": "Tener + sed.",
+      "id": "c3",
+      "after": 3,
+      "focus": "tener sed"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/66",
+    "version": 1,
+    "sha256": "d162103ec9bc46446a7def26f450505bc344ea7c577527b9c0f3999a98976116",
+    "title": "Tener for Everyday Possession: Tengo, Tienes, Tiene in Conversation",
+    "file": "content/spanish-prewritten/advanced/level-066.json"
+  }
+}

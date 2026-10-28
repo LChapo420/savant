@@ -1,0 +1,388 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 105,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach personality adjectives with ser, the softeners and intensifiers muy, un poco and bastante, and the false friend simpático.",
+  "coverage": [
+    "ser + personality: Es simpático. Es trabajadora. Es callado. Es divertida.",
+    "simpático, simpática = nice, friendly (not \"sympathetic\")",
+    "More: inteligente, amable, tímido, serio, generoso, perezoso, hablador, aburrido",
+    "muy = very; bastante = quite; un poco = a little",
+    "Un poco usually goes with less positive traits: un poco tímido, not un poco simpático",
+    "Trabajador and hablador add -a: trabajadora, habladora"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents personality adjectives in pairs.",
+      "data": {
+        "caption": "Personality",
+        "headers": [
+          "Spanish (m / f)",
+          "English"
+        ],
+        "rows": [
+          [
+            "simpático / simpática",
+            "nice, friendly"
+          ],
+          [
+            "antipático / antipática",
+            "unfriendly, unpleasant"
+          ],
+          [
+            "trabajador / trabajadora",
+            "hardworking"
+          ],
+          [
+            "perezoso / perezosa",
+            "lazy (flojo in Mexico and Chile)"
+          ],
+          [
+            "callado / callada",
+            "quiet"
+          ],
+          [
+            "hablador / habladora",
+            "talkative"
+          ],
+          [
+            "divertido / divertida",
+            "fun"
+          ],
+          [
+            "aburrido / aburrida",
+            "boring (with ser)"
+          ],
+          [
+            "tímido / tímida",
+            "shy"
+          ],
+          [
+            "amable",
+            "kind"
+          ],
+          [
+            "inteligente",
+            "intelligent"
+          ],
+          [
+            "generoso / generosa",
+            "generous"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "Shows how to make a description stronger or softer.",
+      "data": {
+        "title": "Stronger or softer",
+        "rows": [
+          {
+            "key": "muy",
+            "value": "very",
+            "detail": "Es muy simpática."
+          },
+          {
+            "key": "bastante",
+            "value": "quite, rather",
+            "detail": "Es bastante serio."
+          },
+          {
+            "key": "un poco",
+            "value": "a little",
+            "detail": "Es un poco tímido.",
+            "tone": "caution"
+          },
+          {
+            "key": "no muy",
+            "value": "not very",
+            "detail": "No es muy hablador."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: describing coworkers.",
+      "data": {
+        "title": "My coworkers",
+        "cueNote": "Pero: but. Notice un poco with callado, a trait that is not entirely positive.",
+        "duration": 17.3,
+        "cues": [
+          {
+            "text": "Mi jefa es muy simpática.",
+            "start": 0.3,
+            "end": 2.3
+          },
+          {
+            "text": "Carlos es trabajador, pero un poco callado.",
+            "start": 3.8,
+            "end": 7.1
+          },
+          {
+            "text": "Ana es divertida y bastante habladora.",
+            "start": 8.6,
+            "end": 11.7
+          },
+          {
+            "text": "El nuevo gerente no es muy amable.",
+            "start": 13.2,
+            "end": 15.8
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Concept_CautionFlag",
+      "purpose": "Flags simpático as a false friend and the un poco nuance.",
+      "data": {
+        "conceptLabel": "Personality words",
+        "flagTitle": "Two traps",
+        "cautions": [
+          {
+            "kind": "illegal_transfer",
+            "title": "Simpático is not \"sympathetic\"",
+            "detail": "Simpático means nice or friendly. Understanding and caring is comprensivo.",
+            "rightExample": "Tu hermano es muy simpático. (Your brother is very nice.)"
+          },
+          {
+            "kind": "pitfall",
+            "title": "Un poco is for the less positive",
+            "detail": "Un poco softens a trait people might not like. With a compliment, use muy or bastante.",
+            "wrongExample": "Es un poco simpático.",
+            "rightExample": "Es un poco tímido. / Es muy simpático."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_CategorySort",
+      "purpose": "Practices separating positive and less positive traits.",
+      "data": {
+        "title": "Compliment or not?",
+        "instruction": "Sort each trait.",
+        "categories": [
+          {
+            "id": "pos",
+            "label": "Usually a compliment"
+          },
+          {
+            "id": "neg",
+            "label": "Usually not a compliment"
+          }
+        ],
+        "items": [
+          {
+            "id": "i1",
+            "text": "simpático",
+            "correctCategoryId": "pos"
+          },
+          {
+            "id": "i2",
+            "text": "trabajadora",
+            "correctCategoryId": "pos"
+          },
+          {
+            "id": "i3",
+            "text": "generoso",
+            "correctCategoryId": "pos"
+          },
+          {
+            "id": "i4",
+            "text": "perezoso",
+            "correctCategoryId": "neg"
+          },
+          {
+            "id": "i5",
+            "text": "antipática",
+            "correctCategoryId": "neg"
+          },
+          {
+            "id": "i6",
+            "text": "aburrido",
+            "correctCategoryId": "neg"
+          },
+          {
+            "id": "i7",
+            "text": "amable",
+            "correctCategoryId": "pos"
+          }
+        ],
+        "shuffle": true
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets reading simpático as \"sympathetic\".",
+      "data": {
+        "question": "Your friend says \"Tu novio es muy simpático.\" What does she mean?",
+        "choices": [
+          "Your boyfriend is very nice.",
+          "Your boyfriend feels sorry for people.",
+          "Your boyfriend is very sympathetic to your problems.",
+          "Your boyfriend is very funny."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Simpático as sympathetic",
+        "trapChoiceIndexes": [
+          1,
+          2
+        ],
+        "trapReasons": {
+          "2": "It looks exactly like the English word."
+        },
+        "whyIntuitionFailed": "Simpático looks like a cognate of \"sympathetic\".",
+        "correctReasoning": "Simpático means nice, friendly, easy to like. It is one of the most common compliments.",
+        "recoveryTip": "Simpático = nice.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the vocabulary and the softeners.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Describing personality",
+        "takeaway": "Ser + personality (simpático, trabajadora, callado), with muy and bastante for compliments and un poco to soften a less positive trait.",
+        "terms": [
+          "simpático",
+          "trabajador",
+          "callado",
+          "divertido",
+          "muy",
+          "un poco"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which is the most natural way to say someone is a bit shy?",
+      "answer": "Es un poco tímido.",
+      "rationale": "Un poco softens a trait that is not entirely positive, and personality uses ser: Es un poco tímido.",
+      "source": "prewritten",
+      "hint": "Un poco goes with less positive traits.",
+      "choices": [
+        "Es un poco tímido.",
+        "Es un poco simpático.",
+        "Es poco tímido un.",
+        "Está un poco tímidos."
+      ],
+      "id": "c1",
+      "after": 3,
+      "focus": "un poco"
+    },
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Your sister works very hard. Which sentence fits?",
+      "answer": "Mi hermana es muy trabajadora.",
+      "rationale": "Mi hermana es muy trabajadora is right: -or adjectives add -a for a woman, and personality uses ser.",
+      "source": "prewritten",
+      "hint": "-or adds -a.",
+      "choices": [
+        "Mi hermana es muy trabajadora.",
+        "Mi hermana es muy trabajador.",
+        "Mi hermana es muy trabajadoras.",
+        "Mi hermana tiene muy trabajadora."
+      ],
+      "id": "c2",
+      "after": 4,
+      "focus": "agreement of -or adjectives"
+    },
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the adjective (masculine) that means \"nice, friendly\".",
+      "answer": "simpático",
+      "rationale": "Nice or friendly is simpático; it does not mean sympathetic.",
+      "source": "prewritten",
+      "accepts": [
+        "simpatico"
+      ],
+      "hint": "A false friend of \"sympathetic\".",
+      "id": "c3",
+      "after": 4,
+      "focus": "simpático"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/105",
+    "version": 1,
+    "sha256": "4a6db1ee0e429aaa85267ed1352f07f6aa4978fe938aefcb6fd89be312b1060d",
+    "title": "Describing People: Personality",
+    "file": "content/spanish-prewritten/advanced/level-105.json"
+  }
+}
