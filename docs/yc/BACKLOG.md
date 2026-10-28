@@ -43,7 +43,7 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-1. **`npm test` passes on a clean clone.** Ship or skip the ACT coverage-map check when the file is missing,
+1. [claimed 2026-10-28T09:16:18Z] **`npm test` passes on a clean clone.** Ship or skip the ACT coverage-map check when the file is missing,
    with a message (`ACT-READINESS.md` item 12). Done when `npm ci && npm test` passes on a fresh clone.
 2. **ACT score entry and test date** (item 2): a small ACT profile with test date, target score, and section
    scores from each official practice test (date, form, English, Math, Reading, optional Science), later the
