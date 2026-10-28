@@ -419,6 +419,28 @@ check('pre-written levels: a file in the lab level format takes the level; a bro
   }
 });
 
+check('pre-written levels: block lessons, their index and their authoring source in the same folder are ignored quietly', () => {
+  const dir = path.join(TMP, 'prewritten-blocks');
+  fs.mkdirSync(path.join(dir, 'entry'), { recursive: true });
+  fs.mkdirSync(path.join(dir, 'src'));
+  fs.writeFileSync(path.join(dir, 'entry', 'level-003.json'), JSON.stringify({ user_id: null, track_id: 'spanish', grade_id: 'entry', level: 3, kind: 'lesson', blocks: [{ block: 'Basic_TextBlock' }], checks: [], prewritten: { id: 'entry/3' } }));
+  fs.writeFileSync(path.join(dir, 'index.json'), JSON.stringify({ track_id: 'spanish', lessons: [] }));
+  fs.writeFileSync(path.join(dir, 'blind-resolve.json'), '[]');
+  fs.writeFileSync(path.join(dir, 'src', 'grade.js'), "throw new Error('authoring source must not be loaded');");
+  process.env.SPANISH_PREWRITTEN_DIR = dir;
+  const warns = [];
+  const warn = console.warn; console.warn = (m) => warns.push(m);
+  try {
+    esPath.resetPrewritten();
+    assert.strictEqual(esPath.prewritten().size, 0);
+    assert.deepStrictEqual(warns, [], 'no warning for the block lessons');
+  } finally {
+    console.warn = warn;
+    delete process.env.SPANISH_PREWRITTEN_DIR;
+    esPath.resetPrewritten();
+  }
+});
+
 // ── wiring ──────────────────────────────────────────────────────────────
 check('wiring: the session route sends Spanish levels to /spanish/learn, with a way back (classic)', () => {
   const src = fs.readFileSync(path.join(__dirname, '..', 'routes', 'learn.js'), 'utf8');

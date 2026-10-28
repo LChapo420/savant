@@ -129,8 +129,9 @@ function prewritten() {
   const walk = (dir, entries) => {
     for (const ent of entries) {
       const full = path.join(dir, ent.name);
-      if (ent.isDirectory()) { try { walk(full, fs.readdirSync(full, { withFileTypes: true })); } catch (e) { /* unreadable */ } continue; }
-      if (!/\.(json|js)$/i.test(ent.name)) continue;
+      // `src/` is authoring source (the pre-written block lessons build from it), not levels.
+      if (ent.isDirectory()) { if (ent.name !== 'src') { try { walk(full, fs.readdirSync(full, { withFileTypes: true })); } catch (e) { /* unreadable */ } } continue; }
+      if (!/\.(json|js)$/i.test(ent.name) || /^(index|blind-resolve)\.json$/i.test(ent.name)) continue;
       let data;
       try {
         // eslint-disable-next-line global-require, import/no-dynamic-require
@@ -138,6 +139,9 @@ function prewritten() {
       } catch (err) { console.warn(`spanish path: skipped ${ent.name} (${err.message})`); continue; }
       const list = Array.isArray(data) ? data : (data && Array.isArray(data.levels) ? data.levels : [data]);
       for (const l of list) {
+        // The same folder holds the pre-written block lessons (block_plans rows: track_id + blocks,
+        // imported by scripts/import-spanish-prewritten.js); they are not lab levels and are not warned about.
+        if (l && typeof l === 'object' && (Array.isArray(l.blocks) || l.prewritten)) continue;
         const gradeRef = l && (l.grade != null ? l.grade : l.csv && l.csv.grade);
         const levelNo = Number(l && (l.level != null && typeof l.level !== 'object' ? l.level : l.csv && l.csv.level));
         const gid = gradeIdOf(gradeRef);
