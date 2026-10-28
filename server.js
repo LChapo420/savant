@@ -139,6 +139,7 @@ app.use('/api', require('./routes/goals')); // the goal picker: what a learner w
 app.use('/api', require('./routes/tutor')); // the persistent tutor (services/tutor.js)
 app.use('/api', require('./routes/prefs')); // engagement settings: hide streak/XP, break line, time zone, next-study plan (config/ux.js)
 // A held graduation (COVERAGE_GATE=enforce): what it waits on, and graduating once it is met.
+app.use('/api/act', require('./routes/act')); // ACT score entry: test date, target, practice-test scores (services/act-scores.js)
 app.use('/api', require('./routes/coverage'));
 // Generated base-lesson pages, and the one way a generated page changes anything.
 app.use('/api', require('./routes/base-lessons'));

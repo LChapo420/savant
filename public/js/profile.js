@@ -215,6 +215,12 @@ App.mount(async () => {
       <p class="small muted" id="plan-note" style="margin:0">${planNote(profile)}</p>
     </div>
 
+    <h2 class="section-title">${window.icon('chart')}ACT scores</h2>
+    <div class="card">
+      <p class="small muted">Record your test date, your target, and the score from each practice test, and see them charted.</p>
+      <a class="btn btn-sm" href="/act-scores">Open ACT scores</a>
+    </div>
+
     <h2 class="section-title">${window.icon('edit')}Your goals</h2>
     <div class="card" id="goals-card">
       <p class="small muted">What you want from each subject or grade. It shapes how long a placement is and how lessons and practice are set up to start with; how you do as you go keeps adjusting it.</p>

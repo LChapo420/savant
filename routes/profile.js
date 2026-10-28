@@ -263,6 +263,7 @@ const EXPORT_MORE = [
   'essays', 'assist_chats', 'level_logs', 'learner_records', 'level_debriefs', 'subject_placements', 'remediations',
   'streaks', 'reports', 'ai_usage', 'chess_ratings', 'chess_puzzle_attempts', 'chess_rush_runs', 'chess_drill_cards',
   'chess_drill_runs', 'piano_song_results', 'learner_goals', 'tutor_memory', 'es_path_runs', 'es_review',
+  'act_profiles', 'act_scores',
 ];
 
 router.get('/account/export', requireAuth, (req, res) => {

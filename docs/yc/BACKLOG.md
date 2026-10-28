@@ -43,10 +43,6 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-2. [claimed 2026-10-28T16:25Z] **ACT score entry and test date** (item 2): a small ACT profile with test date, target score, and section
-   scores from each official practice test (date, form, English, Math, Reading, optional Science), later the
-   real ACT. Show the history as a bar or line chart on an ACT page. Store per user in the existing db layer.
-   Done when a learner can record a practice-test score and see it charted, with tests.
 3. **The measurement kit** (item 3 and section 5): an instruction page for students and parents, links to the
    official free practice tests, the counterbalanced A/B protocol, and an admin view listing every
    participant's before and after scores. Pre-registration is sealed with the same tooling as
@@ -93,6 +89,8 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 (none yet)
 
 ## Done
+
+- 2026-10-28: **ACT score entry and test date** (item 2; commit in this push). `/act-scores` (linked from the profile): test date, target composite, and per-test scores (practice or real ACT, date, form, English, Math, Reading, optional Science), charted as inline SVG with a target line, countdown and gap to target. `services/act-scores.js`, `routes/act.js` (`/api/act`), collections `act_profiles` and `act_scores`, included in the account export and in parent/account deletion. Composite is the average of English, Math and Reading; whether Science counts is UNVERIFIED so Science is charted but never in the composite. Checked: `scripts/act-scores-test.js` (41 checks: validation, isolation between learners, caps, export/deletion wiring) and `npm test` exit 0. Not yet checked: the page in a real browser at 375 px (cloud run has no signed-in session); the next run or the owner should look.
 
 - 2026-10-28: **The game-lab course-frame check now runs on a clean clone** (item 1d; commit in this push). `scripts/build-game-fixture.js` adds two synthetic shared sets (english/proficient level 14 Mario, marked a verified replacement; level 24 Moto, held) to `scripts/fixtures/test-db.json`; they pass the real `inspectPayload` and are placeholder questions, not course content. The check now runs as a standard-plan learner with tester tailoring off, so it never asks a model to write a set (the demo account is on a tailored plan and did try to). Checked: `npm test --strict` on a clean clone with no `data/`; the check prints PASS and no `ai:` lines.
 - 2026-10-28: **The 5 workbook CSV steps now run on a clean clone** (item 1c; commit in this push). Spanish reads the committed `docs/spanish-replica/Spanish_Fluency_Path.csv`; IQ, chess, piano and basketball read sheets rebuilt each run into a temp dir from the committed `content/*-grades.js` by `scripts/build-test-sheets.js` (about 19 MB, so never committed). The tests take `SHEET_DIR` / `SPANISH_SHEET`; the owner's `data/` files win when present. Honest limit: the rebuilt sheets check the content against itself, only the real workbooks check it against the creator's sheet. Checked: no `data/`, `npm test --strict` exit 0 (the run-tests skip list is empty; two in-test skips remain: the ACT coverage map and game-lab course frame, item 1d); `run-tests-test.js` covers the builder. One earlier full run died with a V8 out-of-memory in `round3-consolidation-test` and did not repeat; it passes alone and on rerun, so treat it as a rare flake.
