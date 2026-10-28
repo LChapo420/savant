@@ -44,7 +44,7 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-0a. **Head-to-head study kit: Savant vs Duolingo for Spanish (owner's request, 2026-10-28; for YC and investors).**
+0a. [claimed 2026-10-28T21:20Z] **Head-to-head study kit: Savant vs Duolingo for Spanish (owner's request, 2026-10-28; for YC and investors).**
    The claim to test, honestly: *per hour of study, Savant teaches everyday Spanish more than Duolingo.* Build the
    kit so the owner can run it with beta testers as soon as they arrive (results before the YC interviews):
    - **Protocol** `docs/yc/DUOLINGO-STUDY-PROTOCOL.md`: beginners with no recent Spanish; random assignment to
