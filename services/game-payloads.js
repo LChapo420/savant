@@ -157,7 +157,10 @@ function outputSchema(schema) {
  * `lengthCue`) are all checked here, and a reply that fails is asked for again
  * once before the level is left without a game.
  */
-function inspectPayload(reply, schema) {
+function inspectPayload(reply, schema, { trackId = null } = {}) {
+  // Math sets are written with inequalities and repeat short answers by nature (0, 1, 2x). The engines draw text with
+  // textContent, so < and > cannot break a page and only a real tag is markup; the bank applies the same exemptions.
+  const math = trackId === 'math';
   const problems = [];
   if (!reply || !Array.isArray(reply.questions)) return ['no questions in the reply'];
   const want = schema.questionCount;
@@ -180,10 +183,11 @@ function inspectPayload(reply, schema) {
     if (new Set(opts.map((o) => o.toLowerCase())).size !== opts.length) problems.push(`${n}: two choices are the same`);
     const answer = Number(q && q.answerIndex);
     if (!Number.isInteger(answer) || answer < 0 || answer >= opts.length) problems.push(`${n}: answerIndex ${q && q.answerIndex} is out of range`);
-    if (opts.length && seen.has(opts[answer])) problems.push(`${n}: the same option text is the answer twice`);
+    if (!math && opts.length && seen.has(opts[answer])) problems.push(`${n}: the same option text is the answer twice`);
     seen.add(opts[answer]);
     const prompt = String((q && q.prompt) || '');
-    if (/[<>]/.test(prompt) || opts.some((o) => /[<>]/.test(o))) problems.push(`${n}: markup in the text`);
+    const markup = math ? /<[/]?[a-zA-Z][^>]*>|&[a-z]+;/ : /[<>]/;
+    if (markup.test(prompt) || opts.some((o) => markup.test(o))) problems.push(`${n}: markup in the text`);
     const d = Number(q && q.difficulty);
     if (!Number.isInteger(d) || d < 1 || d > 10) problems.push(`${n}: difficulty ${q && q.difficulty} is out of range`);
     if (opts.length && answer >= 0 && answer < opts.length && lengthCue(opts, opts[answer])) {
@@ -460,7 +464,7 @@ async function ensure(userId, trackId, gradeId, level, opts = {}) {
     && stored.problems.every((p) => /identifiable by its length/.test(p))) {
     const candidate = JSON.parse(JSON.stringify(stored.payload));
     await repairPayload(candidate, schema, userId);
-    const clean = inspectPayload(candidate, schema);
+    const clean = inspectPayload(candidate, schema, { trackId });
     if (!clean.length) {
       const writer = providers.current('blocks');
       db.update(COLLECTION, stored.id, {
@@ -496,7 +500,7 @@ async function ensure(userId, trackId, gradeId, level, opts = {}) {
       lane: process.env.BLOCK_LANE || 'background',
     });
     reply = normalizeReply(reply);
-    problems = inspectPayload(reply, schema);
+    problems = inspectPayload(reply, schema, { trackId });
     // A handful of bad questions in a good set are rewritten on their own,
     // rather than the whole set being written again.
     // Up to three rounds of fixing only what is wrong, before the whole set is
@@ -505,16 +509,16 @@ async function ensure(userId, trackId, gradeId, level, opts = {}) {
     for (let round = 0; round < 3 && reply && problems.length && problems.every((p) => /^q\d+:/.test(p)); round++) {
       if (problems.some((p) => /identifiable by its length/.test(p))) {
         await repairPayload(reply, schema, userId);
-        problems = inspectPayload(reply, schema);
+        problems = inspectPayload(reply, schema, { trackId });
       }
       if (!patchable(problems)) break;
       reply = await patchQuestions(reply, schema, problems, prompt, userId);
-      problems = inspectPayload(reply, schema);
+      problems = inspectPayload(reply, schema, { trackId });
     }
   }
   if (reply && problems.length && problems.every((p) => /identifiable by its length/.test(p))) {
     await repairPayload(reply, schema, userId);
-    problems = inspectPayload(reply, schema);
+    problems = inspectPayload(reply, schema, { trackId });
   }
   // The explanation-key gate (KEY_GATE=on): a question whose explanation describes
   // another option is re-keyed blind; one the blind check does not confirm is
@@ -523,7 +527,7 @@ async function ensure(userId, trackId, gradeId, level, opts = {}) {
     problems = await keyGateProblems(reply);
     if (problems.length && patchable(problems)) {
       reply = await patchQuestions(reply, schema, problems, prompt, userId);
-      problems = inspectPayload(reply, schema);
+      problems = inspectPayload(reply, schema, { trackId });
       if (!problems.length) problems = await keyGateProblems(reply);
     }
   }
@@ -763,7 +767,7 @@ async function writeTailored(userId, trackId, gradeId, level, assignment, schema
       usage.output_tokens = (usage.output_tokens || 0) + (got.usage.output_tokens || 0);
     }
     if (got) model = got.model;
-    problems = inspectPayload(reply, schema);
+    problems = inspectPayload(reply, schema, { trackId });
     // A handful of bad questions in a good set are rewritten on their own,
     // rather than the whole set being written again.
     // Up to three rounds of fixing only what is wrong, before the whole set is
@@ -772,22 +776,22 @@ async function writeTailored(userId, trackId, gradeId, level, assignment, schema
     for (let round = 0; round < 3 && reply && problems.length && problems.every((p) => /^q\d+:/.test(p)); round++) {
       if (problems.some((p) => /identifiable by its length/.test(p))) {
         await repairPayload(reply, schema, userId);
-        problems = inspectPayload(reply, schema);
+        problems = inspectPayload(reply, schema, { trackId });
       }
       if (!patchable(problems)) break;
       reply = await patchQuestions(reply, schema, problems, prompt, userId);
-      problems = inspectPayload(reply, schema);
+      problems = inspectPayload(reply, schema, { trackId });
     }
   }
   if (reply && problems.length && problems.every((p) => /identifiable by its length/.test(p))) {
     await repairPayload(reply, schema, userId);
-    problems = inspectPayload(reply, schema);
+    problems = inspectPayload(reply, schema, { trackId });
   }
   if (reply && !problems.length) {
     problems = await keyGateProblems(reply);
     if (problems.length && patchable(problems)) {
       reply = await patchQuestions(reply, schema, problems, prompt, userId);
-      problems = inspectPayload(reply, schema);
+      problems = inspectPayload(reply, schema, { trackId });
       if (!problems.length) problems = await keyGateProblems(reply);
     }
   }

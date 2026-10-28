@@ -34,6 +34,14 @@ const check = (name, ok, detail = '') => { if (ok) passed++; else { failed++; co
     check('the shared set was asked for', seen.length >= 1, seen.length);
     check('a shared set (no user) is pipeline-class work', seen.every((r) => r.task === 'game_questions' && r.dataClass === 'pipeline' && !r.userId), seen.map((r) => [r.task, r.dataClass, r.userId]));
   }
+  // Math sets: inequalities and repeated short answers are not faults; a real tag still is.
+  const mk = (prompt, a, b) => ({ questions: [0, 1].map((i) => ({ id: `q${i}`, prompt: i ? b : prompt, choices: ['0', '1', '2', '3'], answerIndex: 0, explanation: 'e', difficulty: 3 })) });
+  const schema = { questionCount: 2, choicesPerQuestion: 4 };
+  const has = (r, t, o) => games.inspectPayload(r, schema, o).some((p) => p.includes(t));
+  check('math: 0 < |x - a| < d is allowed', !has(mk('Why does 0 < |x - a| < d matter?', 0, 'Is x > 2?'), 'markup', { trackId: 'math' }));
+  check('math: the same answer twice is allowed', !has(mk('p one', 0, 'p two'), 'answer twice', { trackId: 'math' }));
+  check('math: a real tag is still markup', has(mk('Is <b>x</b> bold?', 0, 'p two'), 'markup', { trackId: 'math' }));
+  check('other subjects: < is still markup, the same answer twice still a fault', has(mk('Is x < 2?', 0, 'p two'), 'markup', { trackId: 'english' }) && has(mk('p one', 0, 'p two'), 'answer twice', {}));
   console.log(failed ? `${failed} FAILED, ${passed} passed` : `${passed}/${passed} passed`);
   process.exit(failed ? 1 : 0);
 })();
