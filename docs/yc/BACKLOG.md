@@ -43,6 +43,15 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
+0. **Creator links for the beta form (do this first: the owner is recruiting creators today).** The site's
+   beta form is in `site/server.js` (`FORMS` includes `beta`). Add a creator code: links like
+   `/beta?ref=<code>` (and `?utm_source=` as a fallback) store the code with each beta application, survive
+   the page reload and the form post, and are shown per code in the site admin (applications, consented emails,
+   and visits per code from `site/analytics.js`). Add a short `site/creators.json` (code, display name, date
+   added) so the owner can add a creator without code changes; unknown codes are still recorded. Add a
+   `/creators` page with the beta link format and the honest one-paragraph description of Savant, both easy to
+   copy. Tests in `site/test.js`. Done when two test codes produce separate counts in the admin.
+
 1c. **Seed fixtures for the 5 workbook CSV steps** (`iq-csv-test`, `spanish-csv-test`, `chess-items-test`, `piano-items-test`, `basketball-items-test`). They still SKIP on a clean clone because their `data/*.csv` inputs are the owner's. Needs small synthetic CSVs of the same shape, or a decision that these stay owner-machine-only. Done when `npm test --strict` passes on a fresh clone.
 1d. **Shared game sets for the game-lab course-frame check.** It SKIPs on the fixture db because the written sets for english/proficient levels 14 and 24 live only in the owner's db. A committed minimal payload for those two levels would let it run in CI.
 
