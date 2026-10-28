@@ -43,7 +43,7 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-1c. **Seed fixtures for the 5 workbook CSV steps** (`iq-csv-test`, `spanish-csv-test`, `chess-items-test`, `piano-items-test`, `basketball-items-test`). They still SKIP on a clean clone because their `data/*.csv` inputs are the owner's. Needs small synthetic CSVs of the same shape, or a decision that these stay owner-machine-only. Done when `npm test --strict` passes on a fresh clone.
+1c. [claimed 2026-10-28T14:25Z] **Seed fixtures for the 5 workbook CSV steps** (`iq-csv-test`, `spanish-csv-test`, `chess-items-test`, `piano-items-test`, `basketball-items-test`). They still SKIP on a clean clone because their `data/*.csv` inputs are the owner's. Needs small synthetic CSVs of the same shape, or a decision that these stay owner-machine-only. Done when `npm test --strict` passes on a fresh clone.
 1d. **Shared game sets for the game-lab course-frame check.** It SKIPs on the fixture db because the written sets for english/proficient levels 14 and 24 live only in the owner's db. A committed minimal payload for those two levels would let it run in CI.
 
 2. **ACT score entry and test date** (item 2): a small ACT profile with test date, target score, and section
