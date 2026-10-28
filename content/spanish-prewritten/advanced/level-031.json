@@ -1,0 +1,439 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 31,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the tens and how numbers combine (veinti- as one word, treinta y ... as three words), the accents of veintidós, veintitrés and veintiséis, veintiún before a noun and cien for 100, then practice with ages and prices.",
+  "coverage": [
+    "21-29 are one word: veintiuno, veintidós, veintitrés ... veintinueve",
+    "veintidós, veintitrés and veintiséis have written accents",
+    "Tens: treinta, cuarenta, cincuenta, sesenta, setenta, ochenta, noventa",
+    "From 31: tens + y + units, three words: treinta y uno, cuarenta y cinco, noventa y nueve",
+    "100 = cien",
+    "Before a masculine noun uno shortens: veintiún años, treinta y un años; una before a feminine noun",
+    "Keep apart: sesenta (60) and setenta (70)"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Teaches the tens with sound guides.",
+      "data": {
+        "caption": "The tens",
+        "headers": [
+          "Number",
+          "Spanish",
+          "Say it"
+        ],
+        "rows": [
+          [
+            "20",
+            "veinte",
+            "BAYN-teh"
+          ],
+          [
+            "30",
+            "treinta",
+            "TRAYN-tah"
+          ],
+          [
+            "40",
+            "cuarenta",
+            "kwah-REHN-tah"
+          ],
+          [
+            "50",
+            "cincuenta",
+            "seen-KWEHN-tah"
+          ],
+          [
+            "60",
+            "sesenta",
+            "seh-SEHN-tah"
+          ],
+          [
+            "70",
+            "setenta",
+            "seh-TEHN-tah"
+          ],
+          [
+            "80",
+            "ochenta",
+            "oh-CHEHN-tah"
+          ],
+          [
+            "90",
+            "noventa",
+            "noh-BEHN-tah"
+          ],
+          [
+            "100",
+            "cien",
+            "syehn"
+          ]
+        ],
+        "highlightColumn": 1
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "States the two ways numbers combine.",
+      "data": {
+        "title": "Building numbers",
+        "rows": [
+          {
+            "key": "21-29: one word",
+            "value": "veinti + unit",
+            "detail": "veintiuno, veintidós, veintitrés, veinticuatro, veinticinco, veintiséis, veintisiete, veintiocho, veintinueve"
+          },
+          {
+            "key": "accents",
+            "value": "veintidós, veintitrés, veintiséis",
+            "detail": "the three that end in a stressed syllable"
+          },
+          {
+            "key": "31-99: three words",
+            "value": "ten + y + unit",
+            "detail": "treinta y uno, cuarenta y cinco, setenta y ocho, noventa y nueve"
+          },
+          {
+            "key": "before a noun",
+            "value": "veintiún, treinta y un; veintiuna",
+            "detail": "veintiún años, treinta y un dólares, veintiuna personas"
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: the tens, a run of combined numbers, then ages and prices.",
+      "data": {
+        "title": "Count by tens and combine",
+        "cueNote": "Treinta y cinco is said almost as one word: TRAYN-tay-SEEN-koh.",
+        "duration": 30.4,
+        "cues": [
+          {
+            "text": "veinte, treinta, cuarenta, cincuenta, sesenta, setenta, ochenta, noventa, cien",
+            "start": 0.3,
+            "end": 5.4
+          },
+          {
+            "text": "veintiuno",
+            "start": 6.9,
+            "end": 7.7
+          },
+          {
+            "text": "veintidós",
+            "start": 9.2,
+            "end": 10
+          },
+          {
+            "text": "treinta y cinco",
+            "start": 11.5,
+            "end": 12.4
+          },
+          {
+            "text": "cuarenta y ocho",
+            "start": 13.9,
+            "end": 15
+          },
+          {
+            "text": "sesenta y seis",
+            "start": 16.5,
+            "end": 17.4
+          },
+          {
+            "text": "setenta y siete",
+            "start": 18.9,
+            "end": 20
+          },
+          {
+            "text": "noventa y nueve",
+            "start": 21.5,
+            "end": 22.6
+          },
+          {
+            "text": "Tengo veintiún años.",
+            "start": 24.1,
+            "end": 25.4
+          },
+          {
+            "text": "Son cincuenta y cinco dólares.",
+            "start": 26.9,
+            "end": 28.9
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_ClickToReveal",
+      "purpose": "Self-tests number building by saying it first.",
+      "data": {
+        "title": "Say it, then check",
+        "subtitle": "Say the number in Spanish, then tap.",
+        "cards": [
+          {
+            "promptLabel": "1",
+            "prompt": "35",
+            "answer": "treinta y cinco"
+          },
+          {
+            "promptLabel": "2",
+            "prompt": "22",
+            "answer": "veintidós"
+          },
+          {
+            "promptLabel": "3",
+            "prompt": "67",
+            "answer": "sesenta y siete"
+          },
+          {
+            "promptLabel": "4",
+            "prompt": "74",
+            "answer": "setenta y cuatro"
+          },
+          {
+            "promptLabel": "5",
+            "prompt": "99",
+            "answer": "noventa y nueve"
+          },
+          {
+            "promptLabel": "6",
+            "prompt": "100",
+            "answer": "cien"
+          }
+        ],
+        "revealLabel": "Tap to check",
+        "revealedLabel": "Shown"
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets mixing up sesenta and setenta.",
+      "data": {
+        "question": "The price is \"setenta dólares\". How much is it?",
+        "choices": [
+          "$70",
+          "$60",
+          "$17",
+          "$7"
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Sesenta or setenta",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "Sesenta and setenta differ by one letter."
+        },
+        "whyIntuitionFailed": "The two words differ only in their middle consonant, so they blur together.",
+        "correctReasoning": "Setenta has a t like siete (7): 70. Sesenta has an s like seis (6): 60.",
+        "recoveryTip": "se-S-enta: seis, 60. se-T-enta: siete, 70.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices combining numbers in ages and prices.",
+      "data": {
+        "title": "Ages and prices",
+        "instructions": "Choose the number in brackets.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Mi padre tiene "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "sesenta y dos",
+              "setenta y dos",
+              "seis y dos"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " años. (62) Tengo "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "veintiún",
+              "veintiuno",
+              "veinte y uno"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " años. (21) El abrigo cuesta "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "cien",
+              "ciento",
+              "uno cien"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " dólares. (100)"
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b2": "Before años, veintiuno shortens to veintiún."
+        }
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the two building rules.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Numbers 21 to 100",
+        "takeaway": "Veinti- plus a unit is one word (veintidós); from thirty on, ten + y + unit is three words (treinta y cinco); 100 is cien.",
+        "terms": [
+          "veintiuno",
+          "veintidós",
+          "treinta y uno",
+          "sesenta",
+          "setenta",
+          "cien"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_numbers",
+      "skill_name": "Numbers and time",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Write 35 in Spanish words.",
+      "answer": "treinta y cinco",
+      "rationale": "From 31 on, numbers are ten + y + unit: treinta y cinco.",
+      "source": "prewritten",
+      "hint": "Three words.",
+      "id": "c1",
+      "after": 3,
+      "focus": "building 31-99"
+    },
+    {
+      "skill_id": "es_numbers",
+      "skill_name": "Numbers and time",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "Which is the correct spelling of 22?",
+      "answer": "veintidós",
+      "rationale": "The twenties are one word starting veinti-, and 22 carries an accent on the last syllable: veintidós.",
+      "source": "prewritten",
+      "hint": "One word, with an accent.",
+      "choices": [
+        "veintidós",
+        "veinte y dos",
+        "vientidos",
+        "veintedós"
+      ],
+      "id": "c2",
+      "after": 1,
+      "focus": "the twenties"
+    },
+    {
+      "skill_id": "es_numbers",
+      "skill_name": "Numbers and time",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "How do you say \"I am 31 years old\"?",
+      "answer": "Tengo treinta y un años.",
+      "rationale": "Before a masculine noun like años, uno shortens to un: treinta y un años, and age uses tener.",
+      "source": "prewritten",
+      "hint": "Uno shortens before a noun.",
+      "choices": [
+        "Tengo treinta y un años.",
+        "Tengo treinta y uno años.",
+        "Soy treinta y uno.",
+        "Tengo treinta un años."
+      ],
+      "id": "c3",
+      "after": 5,
+      "focus": "un before a noun"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/31",
+    "version": 1,
+    "sha256": "98f052c8a423050c9b6bc001ec81d05dfb2b18c272d8883a27434d5500ebca63",
+    "title": "Numbers 21 to 100",
+    "file": "content/spanish-prewritten/advanced/level-031.json"
+  }
+}

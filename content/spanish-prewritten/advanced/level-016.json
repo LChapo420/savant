@@ -1,0 +1,407 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 16,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Extend the -o / -a rule with the endings that reliably mark gender (-ción, -sión, -dad, -tad, -tud feminine; Greek -ma masculine), then the everyday exceptions (el día, el mapa, la mano, la foto) and the special case of el agua.",
+  "coverage": [
+    "-ción and -sión are feminine: la canción, la televisión",
+    "-dad, -tad and -tud are feminine: la ciudad, la libertad, la actitud",
+    "Many -ma words from Greek are masculine: el problema, el sistema, el tema, el idioma, el programa, el clima",
+    "Not every -ma word: la cama, la forma are feminine",
+    "Masculine despite -a: el día, el mapa, el planeta",
+    "Feminine despite -o: la mano; la foto and la moto are short for la fotografía and la motocicleta",
+    "El agua is feminine: el is used before a stressed a-, but adjectives stay feminine: el agua fría, las aguas"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "Collects the endings that reliably show gender.",
+      "data": {
+        "title": "Endings that tell you the gender",
+        "rows": [
+          {
+            "key": "-ción, -sión",
+            "value": "feminine",
+            "detail": "la canción, la información, la televisión",
+            "tone": "success"
+          },
+          {
+            "key": "-dad, -tad, -tud",
+            "value": "feminine",
+            "detail": "la ciudad, la libertad, la actitud",
+            "tone": "success"
+          },
+          {
+            "key": "-ma (Greek words)",
+            "value": "masculine",
+            "detail": "el problema, el sistema, el tema, el idioma, el programa, el clima",
+            "tone": "accent"
+          },
+          {
+            "key": "-e, consonant",
+            "value": "no rule",
+            "detail": "el café, la noche, el papel, la piel: learn each one",
+            "tone": "caution"
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists the everyday exceptions to -o / -a.",
+      "data": {
+        "caption": "Exceptions you will use every day",
+        "headers": [
+          "Word",
+          "Gender",
+          "Why it surprises"
+        ],
+        "rows": [
+          [
+            "el día",
+            "masculine",
+            "ends in -a"
+          ],
+          [
+            "el mapa",
+            "masculine",
+            "ends in -a"
+          ],
+          [
+            "el planeta",
+            "masculine",
+            "ends in -a"
+          ],
+          [
+            "el problema",
+            "masculine",
+            "ends in -a (Greek -ma)"
+          ],
+          [
+            "la mano",
+            "feminine",
+            "ends in -o"
+          ],
+          [
+            "la foto",
+            "feminine",
+            "short for la fotografía"
+          ],
+          [
+            "la moto",
+            "feminine",
+            "short for la motocicleta"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: the exceptions with their articles.",
+      "data": {
+        "title": "Say them with the article",
+        "cueNote": "Buenos días is masculine plural because día is masculine: buenos, not buenas.",
+        "duration": 21.3,
+        "cues": [
+          {
+            "text": "el día",
+            "start": 0.3,
+            "end": 1.1
+          },
+          {
+            "text": "el mapa",
+            "start": 2.6,
+            "end": 3.4
+          },
+          {
+            "text": "el problema",
+            "start": 4.9,
+            "end": 5.8
+          },
+          {
+            "text": "el idioma",
+            "start": 7.3,
+            "end": 8.2
+          },
+          {
+            "text": "la mano",
+            "start": 9.7,
+            "end": 10.5
+          },
+          {
+            "text": "la foto",
+            "start": 12,
+            "end": 12.8
+          },
+          {
+            "text": "la canción",
+            "start": 14.3,
+            "end": 15.1
+          },
+          {
+            "text": "la ciudad",
+            "start": 16.6,
+            "end": 17.4
+          },
+          {
+            "text": "el agua fría",
+            "start": 18.9,
+            "end": 19.8
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Concept_CautionFlag",
+      "purpose": "Explains el agua, the exception that is still feminine.",
+      "data": {
+        "conceptLabel": "El agua",
+        "flagTitle": "Feminine, but with el",
+        "flagIntro": "Agua is feminine. In the singular it takes el only because the word begins with a stressed a sound.",
+        "cautions": [
+          {
+            "kind": "exception",
+            "title": "The article changes, the gender does not",
+            "detail": "Adjectives stay feminine, and the plural goes back to las.",
+            "wrongExample": "el agua frío; los aguas",
+            "rightExample": "el agua fría; las aguas",
+            "exampleNote": "The same happens with el águila (the eagle) and el hambre (hunger)."
+          },
+          {
+            "kind": "non_example",
+            "title": "Not every -ma word is masculine",
+            "detail": "The Greek ones are (el problema, el tema), but la cama (bed) and la forma (shape) are feminine."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_CategorySort",
+      "purpose": "Practices the endings and exceptions together.",
+      "data": {
+        "title": "El or la?",
+        "instruction": "Sort each noun by its article.",
+        "categories": [
+          {
+            "id": "el",
+            "label": "el"
+          },
+          {
+            "id": "la",
+            "label": "la"
+          }
+        ],
+        "items": [
+          {
+            "id": "i1",
+            "text": "día",
+            "correctCategoryId": "el"
+          },
+          {
+            "id": "i2",
+            "text": "mano",
+            "correctCategoryId": "la"
+          },
+          {
+            "id": "i3",
+            "text": "problema",
+            "correctCategoryId": "el"
+          },
+          {
+            "id": "i4",
+            "text": "ciudad",
+            "correctCategoryId": "la"
+          },
+          {
+            "id": "i5",
+            "text": "canción",
+            "correctCategoryId": "la"
+          },
+          {
+            "id": "i6",
+            "text": "mapa",
+            "correctCategoryId": "el"
+          },
+          {
+            "id": "i7",
+            "text": "foto",
+            "correctCategoryId": "la"
+          },
+          {
+            "id": "i8",
+            "text": "idioma",
+            "correctCategoryId": "el"
+          }
+        ],
+        "shuffle": true
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets turning el agua into a masculine noun.",
+      "data": {
+        "question": "Which is correct for \"the cold water\"?",
+        "choices": [
+          "el agua fría",
+          "el agua frío",
+          "la agua fría",
+          "la agua frío"
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "el agua read as masculine",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "If the article is el, a masculine adjective seems to follow."
+        },
+        "whyIntuitionFailed": "Learners see el and conclude the noun is masculine.",
+        "correctReasoning": "Agua is feminine. It takes el only before its stressed first a; the adjective still agrees in the feminine: el agua fría.",
+        "recoveryTip": "el agua, but fría and las aguas.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the endings and the short exception list.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Gender patterns and exceptions",
+        "takeaway": "-ción, -sión, -dad are feminine; Greek -ma words are masculine; and learn the short list: el día, el mapa, la mano, la foto, el agua fría.",
+        "terms": [
+          "la canción",
+          "la ciudad",
+          "el problema",
+          "el día",
+          "la mano",
+          "el agua"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "Which is correct?",
+      "answer": "el problema",
+      "rationale": "Problema is one of the Greek -ma words, which are masculine: el problema.",
+      "source": "prewritten",
+      "hint": "Greek -ma words are masculine.",
+      "choices": [
+        "el problema",
+        "la problema",
+        "los problema",
+        "un problema la"
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "Greek -ma masculine"
+    },
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "Which greeting is correct?",
+      "answer": "Buenos días",
+      "rationale": "Día is masculine despite its -a, so the adjective is masculine plural: buenos días.",
+      "source": "prewritten",
+      "hint": "Día is an exception.",
+      "choices": [
+        "Buenos días",
+        "Buenas días",
+        "Buenos díos",
+        "Buena día"
+      ],
+      "id": "c2",
+      "after": 2,
+      "focus": "el día"
+    },
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Type the article (one word) that goes with \"ciudad\" (city).",
+      "answer": "la",
+      "rationale": "Nouns ending in -dad are feminine: la ciudad.",
+      "source": "prewritten",
+      "hint": "Look at the ending -dad.",
+      "id": "c3",
+      "after": 4,
+      "focus": "-dad feminine"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/16",
+    "version": 1,
+    "sha256": "6bd79423f49e7f031df3d100fd75bed16090eb72720021b7effac9e297becda8",
+    "title": "Gender Patterns and Common Exceptions",
+    "file": "content/spanish-prewritten/advanced/level-016.json"
+  }
+}

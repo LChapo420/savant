@@ -1,0 +1,432 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 3,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the subject pronouns as a table, then the bigger lesson for an English speaker: Spanish usually drops them because the verb ending already says who, keeps them for emphasis or contrast, and has no pronoun for \"it\".",
+  "coverage": [
+    "yo, tú, usted, él, ella, nosotros, nosotras, ustedes, ellos, ellas",
+    "tú is informal (friends, family); usted is formal (strangers, elders, clients)",
+    "In Latin America ustedes is the plural of both tú and usted",
+    "Nosotras and ellas are for all-female groups; nosotros and ellos for male or mixed groups",
+    "Spanish usually drops the pronoun: Soy Ana, not Yo soy Ana",
+    "A pronoun is kept for emphasis, contrast or clarity: Yo soy de Texas y ella es de Chile",
+    "There is no pronoun for \"it\": Es un libro (It is a book)",
+    "tú (you) has an accent; tu (your) does not. él (he) has one; el (the) does not",
+    "Recognition only: vosotros (Spain), vos (Argentina, Uruguay, parts of Central America)"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents the subject pronouns with who each one is for.",
+      "data": {
+        "caption": "Subject pronouns",
+        "headers": [
+          "Spanish",
+          "English",
+          "Use it for"
+        ],
+        "rows": [
+          [
+            "yo",
+            "I",
+            "yourself"
+          ],
+          [
+            "tú",
+            "you",
+            "one friend, family member or child"
+          ],
+          [
+            "usted",
+            "you",
+            "one person, formally: a stranger, an elder, a client"
+          ],
+          [
+            "él / ella",
+            "he / she",
+            "one other person"
+          ],
+          [
+            "nosotros / nosotras",
+            "we",
+            "nosotras only for a group of all women"
+          ],
+          [
+            "ustedes",
+            "you (plural)",
+            "any group you speak to, formal or not"
+          ],
+          [
+            "ellos / ellas",
+            "they",
+            "ellas only for a group of all women"
+          ]
+        ],
+        "footnote": "For recognition: Spain also uses vosotros (you, plural, informal), and Argentina and Uruguay use vos for tú.",
+        "highlightColumn": 0
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: each pronoun, then two sentences that keep a pronoun for contrast.",
+      "data": {
+        "title": "Hear the pronouns",
+        "cueNote": "Usted: oos-TEHD. Ustedes: oos-TEH-dehs. In the last two lines the pronoun is there for contrast; elsewhere it would usually be dropped.",
+        "duration": 29.6,
+        "cues": [
+          {
+            "text": "yo",
+            "start": 0.3,
+            "end": 1.1
+          },
+          {
+            "text": "tú",
+            "start": 2.6,
+            "end": 3.4
+          },
+          {
+            "text": "usted",
+            "start": 4.9,
+            "end": 5.7
+          },
+          {
+            "text": "él",
+            "start": 7.2,
+            "end": 8
+          },
+          {
+            "text": "ella",
+            "start": 9.5,
+            "end": 10.3
+          },
+          {
+            "text": "nosotros",
+            "start": 11.8,
+            "end": 12.6
+          },
+          {
+            "text": "nosotras",
+            "start": 14.1,
+            "end": 14.9
+          },
+          {
+            "text": "ustedes",
+            "start": 16.4,
+            "end": 17.2
+          },
+          {
+            "text": "ellos",
+            "start": 18.7,
+            "end": 19.5
+          },
+          {
+            "text": "ellas",
+            "start": 21,
+            "end": 21.8
+          },
+          {
+            "text": "Yo soy de Texas y ella es de Chile.",
+            "start": 23.3,
+            "end": 25.7
+          },
+          {
+            "text": "Soy Ana. ¿Y tú?",
+            "start": 27.2,
+            "end": 28.1
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the dropping rule and when the pronoun comes back.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "Drop the pronoun",
+        "anchor": "Because the verb ending already shows who is acting, Spanish usually leaves out the subject pronoun.",
+        "prerequisites": [
+          "Soy Ana. (I am Ana.) The -oy of soy can only mean \"I\".",
+          "Keep the pronoun for contrast: Yo soy de Texas y él es de Chile.",
+          "Keep it for emphasis or to make clear who you mean: Ella es la jefa, no él.",
+          "Usted is often kept for politeness: ¿Usted es la señora Ruiz?"
+        ]
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Theory_ContrastSplit",
+      "purpose": "Contrasts the natural dropped version with the over-stated one.",
+      "data": {
+        "title": "Natural or over-stated?",
+        "leftColumn": {
+          "heading": "Natural",
+          "tone": "success",
+          "items": [
+            {
+              "label": "Introducing yourself",
+              "text": "Soy Ana. Soy de Chicago."
+            },
+            {
+              "label": "Answering",
+              "text": "—¿Eres estudiante? —Sí, soy estudiante."
+            }
+          ]
+        },
+        "rightColumn": {
+          "heading": "Over-stated",
+          "tone": "caution",
+          "items": [
+            {
+              "label": "Every sentence with yo",
+              "text": "Yo soy Ana. Yo soy de Chicago.",
+              "example": "Correct, but it sounds insistent, as if someone said otherwise."
+            }
+          ]
+        }
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Concept_CautionFlag",
+      "purpose": "Flags the \"it\" trap: there is no subject pronoun for things.",
+      "data": {
+        "conceptLabel": "Subject pronouns",
+        "flagTitle": "There is no \"it\"",
+        "cautions": [
+          {
+            "kind": "illegal_transfer",
+            "title": "Do not use él or ella for \"it\"",
+            "detail": "For a thing, simply use the verb with no subject.",
+            "wrongExample": "Él es un libro.",
+            "rightExample": "Es un libro.",
+            "exampleNote": "It is a book."
+          },
+          {
+            "kind": "pitfall",
+            "title": "Accents tell words apart",
+            "detail": "tú (you) and tu (your); él (he) and el (the).",
+            "rightExample": "Tú eres mi amigo. Él es el profesor."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Interact_CategorySort",
+      "purpose": "Practices choosing tú or usted by situation.",
+      "data": {
+        "title": "Tú or usted?",
+        "instruction": "Sort each person by how you would address them.",
+        "categories": [
+          {
+            "id": "tu",
+            "label": "tú (informal)"
+          },
+          {
+            "id": "ud",
+            "label": "usted (formal)"
+          }
+        ],
+        "items": [
+          {
+            "id": "i1",
+            "text": "your best friend",
+            "correctCategoryId": "tu"
+          },
+          {
+            "id": "i2",
+            "text": "your little cousin",
+            "correctCategoryId": "tu"
+          },
+          {
+            "id": "i3",
+            "text": "a new client",
+            "correctCategoryId": "ud"
+          },
+          {
+            "id": "i4",
+            "text": "an older neighbor you just met",
+            "correctCategoryId": "ud"
+          },
+          {
+            "id": "i5",
+            "text": "your sister",
+            "correctCategoryId": "tu"
+          },
+          {
+            "id": "i6",
+            "text": "a police officer",
+            "correctCategoryId": "ud"
+          }
+        ],
+        "shuffle": true
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets the reflex of writing yo in front of every verb.",
+      "data": {
+        "question": "You are introducing yourself at work. Which sounds most natural?",
+        "choices": [
+          "Soy Marco. Soy ingeniero.",
+          "Yo soy Marco. Yo soy ingeniero.",
+          "Él es Marco. Él es ingeniero.",
+          "Yo Marco. Yo ingeniero."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Yo in every sentence",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "English always needs \"I\", so yo feels required."
+        },
+        "whyIntuitionFailed": "English cannot drop \"I\", so learners translate it every time.",
+        "correctReasoning": "Soy already means \"I am\". Repeating yo is grammatical but sounds insistent; Soy Marco. Soy ingeniero. is the natural version.",
+        "recoveryTip": "Use yo only when you are contrasting yourself with someone.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the pronoun set and the dropping habit.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Subject pronouns",
+        "takeaway": "Learn yo, tú, usted, él, ella, nosotros, ustedes, ellos, ellas, then mostly leave them out: the verb says who, and Spanish has no \"it\".",
+        "terms": [
+          "yo",
+          "tú",
+          "usted",
+          "nosotros",
+          "ustedes",
+          "ellos"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "How do you say \"It is a book\" in Spanish?",
+      "answer": "Es un libro.",
+      "rationale": "Spanish has no subject pronoun for a thing, so the verb stands alone: Es un libro. Él and ella mean he and she.",
+      "source": "prewritten",
+      "hint": "There is no Spanish word for \"it\" as a subject.",
+      "choices": [
+        "Es un libro.",
+        "Él es un libro.",
+        "Ella es un libro.",
+        "Ello es un libro."
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "no pronoun for it"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "You are speaking to your two coworkers, Laura and Pedro, in Mexico. Which pronoun means \"you\" for both of them?",
+      "answer": "ustedes",
+      "rationale": "In Latin America ustedes is the plural you for any group; vosotros is used in Spain, ellos means they and nosotros means we.",
+      "source": "prewritten",
+      "hint": "Latin America uses one plural you.",
+      "choices": [
+        "ustedes",
+        "vosotros",
+        "ellos",
+        "nosotros"
+      ],
+      "id": "c2",
+      "after": 5,
+      "focus": "ustedes"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Type the pronoun for \"we\" when the group is all women.",
+      "answer": "nosotras",
+      "rationale": "Nosotras is we for an all-female group; nosotros is for a male or mixed group.",
+      "source": "prewritten",
+      "hint": "It ends in -as.",
+      "id": "c3",
+      "after": 0,
+      "focus": "nosotras"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/3",
+    "version": 1,
+    "sha256": "7f0309a6f5982079b673b87090209ec3d30eb59e3d94056599786ba9f64f69aa",
+    "title": "Subject Pronouns and Dropping Them",
+    "file": "content/spanish-prewritten/advanced/level-003.json"
+  }
+}

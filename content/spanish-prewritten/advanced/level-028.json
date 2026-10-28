@@ -1,0 +1,378 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 28,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach un, una, unos and unas, the plural meaning \"some\" or \"about\", and the two places Spanish leaves the indefinite article out where English uses \"a\": a bare profession after ser, and before otro.",
+  "coverage": [
+    "un (masc.), una (fem.): a, an",
+    "unos, unas: some, a few; with numbers, about: unos veinte",
+    "Tengo unas amigas en Chile. (I have some friends in Chile.)",
+    "Ser + profession alone takes no article: Es profesor. Soy médica.",
+    "Add un or una when the profession is described: Es un profesor excelente",
+    "No un before otro: otro café (another coffee), never un otro café"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents the four indefinite articles with examples.",
+      "data": {
+        "caption": "A, an, some",
+        "headers": [
+          "",
+          "Singular",
+          "Plural"
+        ],
+        "rows": [
+          [
+            "Masculine",
+            "un amigo (a friend)",
+            "unos amigos (some friends)"
+          ],
+          [
+            "Feminine",
+            "una amiga (a friend)",
+            "unas amigas (some friends)"
+          ],
+          [
+            "With a number",
+            "",
+            "unos veinte dólares (about twenty dollars)"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the profession rule.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "Jobs without \"a\"",
+        "anchor": "After ser, a profession on its own takes no article: Es profesor, Soy médica.",
+        "prerequisites": [
+          "English says \"He is a teacher\"; Spanish says Es profesor.",
+          "Describe the job and the article comes back: Es un profesor excelente.",
+          "Identifying one person among others also takes it: ¿Quién es? Es un profesor de la escuela."
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: sentences with and without the article.",
+      "data": {
+        "title": "Un, una, or nothing?",
+        "cueNote": "Otro café: another coffee, with no un.",
+        "duration": 18.6,
+        "cues": [
+          {
+            "text": "Tengo un hermano y una hermana.",
+            "start": 0.3,
+            "end": 2.7
+          },
+          {
+            "text": "Tengo unas amigas en Chile.",
+            "start": 4.2,
+            "end": 6.4
+          },
+          {
+            "text": "Mi madre es profesora.",
+            "start": 7.9,
+            "end": 9.7
+          },
+          {
+            "text": "Es una profesora excelente.",
+            "start": 11.2,
+            "end": 13.6
+          },
+          {
+            "text": "Quiero otro café, por favor.",
+            "start": 15.1,
+            "end": 17.1
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Theory_ContrastSplit",
+      "purpose": "Contrasts a bare profession with a described one.",
+      "data": {
+        "title": "Es profesor or es un profesor?",
+        "leftColumn": {
+          "heading": "Just the job",
+          "tone": "success",
+          "items": [
+            {
+              "label": "Example",
+              "text": "Ana es abogada.",
+              "example": "Ana is a lawyer."
+            },
+            {
+              "label": "Example",
+              "text": "Soy ingeniero.",
+              "example": "I am an engineer."
+            }
+          ]
+        },
+        "rightColumn": {
+          "heading": "Job + description",
+          "tone": "accent",
+          "items": [
+            {
+              "label": "Example",
+              "text": "Ana es una abogada famosa.",
+              "example": "Ana is a famous lawyer."
+            },
+            {
+              "label": "Example",
+              "text": "Es un ingeniero muy bueno.",
+              "example": "He is a very good engineer."
+            }
+          ]
+        }
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices un, una, unos, unas and the no-article cases.",
+      "data": {
+        "title": "Choose the article",
+        "instructions": "Choose what fits.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Tengo "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "una",
+              "un",
+              "unos"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " pregunta. Mi hermano es "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "(nothing)",
+              "un",
+              "una"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " médico. Tengo "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "unos",
+              "unas",
+              "un"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " libros en español. Quiero "
+          },
+          {
+            "kind": "blank",
+            "id": "b4",
+            "options": [
+              "otra",
+              "una otra",
+              "un otra"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " cerveza, por favor."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b2": "Profession alone: Es médico.",
+          "b4": "Never un or una before otro / otra."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets copying English \"another\" as un otro.",
+      "data": {
+        "question": "How do you ask for another coffee?",
+        "choices": [
+          "Otro café, por favor.",
+          "Un otro café, por favor.",
+          "Una otra café, por favor.",
+          "Más uno café, por favor."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "un otro",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "\"Another\" seems to contain \"an\", so un is added."
+        },
+        "whyIntuitionFailed": "English \"another\" is \"an + other\", so learners translate both parts.",
+        "correctReasoning": "Otro already means another: Otro café, por favor. Otra for a feminine noun: otra cerveza.",
+        "recoveryTip": "Otro and otra never take un or una.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the four forms and the two exceptions.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Indefinite articles",
+        "takeaway": "Un, una, unos, unas mean a and some, but a bare job after ser and the word otro take no article: Es médico; otro café.",
+        "terms": [
+          "un",
+          "una",
+          "unos",
+          "unas",
+          "otro"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "Which is the natural way to say \"My sister is a nurse\" (enfermera)?",
+      "answer": "Mi hermana es enfermera.",
+      "rationale": "After ser, a profession on its own takes no article: es enfermera. An article is added only when the job is described.",
+      "source": "prewritten",
+      "hint": "A bare job after ser.",
+      "choices": [
+        "Mi hermana es enfermera.",
+        "Mi hermana es una enfermera.",
+        "Mi hermana es un enfermera.",
+        "Mi hermana una enfermera es."
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "no article with professions"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "What does \"Tengo unos veinte dólares\" mean?",
+      "answer": "I have about twenty dollars.",
+      "rationale": "Unos before a number means about or approximately.",
+      "source": "prewritten",
+      "hint": "Unos with a number is an estimate.",
+      "choices": [
+        "I have about twenty dollars.",
+        "I have twenty-one dollars.",
+        "I have one twenty-dollar bill.",
+        "I have exactly twenty dollars."
+      ],
+      "id": "c2",
+      "after": 0,
+      "focus": "unos = about"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Type the word that completes \"Tengo ___ amigas en México.\" (I have some friends in Mexico.)",
+      "answer": "unas",
+      "rationale": "Amigas is feminine plural, so some is unas.",
+      "source": "prewritten",
+      "hint": "Feminine and plural.",
+      "id": "c3",
+      "after": 4,
+      "focus": "unas"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 0,
+    "mc_dropped": 0,
+    "mc_unjudged": 2,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "prewritten",
+  "layout_model": "prewritten",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/28",
+    "version": 1,
+    "sha256": "eb189d24ee3fc0098b00a2d3c4e715d4c6faa27427ef81a8d88e8102f9ca0dcd",
+    "title": "Indefinite Articles: Un, Una, Unos, Unas",
+    "file": "content/spanish-prewritten/advanced/level-028.json"
+  }
+}
