@@ -35,6 +35,7 @@ updates this file.
 - The founder is 16. Anything that touches minors' data follows `docs/yc/PRIVACY.md`.
 - Don't draft the YC or speedrun application answers: the owner said the product will change too much first.
   Fact banks, evidence and interview prep are fine.
+- **Redesign in progress (2026-10-28):** the owner is choosing a new visual design for the whole app. Do not restyle pages or change `public/css/` beyond what an item strictly needs; new pages should use the existing CSS variables so they pick up the new look later.
 - Match the code around you: plain Node/Express, vanilla JS in `public/js/`, the existing CSS. Mobile first:
   check every page at 375 px wide.
 
@@ -42,6 +43,40 @@ updates this file.
 
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
+
+0. **Creator links for the beta form (do this first: the owner is recruiting creators today).** The site's
+   beta form is in `site/server.js` (`FORMS` includes `beta`). Add a creator code: links like
+   `/beta?ref=<code>` (and `?utm_source=` as a fallback) store the code with each beta application, survive
+   the page reload and the form post, and are shown per code in the site admin (applications, consented emails,
+   and visits per code from `site/analytics.js`). Add a short `site/creators.json` (code, display name, date
+   added) so the owner can add a creator without code changes; unknown codes are still recorded. Add a
+   `/creators` page with the beta link format and the honest one-paragraph description of Savant, both easy to
+   copy. Tests in `site/test.js`. Done when two test codes produce separate counts in the admin.
+
+0b. **Learn from your own material (owner's request, 2026-10-28; high YC value: it is the "learn anything" demo).**
+   A learner uploads study material (PDF, DOCX, TXT/Markdown, or pasted text; photos of notes later) and Savant turns
+   it into a course taught with the app's own engine: placement, lessons, retrieval practice, mastery at 75%,
+   remediation of the misunderstanding behind wrong answers, interleaving, and spaced review timed to the
+   forgetting curve. Build it in slices, each tested and pushed on its own:
+   - **(a) Upload and storage.** A `/my-material` page (use the existing CSS variables; a redesign is in
+     progress) with upload, paste, a list and delete. Server route with size limits (20 MB, about 300 pages),
+     type checks by magic bytes, text extraction (look for an existing dependency first; add a small, well-known
+     one only if needed), stored per user under the db layer (private to that user, never shared, deleted for
+     real on delete). Rate limits. Tests.
+   - **(b) Course builder.** From the extracted text: chunk it, build a concept map, order the skills by
+     prerequisite, and for each skill write a short lesson and retrieval questions (multiple choice and short
+     answer), every item **grounded in the source** with a pointer to the passage it came from. A second pass
+     checks each item is supported by its passage and drops any that are not. Use `services/pool.js` with
+     **learner-class providers only** (uploads are learner data: never pipeline-only providers, never
+     OpenRouter), the `AI_POOL` kill switch, the existing ledgers, a per-upload token budget, and caching. Tests
+     use a mocked provider; no real AI calls in tests.
+   - **(c) Teach it with the engine.** The built course appears as a subject on the learner's home and path, with
+     a short diagnostic from the material, lessons, practice, mastery quizzes, remediation and the retention
+     scheduler, exactly like the built-in subjects. Done when a learner can upload a PDF, get a course, study
+     it, and see review come back on schedule (end-to-end test on the fixture db with the mocked provider).
+   - **(d) Later:** photos of notes or textbook pages (vision model or OCR), and URLs.
+   Privacy: tell the learner in plain words where their file goes and how to delete it; follow
+   `docs/yc/PRIVACY.md`. Copyright: personal study use only, never shared with other learners.
 
 3. **Measurement kit, third slice** (local: needs the owner). (a) The owner fills the `OWNER:` lines in
    `docs/yc/ACT-STUDY-PROTOCOL.md`, then seals and RFC 3161 time-stamps it with `spanish-check/scripts/`; (b) the
