@@ -35,6 +35,7 @@ updates this file.
 - The founder is 16. Anything that touches minors' data follows `docs/yc/PRIVACY.md`.
 - Don't draft the YC or speedrun application answers: the owner said the product will change too much first.
   Fact banks, evidence and interview prep are fine.
+- **Redesign in progress (2026-10-28):** the owner is choosing a new visual design for the whole app. Do not restyle pages or change `public/css/` beyond what an item strictly needs; new pages should use the existing CSS variables so they pick up the new look later.
 - Match the code around you: plain Node/Express, vanilla JS in `public/js/`, the existing CSS. Mobile first:
   check every page at 375 px wide.
 
