@@ -255,7 +255,7 @@ async function staticSplit(slots, its) {
 
   // ── 5. ledgers ───────────────────────────────────────────────────────────────
   await check('Standard Compute: the ledger starts at $0.50 spent, refuses past the cap, and no request is sent for a refused call', async () => {
-    process.env.STANDARD_COMPUTE_CAP_USD = '0.52'; // can only lower the $15 cap
+    process.env.STANDARD_COMPUTE_CAP_USD = '0.52'; // can only lower the $20 cap
     process.env.STANDARD_COMPUTE_API_KEY = 'test-key-not-real';
     process.env.STANDARD_COMPUTE_PIPELINE = '1';
     const led = require('../services/standard-compute-ledger');
@@ -268,7 +268,7 @@ async function staticSplit(slots, its) {
       return { ok: true, status: 200, statusText: 'OK', text: async () => body };
     });
     assert.strictEqual(led.status().spent_usd, 0.5, 'seeded at $0.50');
-    assert.strictEqual(led.CAP_USD, 15);
+    assert.strictEqual(led.CAP_USD, 20);
     const schema = { type: 'object', properties: { n: { type: 'number' } }, required: ['n'] };
     const slots = pool.extraSlots().filter((s) => s.id.startsWith('standard_compute:'));
     assert.strictEqual(slots.length, 1);
