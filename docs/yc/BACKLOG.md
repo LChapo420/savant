@@ -43,7 +43,7 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-3. **The measurement kit** (item 3 and section 5): an instruction page for students and parents, links to the
+3. [claimed 2026-10-28T17:20Z] **The measurement kit** (item 3 and section 5): an instruction page for students and parents, links to the
    official free practice tests, the counterbalanced A/B protocol, and an admin view listing every
    participant's before and after scores. Pre-registration is sealed with the same tooling as
    `spanish-check/` (SHA-256 seal, RFC 3161 stamp, OpenTimestamps). Done when the protocol can be run with
