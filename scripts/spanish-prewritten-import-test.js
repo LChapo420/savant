@@ -74,9 +74,11 @@ async function waitUp(child) {
 }
 
 function stopServer(child) {
+  // The app flushes its data file 250 ms after a write and on SIGTERM; Windows has no SIGTERM
+  // handler run on kill(), so let the timed flush land first.
   return new Promise((resolve) => {
     child.on('exit', resolve);
-    child.kill('SIGTERM');
+    setTimeout(() => child.kill('SIGTERM'), 700);
   });
 }
 
