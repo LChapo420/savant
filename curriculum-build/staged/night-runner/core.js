@@ -612,6 +612,13 @@ async function write({ job, key, system, user, schema, schemaName, maxTokens = 6
     const hit = cacheGet(hash(['w', l.model, base]));
     if (hit) { addTokens(job, `W:${l.model}`, null, { cached: 1 }); return hit; }
   }
+  // NIGHT_POOL=1: the model pool (services/pool.js) writes instead of the lanes below: every free slot at once, work
+  // stealing, a hedge on a slow call and a hard timeout. Off by default; the lanes in this file are unchanged.
+  if (process.env.NIGHT_POOL === '1') {
+    const v = await require('./pool-batch').write({ system, user, schema, schemaName, maxTokens, excludeFamilies: excludeModels.map(familyOf).filter(Boolean) });
+    if (v) { cachePut(hash(['w', v.model, base]), v); addTokens(job, `W:${v.model}`, v.usage); return v; }
+    throw new Error('the pool gave no valid answer');
+  }
   return new Promise((resolve, reject) => {
     const req = { type: 'call', role: 'write', job, args: { system, user, schema, schemaName, maxTokens }, excludeFam: new Set(), excludeModel: new Set(excludeModels), tries: 0, at: now(), taken: false, cacheKey: (model) => hash(['w', model, base]), resolve, reject };
     const mmOk = !mm.fatal && writerOn(MM) && !excludeModels.includes(MM) && process.env.MM_WRITE !== '0';

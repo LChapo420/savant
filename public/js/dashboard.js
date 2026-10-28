@@ -45,6 +45,7 @@ App.mount(async () => {
         ${data.profile && !data.profile.took_style_quiz
           ? '<p style="margin-top:14px"><a class="btn btn-text" href="/style-quiz?next=/survey%3Fnext=/onboarding">First, take the learning-style and interests quiz</a></p>'
           : '<p style="margin-top:14px" id="survey-step" hidden><a class="btn btn-text" href="/survey?next=/onboarding">First, tell us your interests</a></p>'}
+        ${user.id === 6689 ? '<p style="margin-top:14px"><a class="btn btn-text" href="/spanish-check">Open Spanish progress (take the daily test before any Spanish)</a></p>' : ''}
       </div>`;
     // The interests survey is the step after the quiz; the dashboard data does not
     // say whether it was filled in, the profile does.
