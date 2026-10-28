@@ -1,0 +1,30 @@
+Spanish check verification
+  root: C:\coding\claudecommittdIq\folderThing\iq-max-repo-2-claude-adoring-mayer-woc9sq\spanish-check
+  results: C:\Users\admin\AppData\Local\Temp\claude\C--coding-claudecommittdIq-folderThing\bf665da0-0ead-4435-b9f4-ddc0bbd108a8\scratchpad\res2
+  openssl: openssl  offline: false
+
+PASS  sealed code, protocol and pool files match SEAL.txt  -  23 files, SEAL.txt sha256 babf567a603c3304...
+PASS  raw Tatoeba files match the sealed hashes  -  8 files
+PASS  pool rebuilt from the raw files is byte-identical  -  rebuilt a4607ac92747244f... sealed a4607ac92747244f...
+PASS  SEAL.txt RFC 3161 timestamp (freetsa.org) is valid for this SEAL.txt  -  digest matches, signature verified, time 2026-10-28T02:49:13.000Z
+PASS  SEAL.txt OpenTimestamps file is well-formed and commits to this SEAL.txt  -  calendar commitment only (not yet Bitcoin-confirmed here; run: ots upgrade SEAL.ots && ots verify SEAL.ots)
+PASS  hash chain intact, first line bound to SEAL.txt  -  57 lines, head 4fc5761ae786fa12...
+PASS  every engine start ran the sealed engine, scoring and pool  -  1 start(s)
+PASS  SEAL.txt was externally timestamped before the first sitting  -  seal 2026-10-28T02:49:13.000Z, first sitting 2026-10-28T02:49:33.735Z
+PASS  each logged drand randomness is the SHA-256 of its logged signature
+PASS  each sitting's drand round exists and its randomness matches the public record  -  1 round(s) refetched, all relays agree
+PASS  each drand round was produced just before its sitting started (not an old or chosen round)
+PASS  the pinned drand quicknet public key, period and genesis hash to the chain hash named in the protocol  -  52db9ba70e0cc0f6...
+WARN  drand BLS signatures are not verified by this script  -  it checks randomness = SHA-256(signature) and agreement of independent relays; for the pairing check use drand-client against the chain hash 52db9ba70e0cc0f6eaf7803dd07447a1f5477735fd3f661792ba94600c84e971
+PASS  every served item is the item the logged randomness produces from the sealed pool  -  25 served items re-derived
+PASS  no question or answer option is repeated across sittings  -  25 distinct sentences, 45 distinct distractors
+PASS  sitting rules respected (one per day, 12 h gap, items one at a time in order, nothing answered twice)
+PASS  no sitting used the override
+PASS  time limits (60 s listening, 30 s reading, 3 s grace) applied from server timestamps; total within 17.5 min plus grace  -  0 late answer(s), all scored 0
+PASS  every score recomputed from the log equals the score the server recorded  -  1 finished sitting(s) recomputed with the sealed scoring.js
+PASS  anchor at seq 56: RFC 3161 token valid for log head dd1ba14de07a...  -  time 2026-10-28T02:50:02.000Z
+PASS  anchor at seq 56: OpenTimestamps file commits to the same head
+PASS  sitting 1: anchor time is after the sitting ended  -  ended 2026-10-28T02:50:02.901Z, anchored 2026-10-28T02:50:02.000Z
+
+Summary: 21 PASS, 0 FAIL, 1 WARN, 0 SKIP
+RESULT: PASS

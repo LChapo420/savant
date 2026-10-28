@@ -1,0 +1,40 @@
+SPANISH-CHECK SEAL v1
+sealed_at: 2026-10-28T02:49:06.774Z
+format: <sha256>  <path relative to the spanish-check folder>   (sha256sum -c compatible)
+
+# core: protocol, pool, scoring, engine, build and verification code, trust anchors
+94e7330e14e36d73fd92cbb0fb864ff9d9e55004024208a36a4c9bce9c4aeb0d  PROTOCOL.md
+c72a983b9aceb50ff6d10757a134815b80511f3988fbd51f2a581658e104ec87  VERIFY.md
+a4607ac92747244f1aa7d0f28ca3c57c5db8ef1860cc0d6292191c09bb74f6f2  pool.json
+a8eed3ea197a325629762f77d6e2810e3c14e6a99244d8f7f46af70b8170eda6  overlap-exclusions.json
+95dc94363b83ee1402c0e6989dd0bd3627faf170723cd194b99f432c956df207  scoring.js
+d7c5ed8db4a159389364b569eb6897bb5ac4d05a80c55b950e3ed997f63b951b  engine.js
+bcdb33880bd2b114e09e4921456605ae5002a434934d6ee69df80393deef56f4  verify.js
+5aea8dc1d48530851844887a1628816c2557639e8c6edd272fa037b735741585  lib/common.js
+eab294024c57649bfa2ead225e58d9e92dad5895125c052b2af3c831b34aebbe  lib/candidates.js
+515608f6b5737304ce3dd2d5f7585c801d5d5ec34d0d9728fc1ed8bd1d922a45  lib/draw.js
+5d3a9601a82aaf770a009b0c5cdb237abc322856411a29be65c5c7bec520f52a  lib/replay.js
+c5c43bf8e8a47cc33593653b4a086a1d1b092d6daee159809fc0aa111d8eaaa2  lib/external.js
+1e3703480cb5b53f520e6e3b69c6cb3d4caa92110eaa40b69db9c106c76d1567  scripts/build-pool.js
+72f6476128df608614ce5235b2bfc10241b00df84659bf2bbbea623c67b63adb  scripts/scan-app.js
+efdc2c7dc081a51f3b7d01079f7d7bc3ace276d7640abcaf4fc9b5c4d936feee  scripts/seal.js
+e4d3ba897cf08a35075778566cd447a437d381606d1c7eb718e30a04494aef44  scripts/timestamp-seal.js
+a594ea24ed5ccb9ad559280bc177662946cde3fcf873ac87f3d0255228c27e2b  scripts/simulate.js
+fce27b274fbdb608a741989e5d762955fe56edd6c5f372ca0e709668e7071ce4  scripts/test-engine.js
+2151b61137ffa86bf664691ba67e7da0b19f98c758e3d228d5d8ebf27e044438  tsa/cacert.pem
+8bfb0305bb64e2571ca507552ef3245cb1c2fee8728e0ff8689225081ea13467  tsa/tsa.crt
+
+# app glue (the routes and the page; the app only mounts them)
+5134138e7aa47c094c1d4068944a5530299e1219d919993551ac094f4839f973  ../routes/spanish-check.js
+2318b415ae127f0ed16c7e2bb1178e95a3b62675591ed8ce5dfc69d806b7a7d2  ../public/spanish-check.html
+4f691efcd3c9763fe6b0038f633b2ab4ec898c5ab2f982df94ca6d39737d2371  ../public/js/spanish-check.js
+
+# frozen raw Tatoeba exports (downloads.tatoeba.org); the pool is rebuilt from these
+c84900a8ac7b4b8724032964651a57d4e134d040875c350aae6951a5605b7fec  raw/spa_sentences.tsv
+6ab1a1c04faee902608ecf925827e26d03490623fb7aca4de194e39f2cd07704  raw/eng_sentences.tsv
+b778ef1eb86cd2fa41f75f2e31ae2efadb78b35b9d0e81ccf1862766bc9d5ab8  raw/spa-eng_links.tsv
+8fd72659536aece35f59b7f19ad4f3cc2c377b20e48f5f097adc591ecaa26517  raw/spa_sentences_with_audio.tsv
+29efd66854f11ad3480720ceda6e7b42563d40df4e660d9b0721c56a61753e9a  raw/spa_sentences.tsv.bz2
+f634eaaf26623c2a2e170be2dae54b18388479311ae8619d04889df4e5d021f3  raw/eng_sentences.tsv.bz2
+f9e3d7c7486ecfcf12724b80e4a0d726aeb01748996ed6098d44763417f113f2  raw/spa-eng_links.tsv.bz2
+cf0aefcd80d4267c9491bf5bc6aa181bd5b6139aa1f61e729760a7494d2973fd  raw/spa_sentences_with_audio.tsv.bz2

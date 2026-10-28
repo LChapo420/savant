@@ -1,0 +1,47 @@
+Simulation: 200 random draws from the sealed pool (listening {"easy":23159,"medium":24478,"hard":21674}, reading {"easy":15288,"medium":16373,"hard":13235})
+
+B. Draw equivalence (stratum-weighted means per draw vs the pool)
+  listening: mean log-difficulty per draw 6.176 (SD 0.178, pool 6.203); words per sentence 5.438 (SD 0.612, pool 5.511)
+  reading: mean log-difficulty per draw 6.121 (SD 0.135, pool 6.142); words per sentence 5.538 (SD 0.516, pool 5.567)
+
+A. Simulated learners over the draws (stratum-weighted scores; "true" = expected value over the whole pool)
+  a. knows nothing
+    listening: true 0.000 | draws mean 0.000 SD 0.000 min 0.000 max 0.000 | CI half-width 0.092 | CI covers truth 100.0%
+    reading raw: mean 0.248 (SD 0.109); above chance: true 0.000 | mean -0.002 SD 0.146 | CI half-width 0.314 | CI covers truth 91.5%
+    two draws of the same learner differ "significantly": 3 of 200 comparisons (1.5%, nominal 5%)
+  b. knows the 250 commonest words
+    listening: true 0.582 | draws mean 0.582 SD 0.057 min 0.385 max 0.743 | CI half-width 0.213 | CI covers truth 100.0%
+    reading raw: mean 0.485 (SD 0.117); above chance: true 0.329 | mean 0.314 SD 0.157 | CI half-width 0.379 | CI covers truth 97.0%
+    two draws of the same learner differ "significantly": 1 of 200 comparisons (0.5%, nominal 5%)
+  c. knows the 1000 commonest words
+    listening: true 0.734 | draws mean 0.733 SD 0.057 min 0.567 max 0.923 | CI half-width 0.214 | CI covers truth 100.0%
+    reading raw: mean 0.676 (SD 0.127); above chance: true 0.577 | mean 0.568 SD 0.169 | CI half-width 0.345 | CI covers truth 97.0%
+    two draws of the same learner differ "significantly": 7 of 200 comparisons (3.5%, nominal 5%)
+  d. knows all
+    listening: true 0.950 | draws mean 0.951 SD 0.033 min 0.814 max 1.000 | CI half-width 0.122 | CI covers truth 100.0%
+    reading raw: mean 0.949 (SD 0.061); above chance: true 0.933 | mean 0.932 SD 0.081 | CI half-width 0.136 | CI covers truth 100.0%
+    two draws of the same learner differ "significantly": 0 of 200 comparisons (0.0%, nominal 5%)
+
+  Ordering a < b < c < d (mean listening / reading raw): a: 0.000 / 0.248   b: 0.582 / 0.485   c: 0.733 / 0.676   d: 0.951 / 0.949
+  strictly increasing in both sections: true
+
+C. Reading: guessing strategies that use only the options and the Spanish sentence (chance = 25%)
+  items skipped because three matching distractors could not be found: 954 over 200 draws (4.8 per draw)
+  longest option                                                         25.1%  (95% CI 23.5 to 26.6, n=3000)
+  shortest option                                                        24.9%  (95% CI 23.4 to 26.4, n=3000)
+  option closest to the median length                                    25.0%  (95% CI 23.5 to 26.6, n=3000)
+  option whose length is most different from the others (odd one out)    24.4%  (95% CI 22.9 to 26.0, n=3000)
+  most words                                                             24.3%  (95% CI 22.8 to 25.8, n=3000)
+  longest average word                                                   24.1%  (95% CI 22.6 to 25.6, n=3000)
+  shares most look-alike words with the Spanish (cognates)               25.8%  (95% CI 24.2 to 27.3, n=3000)
+  shares most exact letters-only words with the Spanish                  25.1%  (95% CI 23.5 to 26.7, n=3000)
+  consensus: shares most content words with the other options            25.1%  (95% CI 23.5 to 26.6, n=3000)
+  most common English words (highest share of stop words)                23.4%  (95% CI 21.9 to 24.9, n=3000)
+  fewest function words (inverse of the line above)                      20.3%  (95% CI 18.9 to 21.8, n=3000)
+  always position A                                                      24.6%  (95% CI 23.1 to 26.2, n=3000)
+  always position B                                                      24.9%  (95% CI 23.4 to 26.5, n=3000)
+  always position C                                                      25.4%  (95% CI 23.8 to 27.0, n=3000)
+  always position D                                                      25.0%  (95% CI 23.5 to 26.6, n=3000)
+
+  distractors within +-20% of the correct option's length: 9000 of 9000 (max deviation 20.0%)
+  correct-option position counts over all draws: 739 / 748 / 762 / 751

@@ -1,0 +1,25 @@
+ok   anonymous -> 404
+ok   other account -> 404 on status
+ok   other account -> 404 on POST /start
+ok   other account -> 404 on GET /next
+ok   other account -> 404 on POST /answer
+ok   other account -> 404 on GET /report
+ok   other account -> 404 on GET /audio/0
+ok   other account -> 404 on POST /abandon
+ok   other account -> 404 on POST /visibility
+ok   status for 6689: {"seal_ok":true,"seal_problems":[],"finished":0,"voided":0,"total":5,"next_name":"Day 0","pending_anchor":null,"statemen
+ok   start (2102 ms): {"resumed":false,"sitting_id":1}
+ok   item payload carries no answer key, transcript or stratum
+ok   25 items answered (25)
+ok   audio endpoint returned 200 audio/mpeg for 10 of 10 listening items
+   audio: 200 audio/mpeg 22406B mp3 | 200 audio/mpeg 11560B mp3 | 200 audio/mpeg 14597B mp3 | 200 audio/mpeg 14373B mp3 | 200 audio/mpeg 10047B mp3 | 200 audio/mpeg 10697B mp3 | 200 audio/mpeg 18060B mp3 | 200 audio/mpeg 18501B mp3 | 200 audio/mpeg 9839B mp3 | 200 audio/mpeg 16982B mp3
+ok   next after the last item -> done
+ok   report has the finished sitting
+   scores: {"listening":{"score":0,"ci":[0,0.18317356935610232],"exact":0,"n":10},"reading":{"raw":0.2589584818246614,"raw_ci":[0,0.5410509331027249],"cc":0.011944642432881883,"cc_ci":[-0.3333333333333333,0.38806791080363323],"correct":4,"n":15},"timing":{"median_s_per_item":0.01,"timeouts":0,"late":0,"page_leaves":1,"items_open_when_left":1},"flags":["listening: 5 of 10 items answered in under 2s","reading: easy >= medium >= hard does not hold","reading: 15 of 15 items answered in under 1s","left the page 1 time(s)"]}
+ok   one page-leave logged and reported
+ok   second start the same day refused (429)
+ok   audio for a closed sitting refused
+ok   log head was time-stamped after the sitting ended
+   anchors dir: 00055-dd1ba14de07a.ots, 00055-dd1ba14de07a.tsq, 00055-dd1ba14de07a.tsr
+
+all passed
