@@ -10,20 +10,18 @@
  *
  * File type is decided by the first bytes, never by the name or the browser's content type.
  */
-const zlib = require('zlib');
 const db = require('../config/db');
 
 const MAX_BYTES = 20 * 1024 * 1024;      // an uploaded file
-const MAX_PAGES = 300;                   // a PDF's page count
+const { MAX_PAGES } = require('./material-parsers'); // a PDF's page count
 const MAX_CHARS = 900000;                // about 300 pages of prose; also the cap for docx, text and paste
 const MIN_CHARS = 200;                   // less than this is not a course
 const MAX_ITEMS = 20;                    // materials per learner
 const MAX_TOTAL_CHARS = 3000000;         // stored text per learner
 const MAX_TITLE = 120;
-const MAX_ZIP_ENTRIES = 5000;
-const MAX_ZIP_UNPACKED = 200 * 1024 * 1024;
 
-function fail(error, code) { return { error, code }; }
+const { fail, normalise, zipEntries } = require('./material-parsers');
+const { parseInChild } = require('./material-runner');
 
 function cleanTitle(t, fallback) {
   const s = String(t || '').replace(/[\u0000-\u001f\u007f<>]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, MAX_TITLE);
@@ -43,78 +41,6 @@ function sniff(buf) {
   return 'text';
 }
 
-/** Read a zip's central directory: entry names and declared sizes, without unpacking anything. */
-function zipEntries(buf) {
-  const min = Math.max(0, buf.length - 65557);
-  let eocd = -1;
-  for (let i = buf.length - 22; i >= min; i--) {
-    if (buf.readUInt32LE(i) === 0x06054b50) { eocd = i; break; }
-  }
-  if (eocd < 0) return null;
-  const count = buf.readUInt16LE(eocd + 10);
-  let p = buf.readUInt32LE(eocd + 16);
-  if (count > MAX_ZIP_ENTRIES) return { tooMany: true, entries: [] };
-  const entries = [];
-  for (let i = 0; i < count; i++) {
-    if (p + 46 > buf.length || buf.readUInt32LE(p) !== 0x02014b50) return null;
-    const size = buf.readUInt32LE(p + 24);
-    const nameLen = buf.readUInt16LE(p + 28);
-    const extraLen = buf.readUInt16LE(p + 30);
-    const commentLen = buf.readUInt16LE(p + 32);
-    entries.push({ name: buf.slice(p + 46, p + 46 + nameLen).toString('utf8'), size });
-    p += 46 + nameLen + extraLen + commentLen;
-  }
-  return { entries };
-}
-
-function normalise(text) {
-  return String(text)
-    .replace(/^﻿/, '')
-    .replace(/\r\n?/g, '\n')
-    .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, '')
-    .replace(/[ \t]+\n/g, '\n')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim();
-}
-
-async function fromPdf(buf) {
-  const { getDocumentProxy, extractText } = await import('unpdf');
-  let pdf;
-  try {
-    pdf = await getDocumentProxy(new Uint8Array(buf), { isEvalSupported: false, useSystemFonts: false, verbosity: 0 });
-  } catch (err) {
-    if (/password/i.test(String(err && (err.name + err.message)))) return fail('That PDF is password-protected. Remove the password and upload it again.', 'encrypted');
-    return fail('That PDF could not be read. It may be damaged.', 'unreadable');
-  }
-  try {
-    if (pdf.numPages > MAX_PAGES) return fail(`That PDF has ${pdf.numPages} pages. The limit is ${MAX_PAGES}. Upload a part of it.`, 'too_many_pages');
-    const { text } = await extractText(pdf, { mergePages: false });
-    return { text: normalise(text.join('\n\n')), pages: pdf.numPages };
-  } catch {
-    return fail('That PDF could not be read. It may be damaged.', 'unreadable');
-  } finally {
-    try { await pdf.destroy(); } catch { /* nothing to do */ }
-  }
-}
-
-async function fromDocx(buf) {
-  const listing = zipEntries(buf);
-  if (!listing) return fail('That file is not a Word document.', 'bad_type');
-  if (listing.tooMany) return fail('That file is not a usable Word document.', 'bad_type');
-  const unpacked = listing.entries.reduce((s, e) => s + e.size, 0);
-  if (unpacked > MAX_ZIP_UNPACKED) return fail('That document unpacks to far more than the size limit.', 'too_big');
-  if (!listing.entries.some((e) => e.name === 'word/document.xml')) {
-    return fail('Only PDF, Word (.docx), text and Markdown files are supported.', 'bad_type');
-  }
-  const mammoth = require('mammoth');
-  try {
-    const out = await mammoth.extractRawText({ buffer: buf });
-    return { text: normalise(out.value), pages: null };
-  } catch {
-    return fail('That Word document could not be read. It may be damaged.', 'unreadable');
-  }
-}
-
 /**
  * Turn an uploaded file into text. Returns { text, kind, pages } or { error, code }.
  * The name is used only for the title; the type comes from the bytes.
@@ -125,8 +51,8 @@ async function extract(buf) {
   const type = sniff(buf);
   let out;
   let kind;
-  if (type === 'pdf') { kind = 'pdf'; out = await fromPdf(buf); }
-  else if (type === 'zip') { kind = 'docx'; out = await fromDocx(buf); }
+  if (type === 'pdf') { kind = 'pdf'; out = await parseInChild('pdf', buf); }
+  else if (type === 'zip') { kind = 'docx'; out = await parseInChild('docx', buf); }
   else if (type === 'text') { kind = 'text'; out = { text: normalise(buf.toString('utf8')), pages: null }; }
   else return fail('Only PDF, Word (.docx), text and Markdown files are supported.', 'bad_type');
   if (out.error) return out;
