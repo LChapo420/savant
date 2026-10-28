@@ -43,7 +43,7 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-1d. **Shared game sets for the game-lab course-frame check.** It SKIPs on the fixture db because the written sets for english/proficient levels 14 and 24 live only in the owner's db. A committed minimal payload for those two levels would let it run in CI.
+1d. [claimed 2026-10-28T15:30Z] **Shared game sets for the game-lab course-frame check.** It SKIPs on the fixture db because the written sets for english/proficient levels 14 and 24 live only in the owner's db. A committed minimal payload for those two levels would let it run in CI.
 
 2. **ACT score entry and test date** (item 2): a small ACT profile with test date, target score, and section
    scores from each official practice test (date, form, English, Math, Reading, optional Science), later the
