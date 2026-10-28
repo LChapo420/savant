@@ -584,13 +584,11 @@
    * ruler ticks of rising height on a baseline, in ink. */
   const BRAND = { name: 'Savant' };
   function brandMark() {
-    // The Savant logo, the same in every style: the profile picture's three white
-    // bars on a baseline, on its blue tile (site/brand/savant-logo-blue.svg, scaled to 32).
-    return '<span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" focusable="false">'
-      + '<rect class="sv-tile" width="32" height="32" rx="7"/>'
-      + '<g class="sv-bars"><rect x="8.69" y="22.91" width="14.63" height="1.22"/>'
-      + '<rect x="9.5" y="17.63" width="1.95" height="5.69"/><rect x="15.03" y="13.56" width="1.95" height="9.75"/>'
-      + '<rect x="20.55" y="8.69" width="1.95" height="14.63"/></g>'
+    // The Savant logo, the same mark as savantedu.com: three bars on a baseline, in the
+    // navbar's text colour (black on a light navbar, white on a dark one).
+    return '<span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 18 20" focusable="false">'
+      + '<rect x="0" y="18.5" width="18" height="1.5"/><rect x="1" y="12" width="2.4" height="7"/>'
+      + '<rect x="7.8" y="7" width="2.4" height="12"/><rect x="14.6" y="1" width="2.4" height="18"/>'
       + '</svg></span>';
   }
 
