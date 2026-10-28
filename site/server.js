@@ -53,6 +53,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const creators = require('./creators');
 
 const ROOT = __dirname;
 const DATA_DIR = path.resolve(process.env.DATA_DIR || path.join(ROOT, 'data'));
@@ -234,13 +235,6 @@ function checkName(raw, errors, label) {
   return name;
 }
 
-// A short campaign or creator tag carried through from ?ref= or ?utm_source=.
-// Letters, digits, spaces and . _ - ~ + only, 64 characters at most.
-function cleanRef(raw) {
-  if (typeof raw !== 'string') return '';
-  return clean(raw).replace(/[^\w .\-~+]/g, '').trim().slice(0, 64);
-}
-
 // The step-2 link: step 1's answer carries it, and step 2 must send it back. It is an HMAC of the
 // record and an expiry, with a key kept in the data folder. It is not a login: it only lets step 2
 // fill in a record that is still marked "started", and only from whoever just sent step 1.
@@ -310,7 +304,7 @@ function validateBeta(body) {
   }
   if (Object.keys(errors).length) return { errors };
   const source = clean(body.source).toLowerCase();
-  return { step, email, ...out, source: SOURCES.includes(source) ? source : '', ref: cleanRef(body.ref) };
+  return { step, email, ...out, source: SOURCES.includes(source) ? source : '' };
 }
 
 /** Returns { errors } or { record } for a form's body. */
@@ -330,7 +324,7 @@ function validate(form, body) {
     if (b.errors) return { errors: b.errors };
     const record = { id, at, form, email: b.email };
     if (b.source) record.source = b.source;
-    if (b.ref) record.ref = b.ref;
+    record.ref = creators.pickCode(body) || null; // the creator link's code (?ref=, else ?utm_source=), see creators.js
     if (b.step !== 1) {
       Object.assign(record, { name: b.name, role: b.role, interests: b.interests });
       if (b.interests_other) record.interests_other = b.interests_other;
@@ -619,6 +613,17 @@ function createApp(opts = {}) {
     '/thanks': 'thanks.html', '/thanks.html': 'thanks.html',
     '/config.js': 'config.js', '/favicon.svg': 'favicon.svg', '/og.png': 'og.png',
   };
+  // /beta?ref=<creator code>: the home page with the code already in the beta form
+  // (also without JavaScript). The code is cleaned to a-z 0-9 . _ - so it is safe in HTML.
+  const homeHtml = () => fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  app.get('/beta', (req, res) => {
+    const code = creators.pickCode(req.query);
+    res.set('Cache-Control', 'no-store').type('html').send(homeHtml().replaceAll('name="ref" value=""', `name="ref" value="${code}"`));
+  });
+  app.get('/creators', (req, res) => {
+    res.set({ 'Cache-Control': 'public, max-age=300', 'X-Robots-Tag': 'noindex' });
+    res.sendFile(path.join(ROOT, 'creators.html'));
+  });
   for (const [route, file] of Object.entries(PAGES)) {
     app.get(route, (req, res) => {
       res.set('Cache-Control', 'public, max-age=300');

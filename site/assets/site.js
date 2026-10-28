@@ -117,6 +117,39 @@
     }
   });
 
+  /* ── creator link: /beta?ref=<code> (or ?utm_source=) fills the beta forms' hidden field ── */
+  var REF = ''; // the code, also sent with the two-step beta application (hero and lower form)
+  (function () {
+    var fields = document.querySelectorAll('form[data-form="beta"] input[name="ref"]');
+    if (!fields.length) return;
+    var clean = function (v) { return String(v || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9._-]/g, '').slice(0, 40); };
+    var code = clean(fields[0].value);
+    try {
+      var sp = new URLSearchParams(location.search);
+      code = code || clean(sp.get('ref')) || clean(sp.get('utm_source'));
+      // Kept for this tab, so a reload or a hop to another page and back keeps the link.
+      if (code) sessionStorage.setItem('savant-ref', code); else code = clean(sessionStorage.getItem('savant-ref'));
+    } catch (e) { /* storage blocked: the URL still works */ }
+    REF = code;
+    fields.forEach(function (f) { f.value = code; });
+  })();
+
+  /* ── creators page: full link text and copy buttons ── */
+  document.querySelectorAll('[data-origin-text]').forEach(function (el) {
+    el.textContent = location.origin + el.getAttribute('data-origin-text');
+  });
+  document.querySelectorAll('[data-copy-from]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var src = document.getElementById(btn.getAttribute('data-copy-from'));
+      if (!src || !navigator.clipboard) return;
+      navigator.clipboard.writeText(src.textContent.trim()).then(function () {
+        var was = btn.textContent;
+        btn.textContent = 'Copied';
+        setTimeout(function () { btn.textContent = was; }, 1500);
+      }, function () { /* copy blocked: the text is selectable */ });
+    });
+  });
+
   /* ── grade strips: one bar per grade ───────────────────────────────── */
   // Each bar's height is how many levels that grade has in the base curriculum
   // (assets/grade-levels.js, generated from the app's config/curriculum.js). Each
@@ -475,11 +508,6 @@
   // application). Step 2 appears in the same place and completes that record, using the link the
   // server handed back. If the server cannot be reached, step 2 falls back to the email app like
   // the other forms. Without JavaScript the lower form is posted whole.
-  var REF = '';
-  try {
-    var qp = new URLSearchParams(location.search);
-    REF = (qp.get('ref') || qp.get('utm_source') || '').slice(0, 64);
-  } catch (e) { /* no tags */ }
   var applied = false;
   var betaForms = Array.prototype.slice.call(document.querySelectorAll('form[data-form="beta"]'));
 
@@ -568,7 +596,6 @@
     form._shownAt = performance.now();
     if (base) form.action = base + '/api/beta';
     setState(form, 1);
-    if (form.elements.ref) form.elements.ref.value = REF;
     form.querySelectorAll('[data-count-for]').forEach(function (meta) {
       var field = form.elements[meta.getAttribute('data-count-for')];
       if (!field) return;
@@ -786,7 +813,7 @@
     var q = { src: '', s: '', m: '', c: '' };
     try {
       var sp = new URLSearchParams(location.search);
-      q = { src: sp.get('src') || '', s: sp.get('utm_source') || '', m: sp.get('utm_medium') || '', c: sp.get('utm_campaign') || '' };
+      q = { src: sp.get('src') || sp.get('ref') || '', s: sp.get('utm_source') || '', m: sp.get('utm_medium') || '', c: sp.get('utm_campaign') || '' };
     } catch (e) { /* no tags */ }
     var body = { p: location.pathname, r: document.referrer || '', u: { s: q.s, m: q.m, c: q.c }, src: q.src, c: visitChoice(), gpc: gpc, wd: navigator.webdriver === true };
     if (document.body.hasAttribute('data-not-found')) body.nf = 1;

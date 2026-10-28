@@ -605,8 +605,9 @@ ${main}
     role: ['Role', (r) => esc(r.role), 'admin-short'],
     status: ['Status', (r) => esc(r.status === 'started' ? 'started (email only)' : r.status), 'admin-short'],
     learn: ['Wants to learn', (r) => esc([...(Array.isArray(r.interests) ? r.interests : []), r.interests_other].filter((x) => typeof x === 'string' && x).join(', ')), 'admin-name'],
-    from: ['From', (r) => esc([r.source, r.ref && `ref ${r.ref}`].filter((x) => typeof x === 'string' && x).join(', ')), 'admin-short'],
+    source: ['Form', (r) => esc(r.source), 'admin-short'],
     why: ['Why', (r) => esc(r.why), 'admin-long'],
+    ref: ['Creator code', (r) => esc(r.ref), 'admin-short'],
     firm: ['Firm', (r) => esc(r.firm), 'admin-name'],
     message: ['Message', (r) => esc(r.message), 'admin-long'],
     // The All tab: a beta "why" and an investor's message never share a row.
@@ -616,7 +617,7 @@ ${main}
   const TAB_COLS = {
     all: ['when', 'form', 'email', 'name', 'role', 'firm', 'text', 'consent'],
     updates: ['when', 'email', 'consent'],
-    beta: ['when', 'email', 'status', 'name', 'role', 'learn', 'why', 'from', 'consent'],
+    beta: ['when', 'email', 'status', 'name', 'role', 'learn', 'why', 'source', 'ref', 'consent'],
     investors: ['when', 'email', 'name', 'firm', 'message'],
   };
   const link = (tab, q) => `${ADMIN_PATH}?form=${encodeURIComponent(tab)}${q ? `&q=${encodeURIComponent(q)}` : ''}`;
@@ -628,9 +629,10 @@ ${main}
       const n = t === 'all' ? total : all[t].length;
       return `<li><a href="${esc(link(t))}"${t === tab ? ' aria-current="page"' : ''}>${esc(LABEL[t])} <span class="num">${n}</span></a></li>`;
     }).join('');
+    const creatorsTab = `<li><a href="${ADMIN_PATH}?form=creators"${tab === 'creators' ? ' aria-current="page"' : ''}>Creators</a></li>`;
     return analytics
-      ? `${formTabs}<li><a href="${ADMIN_PATH}?form=visitors"${tab === 'visitors' ? ' aria-current="page"' : ''}>Visitors</a></li>`
-      : formTabs;
+      ? `${formTabs}${creatorsTab}<li><a href="${ADMIN_PATH}?form=visitors"${tab === 'visitors' ? ' aria-current="page"' : ''}>Visitors</a></li>`
+      : `${formTabs}${creatorsTab}`;
   }
 
   /* the Visitors tab (visit statistics) */
@@ -650,6 +652,42 @@ ${main}
       session,
       script: 'visitors',
       main: renderVisitors({ stats, detail, q, ip, esc, ADMIN_PATH, tabs: tabList('visitors', all, total), idleMinutes: Math.round(cfg.idleMs / 60000) }),
+    });
+  }
+
+  /* the Creators tab: per creator code, applications, consented emails and visits */
+  const creatorsLib = require('./creators');
+  async function creatorsPage(req, session) {
+    const all = {};
+    for (const f of forms) all[f] = readAll(f);
+    const total = forms.reduce((n, f) => n + all[f].length, 0);
+    const stats = report ? await report.stats() : null;
+    const rows = creatorsLib.summarize({ creators: creatorsLib.loadCreators(), beta: all.beta || [], visits: stats ? stats.sourceCounts : {} });
+    const num = (n) => Number(n).toLocaleString('en');
+    const body = rows.map((r) => `<tr data-row>
+        <td data-label="Code" class="admin-name">${esc(r.code)}</td>
+        <td data-label="Creator">${r.listed ? esc(r.name) : '<span class="muted">not in creators.json</span>'}</td>
+        <td data-label="Visits" class="num">${stats ? num(r.visits) : '<span class="muted">&ndash;</span>'}</td>
+        <td data-label="Applications" class="num">${num(r.applications)}</td>
+        <td data-label="Emails OK to use" class="num">${num(r.consented)}</td>
+        <td data-label="Consented emails" class="admin-email">${r.emails.length ? r.emails.map(esc).join('<br>') : '<span class="muted">&ndash;</span>'}</td>
+      </tr>`).join('\n');
+    const noCode = (all.beta || []).filter((r) => !creatorsLib.codeOf(r.ref)).length;
+    return page({
+      title: 'Creators | Savant',
+      session,
+      main: `    <div class="admin-head">
+      <h1>Creators</h1>
+      <p class="muted">Applications come from the beta form's creator code (<code>/beta?ref=code</code>). Visits are page views whose source is that code. A visitor outside the UK/EU who has not agreed to visit stats is counted anonymously; both kinds are included. Codes not in <code>creators.json</code> are still counted.</p>
+    </div>
+    <nav aria-label="Forms"><ul class="admin-tabs">${tabList('creators', all, total)}</ul></nav>
+    <p class="admin-count">${rows.length} ${rows.length === 1 ? 'code' : 'codes'}. ${num(noCode)} beta ${noCode === 1 ? 'application has' : 'applications have'} no creator code.</p>
+    ${rows.length ? `<div class="admin-table-wrap"><table class="admin-table">
+      <thead><tr><th scope="col">Code</th><th scope="col">Creator</th><th scope="col">Visits</th><th scope="col">Applications</th><th scope="col">Emails OK to use</th><th scope="col">Consented emails</th></tr></thead>
+      <tbody>
+${body}
+      </tbody>
+    </table></div>` : '<p class="admin-empty">No creator codes yet. Add one to creators.json.</p>'}`,
     });
   }
 
@@ -766,6 +804,7 @@ ${events}
   router.get('/', wrap(async (req, res) => {
     const session = getSession(req);
     if (!session) return send(res, 200, loginPage(req, res));
+    if (req.query.form === 'creators') return send(res, 200, await creatorsPage(req, session));
     if (report && req.query.form === 'visitors') return send(res, 200, await visitorsPage(req, session));
     return send(res, 200, dashboard(req, session));
   }));

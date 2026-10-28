@@ -123,7 +123,7 @@ test('beta: a valid application keeps only what the form asks', async () => {
   assert.strictEqual(row.consent, true);
   assert.strictEqual(row.status, 'applied');
   assert.deepStrictEqual(row.interests, []);
-  assert.ok(!('extra' in row) && !('elapsed' in row) && !('source' in row) && !('ref' in row));
+  assert.ok(!('extra' in row) && !('elapsed' in row) && !('source' in row) && row.ref === null);
 });
 
 test('beta: "Why should we pick you?" is optional, 1,000 characters at most', async () => {
@@ -310,10 +310,10 @@ test('beta: the whole form (no JavaScript) completes a started application', asy
   assert.strictEqual(rows[0].status, 'applied');
   assert.deepStrictEqual(rows[0].interests, ['piano', 'chess']);
   assert.strictEqual(rows[0].source, 'bottom');
-  assert.ok(!('ref' in rows[0]), 'an empty ref is not stored');
+  assert.strictEqual(rows[0].ref, null, 'an empty ref is stored as null, like the other creator-link records');
 });
 
-test('beta: source is one of the known forms; ref is a short plain tag', async () => {
+test('beta: source is one of the known forms; ref is the creator code, cleaned', async () => {
   const mk = (n, extra) => post('/api/beta', { step: 1, email: `src${n}@example.com`, age_ok: 'yes', consent: 'yes', ...extra, ...human });
   await mk(1, { source: 'sticky', ref: 'Tay_Lor-1.x' });
   await mk(2, { source: '<script>', ref: '<b>x</b>; DROP' });
@@ -321,12 +321,12 @@ test('beta: source is one of the known forms; ref is a short plain tag', async (
   await mk(4, { source: { a: 1 }, ref: ['a'] });
   const row = (n) => readAll('beta').find((x) => x.email === `src${n}@example.com`);
   assert.strictEqual(row(1).source, 'sticky');
-  assert.strictEqual(row(1).ref, 'Tay_Lor-1.x');
+  assert.strictEqual(row(1).ref, 'tay_lor-1.x');
   assert.ok(!('source' in row(2)), 'an unknown source is dropped');
-  assert.ok(/^[\w .\-~+]*$/.test(row(2).ref), 'only plain characters');
+  assert.ok(/^[a-z0-9._-]*$/.test(row(2).ref), 'only a-z 0-9 . _ - survive');
   assert.strictEqual(row(3).source, 'bottom');
-  assert.strictEqual(row(3).ref.length, 64);
-  assert.ok(!('source' in row(4)) && !('ref' in row(4)));
+  assert.strictEqual(row(3).ref.length, 40);
+  assert.ok(!('source' in row(4)) && row(4).ref === null);
 });
 
 test('beta: step 2 has its own rate limit counter', async () => {
@@ -2145,6 +2145,109 @@ test('admin: node server.js admin-verify-code checks a code from stdin against t
       assert.strictEqual(await admin.cliVerifyCode({ root: __dirname, env: { ADMIN_ENV_FILE: file }, input: totp(T0 + 90000), now: () => T0 }), false, 'three steps late');
     } finally { console.error = quiet; }
   } finally { process.exitCode = prev; }
+});
+
+
+test('creators: a code from ?ref= or ?utm_source= is cleaned, stored with the application, and unknown codes are kept', async () => {
+  const base1 = { role: 'learner', why: WHY, age_ok: 'yes', consent: 'yes', ...human };
+  await post('/api/beta', { ...base1, email: 'cr-a@example.com', name: 'A', ref: ' Maya_Codes ' });
+  await post('/api/beta', { ...base1, email: 'cr-b@example.com', name: 'B', utm_source: 'Leo.Plays' });
+  await post('/api/beta', { ...base1, email: 'cr-c@example.com', name: 'C', ref: '<script>x</script>' });
+  await post('/api/beta', { ...base1, email: 'cr-d@example.com', name: 'D' });
+  const row = (e) => readAll('beta').find((x) => x.email === e);
+  assert.strictEqual(row('cr-a@example.com').ref, 'maya_codes');
+  assert.strictEqual(row('cr-b@example.com').ref, 'leo.plays', 'utm_source is the fallback');
+  assert.strictEqual(row('cr-c@example.com').ref, 'scriptxscript', 'only a-z 0-9 . _ - survive');
+  assert.strictEqual(row('cr-d@example.com').ref, null);
+  await post('/api/beta', { ...base1, email: 'cr-e@example.com', name: 'E', ref: 'echo-check' });
+  assert.deepStrictEqual((await post('/api/beta', { ...base1, email: 'cr-e@example.com', name: 'E', ref: 'echo-check' })).json, { ok: true }, 'the answer never echoes it');
+});
+
+test('creators: /beta?ref= puts the code in the form (even without JavaScript) and survives the post', async () => {
+  const html = await (await fetch(`${base}/beta?ref=Maya`)).text();
+  assert.ok(html.includes('<input type="hidden" name="ref" value="maya">'));
+  assert.ok(html.includes('id="beta-form"'), 'it is the home page with the beta form');
+  const none = await (await fetch(`${base}/beta`)).text();
+  assert.ok(none.includes('<input type="hidden" name="ref" value="">'));
+  const evil = await (await fetch(`${base}/beta?ref=${encodeURIComponent('"><script>alert(1)</script>')}`)).text();
+  assert.ok(!evil.includes('<script>alert(1)'), 'the code is cleaned before it is written into the page');
+  const viaUtm = await (await fetch(`${base}/beta?utm_source=Leo`)).text();
+  assert.ok(viaUtm.includes('name="ref" value="leo"'));
+  // a plain form post (no JavaScript) with the hidden field
+  const r = await post('/api/beta', { email: 'cr-nojs@example.com', name: 'N', role: 'teacher', why: WHY, age_ok: 'yes', consent: 'yes', ref: 'maya', ...human }, { type: 'application/x-www-form-urlencoded', accept: 'text/html' });
+  assert.strictEqual(r.status, 303);
+  assert.strictEqual(readAll('beta').find((x) => x.email === 'cr-nojs@example.com').ref, 'maya');
+  const client = fs.readFileSync(path.join(__dirname, 'assets', 'site.js'), 'utf8');
+  assert.ok(client.includes("sp.get('ref')") && client.includes('savant-ref'), 'the page script reads ?ref= and keeps it for the tab');
+});
+
+test('creators: the /creators page has the link format and the description, and is not indexed', async () => {
+  const res = await fetch(`${base}/creators`);
+  assert.strictEqual(res.status, 200);
+  assert.ok((res.headers.get('x-robots-tag') || '').includes('noindex'));
+  const html = await res.text();
+  assert.ok(html.includes('/beta?ref=YOURCODE') && html.includes('data-copy-from="creator-link-format"') && html.includes('id="creator-blurb"'));
+  assert.ok(html.includes('<meta name="robots" content="noindex">'));
+  assert.ok(!/\bscore (gains?|improvements?)\b|guarantee/i.test(html.replace(/Promise test scores[^<]*/, '')), 'no results claims');
+  assert.ok(html.includes('src="assets/site.js'), 'the copy buttons are a file from this site, no inline script');
+});
+
+test('creators: creators.json is read safely and the summary counts per code', async () => {
+  const C = require('./creators');
+  const f = path.join(TMP, 'creators-test.json');
+  fs.writeFileSync(f, JSON.stringify([{ code: 'Maya', name: 'Maya P', added: '2026-10-28' }, { code: 'maya', name: 'dup' }, { code: '', name: 'x' }, 7, { code: 'leo' }]));
+  const list = C.loadCreators(f);
+  assert.deepStrictEqual(list.map((c) => c.code), ['maya', 'leo']);
+  assert.strictEqual(list[0].name, 'Maya P');
+  assert.deepStrictEqual(C.loadCreators(path.join(TMP, 'missing.json')), []);
+  fs.writeFileSync(f, '{not json');
+  assert.deepStrictEqual(C.loadCreators(f), []);
+  const rows = C.summarize({
+    creators: list,
+    beta: [{ ref: 'maya', consent: true, email: 'a@x.co' }, { ref: 'maya', consent: false, email: 'b@x.co' }, { ref: 'stranger', consent: true, email: 'c@x.co' }, { ref: null, consent: true, email: 'd@x.co' }],
+    visits: { maya: 5, leo: 2, google: 40 },
+  });
+  const by = Object.fromEntries(rows.map((r) => [r.code, r]));
+  assert.deepStrictEqual([by.maya.applications, by.maya.consented, by.maya.visits], [2, 1, 5]);
+  assert.deepStrictEqual(by.maya.emails, ['a@x.co']);
+  assert.deepStrictEqual([by.leo.applications, by.leo.visits, by.leo.listed], [0, 2, true]);
+  assert.deepStrictEqual([by.stranger.applications, by.stranger.listed], [1, false], 'unknown codes are still counted');
+  assert.ok(!by.google, 'a source nobody listed or applied with is not a creator');
+});
+
+test('creators: two codes give separate counts in the admin (applications, consented emails, visits)', async () => {
+  const base1 = { role: 'learner', why: WHY, age_ok: 'yes', consent: 'yes', ...human };
+  for (const [ip, src] of [['8.8.9.41', 'alpha'], ['8.8.9.42', 'alpha'], ['8.8.9.43', 'alpha'], ['8.8.9.44', 'beta-two']]) await visit({ src }, { ip });
+  await visit({ p: '/beta', src: 'ZED' }, { ip: '8.8.9.45' });
+  await post('/api/beta', { ...base1, email: 'alpha1@example.com', name: 'A1', ref: 'alpha' });
+  await post('/api/beta', { ...base1, email: 'alpha2@example.com', name: 'A2', ref: 'alpha' });
+  await post('/api/beta', { ...base1, email: 'beta2@example.com', name: 'B1', ref: 'beta-two' });
+  await settle();
+  const A = await startAdmin(FULL);
+  const aip = '198.51.100.220';
+  const anon = await areq(A, 'GET', `${ADMIN}?form=creators`, { ip: aip });
+  assert.ok(isLogin(anon.text) && !anon.text.includes('alpha1@example.com'), 'no session: the sign-in form, no data');
+  const { jar } = await signIn(A, { ip: aip });
+  const pg = await areq(A, 'GET', `${ADMIN}?form=creators`, { ip: aip, jar });
+  assert.strictEqual(pg.status, 200);
+  assert.ok(pg.text.includes('<h1>Creators</h1>') && pg.text.includes('aria-current="page">Creators</a>'));
+  const cells = (code) => {
+    const m = pg.text.match(new RegExp(`<tr data-row>\\s*<td data-label="Code" class="admin-name">${code}</td>([\\s\\S]*?)</tr>`));
+    assert.ok(m, `a row for ${code}`);
+    return [...m[1].matchAll(/<td data-label="([^"]+)"[^>]*>([\s\S]*?)<\/td>/g)].reduce((o, x) => ({ ...o, [x[1]]: x[2] }), {});
+  };
+  const a = cells('alpha');
+  assert.deepStrictEqual([a.Visits, a.Applications, a['Emails OK to use']], ['3', '2', '2']);
+  assert.ok(a['Consented emails'].includes('alpha1@example.com') && a['Consented emails'].includes('alpha2@example.com'));
+  const b = cells('beta-two');
+  assert.deepStrictEqual([b.Visits, b.Applications, b['Emails OK to use']], ['1', '1', '1']);
+  assert.ok(b['Consented emails'].includes('beta2@example.com') && !b['Consented emails'].includes('alpha'));
+  assert.ok(cells('example-creator').Applications === '0', 'a listed creator with no applications still shows');
+  assert.ok(!/data-label="Code" class="admin-name">zed</.test(pg.text), 'a visit-only source nobody listed or applied with is not a creator');
+  const betaTab = await areq(A, 'GET', `${ADMIN}?form=beta`, { ip: aip, jar });
+  assert.ok(betaTab.text.includes('Creator code'), 'the code is a column on the Beta tab');
+  const csv = await areq(A, 'GET', `${ADMIN}/export?form=beta`, { ip: aip, jar });
+  assert.ok(/(^|,)ref(,|$)/.test(csv.text.split('\n')[0]), 'the CSV export has the ref column');
 });
 
 (async () => {
