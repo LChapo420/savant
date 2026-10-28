@@ -1,0 +1,378 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 20,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the plurals where the written accent appears or disappears (joven → jóvenes, inglés → ingleses), the nouns that do not change (los lunes, los paraguas, los sacacorchos) and plural family surnames (los García).",
+  "coverage": [
+    "The stressed syllable stays the same in the plural, so a written accent may appear or disappear",
+    "Accent appears: joven → jóvenes, examen → exámenes, imagen → imágenes",
+    "Accent disappears: canción → canciones, inglés → ingleses, autobús → autobuses",
+    "Words ending in an unstressed vowel + s do not change: el lunes → los lunes, la crisis → las crisis",
+    "Compounds ending in -s do not change: el sacacorchos → los sacacorchos, el paraguas → los paraguas",
+    "Family surnames usually stay the same: los García, los Pérez"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States why accents move in plurals, in one idea.",
+      "data": {
+        "tag": "Spelling",
+        "ruleName": "The stress stays put",
+        "anchor": "A plural almost always keeps the stress on the same syllable as the singular, so the written accent appears or disappears to show it.",
+        "prerequisites": [
+          "jo-ven → JÓ-ve-nes: adding a syllable needs an accent to keep the stress on jo.",
+          "can-CIÓN → can-CIO-nes: the stress now falls there naturally, so the accent goes.",
+          "You do not need the full accent rules yet: learn these common pairs."
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists the common pairs where the accent changes.",
+      "data": {
+        "caption": "Accent changes in the plural",
+        "headers": [
+          "Singular",
+          "Plural",
+          "Accent"
+        ],
+        "rows": [
+          [
+            "el joven",
+            "los jóvenes",
+            "appears"
+          ],
+          [
+            "el examen",
+            "los exámenes",
+            "appears"
+          ],
+          [
+            "la imagen",
+            "las imágenes",
+            "appears"
+          ],
+          [
+            "la canción",
+            "las canciones",
+            "disappears"
+          ],
+          [
+            "el inglés",
+            "los ingleses",
+            "disappears"
+          ],
+          [
+            "el autobús",
+            "los autobuses",
+            "disappears"
+          ]
+        ],
+        "highlightColumn": 1
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: the pairs, so the unchanged stress can be heard.",
+      "data": {
+        "title": "The stress does not move",
+        "cueNote": "JO-ven, JÓ-ve-nes: the first syllable stays strong in both.",
+        "duration": 20.7,
+        "cues": [
+          {
+            "text": "joven, jóvenes",
+            "start": 0.3,
+            "end": 1.4
+          },
+          {
+            "text": "examen, exámenes",
+            "start": 2.9,
+            "end": 4.4
+          },
+          {
+            "text": "canción, canciones",
+            "start": 5.9,
+            "end": 7
+          },
+          {
+            "text": "inglés, ingleses",
+            "start": 8.5,
+            "end": 9.6
+          },
+          {
+            "text": "el lunes, los lunes",
+            "start": 11.1,
+            "end": 12.4
+          },
+          {
+            "text": "el paraguas, los paraguas",
+            "start": 13.9,
+            "end": 15.7
+          },
+          {
+            "text": "la familia García, los García",
+            "start": 17.2,
+            "end": 19.2
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists the nouns that do not change in the plural.",
+      "data": {
+        "caption": "Nouns that stay the same",
+        "headers": [
+          "Singular",
+          "Plural",
+          "Why"
+        ],
+        "rows": [
+          [
+            "el lunes",
+            "los lunes",
+            "ends in an unstressed vowel + s"
+          ],
+          [
+            "la crisis",
+            "las crisis",
+            "ends in an unstressed vowel + s"
+          ],
+          [
+            "el paraguas",
+            "los paraguas",
+            "compound word already ending in -s (para + aguas)"
+          ],
+          [
+            "el sacacorchos",
+            "los sacacorchos",
+            "compound word already ending in -s (saca + corchos)"
+          ],
+          [
+            "la familia García",
+            "los García",
+            "family surnames usually do not change"
+          ]
+        ],
+        "footnote": "Only the article shows the plural: el lunes, los lunes."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_CategorySort",
+      "purpose": "Practices telling which plurals change and which stay the same.",
+      "data": {
+        "title": "Does it change?",
+        "instruction": "Sort by what happens in the plural.",
+        "categories": [
+          {
+            "id": "same",
+            "label": "Stays the same"
+          },
+          {
+            "id": "change",
+            "label": "Changes"
+          }
+        ],
+        "items": [
+          {
+            "id": "i1",
+            "text": "el martes",
+            "correctCategoryId": "same"
+          },
+          {
+            "id": "i2",
+            "text": "el joven",
+            "correctCategoryId": "change"
+          },
+          {
+            "id": "i3",
+            "text": "el paraguas",
+            "correctCategoryId": "same"
+          },
+          {
+            "id": "i4",
+            "text": "el examen",
+            "correctCategoryId": "change"
+          },
+          {
+            "id": "i5",
+            "text": "la crisis",
+            "correctCategoryId": "same"
+          },
+          {
+            "id": "i6",
+            "text": "el autobús",
+            "correctCategoryId": "change"
+          }
+        ],
+        "shuffle": true
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets forgetting the accent that appears in jóvenes.",
+      "data": {
+        "question": "Which is the correct plural of \"joven\" (young person)?",
+        "choices": [
+          "jóvenes",
+          "jovenes",
+          "jóvens",
+          "jovénes"
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Missing the new accent",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "The singular has no accent, so the plural seems not to need one."
+        },
+        "whyIntuitionFailed": "Learners copy the singular spelling and just add -es.",
+        "correctReasoning": "The stress stays on jo. With the extra syllable, that stress needs a written accent: jóvenes.",
+        "recoveryTip": "joven → jóvenes, examen → exámenes: the accent appears.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the stress rule and the unchanging nouns.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Tricky plurals",
+        "takeaway": "The stress stays put (with rare exceptions such as carácter, caracteres), so accents appear (jóvenes, exámenes) or disappear (canciones, ingleses); words like lunes, paraguas and family names stay the same.",
+        "terms": [
+          "jóvenes",
+          "exámenes",
+          "canciones",
+          "los lunes",
+          "los García"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "Which is the correct plural of \"el examen\"?",
+      "answer": "los exámenes",
+      "rationale": "The stress stays on xa, which now needs a written accent: exámenes.",
+      "source": "prewritten",
+      "hint": "Like joven, jóvenes.",
+      "choices": [
+        "los examénes",
+        "los exámenes",
+        "los examenes",
+        "los exámens"
+      ],
+      "id": "c1",
+      "after": 1,
+      "focus": "accent appears"
+    },
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "You visit Mr. and Mrs. Pérez and their children. How do you refer to the whole family?",
+      "answer": "los Pérez",
+      "rationale": "Family surnames usually do not change in the plural; only the article does: los Pérez.",
+      "source": "prewritten",
+      "hint": "Like los García.",
+      "choices": [
+        "los Pérez",
+        "los Péreces",
+        "las Pérez",
+        "los Pérezes"
+      ],
+      "id": "c2",
+      "after": 3,
+      "focus": "plural surnames"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Type the plural of \"el lunes\" (Monday), with its article.",
+      "answer": "los lunes",
+      "rationale": "Lunes ends in an unstressed vowel + s, so it does not change; only el becomes los.",
+      "source": "prewritten",
+      "hint": "Only the article changes.",
+      "id": "c3",
+      "after": 4,
+      "focus": "invariable plurals"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/20",
+    "version": 1,
+    "sha256": "a9a5c71162343da6efb31c3a8a4713dde27cbbde9ec087b7ba9671990a9e3d52",
+    "title": "Tricky Plurals: Jóvenes, Exámenes, Los García",
+    "file": "content/spanish-prewritten/advanced/level-020.json"
+  }
+}

@@ -1,0 +1,487 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "entry",
+  "level": 16,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach five high-value verb forms as ready-made chunks the learner can say today, with an x-ray of one sentence, then practice choosing the right chunk in short survival exchanges.",
+  "coverage": [
+    "Quiero = I want: Quiero agua, por favor",
+    "Tengo = I have: Tengo una pregunta",
+    "Puedo = I can, can I: ¿Puedo pasar? = May I come in?",
+    "Voy = I am going: Voy al baño",
+    "Necesito = I need: Necesito ayuda",
+    "The ending (-o, or -oy in voy) already means \"I\", so yo is not needed",
+    "Each chunk takes a noun (quiero agua) or a verb in its base form (puedo pagar)",
+    "a + el contracts to al: voy al baño, never voy a el baño"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_TextBlock",
+      "purpose": "Explains learning verbs as chunks first, so the learner can speak before studying conjugation.",
+      "data": {
+        "eyebrow": "Unit 1.2",
+        "title": "Five verbs that do most of the work",
+        "sections": [
+          {
+            "paragraphs": [
+              "You do not need grammar to start speaking. Five verb forms, learned as fixed chunks, cover a huge share of what a visitor or a new neighbor needs to say.",
+              "Four of them end in -o (quiero, tengo, puedo, necesito) and voy ends in -oy, and that ending already means \"I\". So quiero alone means \"I want\". Spanish speakers usually leave out yo (I) unless they want to stress it."
+            ]
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents the five chunks with their meanings and a ready-made sentence for each.",
+      "data": {
+        "caption": "The five power verbs",
+        "headers": [
+          "Chunk",
+          "Meaning",
+          "Say it today",
+          "In English"
+        ],
+        "rows": [
+          [
+            "quiero",
+            "I want",
+            "Quiero agua, por favor.",
+            "I want water, please."
+          ],
+          [
+            "tengo",
+            "I have",
+            "Tengo una pregunta.",
+            "I have a question."
+          ],
+          [
+            "puedo",
+            "I can / can I",
+            "¿Puedo pasar?",
+            "May I come in?"
+          ],
+          [
+            "voy",
+            "I am going",
+            "Voy al baño.",
+            "I am going to the bathroom."
+          ],
+          [
+            "necesito",
+            "I need",
+            "Necesito ayuda.",
+            "I need help."
+          ]
+        ],
+        "highlightColumn": 0
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: the five model sentences, heard and repeated.",
+      "data": {
+        "title": "Say the five chunks",
+        "cueNote": "Quiero: KYEH-roh. Necesito: neh-seh-SEE-toh. Por favor: por fah-BOR. In ¿Puedo pasar? let your voice rise at the end.",
+        "duration": 14.1,
+        "cues": [
+          {
+            "text": "Quiero agua, por favor.",
+            "start": 0.3,
+            "end": 1.8
+          },
+          {
+            "text": "Tengo una pregunta.",
+            "start": 3.3,
+            "end": 4.8
+          },
+          {
+            "text": "¿Puedo pasar?",
+            "start": 6.3,
+            "end": 7.2
+          },
+          {
+            "text": "Voy al baño.",
+            "start": 8.7,
+            "end": 9.6
+          },
+          {
+            "text": "Necesito ayuda.",
+            "start": 11.1,
+            "end": 12.6
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_XRay",
+      "purpose": "Breaks one sentence into its parts to show a chunk followed by a verb in its base form.",
+      "data": {
+        "prompt": "Tap each part to see what it does in the sentence.",
+        "source": "¿{{Puedo}} {{pagar}} {{con tarjeta}}?",
+        "terms": [
+          {
+            "id": "x1",
+            "label": "puedo",
+            "mark": "Puedo",
+            "note": "Can I. The -o means \"I\"; no yo is needed."
+          },
+          {
+            "id": "x2",
+            "label": "pagar",
+            "mark": "pagar",
+            "note": "to pay. After puedo, quiero or necesito, the next verb stays in its base form (it ends in -ar, -er or -ir)."
+          },
+          {
+            "id": "x3",
+            "label": "con tarjeta",
+            "mark": "con tarjeta",
+            "note": "with a card. The whole question: Can I pay by card?"
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices choosing the right chunk in a short café and office exchange.",
+      "data": {
+        "title": "At a café",
+        "instructions": "Choose the chunk that fits each gap.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "— "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "Puedo",
+              "Quiero",
+              "Voy"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " un café, por favor. — Muy bien. — ¿"
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "Tengo",
+              "Puedo",
+              "Necesito"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " pagar con tarjeta? — Sí, claro. — Perdón, "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "tengo",
+              "voy",
+              "quiero"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " al baño. ¡Ah! Y "
+          },
+          {
+            "kind": "blank",
+            "id": "b4",
+            "options": [
+              "puedo",
+              "tengo",
+              "voy"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " una pregunta."
+          }
+        ],
+        "feedback": {
+          "correct": "All five chunks are in the right place.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b1": "Quiero un café: I want a coffee.",
+          "b2": "¿Puedo pagar con tarjeta?: Can I pay by card?",
+          "b3": "Voy al baño: I am going to the bathroom.",
+          "b4": "Tengo una pregunta: I have a question."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets the most common slip with voy: writing a el instead of al.",
+      "data": {
+        "question": "How do you say \"I am going to the bathroom\"?",
+        "choices": [
+          "Voy a el baño.",
+          "Soy al baño.",
+          "Voy el baño.",
+          "Voy al baño."
+        ],
+        "correctIndex": 3,
+        "commonErrorLabel": "a + el left apart",
+        "trapChoiceIndexes": [
+          0
+        ],
+        "trapReasons": {
+          "0": "It is a word-for-word copy of \"to the\", which feels logical."
+        },
+        "whyIntuitionFailed": "English keeps \"to\" and \"the\" apart, so the first instinct is a + el. Spanish always fuses them.",
+        "correctReasoning": "a (to) + el (the) is always written and said al: Voy al baño. With la nothing changes: Voy a la tienda.",
+        "recoveryTip": "If you see \"a el\", squeeze it into \"al\".",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves each chunk by its meaning.",
+      "data": {
+        "title": "Chunk to meaning",
+        "instruction": "Connect each Spanish chunk to what it means.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "quiero"
+          },
+          {
+            "id": "t2",
+            "label": "tengo"
+          },
+          {
+            "id": "t3",
+            "label": "puedo"
+          },
+          {
+            "id": "t4",
+            "label": "voy"
+          },
+          {
+            "id": "t5",
+            "label": "necesito"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "I have"
+          },
+          {
+            "id": "d4",
+            "label": "I am going"
+          },
+          {
+            "id": "d1",
+            "label": "I want"
+          },
+          {
+            "id": "d3",
+            "label": "I can / can I"
+          },
+          {
+            "id": "d5",
+            "label": "I need"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the five chunks as a toolkit for day one.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Five power verbs",
+        "takeaway": "Quiero, tengo, puedo, voy and necesito each mean \"I ...\" on their own: add a thing (quiero agua) or a base verb (puedo pagar) and you have a sentence.",
+        "terms": [
+          "quiero",
+          "tengo",
+          "puedo",
+          "voy",
+          "necesito"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_present_ar",
+      "skill_name": "Present tense: -ar verbs",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "You are lost and want someone to help you. Which sentence says what you need?",
+      "answer": "Necesito ayuda.",
+      "rationale": "Necesito means I need, so Necesito ayuda is I need help; tengo ayuda would mean I have help, and voy and puedo do not fit a noun this way.",
+      "source": "prewritten",
+      "hint": "Which chunk means I need?",
+      "choices": [
+        "Tengo ayuda.",
+        "Voy ayuda.",
+        "Puedo ayuda.",
+        "Necesito ayuda."
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "choosing necesito"
+    },
+    {
+      "skill_id": "es_greetings",
+      "skill_name": "Greetings and courtesy",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "You knock on an office door. What does \"¿Puedo pasar?\" ask?",
+      "answer": "May I come in?",
+      "rationale": "Puedo is I can or can I, and pasar is to come in or go through, so ¿Puedo pasar? asks permission to come in.",
+      "source": "prewritten",
+      "hint": "Puedo asks permission.",
+      "choices": [
+        "Am I going in?",
+        "Do you have a pass?",
+        "May I come in?",
+        "Do you want to go?"
+      ],
+      "id": "c2",
+      "after": 4,
+      "focus": "understanding puedo"
+    },
+    {
+      "skill_id": "es_present_ar",
+      "skill_name": "Present tense: -ar verbs",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Type the one Spanish word that means \"I have\".",
+      "answer": "tengo",
+      "rationale": "Tengo means I have, as in Tengo una pregunta; the -o already says \"I\".",
+      "source": "prewritten",
+      "accepts": [
+        "yo tengo"
+      ],
+      "hint": "Tengo una pregunta.",
+      "id": "c3",
+      "after": 6,
+      "focus": "recalling tengo"
+    },
+    {
+      "skill_id": "es_present_ar",
+      "skill_name": "Present tense: -ar verbs",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Fill the gap with one word: \"___ al baño\" (I am going to the bathroom).",
+      "answer": "voy",
+      "rationale": "Voy means I am going; voy al baño is the standard way to say it.",
+      "source": "prewritten",
+      "accepts": [
+        "yo voy"
+      ],
+      "hint": "The chunk for I am going is three letters long.",
+      "id": "c4",
+      "after": 6,
+      "focus": "recalling voy"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/entry/16",
+    "version": 1,
+    "sha256": "dbc43dd2fd9888c375b701a2710756677c0adb1937042362cb87bb10dad84e5e",
+    "title": "Five Power Verbs as Chunks: Quiero, Tengo, Puedo, Voy, Necesito",
+    "file": "content/spanish-prewritten/entry/level-016.json"
+  }
+}

@@ -86,7 +86,27 @@ function publicLevel(id) {
   return strip(JSON.parse(JSON.stringify(view)));
 }
 
-function itemFor(levelId, itemId) { return itemIndex.get(`${levelId}:${itemId}`) || null; }
+/**
+ * A lab level, or a main-path run (services/spanish/path.js): the run keeps
+ * its built level with answers, so it is checked by the same code as the lab.
+ */
+function getLevel(id) {
+  const lab = byId.get(id);
+  if (lab) return lab;
+  // eslint-disable-next-line global-require
+  const pathRuns = require('./path');
+  return pathRuns.isRunId(id) ? pathRuns.runLevel(id) : null;
+}
+
+function itemFor(levelId, itemId) {
+  const hit = itemIndex.get(`${levelId}:${itemId}`);
+  if (hit) return hit;
+  // eslint-disable-next-line global-require
+  const pathRuns = require('./path');
+  if (!pathRuns.isRunId(levelId)) return null;
+  const level = pathRuns.runLevel(levelId);
+  return level ? pathRuns.itemsOf(level).get(itemId) || null : null;
+}
 
 const sentence = (before, mid, after) => [before, mid, after].filter((x) => x !== undefined && x !== '').join(' ').replace(/\s+([,.?!])/g, '$1').replace(/¿ /g, '¿');
 
@@ -137,7 +157,7 @@ function sayFor(levelId, itemId) {
 }
 
 function dictationCheck(levelId, lineId, text) {
-  const level = byId.get(levelId);
+  const level = getLevel(levelId);
   const line = level && level.lines && level.lines.find((l) => l.id === lineId);
   if (!line) return null;
   const d = grade.diff(text, line.es);
@@ -147,24 +167,24 @@ function dictationCheck(levelId, lineId, text) {
 
 // Where a level keeps its writing / recording / conversation config.
 function writingFor(levelId, taskId) {
-  const level = byId.get(levelId);
+  const level = getLevel(levelId);
   if (!level) return null;
   if (!taskId) return level.writing ? { level, writing: level.writing } : null;
   const sec = (level.sections || []).find((s) => s.task && s.task.id === taskId);
   return sec && sec.task.writing ? { level, writing: sec.task.writing } : null;
 }
 function recordingFor(levelId, taskId) {
-  const level = byId.get(levelId);
+  const level = getLevel(levelId);
   if (!level) return null;
   if (!taskId) return level.record ? { level, record: level.record } : null;
   const sec = (level.sections || []).find((s) => s.task && s.task.id === taskId);
   return sec ? { level, record: sec.task } : null;
 }
 function scenarioFor(levelId, part) {
-  const level = byId.get(levelId);
+  const level = getLevel(levelId);
   if (!level) return null;
   const scenario = part === 'exchange' ? level.exchange : part === 'standIn' ? level.standIn : level.scenario;
   return scenario ? { ...level, scenario } : null;
 }
 
-module.exports = { list, publicLevel, check, sayFor, dictationCheck, writingFor, recordingFor, scenarioFor, byId, LEVELS };
+module.exports = { list, publicLevel, check, sayFor, dictationCheck, writingFor, recordingFor, scenarioFor, getLevel, byId, LEVELS };

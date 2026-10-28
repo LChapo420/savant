@@ -32,8 +32,9 @@ const T = 'math';
 const G = (require('../config/curriculum').getTrack(T) && require('../config/curriculum').getTrack(T).grades || [])[0];
 const gradeId = G ? (G.id || G) : 'grade-1';
 
-check('five choices, the specific one needs text', () => {
-  assert.deepStrictEqual(Object.keys(goals.CHOICES), ['next_grade', 'deep', 'test', 'essentials', 'specific']);
+check('six choices (conversation is Spanish only), the specific one needs text', () => {
+  assert.deepStrictEqual(Object.keys(goals.CHOICES), ['next_grade', 'deep', 'test', 'essentials', 'conversation', 'specific']);
+  assert.deepStrictEqual(goals.CHOICES.conversation.tracks, ['spanish']);
   assert.ok(goals.set(user.id, { trackId: T, choice: 'specific', text: '  ' }).error);
 });
 

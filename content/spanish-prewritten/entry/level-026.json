@@ -1,0 +1,559 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "entry",
+  "level": 26,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach cero to diez with sound guides and audio, then use them the way a newcomer needs them first: quantities when ordering, and digits in a phone number.",
+  "coverage": [
+    "cero, uno, dos, tres, cuatro, cinco, seis, siete, ocho, nueve, diez",
+    "Pronunciation: cinco SEEN-koh, seis SAYS, siete SYEH-teh, nueve NWEH-beh",
+    "Uno becomes un before a masculine noun and una before a feminine one: un café, una pregunta",
+    "Phone numbers can be read digit by digit",
+    "¿Cuántos? asks how many",
+    "Look-alikes to keep apart: seis (6) and siete (7), cuatro (4) and cinco (5)"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Teaches cero to diez with a sound guide for each.",
+      "data": {
+        "caption": "Numbers 0 to 10",
+        "headers": [
+          "Number",
+          "Spanish",
+          "Say it"
+        ],
+        "rows": [
+          [
+            "0",
+            "cero",
+            "SEH-roh"
+          ],
+          [
+            "1",
+            "uno",
+            "OO-noh"
+          ],
+          [
+            "2",
+            "dos",
+            "dohs"
+          ],
+          [
+            "3",
+            "tres",
+            "trehs"
+          ],
+          [
+            "4",
+            "cuatro",
+            "KWAH-troh"
+          ],
+          [
+            "5",
+            "cinco",
+            "SEEN-koh"
+          ],
+          [
+            "6",
+            "seis",
+            "says"
+          ],
+          [
+            "7",
+            "siete",
+            "SYEH-teh"
+          ],
+          [
+            "8",
+            "ocho",
+            "OH-choh"
+          ],
+          [
+            "9",
+            "nueve",
+            "NWEH-beh"
+          ],
+          [
+            "10",
+            "diez",
+            "dyehs"
+          ]
+        ],
+        "footnote": "In Spanish, b and v sound the same, so nueve ends like \"beh\". The r in cero and tres is a quick tap, like the tt in American \"butter\".",
+        "highlightColumn": 1
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: counting 0 to 10, then a phone number read digit by digit.",
+      "data": {
+        "title": "Count and listen",
+        "cueNote": "Mi número es means \"my number is\". The last line is a 10-digit phone number: 552-870-1936.",
+        "duration": 31.9,
+        "cues": [
+          {
+            "text": "cero",
+            "start": 0.3,
+            "end": 1.1
+          },
+          {
+            "text": "uno",
+            "start": 2.6,
+            "end": 3.4
+          },
+          {
+            "text": "dos",
+            "start": 4.9,
+            "end": 5.7
+          },
+          {
+            "text": "tres",
+            "start": 7.2,
+            "end": 8
+          },
+          {
+            "text": "cuatro",
+            "start": 9.5,
+            "end": 10.3
+          },
+          {
+            "text": "cinco",
+            "start": 11.8,
+            "end": 12.6
+          },
+          {
+            "text": "seis",
+            "start": 14.1,
+            "end": 14.9
+          },
+          {
+            "text": "siete",
+            "start": 16.4,
+            "end": 17.2
+          },
+          {
+            "text": "ocho",
+            "start": 18.7,
+            "end": 19.5
+          },
+          {
+            "text": "nueve",
+            "start": 21,
+            "end": 21.8
+          },
+          {
+            "text": "diez",
+            "start": 23.3,
+            "end": 24.1
+          },
+          {
+            "text": "Mi número es: cinco, cinco, dos, ocho, siete, cero, uno, nueve, tres, seis.",
+            "start": 25.6,
+            "end": 30.4
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "Teaches the one change uno makes before a noun.",
+      "data": {
+        "tag": "Grammar note",
+        "ruleName": "Uno, un, una",
+        "anchor": "When you count, say uno; in front of a noun, uno shortens to un for masculine words and changes to una for feminine words.",
+        "prerequisites": [
+          "Counting: uno, dos, tres.",
+          "Masculine noun: un café (one coffee, a coffee).",
+          "Feminine noun: una pregunta (one question, a question).",
+          "The other numbers never change: dos cafés, dos preguntas."
+        ]
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_ClickToReveal",
+      "purpose": "Self-tests each number by recalling the word before revealing it.",
+      "data": {
+        "title": "Say it, then check",
+        "subtitle": "Say the Spanish word out loud, then tap to check.",
+        "cards": [
+          {
+            "promptLabel": "1",
+            "prompt": "7",
+            "answer": "siete",
+            "note": "SYEH-teh"
+          },
+          {
+            "promptLabel": "2",
+            "prompt": "4",
+            "answer": "cuatro",
+            "note": "KWAH-troh"
+          },
+          {
+            "promptLabel": "3",
+            "prompt": "9",
+            "answer": "nueve",
+            "note": "NWEH-beh"
+          },
+          {
+            "promptLabel": "4",
+            "prompt": "0",
+            "answer": "cero",
+            "note": "SEH-roh"
+          },
+          {
+            "promptLabel": "5",
+            "prompt": "6",
+            "answer": "seis",
+            "note": "says"
+          },
+          {
+            "promptLabel": "6",
+            "prompt": "5",
+            "answer": "cinco",
+            "note": "SEEN-koh"
+          }
+        ],
+        "revealLabel": "Tap to check",
+        "revealedLabel": "Shown"
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves the numbers by matching digits to words in a mixed order.",
+      "data": {
+        "title": "Digits and words",
+        "instruction": "Connect each word to its number.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "tres"
+          },
+          {
+            "id": "t2",
+            "label": "ocho"
+          },
+          {
+            "id": "t3",
+            "label": "diez"
+          },
+          {
+            "id": "t4",
+            "label": "dos"
+          },
+          {
+            "id": "t5",
+            "label": "seis"
+          },
+          {
+            "id": "t6",
+            "label": "siete"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "8"
+          },
+          {
+            "id": "d4",
+            "label": "2"
+          },
+          {
+            "id": "d6",
+            "label": "7"
+          },
+          {
+            "id": "d1",
+            "label": "3"
+          },
+          {
+            "id": "d3",
+            "label": "10"
+          },
+          {
+            "id": "d5",
+            "label": "6"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Uses numbers for quantities, the way they are needed when ordering.",
+      "data": {
+        "title": "Ordering",
+        "instructions": "Choose the number that matches the English in brackets.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "— Quiero "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "diez",
+              "dos",
+              "doce"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " cafés, por favor. (2) — ¿Y agua? — Sí, "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "una",
+              "un",
+              "uno"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " botella de agua. (1) — Son "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "seis",
+              "cinco",
+              "cuatro"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " dólares. (5)"
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b2": "Botella is feminine, so one bottle is una botella."
+        }
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets the classic slip of keeping uno before a noun.",
+      "data": {
+        "question": "How do you order one coffee?",
+        "choices": [
+          "Unos café, por favor.",
+          "Un café, por favor.",
+          "Uno café, por favor.",
+          "Una café, por favor."
+        ],
+        "correctIndex": 1,
+        "commonErrorLabel": "Uno before a noun",
+        "trapChoiceIndexes": [
+          2
+        ],
+        "trapReasons": {
+          "2": "Uno is the counting word you just learned, so it seems right everywhere."
+        },
+        "whyIntuitionFailed": "In the counting list the word is uno, so learners carry it into sentences.",
+        "correctReasoning": "Before a masculine noun uno shortens to un: un café. Café is masculine, so it is not una.",
+        "recoveryTip": "Counting: uno. Before a noun: un or una.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the eleven numbers and the un/una rule.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Numbers 0 to 10",
+        "takeaway": "Cero to diez let you order, count and give a phone number; just remember un café and una pregunta.",
+        "terms": [
+          "cero",
+          "uno",
+          "dos",
+          "tres",
+          "cuatro",
+          "cinco",
+          "seis",
+          "siete",
+          "ocho",
+          "nueve",
+          "diez"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_numbers",
+      "skill_name": "Numbers and time",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "What number is \"nueve\"?",
+      "answer": "9",
+      "rationale": "Nueve is 9 (nine); the other choices are siete 7, cinco 5 and dos 2.",
+      "source": "prewritten",
+      "hint": "NWEH-beh.",
+      "choices": [
+        "7",
+        "5",
+        "2",
+        "9"
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "recognizing nueve"
+    },
+    {
+      "skill_id": "es_numbers",
+      "skill_name": "Numbers and time",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the number 6 as a Spanish word.",
+      "answer": "seis",
+      "rationale": "Six is seis, said like the English word \"says\"; do not confuse it with siete (7).",
+      "source": "prewritten",
+      "hint": "It rhymes with the English word \"says\".",
+      "id": "c2",
+      "after": 4,
+      "focus": "producing seis"
+    },
+    {
+      "skill_id": "es_numbers",
+      "skill_name": "Numbers and time",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the number 4 as a Spanish word.",
+      "answer": "cuatro",
+      "rationale": "Four is cuatro (KWAH-troh); cinco is five.",
+      "source": "prewritten",
+      "hint": "KWAH-troh.",
+      "id": "c3",
+      "after": 4,
+      "focus": "producing cuatro"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which is the right way to ask for one bottle (una botella) of water?",
+      "answer": "Una botella de agua, por favor.",
+      "rationale": "Botella is feminine, so one bottle is una botella; un goes with masculine nouns, and uno is only for counting.",
+      "source": "prewritten",
+      "hint": "Botella ends in -a.",
+      "choices": [
+        "Uno botella de agua, por favor.",
+        "Un botella de agua, por favor.",
+        "Unos botella de agua, por favor.",
+        "Una botella de agua, por favor."
+      ],
+      "id": "c4",
+      "after": 6,
+      "focus": "un or una before a noun"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/entry/26",
+    "version": 1,
+    "sha256": "88f2d78b17a2586fdb47b04bfb7baf71de97013739ea7749094bc9f6928683ec",
+    "title": "Numbers 0 to 10",
+    "file": "content/spanish-prewritten/entry/level-026.json"
+  }
+}

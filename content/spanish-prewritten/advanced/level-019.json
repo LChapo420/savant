@@ -1,0 +1,439 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 19,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the three plural rules (vowel + s, consonant + es, z to c + es) with the articles los and las, then practice forming plurals in phrases.",
+  "coverage": [
+    "A noun ending in a vowel adds -s: libro → libros, casa → casas, café → cafés",
+    "A noun ending in a consonant adds -es: papel → papeles, ciudad → ciudades, profesor → profesores",
+    "A final z becomes c before -es: lápiz → lápices, luz → luces, vez → veces",
+    "el → los, la → las",
+    "Words ending in -ción add -es and drop the accent: canción → canciones",
+    "Adjectives and articles follow the noun: los libros nuevos"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "States the three plural rules in one reference.",
+      "data": {
+        "title": "Three plural rules",
+        "rows": [
+          {
+            "key": "ends in a vowel",
+            "value": "+ s",
+            "detail": "libro → libros, casa → casas, café → cafés"
+          },
+          {
+            "key": "ends in a consonant",
+            "value": "+ es",
+            "detail": "papel → papeles, ciudad → ciudades, profesor → profesores"
+          },
+          {
+            "key": "ends in z",
+            "value": "z → c, + es",
+            "detail": "lápiz → lápices, luz → luces, vez → veces"
+          },
+          {
+            "key": "the article",
+            "value": "el → los, la → las",
+            "detail": "los libros, las casas"
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Shows singular and plural side by side, with the articles.",
+      "data": {
+        "caption": "One and more than one",
+        "headers": [
+          "Singular",
+          "Plural",
+          "Rule"
+        ],
+        "rows": [
+          [
+            "el libro",
+            "los libros",
+            "+ s"
+          ],
+          [
+            "la mesa",
+            "las mesas",
+            "+ s"
+          ],
+          [
+            "el café",
+            "los cafés",
+            "+ s"
+          ],
+          [
+            "el papel",
+            "los papeles",
+            "+ es"
+          ],
+          [
+            "la ciudad",
+            "las ciudades",
+            "+ es"
+          ],
+          [
+            "el lápiz",
+            "los lápices",
+            "z → c + es"
+          ],
+          [
+            "la canción",
+            "las canciones",
+            "+ es, accent dropped"
+          ]
+        ],
+        "highlightColumn": 1
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: singular and plural pairs.",
+      "data": {
+        "title": "One, then many",
+        "cueNote": "Hear the extra syllable when -es is added: pa-PEL, pa-PE-les.",
+        "duration": 17.9,
+        "cues": [
+          {
+            "text": "el libro, los libros",
+            "start": 0.3,
+            "end": 1.6
+          },
+          {
+            "text": "la mesa, las mesas",
+            "start": 3.1,
+            "end": 4.4
+          },
+          {
+            "text": "el papel, los papeles",
+            "start": 5.9,
+            "end": 7.4
+          },
+          {
+            "text": "la ciudad, las ciudades",
+            "start": 8.9,
+            "end": 10.4
+          },
+          {
+            "text": "el lápiz, los lápices",
+            "start": 11.9,
+            "end": 13.4
+          },
+          {
+            "text": "la canción, las canciones",
+            "start": 14.9,
+            "end": 16.4
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices choosing the right plural form.",
+      "data": {
+        "title": "Make it plural",
+        "instructions": "Choose the correct plural.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Tengo dos "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "lápizes",
+              "lápizs",
+              "lápices"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": ". Hay tres "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "profesoros",
+              "profesores",
+              "profesors"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " nuevos. Me gustan las "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "cancións",
+              "canciones",
+              "canciónes"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " de Shakira."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b3": "Canción drops its accent in the plural."
+        }
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves singular-plural pairs.",
+      "data": {
+        "title": "Find the plural",
+        "instruction": "Connect each singular to its plural.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "la luz"
+          },
+          {
+            "id": "t2",
+            "label": "el árbol"
+          },
+          {
+            "id": "t3",
+            "label": "la casa"
+          },
+          {
+            "id": "t4",
+            "label": "el mes"
+          },
+          {
+            "id": "t5",
+            "label": "el sofá"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "los árboles"
+          },
+          {
+            "id": "d4",
+            "label": "los meses"
+          },
+          {
+            "id": "d1",
+            "label": "las luces"
+          },
+          {
+            "id": "d3",
+            "label": "las casas"
+          },
+          {
+            "id": "d5",
+            "label": "los sofás"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets the z to c spelling change.",
+      "data": {
+        "question": "What is the plural of \"el lápiz\" (the pencil)?",
+        "choices": [
+          "las lápices",
+          "los lápices",
+          "los lápizes",
+          "los lápizs"
+        ],
+        "correctIndex": 1,
+        "commonErrorLabel": "Keeping the z",
+        "trapChoiceIndexes": [
+          2
+        ],
+        "trapReasons": {
+          "2": "It follows the consonant rule (+ es) and keeps the spelling."
+        },
+        "whyIntuitionFailed": "The +es rule is right, but Spanish spelling normally changes z to c before e.",
+        "correctReasoning": "lápiz → lápic + es → lápices. Same for luz → luces and vez → veces.",
+        "recoveryTip": "z + es → ces.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the three rules.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Making nouns plural",
+        "takeaway": "Vowel + s, consonant + es, z becomes c + es; el becomes los and la becomes las.",
+        "terms": [
+          "los libros",
+          "las ciudades",
+          "los lápices",
+          "las canciones"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "What is the plural of \"la ciudad\"?",
+      "answer": "las ciudades",
+      "rationale": "Ciudad ends in a consonant, so it adds -es, and la becomes las: las ciudades.",
+      "source": "prewritten",
+      "hint": "Ends in a consonant.",
+      "choices": [
+        "las ciudades",
+        "las ciudads",
+        "los ciudades",
+        "las ciudad"
+      ],
+      "id": "c1",
+      "after": 3,
+      "focus": "consonant + es"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Type the plural of \"la luz\" (the light), with its article.",
+      "answer": "las luces",
+      "rationale": "z becomes c before -es, and la becomes las: las luces.",
+      "source": "prewritten",
+      "accepts": [
+        "luces"
+      ],
+      "hint": "z changes before -es.",
+      "id": "c2",
+      "after": 5,
+      "focus": "z to c"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Type the plural of \"el profesor\", with its article.",
+      "answer": "los profesores",
+      "rationale": "Profesor ends in a consonant, so it adds -es, and el becomes los.",
+      "source": "prewritten",
+      "accepts": [
+        "profesores"
+      ],
+      "hint": "Consonant + es.",
+      "id": "c3",
+      "after": 5,
+      "focus": "consonant + es"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 1,
+    "mc_agreed": 1,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/19",
+    "version": 1,
+    "sha256": "eef747b3b5fa462dac716ad56c50fa2c1338dbe235c5f391cb2bf2f9ef268062",
+    "title": "Making Nouns Plural",
+    "file": "content/spanish-prewritten/advanced/level-019.json"
+  }
+}

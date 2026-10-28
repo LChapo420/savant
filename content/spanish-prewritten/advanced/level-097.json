@@ -1,0 +1,395 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 97,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Replace the English apostrophe s with the Spanish pattern thing + de + owner, with del, ¿De quién es? for asking whose, and the order of words in longer phrases.",
+  "coverage": [
+    "Spanish has no apostrophe s: Ana's book = el libro de Ana",
+    "Order: thing + de + owner: la casa de mis padres",
+    "de + el = del: el carro del profesor; but de él (him) does not contract",
+    "¿De quién es? (Whose is it?) / ¿De quién son? (Whose are they?)",
+    "Answer: Es de Ana. Son de Pedro.",
+    "Families: la casa de los García"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the possession pattern.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "Thing + de + owner",
+        "anchor": "Spanish shows possession with de: the thing comes first, then de, then the owner.",
+        "prerequisites": [
+          "Ana's book: el libro de Ana.",
+          "My parents' house: la casa de mis padres.",
+          "The teacher's car: el carro del profesor (de + el = del).",
+          "His car: el carro de él (no contraction with the pronoun él)."
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Theory_ContrastSplit",
+      "purpose": "Contrasts English word order with Spanish.",
+      "data": {
+        "title": "Reverse the order",
+        "leftColumn": {
+          "heading": "English",
+          "tone": "neutral",
+          "items": [
+            {
+              "label": "Owner first",
+              "text": "Ana's book"
+            },
+            {
+              "label": "Owner first",
+              "text": "my sister's friends"
+            }
+          ]
+        },
+        "rightColumn": {
+          "heading": "Spanish",
+          "tone": "accent",
+          "items": [
+            {
+              "label": "Thing first",
+              "text": "el libro de Ana"
+            },
+            {
+              "label": "Thing first",
+              "text": "los amigos de mi hermana"
+            }
+          ]
+        }
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: asking and answering whose things are whose.",
+      "data": {
+        "title": "¿De quién es?",
+        "cueNote": "Este teléfono: this phone. Las llaves: the keys.",
+        "duration": 14.9,
+        "cues": [
+          {
+            "text": "¿De quién es este teléfono?",
+            "start": 0.3,
+            "end": 2.3
+          },
+          {
+            "text": "Es de Ana.",
+            "start": 3.8,
+            "end": 4.7
+          },
+          {
+            "text": "¿De quién son las llaves?",
+            "start": 6.2,
+            "end": 7.5
+          },
+          {
+            "text": "Son del profesor.",
+            "start": 9,
+            "end": 10.1
+          },
+          {
+            "text": "Es la casa de los García.",
+            "start": 11.6,
+            "end": 13.4
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_SentenceScramble",
+      "purpose": "Builds a possession phrase in Spanish order.",
+      "data": {
+        "prompt": "Tap the words in order: \"my brother's car\".",
+        "tokens": [
+          {
+            "id": "w1",
+            "text": "el"
+          },
+          {
+            "id": "w2",
+            "text": "carro"
+          },
+          {
+            "id": "w3",
+            "text": "de"
+          },
+          {
+            "id": "w4",
+            "text": "mi"
+          },
+          {
+            "id": "w5",
+            "text": "hermano"
+          }
+        ],
+        "chips": [
+          {
+            "id": "w4",
+            "text": "mi",
+            "correctIndex": 3
+          },
+          {
+            "id": "w5",
+            "text": "hermano",
+            "correctIndex": 4
+          },
+          {
+            "id": "w3",
+            "text": "de",
+            "correctIndex": 2
+          },
+          {
+            "id": "w2",
+            "text": "carro",
+            "correctIndex": 1
+          },
+          {
+            "id": "w1",
+            "text": "el",
+            "correctIndex": 0
+          }
+        ],
+        "feedbackCorrect": "Right: el carro de mi hermano",
+        "feedbackReset": "That chip comes later. Start again from the first word.",
+        "clearOnMistake": true,
+        "hintAfterAttempts": 2,
+        "hintText": "Thing first."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices de and del.",
+      "data": {
+        "title": "De or del?",
+        "instructions": "Choose the word that fits.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Es el perro "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "del",
+              "de el",
+              "de"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " Lucía. Son los libros "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "del",
+              "de el",
+              "de"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " profesor. Es la oficina "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "de la",
+              "del",
+              "de el"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " directora."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b2": "de + el profesor = del profesor.",
+          "b3": "With la there is no contraction."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets copying the English apostrophe s.",
+      "data": {
+        "question": "How do you say \"Pedro's house\"?",
+        "choices": [
+          "la Pedro casa",
+          "la casa Pedro",
+          "la casa de Pedro",
+          "Pedro's casa"
+        ],
+        "correctIndex": 2,
+        "commonErrorLabel": "Apostrophe s in Spanish",
+        "trapChoiceIndexes": [
+          3
+        ],
+        "trapReasons": {
+          "3": "It keeps the English pattern."
+        },
+        "whyIntuitionFailed": "English marks the owner with 's before the thing, and that habit carries over.",
+        "correctReasoning": "Spanish has no 's: the thing comes first, then de + owner: la casa de Pedro.",
+        "recoveryTip": "Whose? Thing + de + owner.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the pattern and the question.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Possession with de",
+        "takeaway": "No apostrophe s in Spanish: say el libro de Ana, el carro del profesor, and ask ¿De quién es?",
+        "terms": [
+          "de",
+          "del",
+          "¿De quién es?",
+          "Es de ..."
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "How do you say \"the doctor's office\" (el médico)?",
+      "answer": "el consultorio del médico",
+      "rationale": "Thing + de + owner, and de + el contracts to del: el consultorio del médico.",
+      "source": "prewritten",
+      "hint": "de + el = ?",
+      "choices": [
+        "el consultorio médico's",
+        "el consultorio del médico",
+        "el consultorio de el médico",
+        "el médico consultorio"
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "del"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "You find a jacket and want to ask whose it is. What do you say?",
+      "answer": "¿De quién es?",
+      "rationale": "¿De quién es? asks whose it is; ¿Quién es? asks who someone is and ¿De dónde es? asks where it is from.",
+      "source": "prewritten",
+      "hint": "De + quién.",
+      "choices": [
+        "¿De dónde es?",
+        "¿De quién es?",
+        "¿Quién es?",
+        "¿Qué es?"
+      ],
+      "id": "c2",
+      "after": 2,
+      "focus": "asking whose"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type \"Ana's friend\" in Spanish: el amigo ___ Ana.",
+      "answer": "de",
+      "rationale": "Possession uses de: el amigo de Ana.",
+      "source": "prewritten",
+      "accepts": [
+        "el amigo de ana"
+      ],
+      "hint": "A two-letter word.",
+      "id": "c3",
+      "after": 4,
+      "focus": "de for possession"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/97",
+    "version": 1,
+    "sha256": "acd5c22ba9268b920710024bf2bbc8c577803956bb45efa283bf2ebe0166c33b",
+    "title": "Possession with De",
+    "file": "content/spanish-prewritten/advanced/level-097.json"
+  }
+}

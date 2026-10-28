@@ -1,0 +1,370 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 70,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach adjective agreement as two matches (gender and number), with the four forms of an -o adjective, adjectives that only change for number, quantity words like mucho, and the masculine plural for mixed groups.",
+  "coverage": [
+    "An adjective matches its noun in gender and number",
+    "-o adjectives have four forms: alto, alta, altos, altas",
+    "Adjectives ending in -e only change for number: una casa grande, unas casas grandes",
+    "mucho / mucha / muchos / muchas agrees too: muchos libros, muchas gracias",
+    "A mixed group takes the masculine plural: Ana y Luis son simpáticos",
+    "Descriptive adjectives usually come after the noun: una casa grande"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States agreement as one rule.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "Adjectives agree",
+        "anchor": "An adjective takes the gender and the number of the noun it describes.",
+        "prerequisites": [
+          "un amigo simpático, una amiga simpática.",
+          "unos amigos simpáticos, unas amigas simpáticas.",
+          "The adjective usually comes after the noun: una casa grande.",
+          "A group of men and women: masculine plural, simpáticos."
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Shows the four forms of an -o adjective and the two forms of an -e adjective.",
+      "data": {
+        "caption": "Forms of an adjective",
+        "headers": [
+          "",
+          "Masculine",
+          "Feminine"
+        ],
+        "rows": [
+          [
+            "-o, singular",
+            "un carro nuevo",
+            "una casa nueva"
+          ],
+          [
+            "-o, plural",
+            "unos carros nuevos",
+            "unas casas nuevas"
+          ],
+          [
+            "-e, singular",
+            "un carro grande",
+            "una casa grande"
+          ],
+          [
+            "-e, plural",
+            "unos carros grandes",
+            "unas casas grandes"
+          ],
+          [
+            "mucho",
+            "muchos libros",
+            "muchas gracias"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: phrases that show agreement.",
+      "data": {
+        "title": "Hear agreement",
+        "cueNote": "Listen for the endings: -o, -a, -os, -as.",
+        "duration": 17.4,
+        "cues": [
+          {
+            "text": "una casa grande",
+            "start": 0.3,
+            "end": 1.6
+          },
+          {
+            "text": "unos amigos simpáticos",
+            "start": 3.1,
+            "end": 5.1
+          },
+          {
+            "text": "muchos libros",
+            "start": 6.6,
+            "end": 7.5
+          },
+          {
+            "text": "muchas gracias",
+            "start": 9,
+            "end": 9.9
+          },
+          {
+            "text": "Mi hermana es alta.",
+            "start": 11.4,
+            "end": 12.9
+          },
+          {
+            "text": "Mis hermanos son altos.",
+            "start": 14.4,
+            "end": 15.9
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_XRay",
+      "purpose": "X-rays a phrase to show every word agreeing.",
+      "data": {
+        "prompt": "Tap each word to see what it agrees with.",
+        "source": "{{unas}} {{casas}} {{blancas}}",
+        "terms": [
+          {
+            "id": "x1",
+            "label": "article",
+            "mark": "unas",
+            "note": "feminine plural, to match casas."
+          },
+          {
+            "id": "x2",
+            "label": "noun",
+            "mark": "casas",
+            "note": "feminine (la casa), plural: it sets the agreement."
+          },
+          {
+            "id": "x3",
+            "label": "adjective",
+            "mark": "blancas",
+            "note": "white: feminine plural, after the noun."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices choosing the agreeing form.",
+      "data": {
+        "title": "Make it agree",
+        "instructions": "Choose the form of the adjective.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Tengo una casa "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "pequeñas",
+              "pequeña",
+              "pequeño"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": ". Mis vecinos son muy "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "simpático",
+              "simpáticas",
+              "simpáticos"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": ". Hay "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "muchos",
+              "mucha",
+              "muchas"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " personas aquí."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b2": "Vecinos: masculine plural.",
+          "b3": "Personas is feminine plural: muchas personas."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets agreeing the adjective with the speaker instead of the noun.",
+      "data": {
+        "question": "Carlos is talking about his house. Which is correct?",
+        "choices": [
+          "Mi casa es bonito.",
+          "Mi casa es bonitos.",
+          "Mi casa son bonita.",
+          "Mi casa es bonita."
+        ],
+        "correctIndex": 3,
+        "commonErrorLabel": "Agreeing with the speaker",
+        "trapChoiceIndexes": [
+          0
+        ],
+        "trapReasons": {
+          "0": "Carlos is a man, so a masculine ending feels right."
+        },
+        "whyIntuitionFailed": "Learners match the adjective to the person speaking, not to the noun.",
+        "correctReasoning": "The adjective describes casa, which is feminine singular: bonita, whoever is talking.",
+        "recoveryTip": "Ask: which noun does it describe?",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the matching rule.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Adjective agreement",
+        "takeaway": "Match every adjective to its noun: alto, alta, altos, altas; grande, grandes; muchos libros, muchas gracias.",
+        "terms": [
+          "alto",
+          "alta",
+          "altos",
+          "altas",
+          "grande",
+          "muchos"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which phrase is correct for \"some nice (female) friends\"?",
+      "answer": "unas amigas simpáticas",
+      "rationale": "Amigas is feminine plural, so the article and adjective are feminine plural too: unas, simpáticas.",
+      "source": "prewritten",
+      "hint": "Every word: feminine plural.",
+      "choices": [
+        "unas amigas simpática",
+        "unas amigas simpáticas",
+        "unas amigas simpáticos",
+        "unos amigas simpáticas"
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "feminine plural agreement"
+    },
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Ana and Luis are both tall. Which is correct?",
+      "answer": "Ana y Luis son altos.",
+      "rationale": "A mixed group takes the masculine plural: altos.",
+      "source": "prewritten",
+      "hint": "A man and a woman together.",
+      "choices": [
+        "Ana y Luis son alto.",
+        "Ana y Luis es altos.",
+        "Ana y Luis son altos.",
+        "Ana y Luis son altas."
+      ],
+      "id": "c2",
+      "after": 0,
+      "focus": "mixed-group agreement"
+    },
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the correct form of \"nuevo\" for: \"unas camisas ___\" (some new shirts).",
+      "answer": "nuevas",
+      "rationale": "Camisas is feminine plural, so nuevo becomes nuevas.",
+      "source": "prewritten",
+      "hint": "Feminine plural ending.",
+      "id": "c3",
+      "after": 4,
+      "focus": "agreement of -o adjectives"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/70",
+    "version": 1,
+    "sha256": "90176299b3bd1f8c57d3cb8e3125459ffddc3f00354ccfe84404bd59bf9ed43c",
+    "title": "Adjective Agreement in Gender and Number",
+    "file": "content/spanish-prewritten/advanced/level-070.json"
+  }
+}

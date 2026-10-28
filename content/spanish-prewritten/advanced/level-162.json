@@ -1,0 +1,452 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 162,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Map the 20 Spanish-speaking countries and their capitals by region with the question pattern ¿Cuál es la capital de ...?, flag the two unusual capitals, and explain the words hispano and latino carefully.",
+  "coverage": [
+    "The 20 Spanish-speaking countries and their capitals, plus Puerto Rico (San Juan)",
+    "¿Cuál es la capital de ...? La capital de Perú es Lima.",
+    "Bolivia has two: Sucre (constitutional capital) and La Paz (seat of government)",
+    "Equatorial Guinea named Ciudad de la Paz its capital in 2026, replacing Malabo",
+    "Hispano: connected to Spanish-speaking countries, including Spain",
+    "Latino: connected to Latin America, including Brazil, not Spain",
+    "Many people prefer their nationality: soy mexicana, soy colombiano"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists the countries of Mexico, Central America and the Caribbean with capitals.",
+      "data": {
+        "caption": "North and Central America, Caribbean",
+        "headers": [
+          "País",
+          "Capital"
+        ],
+        "rows": [
+          [
+            "México",
+            "Ciudad de México"
+          ],
+          [
+            "Guatemala",
+            "Ciudad de Guatemala"
+          ],
+          [
+            "Honduras",
+            "Tegucigalpa"
+          ],
+          [
+            "El Salvador",
+            "San Salvador"
+          ],
+          [
+            "Nicaragua",
+            "Managua"
+          ],
+          [
+            "Costa Rica",
+            "San José"
+          ],
+          [
+            "Panamá",
+            "Ciudad de Panamá"
+          ],
+          [
+            "Cuba",
+            "La Habana"
+          ],
+          [
+            "República Dominicana",
+            "Santo Domingo"
+          ],
+          [
+            "Puerto Rico (US territory)",
+            "San Juan"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists the countries of South America, Europe and Africa with capitals.",
+      "data": {
+        "caption": "South America, Europe, Africa",
+        "headers": [
+          "País",
+          "Capital"
+        ],
+        "rows": [
+          [
+            "Colombia",
+            "Bogotá"
+          ],
+          [
+            "Venezuela",
+            "Caracas"
+          ],
+          [
+            "Ecuador",
+            "Quito"
+          ],
+          [
+            "Perú",
+            "Lima"
+          ],
+          [
+            "Bolivia",
+            "Sucre (constitutional) and La Paz (seat of government)"
+          ],
+          [
+            "Chile",
+            "Santiago"
+          ],
+          [
+            "Argentina",
+            "Buenos Aires"
+          ],
+          [
+            "Uruguay",
+            "Montevideo"
+          ],
+          [
+            "Paraguay",
+            "Asunción"
+          ],
+          [
+            "España",
+            "Madrid"
+          ],
+          [
+            "Guinea Ecuatorial",
+            "Ciudad de la Paz (named capital in 2026; before, Malabo)"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: asking and answering about capitals.",
+      "data": {
+        "title": "¿Cuál es la capital?",
+        "cueNote": "La Habana is Havana. Notice the article: La Habana, La Paz.",
+        "duration": 18.7,
+        "cues": [
+          {
+            "text": "¿Cuál es la capital de Colombia?",
+            "start": 0.3,
+            "end": 2.5
+          },
+          {
+            "text": "La capital de Colombia es Bogotá.",
+            "start": 4,
+            "end": 6.6
+          },
+          {
+            "text": "¿Cuál es la capital de Argentina?",
+            "start": 8.1,
+            "end": 10.5
+          },
+          {
+            "text": "Es Buenos Aires.",
+            "start": 12,
+            "end": 13.1
+          },
+          {
+            "text": "La capital de Cuba es La Habana.",
+            "start": 14.6,
+            "end": 17.2
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Theory_ContrastSplit",
+      "purpose": "Explains hispano and latino without overclaiming.",
+      "data": {
+        "title": "Hispano or latino?",
+        "leftColumn": {
+          "heading": "hispano / hispana",
+          "tone": "neutral",
+          "items": [
+            {
+              "label": "Means",
+              "text": "connected to a Spanish-speaking country.",
+              "example": "Includes Spain; does not include Brazil."
+            }
+          ]
+        },
+        "rightColumn": {
+          "heading": "latino / latina",
+          "tone": "neutral",
+          "items": [
+            {
+              "label": "Means",
+              "text": "connected to Latin America.",
+              "example": "Includes Brazil; does not include Spain."
+            }
+          ]
+        },
+        "footnote": "In the US the two words overlap and preferences vary. Many people simply name their country: Soy dominicana."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves capitals by country.",
+      "data": {
+        "title": "Country and capital",
+        "instruction": "Connect each country to its capital.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "Perú"
+          },
+          {
+            "id": "t2",
+            "label": "Ecuador"
+          },
+          {
+            "id": "t3",
+            "label": "Uruguay"
+          },
+          {
+            "id": "t4",
+            "label": "Paraguay"
+          },
+          {
+            "id": "t5",
+            "label": "Honduras"
+          },
+          {
+            "id": "t6",
+            "label": "Venezuela"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "Quito"
+          },
+          {
+            "id": "d4",
+            "label": "Asunción"
+          },
+          {
+            "id": "d6",
+            "label": "Caracas"
+          },
+          {
+            "id": "d1",
+            "label": "Lima"
+          },
+          {
+            "id": "d3",
+            "label": "Montevideo"
+          },
+          {
+            "id": "d5",
+            "label": "Tegucigalpa"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets the common Bolivia mistake.",
+      "data": {
+        "question": "Which statement about Bolivia's capital is accurate?",
+        "choices": [
+          "Sucre is the constitutional capital; the government sits in La Paz.",
+          "La Paz is the only capital.",
+          "Santa Cruz is the capital.",
+          "Bolivia has no capital."
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "One capital for Bolivia",
+        "trapChoiceIndexes": [
+          1
+        ],
+        "trapReasons": {
+          "1": "La Paz is where the government works, so it is often named as the capital."
+        },
+        "whyIntuitionFailed": "Most countries have one capital, and La Paz is the one in the news.",
+        "correctReasoning": "Bolivia's constitution names Sucre as the capital, while the president and congress sit in La Paz.",
+        "recoveryTip": "Bolivia: Sucre and La Paz.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the map and the question pattern.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Countries and capitals",
+        "takeaway": "Ask ¿Cuál es la capital de ...?, know the capitals region by region (Bolivia has two), and use hispano for the Spanish-speaking world and latino for Latin America.",
+        "terms": [
+          "¿Cuál es la capital?",
+          "Bogotá",
+          "Lima",
+          "Buenos Aires",
+          "hispano",
+          "latino"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_questions",
+      "skill_name": "Questions and negation",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "¿Cuál es la capital de Costa Rica?",
+      "answer": "San José",
+      "rationale": "The capital of Costa Rica is San José; San Salvador is El Salvador's, Managua is Nicaragua's and Santo Domingo is the Dominican Republic's.",
+      "source": "prewritten",
+      "hint": "A saint's name, like several others in the region.",
+      "choices": [
+        "San José",
+        "San Salvador",
+        "Managua",
+        "Santo Domingo"
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "Central American capitals"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "multiple_choice",
+      "prompt": "As this lesson defines the words, which country is included by \"hispano\" but NOT by \"latino\"?",
+      "answer": "España",
+      "rationale": "Hispano covers Spanish-speaking countries including Spain; latino covers Latin America, which does not include Spain.",
+      "source": "prewritten",
+      "hint": "It is in Europe.",
+      "choices": [
+        "Colombia",
+        "España",
+        "Brasil",
+        "México"
+      ],
+      "id": "c2",
+      "after": 3,
+      "focus": "hispano vs latino"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 3,
+      "format": "type_in",
+      "prompt": "Type the capital of Peru.",
+      "answer": "Lima",
+      "rationale": "The capital of Perú is Lima.",
+      "source": "prewritten",
+      "hint": "A people word from it is limeño.",
+      "id": "c3",
+      "after": 4,
+      "focus": "South American capitals"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [
+      {
+        "url": "https://www.financialafrik.com/en/2026/01/06/equatorial-guinea-officially-changes-its-capital/",
+        "title": "Equatorial Guinea officially changes its capital (Jan 2026)"
+      }
+    ],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/162",
+    "version": 1,
+    "sha256": "b056a969ec5ba825c5e530250b435604aed86a24f333477966d0796409c8242f",
+    "title": "The Hispanic World: Countries and Capitals",
+    "file": "content/spanish-prewritten/advanced/level-162.json"
+  }
+}

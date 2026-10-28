@@ -1,6 +1,9 @@
-/* Spoken audio: each line is rendered once by the server (MiMo voices, cached
- * as files) and played from there. If the server cannot speak, the browser's own
- * Spanish voice takes over so a level never goes silent.
+/* Spoken audio: each line is rendered once by the server (services/spanish/voice.js:
+ * ElevenLabs eleven-v3 through the LLM Gateway for the accounts on its list,
+ * Gemini otherwise; cached as files) and played from there. If the server cannot
+ * speak, the browser's own Spanish voice takes over so a level never goes silent.
+ * A page that already knows the server has no voice for this account calls
+ * ES.audio.setServer(false) and every line goes straight to the browser voice.
  *
  * ES.audio.say(text, { voice, slow, char })  -> Promise, resolves when finished
  * ES.audio.warm([{ text, voice }])           -> pre-render a level's lines
@@ -31,14 +34,32 @@
     if (charEl) charEl.dataset.talking = on ? 'true' : 'false';
   }
 
-  function browserSay(text, slow) {
+  // Voices load late in some browsers (Chrome fills the list after a
+  // voiceschanged event), so the Spanish voice is looked up when it is needed.
+  function spanishVoice() {
+    const all = ('speechSynthesis' in window && speechSynthesis.getVoices()) || [];
+    const es = all.filter((x) => /^es(-|_|$)/i.test(x.lang));
+    return es.find((x) => /es[-_](MX|US|419)/i.test(x.lang)) || es.find((x) => /es[-_]ES/i.test(x.lang)) || es[0] || null;
+  }
+  function voicesReady() {
+    if (!('speechSynthesis' in window) || speechSynthesis.getVoices().length) return Promise.resolve();
+    return new Promise((resolve) => {
+      const done = () => { speechSynthesis.removeEventListener && speechSynthesis.removeEventListener('voiceschanged', done); resolve(); };
+      if (speechSynthesis.addEventListener) speechSynthesis.addEventListener('voiceschanged', done);
+      setTimeout(done, 700);
+    });
+  }
+  audio.browserVoice = () => { const v = spanishVoice(); return v ? `${v.name} (${v.lang})` : null; };
+
+  async function browserSay(text, slow) {
+    await voicesReady();
     return new Promise((resolve) => {
       if (!('speechSynthesis' in window)) return resolve();
       speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
       u.lang = 'es-ES';
-      const v = speechSynthesis.getVoices().find((x) => /^es(-|_)/i.test(x.lang));
-      if (v) u.voice = v;
+      const v = spanishVoice();
+      if (v) { u.voice = v; u.lang = v.lang; }
       u.rate = slow ? 0.65 : 0.95;
       u.onend = u.onerror = () => resolve();
       speechSynthesis.speak(u);
@@ -93,5 +114,21 @@
   };
 
   audio.serverVoice = () => Date.now() >= serverOffUntil;
+  /** The page knows whether the server speaks for this account: false skips it for the visit. */
+  audio.setServer = (on) => { serverOffUntil = on ? 0 : Number.MAX_SAFE_INTEGER; };
+  /**
+   * Call from a tap: phones only let a page speak after a user gesture, and a
+   * lesson's first line autoplays a moment after the screen changes.
+   */
+  audio.unlock = () => {
+    try {
+      if ('speechSynthesis' in window) { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u); }
+      // An empty WAV from a blob: URL (the page's CSP allows media from 'self' and blob:, not data:).
+      const wav = Uint8Array.from(atob('UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA='), (c) => c.charCodeAt(0));
+      const src = URL.createObjectURL(new Blob([wav], { type: 'audio/wav' }));
+      const a = new Audio(src); a.volume = 0;
+      a.play().catch(() => {}).finally(() => URL.revokeObjectURL(src));
+    } catch (e) { /* nothing to unlock */ }
+  };
   ES.audio = audio;
 })();

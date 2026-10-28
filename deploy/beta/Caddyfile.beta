@@ -1,0 +1,9 @@
+# Append this block to /etc/caddy/Caddyfile (deploy/beta/README.md, step 8). Leave the
+# landing site's block above it as it is. Caddy gets and renews the HTTPS certificate for
+# beta.savantedu.com by itself once the DNS record points at this VM, and redirects
+# http to https. No access log on purpose: nothing here writes visitors' IP addresses
+# to disk (the app keeps its own error log, without IPs).
+beta.savantedu.com {
+	encode zstd gzip
+	reverse_proxy 127.0.0.1:6767
+}

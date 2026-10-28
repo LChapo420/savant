@@ -1,0 +1,518 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "intermediate",
+  "level": 97,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the days of the week with audio, ask and answer ¿Qué día es hoy?, add hoy, mañana and ayer, and show the article rule (el lunes, los lunes) so the learner can plan.",
+  "coverage": [
+    "lunes, martes, miércoles, jueves, viernes, sábado, domingo",
+    "Days are written in lowercase, and the week starts on Monday on Spanish calendars",
+    "¿Qué día es hoy? Hoy es martes.",
+    "hoy = today, mañana = tomorrow, ayer = yesterday",
+    "mañana also means morning: la mañana; mañana por la mañana = tomorrow morning",
+    "el lunes = on Monday; los lunes = on Mondays; no word for \"on\"",
+    "el fin de semana = the weekend"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Teaches the seven days with sound guides.",
+      "data": {
+        "caption": "Los días de la semana",
+        "headers": [
+          "Spanish",
+          "English",
+          "Say it"
+        ],
+        "rows": [
+          [
+            "lunes",
+            "Monday",
+            "LOO-nehs"
+          ],
+          [
+            "martes",
+            "Tuesday",
+            "MAR-tehs"
+          ],
+          [
+            "miércoles",
+            "Wednesday",
+            "MYEHR-koh-lehs"
+          ],
+          [
+            "jueves",
+            "Thursday",
+            "HWEH-behs"
+          ],
+          [
+            "viernes",
+            "Friday",
+            "BYEHR-nehs"
+          ],
+          [
+            "sábado",
+            "Saturday",
+            "SAH-bah-doh"
+          ],
+          [
+            "domingo",
+            "Sunday",
+            "doh-MEEN-goh"
+          ]
+        ],
+        "footnote": "Days are written in lowercase, and Spanish calendars start the week on lunes.",
+        "highlightColumn": 0
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: the seven days, then a short exchange about today.",
+      "data": {
+        "title": "Days of the week",
+        "cueNote": "¡Qué bien! means \"Great!\" The j in jueves is a breathy h: HWEH-behs.",
+        "duration": 24.5,
+        "cues": [
+          {
+            "text": "lunes",
+            "start": 0.3,
+            "end": 1.1
+          },
+          {
+            "text": "martes",
+            "start": 2.6,
+            "end": 3.4
+          },
+          {
+            "text": "miércoles",
+            "start": 4.9,
+            "end": 5.7
+          },
+          {
+            "text": "jueves",
+            "start": 7.2,
+            "end": 8
+          },
+          {
+            "text": "viernes",
+            "start": 9.5,
+            "end": 10.3
+          },
+          {
+            "text": "sábado",
+            "start": 11.8,
+            "end": 12.6
+          },
+          {
+            "text": "domingo",
+            "start": 14.1,
+            "end": 14.9
+          },
+          {
+            "text": "¿Qué día es hoy?",
+            "start": 16.4,
+            "end": 17.3
+          },
+          {
+            "text": "Hoy es jueves.",
+            "start": 18.8,
+            "end": 19.7
+          },
+          {
+            "text": "Mañana es viernes. ¡Qué bien!",
+            "start": 21.2,
+            "end": 23
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "Collects the time words and the article rule in one reference.",
+      "data": {
+        "title": "Today, tomorrow, Monday",
+        "rows": [
+          {
+            "key": "hoy",
+            "value": "today",
+            "detail": "Hoy es lunes."
+          },
+          {
+            "key": "mañana",
+            "value": "tomorrow",
+            "detail": "Mañana es martes."
+          },
+          {
+            "key": "ayer",
+            "value": "yesterday",
+            "detail": "Ayer fue domingo. (fue = was)"
+          },
+          {
+            "key": "la mañana",
+            "value": "the morning",
+            "detail": "mañana por la mañana = tomorrow morning"
+          },
+          {
+            "key": "el lunes",
+            "value": "on Monday (one Monday)",
+            "detail": "Voy a trabajar el lunes."
+          },
+          {
+            "key": "los lunes",
+            "value": "on Mondays (every Monday)",
+            "detail": "Los lunes voy al gimnasio."
+          },
+          {
+            "key": "el fin de semana",
+            "value": "the weekend"
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Concept_CautionFlag",
+      "purpose": "Warns about the two English habits that break day phrases.",
+      "data": {
+        "conceptLabel": "Days of the week",
+        "flagTitle": "Two habits to drop",
+        "cautions": [
+          {
+            "kind": "illegal_transfer",
+            "title": "No word for \"on\"",
+            "detail": "English says \"on Monday\". Spanish uses the article instead.",
+            "wrongExample": "Voy en lunes.",
+            "rightExample": "Voy el lunes."
+          },
+          {
+            "kind": "pitfall",
+            "title": "No capital letters",
+            "detail": "Days are common nouns in Spanish, so they are lowercase unless they start a sentence.",
+            "wrongExample": "Hoy es Viernes.",
+            "rightExample": "Hoy es viernes."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves the days by matching Spanish to English.",
+      "data": {
+        "title": "Match the days",
+        "instruction": "Connect each day to its English name.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "miércoles"
+          },
+          {
+            "id": "t2",
+            "label": "jueves"
+          },
+          {
+            "id": "t3",
+            "label": "sábado"
+          },
+          {
+            "id": "t4",
+            "label": "martes"
+          },
+          {
+            "id": "t5",
+            "label": "domingo"
+          },
+          {
+            "id": "t6",
+            "label": "viernes"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "Thursday"
+          },
+          {
+            "id": "d4",
+            "label": "Tuesday"
+          },
+          {
+            "id": "d6",
+            "label": "Friday"
+          },
+          {
+            "id": "d1",
+            "label": "Wednesday"
+          },
+          {
+            "id": "d3",
+            "label": "Saturday"
+          },
+          {
+            "id": "d5",
+            "label": "Sunday"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices hoy, mañana and ayer around a given day.",
+      "data": {
+        "title": "Today is Wednesday",
+        "instructions": "Today is miércoles. Choose the right day.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Hoy es miércoles. Mañana es "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "viernes",
+              "jueves",
+              "martes"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": ". Ayer fue "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "lunes",
+              "martes",
+              "jueves"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": ". El fin de semana es sábado y "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "domingo",
+              "lunes",
+              "viernes"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": "."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        }
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets the mañana double meaning.",
+      "data": {
+        "question": "Your coworker says \"Nos vemos mañana por la mañana.\" When will you see them?",
+        "choices": [
+          "Tomorrow morning",
+          "This morning",
+          "Tomorrow, any time",
+          "In the morning every day"
+        ],
+        "correctIndex": 0,
+        "commonErrorLabel": "Mañana means two things",
+        "trapChoiceIndexes": [
+          1,
+          2
+        ],
+        "trapReasons": {
+          "1": "If mañana is read as morning both times, it seems to be \"this morning\"."
+        },
+        "whyIntuitionFailed": "Mañana is both tomorrow and morning, so a sentence with two of them looks like a repeat.",
+        "correctReasoning": "Without la, mañana is tomorrow; la mañana is the morning. Mañana por la mañana is tomorrow morning.",
+        "recoveryTip": "With la: morning. Without la: tomorrow.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the day question and the article rule.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "What day is it today?",
+        "takeaway": "Ask ¿Qué día es hoy?, answer Hoy es ..., and plan with el lunes for one Monday and los lunes for every Monday.",
+        "terms": [
+          "lunes",
+          "miércoles",
+          "sábado",
+          "hoy",
+          "mañana",
+          "ayer"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Hoy es viernes. ¿Qué día es mañana?",
+      "answer": "sábado",
+      "rationale": "The day after viernes (Friday) is sábado (Saturday).",
+      "source": "prewritten",
+      "hint": "Friday, then ...",
+      "choices": [
+        "domingo",
+        "lunes",
+        "sábado",
+        "jueves"
+      ],
+      "id": "c1",
+      "after": 5,
+      "focus": "the order of the days"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "How do you say \"I go to the gym on Mondays\" (every Monday)?",
+      "answer": "Los lunes voy al gimnasio.",
+      "rationale": "Every Monday is los lunes; el lunes would mean one particular Monday, and Spanish uses no word for on.",
+      "source": "prewritten",
+      "hint": "Every week, so plural.",
+      "choices": [
+        "Los lunes voy al gimnasio.",
+        "El lunes voy al gimnasio.",
+        "En lunes voy al gimnasio.",
+        "Lunes voy al gimnasio en."
+      ],
+      "id": "c2",
+      "after": 3,
+      "focus": "el lunes vs los lunes"
+    },
+    {
+      "skill_id": "es_questions",
+      "skill_name": "Questions and negation",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the question \"What day is it today?\" in Spanish.",
+      "answer": "¿Qué día es hoy?",
+      "rationale": "The fixed question is ¿Qué día es hoy? and the answer is Hoy es plus a day.",
+      "source": "prewritten",
+      "accepts": [
+        "que dia es hoy",
+        "qué día es",
+        "Qué día es hoy?"
+      ],
+      "hint": "Qué + día + es + hoy.",
+      "id": "c3",
+      "after": 6,
+      "focus": "asking the day"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/intermediate/97",
+    "version": 1,
+    "sha256": "1fe01d6a596f40ec2bcc656bcddae6834816c9aa2622e69f16df51e14c092976",
+    "title": "What Day Is It Today",
+    "file": "content/spanish-prewritten/intermediate/level-097.json"
+  }
+}

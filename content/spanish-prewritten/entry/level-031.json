@@ -1,0 +1,420 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "entry",
+  "level": 31,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach hay as one survival word that asks and answers whether something is there, with the answers a learner will actually hear (no hay, ya no hay), then practice in a shop and a restaurant.",
+  "coverage": [
+    "Hay means there is or there are, and sounds like the English word \"eye\"",
+    "The same word works for one or many: hay un baño, hay dos baños",
+    "¿Hay baño? ¿Hay agua? ask whether something exists or is available",
+    "No hay means there is not, there are none",
+    "Ya no hay means there is no more, it has run out",
+    "Answers: Sí, hay. / No, no hay.",
+    "Polite openers: Disculpe, ¿hay...?"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "Defines hay and its pronunciation in one card.",
+      "data": {
+        "tag": "Survival chunk",
+        "ruleName": "Hay",
+        "anchor": "Hay (said like the English word \"eye\") means \"there is\" or \"there are\", and with a question mark it asks whether something is there.",
+        "prerequisites": [
+          "The h is silent, so hay sounds like \"eye\".",
+          "One word for one or many: Hay un baño. Hay dos baños.",
+          "Ask: ¿Hay baño? (Is there a bathroom?)",
+          "Answer: Sí, hay. (Yes, there is.) / No, no hay. (No, there isn't.)"
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists the hay chunks a learner will use and hear, with meanings.",
+      "data": {
+        "caption": "Hay in use",
+        "headers": [
+          "Spanish",
+          "English"
+        ],
+        "rows": [
+          [
+            "¿Hay baño?",
+            "Is there a bathroom?"
+          ],
+          [
+            "¿Hay agua?",
+            "Is there any water?"
+          ],
+          [
+            "¿Hay wifi?",
+            "Is there wifi?"
+          ],
+          [
+            "Sí, hay.",
+            "Yes, there is."
+          ],
+          [
+            "No hay.",
+            "There isn't any. / There are none."
+          ],
+          [
+            "Ya no hay.",
+            "There is no more. / It has run out."
+          ],
+          [
+            "Ya no hay pan.",
+            "There is no more bread."
+          ],
+          [
+            "Disculpe, ¿hay baño?",
+            "Excuse me, is there a bathroom?"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: a short shop exchange using hay, no hay and ya no hay.",
+      "data": {
+        "title": "At the corner store",
+        "cueNote": "Lo siento means \"I'm sorry\". Hear how ya no hay is said as one smooth chunk: yah-noh-EYE.",
+        "duration": 15.9,
+        "cues": [
+          {
+            "text": "Disculpe, ¿hay agua?",
+            "start": 0.3,
+            "end": 1.6
+          },
+          {
+            "text": "Sí, hay.",
+            "start": 3.1,
+            "end": 3.9
+          },
+          {
+            "text": "¿Hay pan?",
+            "start": 5.4,
+            "end": 6.2
+          },
+          {
+            "text": "No, ya no hay pan.",
+            "start": 7.7,
+            "end": 8.8
+          },
+          {
+            "text": "¿Y hay baño?",
+            "start": 10.3,
+            "end": 11.1
+          },
+          {
+            "text": "No, no hay baño. Lo siento.",
+            "start": 12.6,
+            "end": 14.4
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Theory_ContrastSplit",
+      "purpose": "Contrasts no hay and ya no hay, the two answers learners most often mix up.",
+      "data": {
+        "title": "No hay or ya no hay?",
+        "leftColumn": {
+          "heading": "No hay",
+          "tone": "success",
+          "items": [
+            {
+              "label": "Meaning",
+              "text": "There isn't any (here, at all).",
+              "example": "No hay baño. There is no bathroom."
+            }
+          ]
+        },
+        "rightColumn": {
+          "heading": "Ya no hay",
+          "tone": "accent",
+          "items": [
+            {
+              "label": "Meaning",
+              "text": "There was some, but it has run out.",
+              "example": "Ya no hay café. The coffee is gone."
+            }
+          ]
+        },
+        "footnote": "Ya adds \"anymore\": the thing was there before."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_MultipleChoice",
+      "purpose": "Applies hay in a restaurant: choosing the question that asks if something is available.",
+      "data": {
+        "prompt": "You want to know if a café has wifi. What do you ask?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Ya no hay wifi."
+          },
+          {
+            "id": "b",
+            "text": "¿Hay wifi?"
+          },
+          {
+            "id": "c",
+            "text": "¿Tengo wifi?"
+          },
+          {
+            "id": "d",
+            "text": "¿Voy wifi?"
+          }
+        ],
+        "correctOptionId": "b",
+        "feedback": {
+          "correct": "Right.",
+          "incorrect": "Not quite. Read the feedback and try again.",
+          "byOption": {
+            "a": "This is a statement: there is no more wifi. It does not ask anything.",
+            "b": "Yes: hay asks whether something is there or available.",
+            "c": "Tengo means I have. You would be asking whether you have wifi.",
+            "d": "Voy means I am going. It does not fit here."
+          }
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices the answers to a hay question in a short exchange.",
+      "data": {
+        "title": "At a bakery",
+        "instructions": "Choose the words that fit.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "— Buenos días. ¿"
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "No",
+              "Hay",
+              "Ya"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " pan? — Sí, "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "ya no hay",
+              "hay",
+              "no hay"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": ". ¿Y café? — Lo siento, "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "sí hay",
+              "ya no hay",
+              "hay"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": ". Se terminó."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b2": "Sí, hay: Yes, there is.",
+          "b3": "Ya no hay: it has run out."
+        }
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets pronouncing hay with an English h.",
+      "data": {
+        "question": "How do you say hay?",
+        "choices": [
+          "Like \"high\", with an h",
+          "Like \"hah-ee\", two syllables",
+          "Like the English word \"eye\"",
+          "Like the English word \"hay\" (hey)"
+        ],
+        "correctIndex": 2,
+        "commonErrorLabel": "Reading hay as English",
+        "trapChoiceIndexes": [
+          3
+        ],
+        "trapReasons": {
+          "3": "Hay is also an English word (dried grass), so the eye reads it in English."
+        },
+        "whyIntuitionFailed": "The word is spelled like an English word, so the English sound comes first.",
+        "correctReasoning": "The h is silent and a + y blend into one sound: \"eye\".",
+        "recoveryTip": "Hay sounds like the English word \"eye\".",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 6
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with hay as a single word for asking and answering about what is there.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Hay",
+        "takeaway": "¿Hay ...? asks if something is there; sí, hay says yes; no hay says none; ya no hay says it has run out.",
+        "terms": [
+          "¿Hay baño?",
+          "No hay",
+          "Ya no hay"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 7
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "A waiter says \"Ya no hay pollo.\" What does he mean?",
+      "answer": "There is no more chicken.",
+      "rationale": "Ya no hay means there is no more: the chicken has run out. Pollo is chicken.",
+      "source": "prewritten",
+      "hint": "Ya no adds \"anymore\".",
+      "choices": [
+        "The chicken is ready.",
+        "I do not want chicken.",
+        "There is no more chicken.",
+        "There is chicken now."
+      ],
+      "id": "c1",
+      "after": 5,
+      "focus": "understanding ya no hay"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which is correct for \"There are two bathrooms\"?",
+      "answer": "Hay dos baños.",
+      "rationale": "Hay never changes: the same word means there is and there are.",
+      "source": "prewritten",
+      "hint": "One word for one or many.",
+      "choices": [
+        "Hay dos baños.",
+        "Hayn dos baños.",
+        "Son hay dos baños.",
+        "Hay uno dos baños."
+      ],
+      "id": "c2",
+      "after": 3,
+      "focus": "hay for singular and plural"
+    },
+    {
+      "skill_id": "es_greetings",
+      "skill_name": "Greetings and courtesy",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the two-word question that asks \"Is there a bathroom?\"",
+      "answer": "¿Hay baño?",
+      "rationale": "Hay plus the thing you want, with a rising voice: ¿Hay baño?",
+      "source": "prewritten",
+      "accepts": [
+        "hay un baño",
+        "¿Hay un baño?",
+        "Hay baño?",
+        "Hay un baño?"
+      ],
+      "hint": "Start with the word that sounds like \"eye\".",
+      "id": "c3",
+      "after": 5,
+      "focus": "asking with hay"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/entry/31",
+    "version": 1,
+    "sha256": "c6b2ca9ac06ca9f014210710c3afa01226e6b2b0a0ae1752e61b68abbd9329c7",
+    "title": "Hay as a Survival Chunk: ¿Hay Baño? and No Hay",
+    "file": "content/spanish-prewritten/entry/level-031.json"
+  }
+}

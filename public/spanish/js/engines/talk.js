@@ -5,7 +5,7 @@
   const ES = window.ES;
   const { h, esc, icon, ui, sfx } = ES;
   const engines = (ES.engines = ES.engines || {});
-  const quit = () => { location.href = '/spanish/lab'; };
+  const quit = () => ES.flow.exit();
 
   // ── the role-play chat (Max-style Roleplay) ─────────────────────────
   // Resolves with { history, goalsMet, rubric }.
@@ -140,7 +140,23 @@
         let raf; const anim = () => { const left = Math.max(0, 1 - (performance.now() - t0) / ms); fill.style.setProperty('--p', `${left * 100}%`); fill.style.transition = 'none'; if (left > 0) raf = requestAnimationFrame(anim); };
         anim();
         let ok = false; let heard = '';
-        if (!selfCheck) {
+        // No transcription on the server: the browser's recogniser, or a self-check.
+        if (!selfCheck && ES.asr && ES.asr.server === false) {
+          if (!ES.asr.browser) selfCheck = true;
+          else {
+            try {
+              status.innerHTML = `${icon('mic')} Listening…`;
+              let recog = null;
+              const timer = setTimeout(() => { if (recog) { try { recog.stop(); } catch (e) { /* stopped */ } } }, ms);
+              const out = await ES.asr.recognise({ onStart: (r) => { recog = r; } });
+              clearTimeout(timer);
+              heard = out.transcript || '';
+              ok = ES.grade.speech(heard, p.es, p.accepted).pass;
+            } catch (err) {
+              selfCheck = true;
+            }
+          }
+        } else if (!selfCheck) {
           try {
             status.innerHTML = `${icon('mic')} Listening…`;
             // Stop when the time is up, or as soon as the learner has spoken and gone quiet.
@@ -182,6 +198,7 @@
         await ES.wait(1100);
       }
     }
+    ES.flow.result = { hits, total };
     await ui.complete(root, { title: 'Sprint finished!', xp: Math.round(score / 10), accuracy: Math.round((hits / total) * 100), extraHtml: `<p>Score <b>${score}</b> · ${hits} of ${total} chunks in time</p>` });
     ES.flow.back(root, { level, title: 'Fluency sprint', html: misses.length ? `<p>Back into review: <span lang="es">${esc(misses.join(', '))}</span></p>` : '<p>Every chunk in time!</p>' });
   };

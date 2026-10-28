@@ -1,0 +1,434 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 93,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Complete the family picture with partners, in-laws and step-family, marital status words (used with ser or estar), and pets, phrased so that every kind of family can be described respectfully.",
+  "coverage": [
+    "esposo / esposa (husband / wife); also marido and mujer",
+    "novio / novia: boyfriend / girlfriend (also groom / bride); pareja: partner",
+    "suegro / suegra (in-laws), cuñado / cuñada (brother- / sister-in-law), yerno / nuera (son- / daughter-in-law)",
+    "padrastro / madrastra: stepfather / stepmother",
+    "soltero, casado, divorciado, separado, viudo (+ -a): both Soy soltera and Estoy casado are heard",
+    "Pets: la mascota, el perro, el gato, el pez (los peces), el pájaro",
+    "¿Tienes mascotas? Tengo un perro y dos gatos."
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents partners and in-laws.",
+      "data": {
+        "caption": "Partners and in-laws",
+        "headers": [
+          "Male",
+          "Female",
+          "English"
+        ],
+        "rows": [
+          [
+            "el esposo (el marido)",
+            "la esposa (la mujer)",
+            "husband / wife"
+          ],
+          [
+            "el novio",
+            "la novia",
+            "boyfriend / girlfriend; groom / bride"
+          ],
+          [
+            "la pareja",
+            "la pareja",
+            "partner (for anyone)"
+          ],
+          [
+            "el suegro",
+            "la suegra",
+            "father-in-law / mother-in-law"
+          ],
+          [
+            "el cuñado",
+            "la cuñada",
+            "brother-in-law / sister-in-law"
+          ],
+          [
+            "el yerno",
+            "la nuera",
+            "son-in-law / daughter-in-law"
+          ],
+          [
+            "el padrastro",
+            "la madrastra",
+            "stepfather / stepmother"
+          ]
+        ],
+        "footnote": "Pareja is always feminine as a word (la pareja), whoever the partner is."
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents marital status words.",
+      "data": {
+        "caption": "Estado civil (marital status)",
+        "headers": [
+          "Spanish",
+          "English",
+          "Example"
+        ],
+        "rows": [
+          [
+            "soltero / soltera",
+            "single",
+            "Soy soltera."
+          ],
+          [
+            "casado / casada",
+            "married",
+            "Estoy casado."
+          ],
+          [
+            "divorciado / divorciada",
+            "divorced",
+            "Estoy divorciada."
+          ],
+          [
+            "separado / separada",
+            "separated",
+            "Estamos separados."
+          ],
+          [
+            "viudo / viuda",
+            "widowed",
+            "Mi abuela es viuda."
+          ]
+        ],
+        "footnote": "With these words you will hear both ser and estar: Soy casado and Estoy casado both occur. Estar is a little more common for casado."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: describing partners, status and pets.",
+      "data": {
+        "title": "My household",
+        "cueNote": "Vive con nosotros: lives with us.",
+        "duration": 18.9,
+        "cues": [
+          {
+            "text": "Estoy casada. Mi esposo se llama Luis.",
+            "start": 0.3,
+            "end": 3.2
+          },
+          {
+            "text": "Mi hermano es soltero, pero tiene novia.",
+            "start": 4.7,
+            "end": 7.8
+          },
+          {
+            "text": "Mi suegra vive con nosotros.",
+            "start": 9.3,
+            "end": 11.3
+          },
+          {
+            "text": "¿Tienes mascotas?",
+            "start": 12.8,
+            "end": 13.9
+          },
+          {
+            "text": "Sí, tengo un perro y dos gatos.",
+            "start": 15.4,
+            "end": 17.4
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Memory_CheatSheet",
+      "purpose": "Presents common pets with their plurals.",
+      "data": {
+        "title": "Mascotas (pets)",
+        "rows": [
+          {
+            "key": "el perro / la perra",
+            "value": "dog",
+            "detail": "plural: los perros"
+          },
+          {
+            "key": "el gato / la gata",
+            "value": "cat",
+            "detail": "plural: los gatos"
+          },
+          {
+            "key": "el pez",
+            "value": "fish (alive)",
+            "detail": "plural: los peces; fish as food is pescado"
+          },
+          {
+            "key": "el pájaro",
+            "value": "bird",
+            "detail": "plural: los pájaros"
+          },
+          {
+            "key": "el conejo",
+            "value": "rabbit",
+            "detail": "plural: los conejos"
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves the extended family words.",
+      "data": {
+        "title": "Extended family",
+        "instruction": "Connect each word to its meaning.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "la suegra"
+          },
+          {
+            "id": "t2",
+            "label": "el cuñado"
+          },
+          {
+            "id": "t3",
+            "label": "la nuera"
+          },
+          {
+            "id": "t4",
+            "label": "viudo"
+          },
+          {
+            "id": "t5",
+            "label": "soltera"
+          },
+          {
+            "id": "t6",
+            "label": "la pareja"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "brother-in-law"
+          },
+          {
+            "id": "d4",
+            "label": "widowed (man)"
+          },
+          {
+            "id": "d6",
+            "label": "partner"
+          },
+          {
+            "id": "d1",
+            "label": "mother-in-law"
+          },
+          {
+            "id": "d3",
+            "label": "daughter-in-law"
+          },
+          {
+            "id": "d5",
+            "label": "single (woman)"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets pez versus pescado.",
+      "data": {
+        "question": "You have a goldfish at home. Which sentence is right?",
+        "choices": [
+          "Tengo un pescado.",
+          "Tengo una pez.",
+          "Tengo un peces.",
+          "Tengo un pez."
+        ],
+        "correctIndex": 3,
+        "commonErrorLabel": "Pescado for a pet",
+        "trapChoiceIndexes": [
+          0
+        ],
+        "trapReasons": {
+          "0": "Pescado is the fish you see on menus, so it is often learned first."
+        },
+        "whyIntuitionFailed": "English uses \"fish\" for both the animal and the food.",
+        "correctReasoning": "A live fish is un pez (plural peces); pescado is fish as food.",
+        "recoveryTip": "In the water: pez. On the plate: pescado.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the full family picture.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Extended family, status and pets",
+        "takeaway": "Add esposo, pareja, suegra and cuñado, say Soy soltera or Estoy casado, and talk about your mascotas: perro, gato, pez.",
+        "terms": [
+          "esposa",
+          "pareja",
+          "suegro",
+          "soltero",
+          "casada",
+          "mascota"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "What is your wife's mother to you?",
+      "answer": "tu suegra",
+      "rationale": "Your spouse's mother is your mother-in-law: suegra.",
+      "source": "prewritten",
+      "hint": "A mother-in-law.",
+      "choices": [
+        "tu suegra",
+        "tu cuñada",
+        "tu nuera",
+        "tu madrastra"
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "in-laws"
+    },
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which sentence says \"I am married\" (a man speaking)?",
+      "answer": "Estoy casado.",
+      "rationale": "A man is casado, and estar is the most common verb with it: Estoy casado.",
+      "source": "prewritten",
+      "hint": "A man speaking, singular.",
+      "choices": [
+        "Estoy casada.",
+        "Soy casados.",
+        "Estoy casado.",
+        "Tengo casado."
+      ],
+      "id": "c2",
+      "after": 1,
+      "focus": "marital status"
+    },
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the plural of \"el pez\" (the fish), with its article.",
+      "answer": "los peces",
+      "rationale": "z becomes c before -es: los peces.",
+      "source": "prewritten",
+      "accepts": [
+        "peces"
+      ],
+      "hint": "z changes before -es.",
+      "id": "c3",
+      "after": 3,
+      "focus": "pez / peces"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/93",
+    "version": 1,
+    "sha256": "eff0df00464107bb4fde0c6620f948675a9f0e10c139615fd1981dfba8416425",
+    "title": "Extended Family, Marital Status, and Pets",
+    "file": "content/spanish-prewritten/advanced/level-093.json"
+  }
+}

@@ -1,0 +1,371 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 27,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach el, la, los and las, the contractions al and del, and the places Spanish uses an article where English does not: general statements, titles when talking about someone, days, and languages as a subject.",
+  "coverage": [
+    "el (masc. sing.), la (fem. sing.), los (masc. pl.), las (fem. pl.)",
+    "a + el = al; de + el = del",
+    "General statements use the article: El café es caro. La salud es importante.",
+    "A title takes the article when you talk about someone: La doctora Ruiz es de Perú",
+    "No article when you speak to them: Buenos días, doctora Ruiz",
+    "Days take el for \"on\": el lunes",
+    "Languages: El español es fácil, but Hablo español (no article after hablar)"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents the four definite articles and the two contractions.",
+      "data": {
+        "caption": "The four words for \"the\"",
+        "headers": [
+          "",
+          "Singular",
+          "Plural"
+        ],
+        "rows": [
+          [
+            "Masculine",
+            "el libro",
+            "los libros"
+          ],
+          [
+            "Feminine",
+            "la casa",
+            "las casas"
+          ],
+          [
+            "Contractions",
+            "a + el = al (voy al banco)",
+            "de + el = del (el carro del profesor)"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States where Spanish uses an article and English does not.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "More articles than English",
+        "anchor": "Spanish uses el, la, los or las in several places where English uses no article at all.",
+        "prerequisites": [
+          "Things in general: El café es caro. (Coffee is expensive.)",
+          "Abstract ideas: La salud es importante. (Health is important.)",
+          "A title, when you talk about someone: La doctora Ruiz es de Perú.",
+          "Days, for \"on\": El lunes voy al banco. (On Monday I go to the bank.)",
+          "A language as the subject: El español es bonito."
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Theory_ContrastSplit",
+      "purpose": "Contrasts talking about someone with talking to them.",
+      "data": {
+        "title": "About them or to them?",
+        "leftColumn": {
+          "heading": "Talking about someone: article",
+          "tone": "accent",
+          "items": [
+            {
+              "label": "Example",
+              "text": "La doctora Ruiz es muy amable."
+            },
+            {
+              "label": "Example",
+              "text": "El señor Gómez es mi vecino."
+            }
+          ]
+        },
+        "rightColumn": {
+          "heading": "Talking to someone: no article",
+          "tone": "accent",
+          "items": [
+            {
+              "label": "Example",
+              "text": "Buenos días, doctora Ruiz."
+            },
+            {
+              "label": "Example",
+              "text": "Gracias, señor Gómez."
+            }
+          ]
+        }
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: sentences where Spanish needs the article.",
+      "data": {
+        "title": "Hear the articles",
+        "cueNote": "Caro: expensive. Bonito: beautiful, nice. After hablar the article is usually left out: Hablo español.",
+        "duration": 21.8,
+        "cues": [
+          {
+            "text": "El café es caro.",
+            "start": 0.3,
+            "end": 1.6
+          },
+          {
+            "text": "La salud es importante.",
+            "start": 3.1,
+            "end": 4.9
+          },
+          {
+            "text": "El lunes voy al banco.",
+            "start": 6.4,
+            "end": 7.9
+          },
+          {
+            "text": "La doctora Ruiz es de Perú.",
+            "start": 9.4,
+            "end": 11.4
+          },
+          {
+            "text": "Buenos días, doctora Ruiz.",
+            "start": 12.9,
+            "end": 14.4
+          },
+          {
+            "text": "El español es bonito.",
+            "start": 15.9,
+            "end": 17.7
+          },
+          {
+            "text": "Hablo español.",
+            "start": 19.2,
+            "end": 20.3
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices the article where English has none.",
+      "data": {
+        "title": "Article or not?",
+        "instructions": "Choose what fits.",
+        "segments": [
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "Un",
+              "El",
+              "(nothing)"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": " café de Colombia es famoso. "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "El",
+              "En",
+              "(nothing)"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " lunes voy a trabajar. Buenas tardes, "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "(nothing)",
+              "la",
+              "una"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " señora Díaz."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b1": "A general statement: El café.",
+          "b2": "On Monday is el lunes.",
+          "b3": "Speaking to her: no article."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets the contraction de + el.",
+      "data": {
+        "question": "How do you say \"the teacher's car\" (the car of the teacher, el profesor)?",
+        "choices": [
+          "el carro de profesor",
+          "el profesor carro",
+          "el carro del profesor",
+          "el carro de el profesor"
+        ],
+        "correctIndex": 2,
+        "commonErrorLabel": "de + el left apart",
+        "trapChoiceIndexes": [
+          3
+        ],
+        "trapReasons": {
+          "3": "It follows \"of the\" word for word."
+        },
+        "whyIntuitionFailed": "Like a + el, de + el looks like two separate words in English.",
+        "correctReasoning": "de + el fuses into del: el carro del profesor. With la nothing fuses (la casa de la profesora), nor with a name that includes El (de El Salvador) or with él, him (de él).",
+        "recoveryTip": "a + el = al, de + el = del.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the four articles and the extra places they appear.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Definite articles",
+        "takeaway": "El, la, los, las (plus al and del) appear in general statements, with titles when talking about someone, with days and with languages as a subject.",
+        "terms": [
+          "el",
+          "la",
+          "los",
+          "las",
+          "al",
+          "del"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "Which is the natural Spanish for \"Health is important\"?",
+      "answer": "La salud es importante.",
+      "rationale": "A general or abstract noun as the subject takes the article in Spanish: La salud.",
+      "source": "prewritten",
+      "hint": "Spanish uses the article for ideas in general.",
+      "choices": [
+        "Salud es importante.",
+        "Una salud es importante.",
+        "Es salud importante.",
+        "La salud es importante."
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "article in general statements"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "multiple_choice",
+      "prompt": "You are telling a friend about your neighbor, Mr. Gómez. Which sentence is correct?",
+      "answer": "El señor Gómez es de Cuba.",
+      "rationale": "Talking about someone with a title, Spanish uses the article: el señor Gómez.",
+      "source": "prewritten",
+      "hint": "You are talking about him, not to him.",
+      "choices": [
+        "Los señor Gómez es de Cuba.",
+        "El señor Gómez es de Cuba.",
+        "Señor Gómez es de Cuba.",
+        "Un señor Gómez es de Cuba."
+      ],
+      "id": "c2",
+      "after": 4,
+      "focus": "titles with the article"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 1,
+      "format": "type_in",
+      "prompt": "Combine and type the one word for \"a + el\".",
+      "answer": "al",
+      "rationale": "a + el contracts to al, as in voy al banco (but not with a name that includes El: a El Salvador).",
+      "source": "prewritten",
+      "hint": "Two letters.",
+      "id": "c3",
+      "after": 5,
+      "focus": "al"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/27",
+    "version": 1,
+    "sha256": "c12f9b46bb1242cb706b322baa336a2a3283069af95588df7e254322bbfb1b57",
+    "title": "Definite Articles: El, La, Los, Las",
+    "file": "content/spanish-prewritten/advanced/level-027.json"
+  }
+}

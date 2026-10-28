@@ -1,0 +1,393 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 69,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the verbs Spanish uses for size, weight and price (medir, pesar, costar, and tener ... de largo) where English uses \"to be\" with a number, with the questions to ask and metric units.",
+  "coverage": [
+    "medir (to measure): ¿Cuánto mides? Mido un metro setenta. Mide dos metros.",
+    "pesar (to weigh): ¿Cuánto pesa? Pesa cinco kilos.",
+    "costar (to cost): ¿Cuánto cuesta? Cuesta diez dólares. Plural: cuestan",
+    "Dimensions: tiene tres metros de largo (is three meters long); also de ancho, de alto",
+    "English \"to be + number\" is not ser in Spanish: not Soy un metro setenta",
+    "Most Spanish-speaking countries use meters and kilos; US Spanish speakers also use pies, pulgadas and libras",
+    "Height is said aloud as un metro setenta (1.70 m)"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lays out the three measurement verbs with questions and answers.",
+      "data": {
+        "caption": "Size, weight, price",
+        "headers": [
+          "Verb",
+          "Question",
+          "Answer",
+          "English"
+        ],
+        "rows": [
+          [
+            "medir",
+            "¿Cuánto mides?",
+            "Mido un metro setenta.",
+            "How tall are you? I am 1.70 m."
+          ],
+          [
+            "medir",
+            "¿Cuánto mide tu hermano?",
+            "Mide dos metros.",
+            "How tall is your brother? He is 2 m."
+          ],
+          [
+            "pesar",
+            "¿Cuánto pesa el bebé?",
+            "Pesa cinco kilos.",
+            "How much does the baby weigh? Five kilos."
+          ],
+          [
+            "costar",
+            "¿Cuánto cuesta?",
+            "Cuesta diez dólares.",
+            "How much is it? It costs ten dollars."
+          ],
+          [
+            "costar",
+            "¿Cuánto cuestan?",
+            "Cuestan veinte dólares.",
+            "How much are they? Twenty dollars."
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the contrast with English in one rule.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "Measure, weigh, cost",
+        "anchor": "Where English says \"is\" with a measurement, Spanish uses a verb that names it: mide (measures), pesa (weighs), cuesta (costs).",
+        "prerequisites": [
+          "I am 1.70 m tall: Mido un metro setenta.",
+          "It is 3 meters long: Tiene tres metros de largo (or Mide tres metros de largo).",
+          "It is $10: Cuesta diez dólares.",
+          "Medir changes e to i (mido, mides, mide); costar changes o to ue (cuesta, cuestan)."
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: measurements in a store and at the doctor.",
+      "data": {
+        "title": "Measuring",
+        "cueNote": "Un metro ochenta is 1.80 m, about 5 feet 11 inches. Esta mesa: this table.",
+        "duration": 20.2,
+        "cues": [
+          {
+            "text": "¿Cuánto mides?",
+            "start": 0.3,
+            "end": 1.2
+          },
+          {
+            "text": "Mido un metro ochenta.",
+            "start": 2.7,
+            "end": 4.5
+          },
+          {
+            "text": "¿Y cuánto pesas?",
+            "start": 6,
+            "end": 6.9
+          },
+          {
+            "text": "Peso setenta y cinco kilos.",
+            "start": 8.4,
+            "end": 10.4
+          },
+          {
+            "text": "¿Cuánto cuesta esta mesa?",
+            "start": 11.9,
+            "end": 13.7
+          },
+          {
+            "text": "Cuesta noventa dólares. Tiene dos metros de largo.",
+            "start": 15.2,
+            "end": 18.7
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Gives units and rough conversions, including the US units Spanish speakers use.",
+      "data": {
+        "caption": "Units",
+        "headers": [
+          "Spanish",
+          "English",
+          "About"
+        ],
+        "rows": [
+          [
+            "un metro",
+            "a meter",
+            "3.3 feet"
+          ],
+          [
+            "un centímetro",
+            "a centimeter",
+            "0.4 inch"
+          ],
+          [
+            "un kilo (kilogramo)",
+            "a kilogram",
+            "2.2 pounds"
+          ],
+          [
+            "un pie",
+            "a foot",
+            "30 cm"
+          ],
+          [
+            "una pulgada",
+            "an inch",
+            "2.5 cm"
+          ],
+          [
+            "una libra",
+            "a pound",
+            "0.45 kilo"
+          ]
+        ],
+        "footnote": "In the US, Spanish speakers often give height in pies and pulgadas: Mido cinco pies y diez pulgadas."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices choosing mide, pesa or cuesta.",
+      "data": {
+        "title": "Which verb?",
+        "instructions": "Choose the verb that fits.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "La maleta "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "mide",
+              "cuesta",
+              "pesa"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " veinte kilos. Mi hijo "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "pesa",
+              "es",
+              "mide"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " un metro veinte. Los zapatos "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "cuestan",
+              "cuesta",
+              "son"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": " cincuenta dólares."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b3": "Los zapatos is plural: cuestan."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets translating \"I am 1.70 m\" with soy.",
+      "data": {
+        "question": "How do you say \"I am 1.65 m tall\"?",
+        "choices": [
+          "Soy un metro sesenta y cinco.",
+          "Estoy un metro sesenta y cinco.",
+          "Tengo un metro sesenta y cinco.",
+          "Mido un metro sesenta y cinco."
+        ],
+        "correctIndex": 3,
+        "commonErrorLabel": "Height with ser",
+        "trapChoiceIndexes": [
+          0
+        ],
+        "trapReasons": {
+          "0": "English says \"I am ... tall\", and soy means \"I am\"."
+        },
+        "whyIntuitionFailed": "English uses \"to be\" for height, so learners reach for soy.",
+        "correctReasoning": "Spanish measures height with medir: Mido un metro sesenta y cinco. (Soy alto, \"I am tall\", is fine without a number.)",
+        "recoveryTip": "A number of meters: mido. A description: soy alto.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the three verbs.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Measurements",
+        "takeaway": "Mide for height and length, pesa for weight, cuesta and cuestan for price: Spanish names the measurement instead of saying \"is\".",
+        "terms": [
+          "mide",
+          "pesa",
+          "cuesta",
+          "de largo",
+          "metro",
+          "kilo"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_numbers",
+      "skill_name": "Numbers and time",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which sentence says \"The baby weighs four kilos\"?",
+      "answer": "El bebé pesa cuatro kilos.",
+      "rationale": "Weight uses pesar: pesa cuatro kilos. Mide is for height or length, and cuesta for price.",
+      "source": "prewritten",
+      "hint": "Weight needs its own verb.",
+      "choices": [
+        "El bebé es cuatro kilos.",
+        "El bebé mide cuatro kilos.",
+        "El bebé cuesta cuatro kilos.",
+        "El bebé pesa cuatro kilos."
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "pesar for weight"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "In a store you point at two shirts. Which question asks their price?",
+      "answer": "¿Cuánto cuestan?",
+      "rationale": "Price uses costar, and two shirts are plural: cuestan.",
+      "source": "prewritten",
+      "hint": "Plural and price.",
+      "choices": [
+        "¿Cuánto pesan?",
+        "¿Cuánto cuestan?",
+        "¿Cuánto cuesta?",
+        "¿Cuánto miden?"
+      ],
+      "id": "c2",
+      "after": 4,
+      "focus": "cuestan for plural prices"
+    },
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Complete with one word: \"Yo ___ un metro setenta.\" (I am 1.70 m tall.)",
+      "answer": "mido",
+      "rationale": "Height in numbers uses medir, and the yo form is mido.",
+      "source": "prewritten",
+      "hint": "The yo form of medir.",
+      "id": "c3",
+      "after": 5,
+      "focus": "mido"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/69",
+    "version": 1,
+    "sha256": "cee1a776e9e974a4568fd0aea080bfca994ffe173a26195dd0ac968b68d3e94f",
+    "title": "Height, Weight, and Measurements: Mide, Pesa, Cuesta",
+    "file": "content/spanish-prewritten/advanced/level-069.json"
+  }
+}

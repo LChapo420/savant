@@ -343,6 +343,8 @@
     span.textContent = cues[k].text;
     span.setAttribute('data-i', String(k));
     scriptEl.appendChild(span);
+    // A space between cues, or a run of short cues is one unbreakable "word" and widens the page.
+    if (k < cues.length - 1) scriptEl.appendChild(document.createTextNode(' '));
     segs.push(span);
   }
   if (!cues.length) {
@@ -547,7 +549,11 @@
     });
   });
 
-  if (audio) {
+  // The synthesized stand-in (no audioSrc) drives its own labels and paints and
+  // has no event target: only a real <audio> element gets these listeners.
+  // Without the guard a clip-less block threw in every browser with Web Audio,
+  // and the page lost every block after it.
+  if (audio && typeof audio.addEventListener === 'function') {
     audio.addEventListener('timeupdate', paint);
     audio.addEventListener('loadedmetadata', function () {
       if (isFinite(audio.duration) && audio.duration > 0) duration = audio.duration;

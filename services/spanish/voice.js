@@ -25,6 +25,7 @@ const MIMO_URL = (process.env.MIMO_BASE_URL || 'https://api.xiaomimimo.com/v1').
 const ASR_MODEL = process.env.MIMO_ASR_MODEL || 'mimo-v2.5-asr';
 const MEDIA_DIR = process.env.SPANISH_MEDIA_DIR || path.join(__dirname, '..', '..', 'data', 'spanish-media');
 const VOICES = require('../../config/spanish/voices.json');
+const gatewayLedger = require('../llmgateway-ledger');
 
 // ── LLM Gateway: ElevenLabs eleven-v3 speech, and speech-to-text ─────────────────
 // Owner's decision (2026-10-27): a Spanish-accented voice, generated just in time
@@ -121,16 +122,38 @@ function noteGatewayFailure(err) {
   if ([401, 402, 403, 429].includes(err.status)) gatewayCoolUntil = Date.now() + 10 * 60 * 1000;
 }
 
+/**
+ * Every gateway call reserves its worst-case cost in the $5 total ledger first (services/llmgateway-ledger.js)
+ * and is refused past the cap: the caller throws, the route answers 503 and the browser speaks with its own voice.
+ * An HTTP error the gateway answered is not billed; a network failure or timeout is counted at the reservation.
+ */
+async function billed(call, fn) {
+  const id = gatewayLedger.reserve(call);
+  let settled = false;
+  try {
+    const out = await fn();
+    gatewayLedger.settle(id, { outcome: 'ok' });
+    settled = true;
+    return out;
+  } catch (err) {
+    if (!settled) gatewayLedger.settle(id, { outcome: err && err.status ? 'not_billed' : 'unknown' });
+    throw err;
+  }
+}
+
 async function gatewaySpeak(voice, line) {
-  const res = await gatewayFetch('/audio/speech', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model: GATEWAY_TTS_MODEL(), input: line, voice, language: 'es' }),
-  }, 45000);
-  const type = String(res.headers.get('content-type') || '');
-  const buf = Buffer.from(await res.arrayBuffer());
-  if (!buf.length || (type && !/audio|octet-stream/i.test(type))) throw new Error('no audio in the response');
-  return buf;
+  const model = GATEWAY_TTS_MODEL();
+  return billed({ kind: 'tts', model, chars: line.length }, async () => {
+    const res = await gatewayFetch('/audio/speech', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model, input: line, voice, language: 'es' }),
+    }, 45000);
+    const type = String(res.headers.get('content-type') || '');
+    const buf = Buffer.from(await res.arrayBuffer());
+    if (!buf.length || (type && !/audio|octet-stream/i.test(type))) throw new Error('no audio in the response');
+    return buf;
+  });
 }
 
 /** The cached clip, or one new call. Returns { url, cached }. */
@@ -213,14 +236,17 @@ const MIME = { wav: 'audio/wav', mp3: 'audio/mpeg', ogg: 'audio/ogg', m4a: 'audi
  */
 async function asrGateway(buf, kind) {
   if (Date.now() < gatewayCoolUntil) throw Object.assign(new Error('gateway speech cooling down'), { status: 429 });
+  const model = GATEWAY_STT_MODEL();
   const form = new FormData();
   form.append('file', new Blob([buf], { type: MIME[kind] || MIME.wav }), `speech.${kind}`);
-  form.append('model', GATEWAY_STT_MODEL());
+  form.append('model', model);
   form.append('language', 'es');
   try {
-    const res = await gatewayFetch('/audio/transcriptions', { method: 'POST', body: form }, 45000);
-    const json = await res.json();
-    return String((json && (json.text != null ? json.text : json.transcript)) || '').trim();
+    return await billed({ kind: 'stt', model, bytes: buf.length }, async () => {
+      const res = await gatewayFetch('/audio/transcriptions', { method: 'POST', body: form }, 45000);
+      const json = await res.json();
+      return String((json && (json.text != null ? json.text : json.transcript)) || '').trim();
+    });
   } catch (err) { noteGatewayFailure(err); throw err; }
 }
 

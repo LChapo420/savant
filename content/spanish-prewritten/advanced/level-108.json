@@ -1,0 +1,369 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 108,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the default order (noun, then descriptive adjective), muy as an unchanging intensifier, and the small set of words that go before the noun, including buen and gran.",
+  "coverage": [
+    "Descriptive adjectives usually follow the noun: una mujer alta, un coche pequeño",
+    "Muy goes right before the adjective and never changes: una mujer muy alta, unas casas muy grandes",
+    "Never mucho before an adjective: muy grande, not mucho grande",
+    "Numbers and quantity words go before: dos libros, muchos amigos, otro día",
+    "Bueno and malo can go before and shorten: un buen amigo, un mal día",
+    "Gran before a noun means great; grande after means big: un gran hombre, un hombre grande",
+    "Colors and nationalities always go after: un carro rojo, una película mexicana"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the default order.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "Noun first",
+        "anchor": "In Spanish a descriptive adjective normally comes after the noun: una casa grande, a big house.",
+        "prerequisites": [
+          "un coche pequeño (a small car).",
+          "una mujer muy alta (a very tall woman).",
+          "Colors and nationalities always follow: un carro rojo, comida mexicana."
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Lists the words that come before the noun.",
+      "data": {
+        "caption": "Words that go first",
+        "headers": [
+          "Word",
+          "Example",
+          "English"
+        ],
+        "rows": [
+          [
+            "numbers",
+            "dos libros",
+            "two books"
+          ],
+          [
+            "mucho, poco",
+            "muchos amigos, poco tiempo",
+            "many friends, little time"
+          ],
+          [
+            "otro",
+            "otro día",
+            "another day"
+          ],
+          [
+            "bueno → buen",
+            "un buen amigo",
+            "a good friend"
+          ],
+          [
+            "malo → mal",
+            "un mal día",
+            "a bad day"
+          ],
+          [
+            "grande → gran",
+            "un gran hombre",
+            "a great man"
+          ]
+        ],
+        "footnote": "Buen and mal are the short forms before a masculine singular noun; after the noun they stay bueno and malo: un amigo bueno."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: phrases with adjectives in the right place.",
+      "data": {
+        "title": "Where does it go?",
+        "cueNote": "Un gran hombre is a great man; un hombre grande is a big man.",
+        "duration": 19.3,
+        "cues": [
+          {
+            "text": "una mujer muy alta",
+            "start": 0.3,
+            "end": 1.8
+          },
+          {
+            "text": "un coche pequeño",
+            "start": 3.3,
+            "end": 4.6
+          },
+          {
+            "text": "unas casas muy grandes",
+            "start": 6.1,
+            "end": 7.6
+          },
+          {
+            "text": "un buen amigo",
+            "start": 9.1,
+            "end": 10.2
+          },
+          {
+            "text": "un gran hombre",
+            "start": 11.7,
+            "end": 12.6
+          },
+          {
+            "text": "un hombre grande",
+            "start": 14.1,
+            "end": 15.2
+          },
+          {
+            "text": "muchos amigos",
+            "start": 16.7,
+            "end": 17.8
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Theory_ContrastSplit",
+      "purpose": "Contrasts gran before the noun with grande after it.",
+      "data": {
+        "title": "Gran or grande?",
+        "leftColumn": {
+          "heading": "gran + noun",
+          "tone": "accent",
+          "items": [
+            {
+              "label": "Means",
+              "text": "great, important",
+              "example": "una gran ciudad (a great city)"
+            }
+          ]
+        },
+        "rightColumn": {
+          "heading": "noun + grande",
+          "tone": "neutral",
+          "items": [
+            {
+              "label": "Means",
+              "text": "big in size",
+              "example": "una ciudad grande (a big city)"
+            }
+          ]
+        }
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Interact_SentenceScramble",
+      "purpose": "Builds a noun phrase in Spanish order.",
+      "data": {
+        "prompt": "Tap the words in order: \"a very small house\".",
+        "tokens": [
+          {
+            "id": "w1",
+            "text": "una"
+          },
+          {
+            "id": "w2",
+            "text": "casa"
+          },
+          {
+            "id": "w3",
+            "text": "muy"
+          },
+          {
+            "id": "w4",
+            "text": "pequeña"
+          }
+        ],
+        "chips": [
+          {
+            "id": "w3",
+            "text": "muy",
+            "correctIndex": 2
+          },
+          {
+            "id": "w4",
+            "text": "pequeña",
+            "correctIndex": 3
+          },
+          {
+            "id": "w2",
+            "text": "casa",
+            "correctIndex": 1
+          },
+          {
+            "id": "w1",
+            "text": "una",
+            "correctIndex": 0
+          }
+        ],
+        "feedbackCorrect": "Right: una casa muy pequeña",
+        "feedbackReset": "That chip comes later. Start again from the first word.",
+        "clearOnMistake": true,
+        "hintAfterAttempts": 2,
+        "hintText": "Noun first, then muy + adjective."
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets mucho before an adjective.",
+      "data": {
+        "question": "How do you say \"The house is very big\"?",
+        "choices": [
+          "La casa es mucho grande.",
+          "La casa es muy grandes.",
+          "La casa es grande muy.",
+          "La casa es muy grande."
+        ],
+        "correctIndex": 3,
+        "commonErrorLabel": "Mucho for \"very\"",
+        "trapChoiceIndexes": [
+          0
+        ],
+        "trapReasons": {
+          "0": "Mucho means a lot, which feels like very."
+        },
+        "whyIntuitionFailed": "Both muy and mucho translate as \"very much\" or \"a lot\", so they get swapped.",
+        "correctReasoning": "Before an adjective, use muy, which never changes: muy grande. Mucho goes with nouns: muchas casas.",
+        "recoveryTip": "Muy + adjective. Mucho + noun.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the order rules.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Adjective position and muy",
+        "takeaway": "Noun first, then the adjective (una casa grande), with muy right before it; numbers, quantity words like mucho and otro, possessives like mi, and buen, mal and gran come first.",
+        "terms": [
+          "muy",
+          "buen",
+          "mal",
+          "gran",
+          "grande"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which phrase is natural Spanish for \"a red car\"?",
+      "answer": "un carro rojo",
+      "rationale": "Colors always follow the noun and agree with it: un carro rojo.",
+      "source": "prewritten",
+      "hint": "Colors go after.",
+      "choices": [
+        "rojo un carro",
+        "un carro rojo",
+        "un rojo carro",
+        "un carro roja"
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "adjective after the noun"
+    },
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Your friend is a really good person. Which phrase fits?",
+      "answer": "Es un buen amigo.",
+      "rationale": "Before a masculine singular noun, bueno shortens to buen: un buen amigo.",
+      "source": "prewritten",
+      "hint": "Bueno shortens before the noun.",
+      "choices": [
+        "Es un amigo buen.",
+        "Es un muy bueno amigo.",
+        "Es un buen amigo.",
+        "Es un bueno amigo."
+      ],
+      "id": "c2",
+      "after": 1,
+      "focus": "buen"
+    },
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the word that means \"very\" in \"una mujer ___ alta\".",
+      "answer": "muy",
+      "rationale": "Very before an adjective is muy, which never changes.",
+      "source": "prewritten",
+      "hint": "Three letters.",
+      "id": "c3",
+      "after": 4,
+      "focus": "muy"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/108",
+    "version": 1,
+    "sha256": "1a71318ea57f2d60a706b613e3318787eb55e31730052cc65379c435f484d398",
+    "title": "Adjective Position and Muy",
+    "file": "content/spanish-prewritten/advanced/level-108.json"
+  }
+}

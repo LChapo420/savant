@@ -8,6 +8,7 @@
  * data, and nothing here calls a model.
  */
 const express = require('express');
+const path = require('path');
 const db = require('../config/db');
 const curriculum = require('../config/curriculum');
 const subscriptions = require('../config/subscriptions');
@@ -20,6 +21,7 @@ const translate = require('../services/scorecard/translate');
 const summary = require('../services/scorecard/summary');
 const ai = require('../services/ai');
 const learnerRecord = require('../services/learner-record');
+const realMetrics = require('../services/real-user-metrics');
 const { requireAuth, requireAdmin, isAdmin, publicUser } = require('../middleware/auth');
 
 const router = express.Router();
@@ -248,6 +250,30 @@ router.get('/users/:id', (req, res) => {
     big_after: learnerRecord.BIG_AFTER,
     ai_usage_today: ai.usageToday(user.id),
   });
+});
+
+/**
+ * Real-user metrics (services/real-user-metrics.js, rules in docs/METRICS.md):
+ * sign-ups, active days, day-1/day-7 return, sessions and minutes, AI cost per
+ * active learner. Test, demo and founder accounts are counted apart, never as users.
+ */
+function metricsNow(req) {
+  return realMetrics.compute(db, {
+    days: Number(req.query.days) || 30,
+    ledgerDir: process.env.METRICS_LEDGER_DIR || path.join(__dirname, '..', 'data'),
+  });
+}
+
+router.get('/metrics', (req, res) => {
+  res.json(metricsNow(req));
+});
+
+router.get('/metrics.csv', (req, res) => {
+  const table = typeof req.query.table === 'string' ? req.query.table : 'daily';
+  if (!realMetrics.TABLES.includes(table)) return res.status(400).json({ error: `table must be one of ${realMetrics.TABLES.join(', ')}` });
+  res.set('Content-Type', 'text/csv; charset=utf-8');
+  res.set('Content-Disposition', `attachment; filename="metrics-${table}-${new Date().toISOString().slice(0, 10)}.csv"`);
+  res.send(realMetrics.toCsv(metricsNow(req), table));
 });
 
 /** Every learner's 100 stats as a spreadsheet: score and confidence per stat. */

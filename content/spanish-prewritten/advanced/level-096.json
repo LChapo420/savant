@@ -1,0 +1,366 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 96,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the possessive adjectives, the rule that they agree with the thing owned (not the owner), the many meanings of su and how to make it clear, and vuestro for recognition.",
+  "coverage": [
+    "mi, mis (my); tu, tus (your, to a friend); su, sus (his, her, its, your formal, their)",
+    "nuestro, nuestra, nuestros, nuestras (our)",
+    "Possessives agree with the thing owned: mis padres, nuestra casa",
+    "tu (your) has no accent; tú (you) does",
+    "su can mean his, her, your or their; to be clear: la casa de él, de ella, de usted, de ellos",
+    "vuestro (your, plural informal) is used in Spain; Latin America uses su"
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents the possessive adjectives.",
+      "data": {
+        "caption": "Possessive adjectives",
+        "headers": [
+          "Owner",
+          "One thing",
+          "More than one"
+        ],
+        "rows": [
+          [
+            "yo",
+            "mi casa",
+            "mis casas"
+          ],
+          [
+            "tú",
+            "tu casa",
+            "tus casas"
+          ],
+          [
+            "él, ella, usted",
+            "su casa",
+            "sus casas"
+          ],
+          [
+            "nosotros / nosotras",
+            "nuestro carro, nuestra casa",
+            "nuestros carros, nuestras casas"
+          ],
+          [
+            "ustedes, ellos, ellas",
+            "su casa",
+            "sus casas"
+          ]
+        ],
+        "footnote": "Spain also uses vuestro, vuestra (your, to a group of friends). In Latin America it is su."
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the agreement rule for possessives.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "Agree with the thing, not the owner",
+        "anchor": "A possessive agrees with the thing that is owned, never with the person who owns it.",
+        "prerequisites": [
+          "mis padres: plural, because padres is plural (even though \"I\" is one person).",
+          "nuestra casa: feminine, because casa is feminine (even if \"we\" are men).",
+          "Only nuestro (and Spain's vuestro) also changes for gender; mi, tu and su change only for number."
+        ]
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: talking about whose things are whose.",
+      "data": {
+        "title": "My, your, our",
+        "cueNote": "Su esposa could be his wife, your wife or their wife: context tells you which.",
+        "duration": 17.2,
+        "cues": [
+          {
+            "text": "Mis padres viven en Florida.",
+            "start": 0.3,
+            "end": 2.3
+          },
+          {
+            "text": "¿Tu hermano es médico?",
+            "start": 3.8,
+            "end": 5.6
+          },
+          {
+            "text": "Nuestra casa es pequeña.",
+            "start": 7.1,
+            "end": 8.9
+          },
+          {
+            "text": "Nuestros hijos son estudiantes.",
+            "start": 10.4,
+            "end": 12.4
+          },
+          {
+            "text": "Su esposa es de Chile.",
+            "start": 13.9,
+            "end": 15.7
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Concept_CautionFlag",
+      "purpose": "Explains the ambiguity of su and how to clear it up.",
+      "data": {
+        "conceptLabel": "su",
+        "flagTitle": "Su has many owners",
+        "flagIntro": "Su (and sus) can mean his, her, its, your (usted or ustedes) or their.",
+        "cautions": [
+          {
+            "kind": "pitfall",
+            "title": "Make it clear with de",
+            "detail": "When context is not enough, use the + noun + de + person.",
+            "wrongExample": "Es su carro. (whose?)",
+            "rightExample": "Es el carro de ella. / Es el carro de usted."
+          },
+          {
+            "kind": "pitfall",
+            "title": "tu or tú",
+            "detail": "tu (no accent) is your; tú (accent) is you.",
+            "rightExample": "Tú tienes tu libro."
+          }
+        ]
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices agreement with the thing owned.",
+      "data": {
+        "title": "Choose the possessive",
+        "instructions": "Choose the form that agrees with the thing owned.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "Te presento a "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "mi",
+              "mío",
+              "mis"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " padres. Esta es "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "nuestro",
+              "nuestras",
+              "nuestra"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " casa. ¿Dónde están "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "tu",
+              "tú",
+              "tus"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": " llaves?"
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        },
+        "perBlankFeedback": {
+          "b1": "Padres is plural: mis.",
+          "b2": "Casa is feminine singular."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets agreeing the possessive with the owner.",
+      "data": {
+        "question": "Two brothers talk about the house they share. Which is correct?",
+        "choices": [
+          "Nuestros casa es grande.",
+          "Nos casa es grande.",
+          "Nuestra casa es grande.",
+          "Nuestro casa es grande."
+        ],
+        "correctIndex": 2,
+        "commonErrorLabel": "Agreeing with the owners",
+        "trapChoiceIndexes": [
+          3,
+          0
+        ],
+        "trapReasons": {
+          "0": "There are two owners, so a plural seems right.",
+          "3": "The owners are men, so a masculine form seems right."
+        },
+        "whyIntuitionFailed": "In English \"our\" never changes, so learners look at who owns the thing.",
+        "correctReasoning": "Nuestro agrees with casa, which is feminine singular: nuestra casa.",
+        "recoveryTip": "Look at the thing owned.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the forms and the agreement rule.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Possessive adjectives",
+        "takeaway": "Mi, tu, su add -s for more than one thing; nuestro also agrees in gender; all of them agree with the thing owned: mis padres, nuestra casa.",
+        "terms": [
+          "mi",
+          "mis",
+          "tu",
+          "su",
+          "nuestro",
+          "nuestra"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_adjectives",
+      "skill_name": "Adjective agreement",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "How do you say \"my parents\"?",
+      "answer": "mis padres",
+      "rationale": "Padres is plural, so the possessive is plural too: mis padres.",
+      "source": "prewritten",
+      "hint": "Agree with the thing owned.",
+      "choices": [
+        "mis padre",
+        "mis padres",
+        "mi padres",
+        "mío padres"
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "mi / mis"
+    },
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Which is correct for \"our daughters\"?",
+      "answer": "nuestras hijas",
+      "rationale": "Hijas is feminine plural, so nuestro becomes nuestras.",
+      "source": "prewritten",
+      "hint": "Feminine and plural.",
+      "choices": [
+        "nuestra hijas",
+        "nuestro hijas",
+        "nuestras hijas",
+        "nuestros hijas"
+      ],
+      "id": "c2",
+      "after": 4,
+      "focus": "nuestro agreement"
+    },
+    {
+      "skill_id": "es_ser_estar",
+      "skill_name": "Ser and estar",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "\"Es su carro\" could mean several things. Rewrite it to say clearly \"It is HER car\": Es el carro ___ ___.",
+      "answer": "de ella",
+      "rationale": "To make su clear, use de + the person: el carro de ella.",
+      "source": "prewritten",
+      "accepts": [
+        "es el carro de ella"
+      ],
+      "hint": "de + she.",
+      "id": "c3",
+      "after": 3,
+      "focus": "clarifying su"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/96",
+    "version": 1,
+    "sha256": "901eb3f97fedd8ca302a153184a9adaf7de48d6138fb69e069dfedcb500ab75b",
+    "title": "Possessive Adjectives: Mi, Tu, Su",
+    "file": "content/spanish-prewritten/advanced/level-096.json"
+  }
+}

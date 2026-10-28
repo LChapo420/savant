@@ -1,0 +1,470 @@
+{
+  "user_id": null,
+  "track_id": "spanish",
+  "grade_id": "advanced",
+  "level": 92,
+  "attempt": 1,
+  "kind": "lesson",
+  "status": "ready",
+  "arm": "shared",
+  "experiment": null,
+  "approach": "Teach the close family words in male/female pairs, the masculine plural for mixed groups (padres, hermanos, hijos), and how to describe your own family with tener.",
+  "coverage": [
+    "madre / mamá, padre / papá; los padres = parents",
+    "hermano, hermana; los hermanos = siblings, or brothers",
+    "hijo, hija; los hijos = children, or sons",
+    "abuelo, abuela; tío, tía; primo, prima; sobrino, sobrina; nieto, nieta",
+    "A mixed group uses the masculine plural: Tengo dos hermanos can mean a brother and a sister",
+    "¿Tienes hermanos? Sí, tengo un hermano y una hermana."
+  ],
+  "layout_fallback": false,
+  "blocks": [
+    {
+      "block": "Basic_DataTable",
+      "purpose": "Presents close family words in pairs.",
+      "data": {
+        "caption": "La familia",
+        "headers": [
+          "Male",
+          "Female",
+          "English",
+          "Plural (mixed)"
+        ],
+        "rows": [
+          [
+            "el padre / papá",
+            "la madre / mamá",
+            "father / mother",
+            "los padres (parents)"
+          ],
+          [
+            "el hermano",
+            "la hermana",
+            "brother / sister",
+            "los hermanos (siblings)"
+          ],
+          [
+            "el hijo",
+            "la hija",
+            "son / daughter",
+            "los hijos (children)"
+          ],
+          [
+            "el abuelo",
+            "la abuela",
+            "grandfather / grandmother",
+            "los abuelos (grandparents)"
+          ],
+          [
+            "el tío",
+            "la tía",
+            "uncle / aunt",
+            "los tíos"
+          ],
+          [
+            "el primo",
+            "la prima",
+            "cousin",
+            "los primos"
+          ],
+          [
+            "el sobrino",
+            "la sobrina",
+            "nephew / niece",
+            "los sobrinos"
+          ],
+          [
+            "el nieto",
+            "la nieta",
+            "grandson / granddaughter",
+            "los nietos (grandchildren)"
+          ]
+        ]
+      },
+      "repaired": false,
+      "index": 0
+    },
+    {
+      "block": "Concept_AudioWave",
+      "purpose": "The audio script: describing a family.",
+      "data": {
+        "title": "Mi familia",
+        "cueNote": "Hermanos here means a brother and a sister: the masculine plural covers a mixed group.",
+        "duration": 23.5,
+        "cues": [
+          {
+            "text": "¿Tienes hermanos?",
+            "start": 0.3,
+            "end": 1.4
+          },
+          {
+            "text": "Sí, tengo dos hermanos: un hermano y una hermana.",
+            "start": 2.9,
+            "end": 6.4
+          },
+          {
+            "text": "Mis padres son de Puerto Rico.",
+            "start": 7.9,
+            "end": 9.9
+          },
+          {
+            "text": "Mi abuela tiene ochenta años.",
+            "start": 11.4,
+            "end": 13.8
+          },
+          {
+            "text": "Tengo cinco primos.",
+            "start": 15.3,
+            "end": 16.6
+          },
+          {
+            "text": "¿Tienes hijos?",
+            "start": 18.1,
+            "end": 19
+          },
+          {
+            "text": "Sí, tengo una hija.",
+            "start": 20.5,
+            "end": 22
+          }
+        ],
+        "playLabel": "Play",
+        "pauseLabel": "Pause",
+        "unavailableLabel": "Audio is not available here: read each line aloud yourself, slowly, then at normal speed."
+      },
+      "repaired": false,
+      "index": 1
+    },
+    {
+      "block": "Theory_RuleCard",
+      "purpose": "States the mixed-group plural rule for family words.",
+      "data": {
+        "tag": "Grammar",
+        "ruleName": "The masculine plural covers everyone",
+        "anchor": "For a mixed group, Spanish uses the masculine plural, so padres means parents and hermanos can mean brothers and sisters.",
+        "prerequisites": [
+          "mis padres = my mother and father.",
+          "Tengo tres hijos: the three may be sons, or sons and daughters.",
+          "Only all-female groups take the feminine: mis hermanas (my sisters)."
+        ]
+      },
+      "repaired": false,
+      "index": 2
+    },
+    {
+      "block": "Interact_TermConnect",
+      "purpose": "Retrieves the family words by meaning.",
+      "data": {
+        "title": "Who is who?",
+        "instruction": "Connect each word to its meaning.",
+        "terms": [
+          {
+            "id": "t1",
+            "label": "la abuela"
+          },
+          {
+            "id": "t2",
+            "label": "el tío"
+          },
+          {
+            "id": "t3",
+            "label": "la prima"
+          },
+          {
+            "id": "t4",
+            "label": "el sobrino"
+          },
+          {
+            "id": "t5",
+            "label": "la nieta"
+          },
+          {
+            "id": "t6",
+            "label": "los padres"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d2",
+            "label": "uncle"
+          },
+          {
+            "id": "d4",
+            "label": "nephew"
+          },
+          {
+            "id": "d6",
+            "label": "parents"
+          },
+          {
+            "id": "d1",
+            "label": "grandmother"
+          },
+          {
+            "id": "d3",
+            "label": "female cousin"
+          },
+          {
+            "id": "d5",
+            "label": "granddaughter"
+          }
+        ],
+        "matches": [
+          {
+            "termId": "t1",
+            "definitionId": "d1"
+          },
+          {
+            "termId": "t2",
+            "definitionId": "d2"
+          },
+          {
+            "termId": "t3",
+            "definitionId": "d3"
+          },
+          {
+            "termId": "t4",
+            "definitionId": "d4"
+          },
+          {
+            "termId": "t5",
+            "definitionId": "d5"
+          },
+          {
+            "termId": "t6",
+            "definitionId": "d6"
+          }
+        ],
+        "completionMessage": "All matched."
+      },
+      "repaired": false,
+      "index": 3
+    },
+    {
+      "block": "Recall_FillTheBlank",
+      "purpose": "Practices describing a family tree.",
+      "data": {
+        "title": "Elena's family",
+        "instructions": "Read the clue and choose the word.",
+        "segments": [
+          {
+            "kind": "text",
+            "text": "La madre de mi madre es mi "
+          },
+          {
+            "kind": "blank",
+            "id": "b1",
+            "options": [
+              "abuela",
+              "tía",
+              "prima"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". El hermano de mi padre es mi "
+          },
+          {
+            "kind": "blank",
+            "id": "b2",
+            "options": [
+              "abuelo",
+              "tío",
+              "primo"
+            ],
+            "correctIndex": 1
+          },
+          {
+            "kind": "text",
+            "text": ". La hija de mi tío es mi "
+          },
+          {
+            "kind": "blank",
+            "id": "b3",
+            "options": [
+              "prima",
+              "sobrina",
+              "hermana"
+            ],
+            "correctIndex": 0
+          },
+          {
+            "kind": "text",
+            "text": ". El hijo de mi hermana es mi "
+          },
+          {
+            "kind": "blank",
+            "id": "b4",
+            "options": [
+              "nieto",
+              "primo",
+              "sobrino"
+            ],
+            "correctIndex": 2
+          },
+          {
+            "kind": "text",
+            "text": "."
+          }
+        ],
+        "feedback": {
+          "correct": "All correct.",
+          "incorrect": "At least one choice is off. Change it and check again."
+        }
+      },
+      "repaired": false,
+      "index": 4
+    },
+    {
+      "block": "Trap_CommonError",
+      "purpose": "Targets reading padres as \"fathers\" only.",
+      "data": {
+        "question": "Your coworker says \"Mis padres viven en Texas.\" Who lives in Texas?",
+        "choices": [
+          "Only her father",
+          "Her two fathers, certainly",
+          "Her relatives in general",
+          "Her mother and father"
+        ],
+        "correctIndex": 3,
+        "commonErrorLabel": "Padres as fathers only",
+        "trapChoiceIndexes": [
+          0
+        ],
+        "trapReasons": {
+          "0": "Padre means father, so padres looks like \"fathers\"."
+        },
+        "whyIntuitionFailed": "Padre means father, so the plural looks like it should mean fathers.",
+        "correctReasoning": "Los padres is the normal word for parents, a mother and a father together.",
+        "recoveryTip": "Padres = parents. Relatives = parientes.",
+        "difficulty": "Trap"
+      },
+      "repaired": false,
+      "index": 5
+    },
+    {
+      "block": "Concept_TakeawayBadge",
+      "purpose": "Closes with the pairs and the plural rule.",
+      "data": {
+        "badgeLabel": "Key takeaway",
+        "topic": "Family members",
+        "takeaway": "Family words come in pairs (hermano, hermana), and the masculine plural covers mixed groups: padres are parents, hermanos are siblings.",
+        "terms": [
+          "padres",
+          "hermanos",
+          "hijos",
+          "abuela",
+          "tío",
+          "primo"
+        ],
+        "accent": "success",
+        "icon": "check"
+      },
+      "repaired": false,
+      "index": 6
+    }
+  ],
+  "checks": [
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "What is your mother's sister to you?",
+      "answer": "tu tía",
+      "rationale": "Your mother's sister is your aunt: tía.",
+      "source": "prewritten",
+      "hint": "An aunt.",
+      "choices": [
+        "tu prima",
+        "tu abuela",
+        "tu sobrina",
+        "tu tía"
+      ],
+      "id": "c1",
+      "after": 4,
+      "focus": "family relationships"
+    },
+    {
+      "skill_id": "es_gender",
+      "skill_name": "Gender and articles",
+      "difficulty": 2,
+      "format": "multiple_choice",
+      "prompt": "Carmen has one brother and one sister. How does she say it?",
+      "answer": "Tengo dos hermanos.",
+      "rationale": "A mixed group takes the masculine plural, so a brother and a sister are dos hermanos.",
+      "source": "prewritten",
+      "hint": "Mixed group.",
+      "choices": [
+        "Tengo dos hermanas.",
+        "Tengo dos hermano.",
+        "Tengo un hermanos.",
+        "Tengo dos hermanos."
+      ],
+      "id": "c2",
+      "after": 2,
+      "focus": "masculine plural for mixed groups"
+    },
+    {
+      "skill_id": "es_vocab_core",
+      "skill_name": "Core vocabulary",
+      "difficulty": 2,
+      "format": "type_in",
+      "prompt": "Type the Spanish word for \"grandfather\" (with or without el).",
+      "answer": "abuelo",
+      "rationale": "Grandfather is abuelo; grandmother is abuela.",
+      "source": "prewritten",
+      "accepts": [
+        "el abuelo"
+      ],
+      "hint": "abuel-.",
+      "id": "c3",
+      "after": 3,
+      "focus": "abuelo"
+    }
+  ],
+  "dropped": [],
+  "dropped_checks": [],
+  "verification": {
+    "status": "verified",
+    "model": "Claude Code (pre-written lesson, fact-checked by hand)",
+    "method": "Written by hand to the level objective, then a second line-by-line pass against the objective and Spanish grammar and usage, and the app's own validators (scripts/check-spanish-prewritten.js). Record: content/spanish-prewritten/CHECKS.md.",
+    "rounds": 2,
+    "searches": 0,
+    "cost": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z",
+    "claims": [],
+    "sources": [],
+    "stages": [],
+    "blocks_fixed": [],
+    "blocks_dropped": [],
+    "checks_fixed": [],
+    "checks_dropped": []
+  },
+  "self_check": {
+    "status": "passed",
+    "method": "hand check of every claim + blind re-solve of every multiple-choice check by a separate reviewer never shown the key",
+    "claim_read": "verified",
+    "mc_checked": 2,
+    "mc_agreed": 2,
+    "mc_dropped": 0,
+    "mc_unjudged": 0,
+    "checked_at": "2026-10-28T00:00:00.000Z"
+  },
+  "check_tier": "prewritten",
+  "fact_sheet": null,
+  "model": "Claude, pre-written and fact-checked",
+  "layout_model": "Claude, pre-written and fact-checked",
+  "usage": null,
+  "seconds": 0,
+  "brief_hash": null,
+  "finished_at": "2026-10-28T00:00:00.000Z",
+  "prewritten": {
+    "id": "spanish/advanced/92",
+    "version": 1,
+    "sha256": "5340a8b283643598fa42b62446ec06da12645ef11d73f61dcd5f29af7afc4a73",
+    "title": "Family Members and Relatives",
+    "file": "content/spanish-prewritten/advanced/level-092.json"
+  }
+}

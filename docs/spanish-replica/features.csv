@@ -1,75 +1,75 @@
 feature,area,priority,original,clone,notes
-Reuse host app accounts and auth for the language section,auth,must,n/a,no,Clone lives inside the user's existing education app; don't build a second login
+Reuse host app accounts and auth for the language section,auth,must,n/a,yes,Clone lives inside the user's existing education app; don't build a second login
 Guest mode: start learning before creating a profile,onboarding,should,yes,no,F01: profile prompt only after the first lesson (S18)
-Course picker grid with flag and name,onboarding,must,yes,no,S02
-Onboarding questionnaire (reason / proficiency / daily goal) with mascot bubble and progress bar,onboarding,must,yes,no,S03: 9 steps observed; referral-source step optional
-Choose start: from scratch or find my level,onboarding,must,yes,no,S03 choosePath
-Entry Check: adaptive placement at the start of every grade,onboarding,must,yes,no,3-4 items per unit incl. one spoken; stop early; 15-min cap; known units skipped
+Course picker grid with flag and name,onboarding,must,yes,partial,S02
+Onboarding questionnaire (reason / proficiency / daily goal) with mascot bubble and progress bar,onboarding,must,yes,partial,S03: 9 steps observed; referral-source step optional
+Choose start: from scratch or find my level,onboarding,must,yes,yes,S03 choosePath
+Entry Check: adaptive placement at the start of every grade,onboarding,must,yes,partial,3-4 items per unit incl. one spoken; stop early; 15-min cap; known units skipped
 Notification permission prompt during onboarding (mobile),onboarding,should,yes,no,
-Spanish level pipeline: generate every level once from its spec + grade + prev/next level context,content,must,n/a,no,Host app's model; shared content for all learners
-Generator outputs typed exercise JSON per E-type (prompt / choices / pairs / tiles / answer),content,must,n/a,no,Lesson player renders these; free text is not enough
-Accepted-answer lists for every translate / type exercise,content,must,n/a,no,Biggest typed-grading risk; validator checks coverage
+Spanish level pipeline: generate every level once from its spec + grade + prev/next level context,content,must,n/a,partial,Host app's model; shared content for all learners
+Generator outputs typed exercise JSON per E-type (prompt / choices / pairs / tiles / answer),content,must,n/a,partial,Lesson player renders these; free text is not enough
+Accepted-answer lists for every translate / type exercise,content,must,n/a,partial,Biggest typed-grading risk; validator checks coverage
 AI validation pass: quality + fit with the grade + answer coverage + difficulty,content,must,n/a,no,Verdict pass / regenerate / human review
-Vocabulary and grammar ledger across all 57 grades,content,must,n/a,no,"Feeds generation context, validator, NEW WORD tags, guidebook, SRS"
+Vocabulary and grammar ledger across all 57 grades,content,must,n/a,partial,"Feeds generation context, validator, NEW WORD tags, guidebook, SRS"
 Level versioning (draft / validated / published / retired),content,must,n/a,no,Progress keyed to level id; mid-level learners finish the old version
-Media manifest: deduplicated TTS audio + image prompts,content,must,n/a,no,Generate once per string
+Media manifest: deduplicated TTS audio + image prompts,content,must,n/a,partial,Generate once per string
 Admin view: browse levels / read validation reports / regenerate / resolve reports,content,should,internal,no,"Small internal tool, not a full CMS"
-Generation cost and token tracking per run,content,should,n/a,no,"~5,100-14,250 levels"
-Map level types (lesson / quiz / test / dictation / game) to node style and exercise mix,content,must,n/a,no,See recon mapping table
-Units with goal + key phrases from the curriculum (721 units),learn,must,yes,no,Already defined in the curriculum CSV; no extra grouping needed
-Text-to-speech or recorded audio for every prompt,content,must,yes,no,Generated in the media manifest step; recordings can override
-Learning path with zig-zag nodes grouped by unit,learn,must,yes,no,S07
-Node states: locked / current with progress ring / completed,learn,must,yes,no,S07 S08
-Node popover with Lesson n of m and START +XP,learn,must,yes,no,S08
-Node types: lesson / practice / chest / unit review,learn,must,yes,no,S07
-Node types: story / radio / video call / adventure,learn,could,yes,no,Needs extra content formats
-Unit header banner with guidebook button,learn,must,yes,no,S07
-Unit guidebook (key phrases with audio + grammar tips),learn,should,yes,no,S10; built from the unit's goal + key phrases + lesson grammar
-Grades overview (57 grades) with CEFR tag and progress,learn,should,yes,no,S09; CEFR band and lemma target come from each grade title
-Jump here / jump to grade via test-out,learn,should,yes,no,F05; fail leaves progress unchanged
-Unit Check: ungated quiz assembled from the review queue,learn,must,yes,no,721 levels; feeds the weak-spot list; never blocks progress
-Top stat bar: course + score / streak / gems / hearts,learn,must,yes,no,S07
-Course switcher and add a second course,learn,should,yes,no,S11
-Lesson player shell: progress bar / hearts / close / skip / check,lesson,must,yes,no,S12
-Keyboard shortcuts in lessons (number keys / Enter),lesson,should,yes,no,Observed live on web
-Exercise: select the image,lesson,must,yes,no,E01
-Exercise: match pairs,lesson,must,yes,no,E02
-Exercise: select the correct meaning (character speech bubble),lesson,must,yes,no,E03
-Exercise: translate with word bank,lesson,must,yes,no,E04
-Exercise: translate by typing with fuzzy grading,lesson,must,yes,no,E05: typo tolerance + accent warning + multiple accepted answers
-Exercise: tap what you hear,lesson,must,yes,no,E06
-Exercise: type what you hear with slow-audio button,lesson,must,yes,no,E07
-Exercise: speak this sentence (speech recognition),lesson,must,yes,no,E08; Speaking/Pronunciation levels are ~7% of the curriculum; must be skippable when mic is unavailable
-Exercise: fill the blank / complete the sentence,lesson,should,yes,no,E09
-Exercise: complete the chat,lesson,could,yes,no,E10
-Exercise: arrange words,lesson,should,yes,no,E12
-Exercise: listen and choose,lesson,should,yes,no,E13
+Generation cost and token tracking per run,content,should,n/a,partial,"~5,100-14,250 levels"
+Map level types (lesson / quiz / test / dictation / game) to node style and exercise mix,content,must,n/a,yes,See recon mapping table
+Units with goal + key phrases from the curriculum (721 units),learn,must,yes,yes,Already defined in the curriculum CSV; no extra grouping needed
+Text-to-speech or recorded audio for every prompt,content,must,yes,yes,Generated in the media manifest step; recordings can override
+Learning path with zig-zag nodes grouped by unit,learn,must,yes,partial,S07
+Node states: locked / current with progress ring / completed,learn,must,yes,partial,S07 S08
+Node popover with Lesson n of m and START +XP,learn,must,yes,partial,S08
+Node types: lesson / practice / chest / unit review,learn,must,yes,partial,S07
+Node types: story / radio / video call / adventure,learn,could,yes,partial,Needs extra content formats
+Unit header banner with guidebook button,learn,must,yes,partial,S07
+Unit guidebook (key phrases with audio + grammar tips),learn,should,yes,partial,S10; built from the unit's goal + key phrases + lesson grammar
+Grades overview (57 grades) with CEFR tag and progress,learn,should,yes,partial,S09; CEFR band and lemma target come from each grade title
+Jump here / jump to grade via test-out,learn,should,yes,yes,F05; fail leaves progress unchanged
+Unit Check: ungated quiz assembled from the review queue,learn,must,yes,yes,721 levels; feeds the weak-spot list; never blocks progress
+Top stat bar: course + score / streak / gems / hearts,learn,must,yes,partial,S07
+Course switcher and add a second course,learn,should,yes,yes,S11
+Lesson player shell: progress bar / hearts / close / skip / check,lesson,must,yes,yes,S12
+Keyboard shortcuts in lessons (number keys / Enter),lesson,should,yes,yes,Observed live on web
+Exercise: select the image,lesson,must,yes,yes,E01
+Exercise: match pairs,lesson,must,yes,yes,E02
+Exercise: select the correct meaning (character speech bubble),lesson,must,yes,yes,E03
+Exercise: translate with word bank,lesson,must,yes,yes,E04
+Exercise: translate by typing with fuzzy grading,lesson,must,yes,yes,E05: typo tolerance + accent warning + multiple accepted answers
+Exercise: tap what you hear,lesson,must,yes,yes,E06
+Exercise: type what you hear with slow-audio button,lesson,must,yes,yes,E07
+Exercise: speak this sentence (speech recognition),lesson,must,yes,yes,E08; Speaking/Pronunciation levels are ~7% of the curriculum; must be skippable when mic is unavailable
+Exercise: fill the blank / complete the sentence,lesson,should,yes,yes,E09
+Exercise: complete the chat,lesson,could,yes,yes,E10
+Exercise: arrange words,lesson,should,yes,yes,E12
+Exercise: listen and choose,lesson,should,yes,yes,E13
 Exercise: non-Latin script (character to sound / build / trace),lesson,skip,yes,skip,Spanish uses the Latin script; revisit for future courses
-New word tag and introduction,lesson,must,yes,no,NEW WORD label seen live
-Answer feedback sheet: correct / incorrect with correct solution,lesson,must,yes,no,S13
-Report an exercise / too easy / too difficult,lesson,should,yes,no,Feeds the regenerate queue in the admin view
+New word tag and introduction,lesson,must,yes,yes,NEW WORD label seen live
+Answer feedback sheet: correct / incorrect with correct solution,lesson,must,yes,yes,S13
+Report an exercise / too easy / too difficult,lesson,should,yes,partial,Feeds the regenerate queue in the admin view
 Explain my answer (AI explanation of a mistake),lesson,could,yes,no,Free in big courses since 2026; LLM-backed
-Missed exercises re-asked at end of lesson,lesson,must,yes,no,Observed: PREVIOUS MISTAKE tag + interstitial
-Combo counter (N IN A ROW) and gold progress bar,lesson,should,yes,no,Observed live
-Mid-lesson encouragement interstitials,lesson,should,yes,no,S14
-Quit lesson confirmation,lesson,must,yes,no,S16
-Sound effects and haptics for correct / wrong / complete,lesson,must,yes,no,Your own sounds; big part of the feel
-Lesson complete screen (XP / accuracy / time),lesson,must,yes,no,S17
+Missed exercises re-asked at end of lesson,lesson,must,yes,yes,Observed: PREVIOUS MISTAKE tag + interstitial
+Combo counter (N IN A ROW) and gold progress bar,lesson,should,yes,yes,Observed live
+Mid-lesson encouragement interstitials,lesson,should,yes,yes,S14
+Quit lesson confirmation,lesson,must,yes,yes,S16
+Sound effects and haptics for correct / wrong / complete,lesson,must,yes,partial,Your own sounds; big part of the feel
+Lesson complete screen (XP / accuracy / time),lesson,must,yes,yes,S17
 Review lesson (see your answers),lesson,could,yes,no,S19
-Post-lesson reward sequence (streak / quests / gems / score),lesson,must,yes,no,S18
+Post-lesson reward sequence (streak / quests / gems / score),lesson,must,yes,partial,S18
 Legendary challenge on completed nodes,lesson,could,yes,no,"F06; harder, no hints, gold node"
-Stories player,content,must,yes,no,"Story (635) + picture captions, read-along, say two captions aloud"
-Listening Lab: short clips + questions + repeat-after-me,content,must,yes,no,"627 levels; slow speech in grades 1-2, real speed from grade 3"
+Stories player,content,must,yes,yes,"Story (635) + picture captions, read-along, say two captions aloud"
+Listening Lab: short clips + questions + repeat-after-me,content,must,yes,yes,"627 levels; slow speech in grades 1-2, real speed from grade 3"
 Adventures (game-like scenes),content,skip,yes,skip,Heavy game-engine work; low value for an add-on section
-XP awarded per lesson with bonuses,gamification,must,yes,no,10 base + accuracy/combo bonus (14 seen)
+XP awarded per lesson with bonuses,gamification,must,yes,yes,10 base + accuracy/combo bonus (14 seen)
 Daily goal (5/10/15/20 min or XP),gamification,must,yes,no,S03 dailyGoal
-Streak counting with local-midnight cutoff,gamification,must,yes,no,Time-zone correct
-Streak extended screen with week strip,gamification,must,yes,no,S18
+Streak counting with local-midnight cutoff,gamification,must,yes,yes,Time-zone correct
+Streak extended screen with week strip,gamification,must,yes,yes,S18
 Streak goal commitment (7/14/30/50),gamification,could,yes,no,S18
-Streak freeze (buy with gems / max 2 equipped),gamification,should,yes,no,S30
+Streak freeze (buy with gems / max 2 equipped),gamification,should,yes,partial,S30
 Streak repair after a break,gamification,could,yes,no,Gems or Super monthly repair
-Streak calendar detail,gamification,should,yes,no,S36
-Hearts: lose on mistake / refill over time / refill with gems,gamification,must,yes,no,Make hearts vs energy a config switch
+Streak calendar detail,gamification,should,yes,partial,S36
+Hearts: lose on mistake / refill over time / refill with gems,gamification,must,yes,partial,Make hearts vs energy a config switch
 Energy system alternative to hearts,gamification,could,yes,no,Duolingo moved free users to energy in 2025; unpopular in reviews
 Practice lesson to earn hearts back,gamification,should,yes,no,F04
 Gems wallet and earning (quests / chests / goals),gamification,should,yes,no,S18 S29
@@ -77,11 +77,11 @@ Shop: heart refill / streak freeze / XP boost,gamification,should,yes,no,S30
 Daily quests (3 per day with timer and chest),gamification,should,yes,no,S29
 Monthly challenge badge,gamification,could,yes,no,S29
 Achievements with tiers,gamification,could,yes,no,S34
-Progress score per course (Duolingo Score-like),gamification,could,yes,no,Do not claim CEFR equivalence
-Practice hub: mistakes review,practice,should,yes,no,S25
-Practice hub: words list and words practice,practice,should,yes,no,S26
+Progress score per course (Duolingo Score-like),gamification,could,yes,partial,Do not claim CEFR equivalence
+Practice hub: mistakes review,practice,should,yes,partial,S25
+Practice hub: words list and words practice,practice,should,yes,partial,S26
 Practice hub: speak / listen focused sessions,practice,could,yes,no,S25
-"Spaced-review queue (per learner, item-level)",practice,must,yes,no,"Unit Checks, Quick Games, Checkpoints and Finals all draw from it"
+"Spaced-review queue (per learner, item-level)",practice,must,yes,yes,"Unit Checks, Quick Games, Checkpoints and Finals all draw from it"
 Weekly leagues with 10 tiers and promotion / demotion,social,should,yes,no,F08; needs cohort-size fallback while you're small
 Leaderboard locked until N lessons,social,could,yes,no,Observed: complete 3 lessons to unlock
 League results screen,social,should,yes,no,S28
@@ -92,59 +92,59 @@ Block and report users,social,should,yes,no,Required as soon as any social featu
 Friend streaks (up to 5),social,could,yes,no,
 Friends quests (weekly pair goal),social,could,yes,no,
 Activity feed,social,skip,yes,skip,Low value inside a host app
-Under-13 mode disables social features,social,must,yes,no,COPPA; check host app's age data
+Under-13 mode disables social features,social,must,yes,n/a,COPPA; check host app's age data
 Private profile toggle disables leagues and friends,social,should,yes,no,S41
-Profile page with stats and achievements,profile,should,yes,no,S31
+Profile page with stats and achievements,profile,should,yes,partial,S31
 Avatar builder,profile,could,yes,no,Use host app's avatar if it has one
-Settings: preferences (sfx / animations / listening / speaking / dark mode),settings,must,yes,no,S39
-Settings: notifications and practice reminder time,settings,should,yes,no,S40
+Settings: preferences (sfx / animations / listening / speaking / dark mode),settings,must,yes,partial,S39
+Settings: notifications and practice reminder time,settings,should,yes,partial,S40
 Push reminders (practice / streak at risk),notifications,should,yes,no,Expo push or FCM/APNs
 Email reminders and weekly progress,notifications,could,yes,no,
-Settings: remove or reset a course,settings,should,yes,no,S42
-Dark mode,settings,should,yes,no,Web default observed dark
-Subscription tier removing hearts limit and ads,monetisation,should,yes,no,Super equivalent; may map to host app's plan
+Settings: remove or reset a course,settings,should,yes,yes,S42
+Dark mode,settings,should,yes,yes,Web default observed dark
+Subscription tier removing hearts limit and ads,monetisation,should,yes,partial,Super equivalent; may map to host app's plan
 Web payments (Stripe) for subscription,monetisation,should,yes,no,
 In-app purchase on iOS / Android with shared entitlement,monetisation,should,yes,no,RevenueCat recommended
 Free trial,monetisation,could,yes,no,
 Family plan (up to 6),monetisation,could,yes,no,S45
 Gem packs bought with real money,monetisation,skip,yes,skip,Virtual currency IAP adds store-review and consumer-law burden; earn-only gems first
 Ads after lessons,monetisation,skip,yes,skip,Off by default; ads in an education app hurt trust
-Conversation Lab: AI partner role-play with information gap and outcome check,ai,must,yes,no,721 levels (one per unit); runtime AI cost; your own characters
+Conversation Lab: AI partner role-play with information gap and outcome check,ai,must,yes,yes,721 levels (one per unit); runtime AI cost; your own characters
 Offline lessons (mobile),platform,could,yes,no,Download units; sync sessions later
 Home-screen streak widget (iOS / Android),platform,skip,yes,skip,Nice later; native modules
 Duolingo course content (sentences / audio / art / characters),content,skip,yes,skip,Their Service Content; author your own
 Duo owl mascot and Duolingo brand,brand,skip,yes,skip,Trademark; replica-brand makes yours
 Duolingo English Test / Chess / Math / Music,scope,skip,yes,skip,Separate products
 Duolingo Score CEFR calibration,scope,skip,yes,skip,Their research; build a simple score instead
-Curriculum importer: unpivot the wide CSV into grades / units / levels,content,must,n/a,no,57 x 9-column blocks; id = grade + level #; titles repeat so never key on them
+Curriculum importer: unpivot the wide CSV into grades / units / levels,content,must,n/a,yes,57 x 9-column blocks; id = grade + level #; titles repeat so never key on them
 Lemma target per grade checked against the ledger,content,must,n/a,no,"Grade titles give targets from ~100 to ~12,000 known lemmas"
-Unit intro card: goal + 5 key phrases + 30-second clip + repeat,learn,must,partial,no,Preview levels (721)
-Input Session: serialized story with recurring characters / pictures / slow audio,learn,must,partial,no,721 levels; success = 80% on picture questions
-Recurring story characters with consistent voices and art,content,should,yes,no,Own characters; one TTS voice per character
-Reader: tap any word for audio and gloss,learn,must,partial,no,Reading levels; 'every word has audio'
-Reading Block: graded reader picked from a pre-generated pool by learner interest,learn,should,no,no,219 levels; ~98% known words
-Learner interests profile,onboarding,should,partial,no,Drives Reading Block selection
-Dictation with errors auto-tagged as sound or spelling,lesson,must,partial,no,506 levels
-Quick Game: Listen and Tap,game,must,partial,no,3 min; speed + accuracy; misses go to review
-Quick Game: Word Race,game,must,partial,no,Say or type before the timer
-Quick Game: Sentence Builder,game,must,partial,no,Drag tiles to build what you hear
-Quick Game: Fix the Sentence,game,should,no,no,Spot and fix the mistake in a timed streak
-Quick Game: Memory Pairs,game,should,partial,no,Close to match pairs
-Quick Game: Speed Match,game,should,partial,no,Timed matching
-Fluency Sprint / Chunk Speed Drill (timed speaking rounds),game,must,no,no,378 levels
-Pronunciation scoring incl. speech rate and pausing,lesson,must,partial,no,Checkpoint speaking samples are scored on rate and pausing
-Writing Lab: plan / draft / AI feedback on 2-3 priorities / revise / model answer,lesson,must,no,no,476 Writing + Essay levels; runtime AI
-Mediation task: summarize a source for a reader in the other language,lesson,should,no,no,139 levels; runtime AI feedback
-Error log with tags (sound / spelling / grammar / vocab),learner model,must,no,no,Named directly in the curriculum
-Weak-spot list driving checks / games / finals,learner model,must,partial,no,Unit Checks feed it; Finals are weighted toward it
-Checkpoint every ~3 units: 80% gate / targeted repair / retake,assessment,must,no,no,242 levels; listening + reading + recorded speaking + short writing
-Final exam per grade: 80% pass unlocks the next grade,assessment,must,no,no,57 levels; free retake after repair
-Grade Project: record audio or video + AI exchange + rubric + one revision,assessment,must,no,no,57 levels
-Rubric scoring by LLM (task completion / accuracy / range / pronunciation or fluency),assessment,must,partial,no,"Shared by projects, conversations, writing, live sessions"
-Optional units (skippable blocks on the path),learn,should,no,no,"1,458 levels marked Optional unit"
+Unit intro card: goal + 5 key phrases + 30-second clip + repeat,learn,must,partial,yes,Preview levels (721)
+Input Session: serialized story with recurring characters / pictures / slow audio,learn,must,partial,yes,721 levels; success = 80% on picture questions
+Recurring story characters with consistent voices and art,content,should,yes,yes,Own characters; one TTS voice per character
+Reader: tap any word for audio and gloss,learn,must,partial,partial,Reading levels; 'every word has audio'
+Reading Block: graded reader picked from a pre-generated pool by learner interest,learn,should,no,lab,219 levels; ~98% known words
+Learner interests profile,onboarding,should,partial,lab,Drives Reading Block selection
+Dictation with errors auto-tagged as sound or spelling,lesson,must,partial,partial,506 levels
+Quick Game: Listen and Tap,game,must,partial,lab,3 min; speed + accuracy; misses go to review
+Quick Game: Word Race,game,must,partial,lab,Say or type before the timer
+Quick Game: Sentence Builder,game,must,partial,lab,Drag tiles to build what you hear
+Quick Game: Fix the Sentence,game,should,no,lab,Spot and fix the mistake in a timed streak
+Quick Game: Memory Pairs,game,should,partial,lab,Close to match pairs
+Quick Game: Speed Match,game,should,partial,lab,Timed matching
+Fluency Sprint / Chunk Speed Drill (timed speaking rounds),game,must,no,yes,378 levels
+Pronunciation scoring incl. speech rate and pausing,lesson,must,partial,partial,Checkpoint speaking samples are scored on rate and pausing
+Writing Lab: plan / draft / AI feedback on 2-3 priorities / revise / model answer,lesson,must,no,lab,476 Writing + Essay levels; runtime AI
+Mediation task: summarize a source for a reader in the other language,lesson,should,no,lab,139 levels; runtime AI feedback
+Error log with tags (sound / spelling / grammar / vocab),learner model,must,no,partial,Named directly in the curriculum
+Weak-spot list driving checks / games / finals,learner model,must,partial,partial,Unit Checks feed it; Finals are weighted toward it
+Checkpoint every ~3 units: 80% gate / targeted repair / retake,assessment,must,no,partial,242 levels; listening + reading + recorded speaking + short writing
+Final exam per grade: 80% pass unlocks the next grade,assessment,must,no,partial,57 levels; free retake after repair
+Grade Project: record audio or video + AI exchange + rubric + one revision,assessment,must,no,lab,57 levels
+Rubric scoring by LLM (task completion / accuracy / range / pronunciation or fluency),assessment,must,partial,partial,"Shared by projects, conversations, writing, live sessions"
+Optional units (skippable blocks on the path),learn,should,no,partial,"1,458 levels marked Optional unit"
 Domain electives picker (30 domains incl. regional varieties),learn,should,no,no,~330 levels; Checkpoints include the domains the learner took
 Elective tracks after grade 42 (culture / literature / translation / linguistics / teaching),learn,could,no,no,"Grades 43-57, 807 levels"
-Live Conversation: upload a 2-minute excerpt + rubric + flagged AI stand-in,social,should,no,no,170 levels; not a gate
+Live Conversation: upload a 2-minute excerpt + rubric + flagged AI stand-in,social,should,no,lab,170 levels; not a gate
 Peer / tutor matching for live conversation,social,could,no,no,Marketplace-sized; later
-Real-World Mission: upload recording or log + self-assessment,assessment,could,no,no,8 milestone levels (A1-C2)
-Per-learner AI cost budgets and rate limits,platform,must,n/a,no,Conversation / writing / speech scoring run per learner
+Real-World Mission: upload recording or log + self-assessment,assessment,could,no,lab,8 milestone levels (A1-C2)
+Per-learner AI cost budgets and rate limits,platform,must,n/a,yes,Conversation / writing / speech scoring run per learner
