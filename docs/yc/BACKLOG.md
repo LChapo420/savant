@@ -55,7 +55,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
      type checks by magic bytes, text extraction (look for an existing dependency first; add a small, well-known
      one only if needed), stored per user under the db layer (private to that user, never shared, deleted for
      real on delete). Rate limits. Tests.
-   - **(b) Course builder.** From the extracted text: chunk it, build a concept map, order the skills by
+   - **(b) Course builder.** [claimed 2026-10-28 23:15Z] From the extracted text: chunk it, build a concept map, order the skills by
      prerequisite, and for each skill write a short lesson and retrieval questions (multiple choice and short
      answer), every item **grounded in the source** with a pointer to the passage it came from. A second pass
      checks each item is supported by its passage and drops any that are not. Use `services/pool.js` with
