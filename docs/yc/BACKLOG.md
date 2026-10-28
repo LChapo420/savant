@@ -44,28 +44,16 @@ updates this file.
 The wedge is **ACT prep**. What moves YC most is real outside users and honest evidence that the app raises
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
-0a. [claimed 2026-10-28T21:20Z] **Head-to-head study kit: Savant vs Duolingo for Spanish (owner's request, 2026-10-28; for YC and investors).**
-   The claim to test, honestly: *per hour of study, Savant teaches everyday Spanish more than Duolingo.* Build the
-   kit so the owner can run it with beta testers as soon as they arrive (results before the YC interviews):
-   - **Protocol** `docs/yc/DUOLINGO-STUDY-PROTOCOL.md`: beginners with no recent Spanish; random assignment to
-     Savant or Duolingo with the public drand beacon (as `spanish-check/` does); the same fixed daily time (for
-     example 20 minutes for 14 days) in both arms; the primary outcome is the gain on the sealed external tests
-     (listening comprehension and the daily test, built from Tatoeba, so neither app taught the exact items),
-     chance-corrected; efficiency = gain per hour studied; report every participant including dropouts, with
-     confidence intervals; state the minimum sample needed and what a small sample can and cannot show. Leave
-     `OWNER:` lines for decisions. It is pre-registered: sealed and time-stamped like the Spanish tests before
-     anyone starts.
-   - **A multi-participant version of the sealed tests.** The founder's tests are sealed and only for account 6689:
-     **never edit `spanish-check/`, `spanish-check-lc/` or their routes and pages.** Create a separate module
-     (for example `spanish-study/`) that reuses their engine code by copying, with its own fresh seal, per-participant
-     draws and logs, and the same integrity rules (timed, one sitting per day, no Spanish text in listening).
-   - **Time on task:** Savant's minutes come from the app's logs. Duolingo minutes are self-reported daily with a
-     screenshot of Duolingo's own stats; record both, and flag missing days.
-   - **Participant pages** (sign-up with consent; parental consent under 18 per `docs/yc/PRIVACY.md`; daily
-     check-in) and **an admin results page** with a per-arm bar chart of gain per hour, the CI, and a CSV export.
-   - Tests on the fixture db. Done when the whole study can be run end to end on fixture data.
-   - [local only, later] Find Duolingo's own published efficacy studies and cite them in the protocol as context,
-     marked UNVERIFIED until a person checks them.
+0a. **Head-to-head study kit, remaining slices** (first slice is under Done). The claim: *per hour of study, Savant teaches everyday Spanish more than Duolingo.*
+   - **(b) Sealed multi-participant tests.** Create `spanish-study-tests/` (a new module, **never edit `spanish-check/`,
+     `spanish-check-lc/` or their routes and pages**) that copies their engine code with its own fresh seal, per-participant
+     draws and logs, and the same integrity rules (timed, one sitting per day, no Spanish text in listening). Pre-test day 0,
+     post-test last day; write results with `recordTest` in `services/spanish-study.js`. Until this exists the study cannot run end to end.
+   - **(c) Participant and admin pages:** sign-up with consent (teen parental box), daily check-in with the screenshot tick,
+     and an admin results page with a per-arm bar chart of gain per hour, the CI and a CSV link (use CSS variables; redesign in progress).
+   - **(d) End-to-end fixture test** once (b) and (c) exist. Then the owner fills the `OWNER:` lines in
+     `docs/yc/DUOLINGO-STUDY-PROTOCOL.md`, seals and time-stamps it before anyone joins.
+   - [local only, later] Find Duolingo's own published efficacy studies and cite them in the protocol, marked UNVERIFIED until a person checks them.
 
 0b. **Learn from your own material (owner's request, 2026-10-28; high YC value: it is the "learn anything" demo).**
    A learner uploads study material (PDF, DOCX, TXT/Markdown, or pasted text; photos of notes later) and Savant turns
@@ -153,6 +141,8 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
 - 2026-10-28: `scripts/scorecard-evidence-test.js` check "review today() for a learner on the Final stays under 4 s" is a wall-clock check that takes 4.5 to 5.4 s in the cloud container, with and without the ACT landing page change (reproduced on a stashed, untouched `yc-next`). Every other `npm test` step passed. Not fixed here: raising the limit would hide a real slowdown; the owner should say whether to loosen it for slow machines or profile `review today()`.
 
 ## Done
+
+- 2026-10-28: **Savant vs Duolingo study kit, first slice** (item 0a; commit in this push). `docs/yc/DUOLINGO-STUDY-PROTOCOL.md` (DRAFT, unsealed, `OWNER:` lines for dose, sample target and sealing; states limits and what a small sample cannot show). `services/spanish-study.js` + `routes/spanish-study.js` (`/api/spanish-study`: me, join, checkin, leave, admin report and CSV): consent (adults, or 13 to 17 with a parent-knows box; under 13 refused; beginners only), arm drawn from the public drand beacon in permuted blocks of four with the round and randomness stored so the draw can be recomputed, Savant minutes from the app's study-session clock, Duolingo minutes self-reported daily with a screenshot tick (missing days flagged), chance-corrected pre/post gain on two tests, gain per hour, per-arm mean with t intervals, Welch difference interval, minimum sample per arm, every participant listed (dropouts included, nothing imputed), demo/test accounts excluded. New collections `spanish_study`, `spanish_study_checkins`, `spanish_study_tests` are in `config/db.js` and the account export and deletion. The sealed Spanish files are untouched. Checked: `scripts/spanish-study-test.js` (about 45 checks, fake beacon, no network) and full `npm test` exit 0 ("All steps passed"). Not built: the sealed participant tests, the pages (see the Queue). Not checked: the live drand call.
 
 - 2026-10-28: **Creator links for the beta form** (item 0; commit in this push). `/beta?ref=<code>` (or `?utm_source=`) serves the home page with the code already in a hidden `ref` field (works without JavaScript; `assets/site.js` also reads the URL and keeps the code for the tab in `sessionStorage`), and the code is stored as `ref` on the beta application, cleaned to a-z 0-9 . _ - (40 characters). `ref` also becomes the visit's source in the visit statistics, so visits count per code. `site/creators.json` (code, name, added; one example row to delete) is display-only: unknown codes are still recorded. `/creators` (`site/creators.html`, noindex) gives the link format and one honest paragraph about Savant, each with a copy button, and says not to promise results. Admin: a new **Creators** tab (per code: visits, applications, consented emails, the emails) and a "Creator code" column on the Beta tab and in its CSV. Checked: `site/test.js` (5 new tests: cleaning and fallback, hidden field and form post, the page, the JSON and summary, and two test codes producing separate counts in the admin); site suite 64 of 65, the one failure (`visits: the admin Visitors tab`, a `land.json` globe check) fails the same on untouched `yc-next`. Not checked: the pages in a real browser at 375 px, and the copy buttons. Notes: a visit-only source nobody listed or applied with is not shown as a creator (otherwise Google would be); anonymous visits (EU/UK without consent) are counted; the live domain is not hard-coded (the page shows the link from where it is opened). The site tests are not part of the root `npm test`.
 

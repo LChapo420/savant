@@ -61,6 +61,9 @@ const COLLECTIONS = [
   'act_profiles',            // ACT prep: one per learner, test date and target score (services/act-scores.js)
   'act_scores',              // ACT prep: one per recorded practice or official test, section scores by date (services/act-scores.js)
   'act_study',               // ACT measurement study: one per participant, counterbalanced order, consent (services/act-study.js)
+  'spanish_study',           // Savant vs Duolingo beginner-Spanish study: one per participant, arm drawn from drand (services/spanish-study.js)
+  'spanish_study_checkins',  // Duolingo-arm daily self-reported minutes
+  'spanish_study_tests',     // pre/post scores on the sealed external tests
   'es_review',               // main-path Spanish: the item-level review queue, one per learner per phrase: box, due time, right/wrong (services/spanish/path.js)
 ];
 

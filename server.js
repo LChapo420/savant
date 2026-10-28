@@ -141,6 +141,7 @@ app.use('/api', require('./routes/prefs')); // engagement settings: hide streak/
 // A held graduation (COVERAGE_GATE=enforce): what it waits on, and graduating once it is met.
 app.use('/api/act', require('./routes/act')); // ACT score entry: test date, target, practice-test scores (services/act-scores.js)
 app.use('/api/act-study', require('./routes/act-study')); // the ACT measurement study: counterbalanced practice-test order, admin before/after (services/act-study.js)
+app.use('/api/spanish-study', require('./routes/spanish-study')); // Savant vs Duolingo beginner-Spanish study (services/spanish-study.js)
 app.use('/api', require('./routes/coverage'));
 // Generated base-lesson pages, and the one way a generated page changes anything.
 app.use('/api', require('./routes/base-lessons'));
