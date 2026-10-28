@@ -45,7 +45,7 @@ The wedge is **ACT prep**. What moves YC most is real outside users and honest e
 scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READINESS.md` section 4.
 
    **Priority (owner, 2026-10-28 evening): 0b and 0c come first — they are the TikTok demo pieces. Ship a working, demo-able first slice of each as fast as possible.**
-0b. **Learn from your own material (owner's request, 2026-10-28; high YC value: it is the "learn anything" demo).**
+0b. [claimed 2026-10-28T23:00Z, slice (a)] **Learn from your own material (owner's request, 2026-10-28; high YC value: it is the "learn anything" demo).**
    A learner uploads study material (PDF, DOCX, TXT/Markdown, or pasted text; photos of notes later) and Savant turns
    it into a course taught with the app's own engine: placement, lessons, retrieval practice, mastery at 75%,
    remediation of the misunderstanding behind wrong answers, interleaving, and spaced review timed to the
