@@ -47,7 +47,7 @@ scores, so items that unblock those come first. Plan source: `docs/yc/ACT-READIN
    `docs/yc/ACT-STUDY-PROTOCOL.md`, then seals and RFC 3161 time-stamps it with `spanish-check/scripts/`; (b) the
    owner decides whether to use the wait-list arm; (c) look at `/act-study` and `/act-study-admin` at 375 px in a
    real browser, signed in (a cloud run has no session; do it on the owner's machine or with a seeded demo login).
-4. **An ACT landing page** at `/act` for students and parents: what it does today (truthfully), how it adapts,
+4. [claimed 19:16Z 2026-10-28] **An ACT landing page** at `/act` for students and parents: what it does today (truthfully), how it adapts,
    privacy in plain words, and one clear "Start free" button into onboarding with ACT preselected. Done when it
    loads fast on a phone and every claim on it is true of the code.
 5. **Activation funnel numbers.** Extend the real-user metrics (`scripts/real-user-metrics*.js`) with the
