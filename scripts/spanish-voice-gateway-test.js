@@ -12,6 +12,7 @@ const assert = require('assert');
 
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'voicegw-'));
 process.env.SPANISH_MEDIA_DIR = path.join(dir, 'media');
+process.env.LLMGATEWAY_LEDGER_FILE = path.join(dir, 'ledger.json'); // never the real data/llmgateway-ledger.json
 process.env.HOLDOUT_DIR = dir; // where spanish-gateway-users.json is read from
 fs.writeFileSync(path.join(dir, 'spanish-gateway-users.json'), '[6689]');
 delete process.env.GEMINI_API_KEY; delete process.env.MIMO_API_KEY; delete process.env.SPANISH_GATEWAY_USERS;
@@ -70,6 +71,31 @@ server.listen(0, async () => {
     // ...but a clip already paid for still plays.
     mode = 'ok';
     assert.strictEqual((await voice.tts('Hola, ¿cómo estás?', 'mara', { userId: 6689 })).cached, true);
+    // 7. The $5 ledger: every billed call was reserved and settled at the published rate; an answered 401 cost nothing.
+    const ledger = require('../services/llmgateway-ledger');
+    const st = ledger.status();
+    assert(st.ok && st.cap_usd === 5 && st.reserved_usd === 0);
+    const data = JSON.parse(fs.readFileSync(process.env.LLMGATEWAY_LEDGER_FILE, 'utf8'));
+    assert.strictEqual(data.calls, 4); assert.strictEqual(data.failed_calls, 1); // 2 tts + 1 stt ok, 1 refused-by-gateway 401
+    const per = (chars) => (chars / 1000) * 0.11 * 1.15;
+    const expectTts = per('Hola, ¿cómo estás?'.length) * 2 + 0; // two paid clips of that text (mara, narrator)
+    assert(Math.abs(data.by_model['eleven-v3'].usd - expectTts) < 1e-6, `tts settled ${data.by_model['eleven-v3'].usd} vs ${expectTts}`);
+    assert(data.by_model['grok-stt-1-0'].usd > 0 && data.by_model['grok-stt-1-0'].usd < 0.001);
+    // 8. Past the cap: refused before any request leaves, and the caller gets an error (the route answers 503, the browser speaks).
+    process.env.LLMGATEWAY_CAP_USD = String(st.spent_usd); // a cap with no headroom left
+    const n1 = calls.length;
+    // the 401 above put voice.js on a ten-minute cool-down; load it afresh so it is the ledger that refuses
+    delete require.cache[require.resolve('../services/spanish/voice')];
+    const voice2 = require('../services/spanish/voice');
+    await assert.rejects(voice2.tts('Una línea que ya no se paga', 'mara', { userId: 6689 }), (e) => e.status === 402 && /refused/.test(e.message));
+    delete require.cache[require.resolve('../services/spanish/voice')]; // the refusal above cooled voice2 down as well
+    await assert.rejects(require('../services/spanish/voice').asr(Buffer.from('RIFFfakewav'), 'wav', { userId: 6689 }), (e) => e.status === 402);
+    assert.strictEqual(calls.length, n1);
+    assert(ledger.status().refused_calls >= 1);
+    // The cap can only be lowered by the environment, never raised.
+    process.env.LLMGATEWAY_CAP_USD = '999'; assert.strictEqual(ledger.status().cap_usd, 5);
+    // The ledger is for speech only.
+    assert.throws(() => ledger.reserve({ kind: 'chat', model: 'x', chars: 10 }), /not used for text/);
     console.log('spanish-voice-gateway-test: ok');
   } finally {
     server.close();
